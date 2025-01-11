@@ -730,7 +730,7 @@ a:focus {
     border: none;
     padding: 14px 26px 14px;
     font-size: 21px;
-    background: #0B9ED9;
+    background: #214162;
     margin-right: 0;
     cursor: pointer;
     float: left;
@@ -753,7 +753,7 @@ a:focus {
 
 .icon_info ul.user_profile_dd li div a {
     font-size: 15px;
-    color: #0B9ED9;
+    color: #214162;
     background-color: #fff;
     padding: 4px 15px;
     border-bottom: none;
@@ -761,7 +761,7 @@ a:focus {
 }
 .icon_info ul.user_profile_dd li div a span {
     font-size: 13px;
-    color: #0B9ED9;
+    color: #214162;
     background-color: #fff;
     font-weight: normal;
     padding: 0;
@@ -771,27 +771,27 @@ a:focus {
 .icon_info ul.user_profile_dd li{
     border-left:1px;
     border-left-color: #fff; 
-    background-color: #0B9ED9;
+    background-color: #214162;
 }
 .fa-bars:hover{
-    background-color: #0B9ED9;
+    background-color: #214162;
     color:red;
 }
 .icon_info ul li .fa-bell-o:hover{
-    background-color: #0B9ED9;
+    background-color: #214162;
     color:red;
 }
 .icon_info ul li .fa-question-circle:hover{
-    background-color: #0B9ED9;
+    background-color: #214162;
     color:red;
 }
 .icon_info ul li .fa-envelope-o:hover{
-    background-color: #0B9ED9;
+    background-color: #214162;
     color:red;
 }
 .dropdown-item:hover,
 .dropdown-item:focus{
-    background-color: #0B9ED9;
+    background-color: #214162;
     color:red;
 }
 .icon_info ul.user_profile_dd li div a:hover,
@@ -849,7 +849,7 @@ span {
 #sidebar {
     min-width: 280px;
     max-width: 280px;
-    background-color: #0B9ED9;
+    background-color: #214162;
     color: #fff;
     transition: all 0.3s;
     position: relative;
@@ -907,7 +907,7 @@ span {
     border-bottom: solid 1px;
     border-top:solid 1px;
     border-color: #fff;
-    background: #0B9ED9;
+    background: #214162;
     padding: 20px 0;
 }
 
@@ -972,7 +972,7 @@ a[data-toggle="collapse"] {
 
 .topbar .navbar {
     padding: 0;
-    background: #0B9ED9;
+    background: #214162;
     border: none;
     border-radius: 0;
 }
@@ -983,7 +983,7 @@ a[data-toggle="collapse"] {
 
 .sidebar_user_info {
     padding: 15px 25px;
-    background: #0B9ED9;
+    background: #214162;
 }
 
 .user_img img {
@@ -1077,7 +1077,7 @@ a[data-toggle="collapse"] {
 }
 
 #sidebar h4 {
-    background: #0B9ED9;
+    background: #214162;
     margin: 0;
     padding: 21px 25px 19px;
     font-weight: 500;
@@ -2207,9 +2207,9 @@ i.icon {
 /** tabbar style 2 **/
 
 .tab_style2 .tabbar nav div.nav-tabs .nav-link.active {
-    background: #0B9ED9;
+    background: #214162;
     color: #fff;
-    border-color: #0B9ED9;
+    border-color: #214162;
 }
 
 
@@ -2232,9 +2232,9 @@ i.icon {
 }
 
 .tab_style3 div.tabbar div.nav-pills .nav-link.active {
-    background: #0B9ED9;
+    background: #214162;
     color: #fff;
-    border-color: #0B9ED9;
+    border-color: #214162;
 }
 
 
@@ -2262,9 +2262,9 @@ i.icon {
 /** pagination **/
 
 .pagination .btn {
-    background: #0B9ED9;
+    background: #214162;
     color: #fff;
-    border-color: #0B9ED9;
+    border-color: #214162;
     width: 45px;
     height: 40px;
     font-size: 14px;
@@ -2278,7 +2278,7 @@ i.icon {
 .pagination .btn.active,
 .pagination .btn:hover,
 .pagination .btn:focus {
-    background: #0B9ED9;
+    background: #214162;
     border-color: red;
 }
 
@@ -3287,7 +3287,7 @@ table.projects tr td:first-child {
 -------------------------------------------------------------------*/
 
 .login {
-    background: #0B9ED9;
+    background: #214162;
 }
 
 .full_height {
@@ -3433,7 +3433,7 @@ table.projects tr td:first-child {
 .error_404 {
     background: url('images/layout_img/pattern_h.png');
     background-size: cover;
-    background-color: #0B9ED9;
+    background-color: #214162;
 }
 
 
