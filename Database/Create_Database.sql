@@ -2,6 +2,12 @@
 Go
 use apartment_management
 go
+
+CREATE TABLE TypeRoom (
+  Id          int NOT NULL , 
+  [Description] varchar(255) NOT NULL, 
+  PRIMARY KEY (Id));
+
 CREATE TABLE [Role] (
   Id          int NOT NULL , 
   [Name]        varchar(255) NOT NULL, 
@@ -62,7 +68,7 @@ CREATE TABLE Employee (
 --5
 CREATE TABLE Apartment (
   Id     varchar(10) NOT NULL, 
-  typeid int NOT NULL, 
+  typeid int NOT NULL FOREIGN KEY (typeid) REFERENCES TypeRoom (Id), 
   [Square] int NOT NULL, 
   price  int NOT NULL, 
   [floor]  int NOT NULL, 
@@ -91,6 +97,7 @@ CREATE TABLE [Service] (
 CREATE TABLE Resident (
   pId    varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
   Bank   varchar(255) unique NOT NULL, 
+  Subemail    varchar(255) unique NOT NULL, 
   [Status] varchar(255) NOT NULL, 
   PRIMARY KEY (pId));
 
