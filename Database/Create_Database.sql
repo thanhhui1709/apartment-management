@@ -137,7 +137,7 @@ CREATE TABLE Expenditure (
 --17
 CREATE TABLE Render (
   pId       varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
-  aId       varchar(10) NOT NULL FOREIGN KEY (aId) REFERENCES Apartment (Id), 
+  aId       varchar(10) NOT NULL FOREIGN KEY (aId) REFERENCES AprtmentOwner (aId), 
   rId       varchar(10) NOT NULL FOREIGN KEY (rId) REFERENCES Resident (pId), 
   StartDate date NOT NULL, 
   Enddate   date NOT NULL, 
