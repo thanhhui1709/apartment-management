@@ -1,6 +1,7 @@
-﻿--create database apartment_management
+﻿create database apartment_management
+Go
 use apartment_management
-
+go
 CREATE TABLE [Role] (
   Id          int NOT NULL , 
   [Name]        varchar(255) NOT NULL, 
@@ -134,16 +135,6 @@ CREATE TABLE Expenditure (
   [Status]       int NOT NULL, 
   [Provider]     varchar(255) NOT NULL, 
   PRIMARY KEY (Id));
---17
-CREATE TABLE Render (
-  pId       varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
-  aId       varchar(10) NOT NULL FOREIGN KEY (aId) REFERENCES AprtmentOwner (aId), 
-  rId       varchar(10) NOT NULL FOREIGN KEY (rId) REFERENCES Resident (pId), 
-  StartDate date NOT NULL, 
-  Enddate   date NOT NULL, 
-  [Status]    varchar(255) NOT NULL, 
-  PRIMARY KEY (pId, 
-  aId));
 
 CREATE TABLE RoomUsage (
   ApartmentId varchar(10) NOT NULL FOREIGN KEY (ApartmentId) REFERENCES Apartment (Id), 
