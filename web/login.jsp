@@ -1,15 +1,24 @@
-<%-- 
-    Document   : login
-    Created on : 13 Jan 2025, 22:12:51
-    Author     : Lenovo
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+
+<html lang="en">
+    <head>
+        <!-- basic -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- mobile metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+        <!-- site metas -->
+        <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
+
         <meta name="keywords" content="">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -47,6 +56,7 @@
                             </div>
                         </div>
                         <div class="login_form">
+
                             <form>
                                 <fieldset>
                                     <div class="field">
@@ -60,11 +70,33 @@
                                     <div class="field">
                                         <label class="label_field hidden">hidden label</label>
                                         <label class="form-check-label"><input type="checkbox" class="form-check-input"> Remember Me</label>
+
+                            <c:if test="${requestScope.error != null}">
+                                <p class="error-message">${requestScope.error}</h3>
+                            </c:if>
+                            <form action="login" method="post">
+                                <fieldset>
+                                    <div class="field">
+                                        <label class="label_field">User Name</label>
+                                        <input type="text" name="username" placeholder="Username" value=""/>
+                                    </div>
+                                    <div class="field">
+                                        <label class="label_field">Password</label>
+                                        <input type="password" name="password" placeholder="Password" value="" />
+                                    </div>
+                                    <div class="field">
+                                        <label class="label_field hidden">hidden label</label>
+                                        <label class="form-check-label"><input type="checkbox" class="form-check-input" name="saveUser" value="save"> Remember Me</label>
+
                                         <a class="forgot" href="">Forgotten Password?</a>
                                     </div>
                                     <div class="field margin_0">
                                         <label class="label_field hidden">hidden label</label>
+
                                         <button class="main_bt">Sing In</button>
+
+                                        <button class="main_bt" type="submit">Sing In</button>
+
                                     </div>
                                 </fieldset>
                             </form>
