@@ -1,4 +1,4 @@
-﻿create database apartment_management
+create database apartment_management
 Go
 use apartment_management
 go
@@ -148,3 +148,4 @@ CREATE TABLE InvoiceDetail (
   PRIMARY KEY ([aId],[sId],[iId]),
   FOREIGN KEY ([sId], [aId]) REFERENCES MonthlyInvoice ([sId], [aId])
   );
+
