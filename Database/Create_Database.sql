@@ -148,3 +148,4 @@ CREATE TABLE InvoiceDetail (
   PRIMARY KEY ([aId],[sId],[iId]),
   FOREIGN KEY ([sId], [aId]) REFERENCES MonthlyInvoice ([sId], [aId])
   );
+
