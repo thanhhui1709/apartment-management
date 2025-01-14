@@ -23,8 +23,7 @@ public class ResidentDAO extends DBContext{
         return connection==null;
     }
     public List<Resident> getAll(){
-        String xx= "test2";
-        String x= "test";
+        String x= "testxx";
         String sql ="select  * from resident";
         List<Resident> list = new ArrayList<>();
         PersonDAO pd = new PersonDAO();
