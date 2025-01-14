@@ -15,42 +15,108 @@ public class Resident {
   Subemail    varchar(255) unique NOT NULL, 
   [Status] varchar(255) NOT NULL, 
   PRIMARY KEY (pId));*/
-    private Person pId;
-    private String bank;
-    private String submail;
-    private String status;
+    private String pId;
+    private String name,cccd;
+    private String phone,email,bod,address,username,password,status,note;
+    private Role role;
 
-    public Resident(Person pId, String bank, String submail, String status) {
-        this.pId = pId;
-        this.bank = bank;
-        this.submail = submail;
-        this.status = status;
+    public Resident() {
     }
 
-    
-    
-    public Person getpId() {
+    public Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String username, String password, String status, String note, Role role) {
+        this.pId = pId;
+        this.name = name;
+        this.cccd = cccd;
+        this.phone = phone;
+        this.email = email;
+        this.bod = bod;
+        this.address = address;
+        this.username = username;
+        this.password = password;
+        this.status = status;
+        this.note = note;
+        this.role = role;
+    }
+
+    public String getCccd() {
+        return cccd;
+    }
+
+    public void setCccd(String cccd) {
+        this.cccd = cccd;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+
+    public String getpId() {
         return pId;
     }
 
-    public void setpId(Person pId) {
+    public void setpId(String pId) {
         this.pId = pId;
     }
 
-    public String getBank() {
-        return bank;
+    public String getName() {
+        return name;
     }
 
-    public void setBank(String bank) {
-        this.bank = bank;
+    public void setName(String Name) {
+        this.name = Name;
     }
 
-    public String getSubmail() {
-        return submail;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setSubmail(String submail) {
-        this.submail = submail;
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBod() {
+        return bod;
+    }
+
+    public void setBod(String bod) {
+        this.bod = bod;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getStatus() {
@@ -59,6 +125,14 @@ public class Resident {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
     
 }
