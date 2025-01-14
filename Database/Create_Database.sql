@@ -1,17 +1,25 @@
-﻿create database apartment_management
+create database apartment_management
 Go
 use apartment_management
 go
 
-CREATE TABLE TypeRoom (
-  Id          int NOT NULL , 
+CREATE TABLE [Role] (
+  Id          varchar(10) NOT NULL , 
+  [Name]        varchar(255) NOT NULL, 
   [Description] varchar(255) NOT NULL, 
   PRIMARY KEY (Id));
 
-CREATE TABLE [Role] (
-  Id          int NOT NULL , 
-  [Name]        varchar(255) NOT NULL, 
-  [Description] varchar(255) NOT NULL, 
+  CREATE TABLE Resident (
+  Id       varchar(10) NOT NULL, 
+  [Name] nvarchar(255) NOT NULL, 
+  Bod      date NOT NULL, 
+  Email    varchar(255) unique NOT NULL, 
+  Phone      varchar(11) unique NOT NULL, 
+  [Address]  nvarchar(255) NOT NULL, 
+  CCCD     varchar(12) unique NOT NULL,
+  username varchar(255) not null,
+  [password] varchar(255) NOT NULL,
+  roleId varchar(10) NOT NULL REFERENCES [Role](Id),
   PRIMARY KEY (Id));
 
 CREATE TABLE ServiceProvider (
@@ -20,151 +28,126 @@ CREATE TABLE ServiceProvider (
   [Description] nvarchar(255) NOT NULL, 
   sdt         varchar(11) unique NOT NULL, 
   email       varchar(255) unique NOT NULL, 
-  [status]      varchar(255) NOT NULL, 
+  [address]      varchar(255) NOT NULL, 
   PRIMARY KEY (id));
 
 CREATE TABLE ServiceCategory (
   Id          varchar(10) NOT NULL, 
   [Name]        nvarchar(255) NOT NULL, 
-  [Description] varchar(255) NOT NULL, 
+  [Detail] varchar(255) NOT NULL, 
   PRIMARY KEY (Id));
 
-CREATE TABLE Person (
-  Id       varchar(10) NOT NULL, 
-  Fullname nvarchar(255) NOT NULL, 
+CREATE TABLE Staff (
+  Id        varchar(10) NOT NULL , 
+  [Name] nvarchar(255) NOT NULL, 
   Bod      date NOT NULL, 
   Email    varchar(255) unique NOT NULL, 
-  Sđt      varchar(11) unique NOT NULL, 
-  Address  nvarchar(255) NOT NULL, 
-  CCCD     varchar(12) unique NOT NULL, 
+  Phone      varchar(11) unique NOT NULL, 
+  [Address]  nvarchar(255) NOT NULL, 
+  CCCD     varchar(12) unique NOT NULL,
+  Salary     int NOT NULL, 
+  Education  varchar(255) NOT NULL, 
+  Bank       varchar(255) unique NOT NULL, 
+  username varchar(255) not null,
+  [password] varchar(255) NOT NULL,
+  roleId varchar(10) NOT NULL REFERENCES [Role](Id),
   PRIMARY KEY (Id));
-  --2
-CREATE TABLE Account (
-  username varchar(20) NOT NULL, 
-  [password] varchar(255) NOT NULL, 
-  pId      varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
-  [Role]     int NOT NULL FOREIGN KEY ([Role]) REFERENCES [Role] (Id), 
-  PRIMARY KEY (username));
-  
---3
-CREATE TABLE [Admin] (
-  pId       varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
-  startdate int NOT NULL, 
-  Enddate   date, 
-  salary    int NOT NULL, 
-  education int, 
-  [Status]    int NOT NULL, 
-  Bank      varchar(255) unique NOT NULL, 
-  PRIMARY KEY (pId));
---4
+
 CREATE TABLE Employee (
-  pId            varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
-  JobDescription nvarchar(255) NOT NULL, 
+  Id            varchar(10) NOT NULL, 
+  [Name] nvarchar(255) NOT NULL, 
+  Bod      date NOT NULL, 
+  Email    varchar(255) unique NOT NULL, 
+  Phone      varchar(11) unique NOT NULL, 
+  [Address]  nvarchar(255) NOT NULL, 
+  CCCD     varchar(12) unique NOT NULL,
   Companyid      varchar(10) NOT NULL FOREIGN KEY (Companyid) REFERENCES ServiceProvider (id), 
-  startdate      date NOT NULL, 
+  Startdate      date NOT NULL, 
   Enddate        date, 
   [status]         int NOT NULL, 
-  PRIMARY KEY (pId));
+  username varchar(255) not null,
+  [password] varchar(255) NOT NULL,
+  roleId varchar(10) NOT NULL REFERENCES [Role](Id),
+  PRIMARY KEY (Id));
 --5
 CREATE TABLE Apartment (
   Id     varchar(10) NOT NULL, 
-  typeid int NOT NULL FOREIGN KEY (typeid) REFERENCES TypeRoom (Id), 
   [Square] int NOT NULL, 
-  price  int NOT NULL, 
+  NoPerson  int NOT NULL, 
   [floor]  int NOT NULL, 
+  information nvarchar(255),
+  rId varchar(10) NOT NULL REFERENCES Resident(Id),
   [status] int NOT NULL, 
   PRIMARY KEY (Id));
 --6
-CREATE TABLE Invoice (
-  id          varchar(10) NOT NULL, 
-  pId         varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
-  total       int NOT NULL, 
-  [date]      int NOT NULL, 
-  [status]      varchar(10) NOT NULL, 
-  [description] nvarchar(255) NOT NULL, 
-  PRIMARY KEY (id));
---7
 CREATE TABLE [Service] (
   Id          varchar(10) NOT NULL, 
-  [Name]        nvarchar(255) NOT NULL, 
+  [Name]      nvarchar(255) NOT NULL, 
   cId         varchar(10) NOT NULL FOREIGN KEY (cId) REFERENCES ServiceCategory (Id), 
   UnitPrice   int NOT NULL, 
   [Description] nvarchar(255) NOT NULL, 
   [Status]      varchar(20) NOT NULL, 
   PRIMARY KEY (Id));
 
+CREATE TABLE Invoice (
+  id          varchar(10) NOT NULL, 
+  total       int NOT NULL, 
+  [date]      date NOT NULL, 
+  [status]      varchar(10) NOT NULL, 
+  [description] nvarchar(255) NOT NULL, 
+  rId         varchar(10) NOT NULL FOREIGN KEY (rId) REFERENCES Resident (Id), 
+  PRIMARY KEY (id));
 
-CREATE TABLE Resident (
-  pId    varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
-  Bank   varchar(255) unique NOT NULL, 
-  Subemail    varchar(255) unique NOT NULL, 
-  [Status] varchar(255) NOT NULL, 
-  PRIMARY KEY (pId));
+CREATE TABLE TypeRequest (
+  Id       varchar(10) NOT NULL , 
+  [Name] nvarchar(255) NOT NULL, 
+  Detail  nvarchar(255) NOT NULL, 
+  PRIMARY KEY (Id));
+
 
 CREATE TABLE Request (
-  pId         varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Resident (pId), 
-  [Description] nvarchar(255) NOT NULL, 
-  Request     nvarchar(255) NOT NULL, 
+  rId         varchar(10) NOT NULL FOREIGN KEY (rId) REFERENCES Resident (Id), 
+  [sId]         varchar(10) NOT NULL FOREIGN KEY ([sId]) REFERENCES Staff (Id),
+  Detail varchar(255) NOT NULL,  
   Response    nvarchar(255) NOT NULL, 
   [Status]      varchar(255) NOT NULL, 
-  [Date]      date NOT NULL, 
-  PRIMARY KEY (pId, 
-  [Date]));
+  tId         varchar(10) NOT NULL FOREIGN KEY (tId) REFERENCES TypeRequest (Id), 
+  PRIMARY KEY (rId, 
+  [sId]));
 
-CREATE TABLE AprtmentOwner (
-  aId       varchar(10) NOT NULL FOREIGN KEY (aId) REFERENCES Apartment (Id), 
-  pId       varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Resident (pId), 
-  startdate date NOT NULL, 
-  noperson  int NOT NULL, 
-  [status]    int NOT NULL, 
-  PRIMARY KEY (aId));
-
-CREATE TABLE Accountant (
-  pId        varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
-  StartDate  date NOT NULL, 
-  Enddate    date, 
-  Salary     int NOT NULL, 
-  Education  varchar(255) NOT NULL, 
-  Experience varchar(255), 
-  Bank       varchar(255) unique NOT NULL, 
-  supervisor varchar(10) NOT NULL FOREIGN KEY (supervisor) REFERENCES [Admin] (pId), 
-  [status]     varchar(255) NOT NULL, 
-  PRIMARY KEY (pId));
-
+  CREATE TABLE Feedback (
+  Id    varchar(10) NOT NULL , 
+  Detail varchar(255) NOT NULL, 
+  [Date] date NOT NULL, 
+  [rId] varchar(10) NOT NULL FOREIGN KEY (rId) REFERENCES Resident (Id), 
+  tId         varchar(10) NOT NULL FOREIGN KEY (tId) REFERENCES TypeRequest (Id), 
+  PRIMARY KEY (Id));
 
 CREATE TABLE Expenditure (
   Id           varchar(10) NOT NULL, 
-  [Name]         nvarchar(255) NOT NULL, 
-  AccountantId varchar(10) NOT NULL FOREIGN KEY (AccountantId) REFERENCES Accountant (pId), 
-  [Description]  nvarchar(255) NOT NULL, 
+  [Detail]         nvarchar(255) NOT NULL, 
+  [Provide]  nvarchar(255) NOT NULL, 
   Price        int NOT NULL, 
   [Date]       date NOT NULL, 
-  [Status]       int NOT NULL, 
-  [Provider]     varchar(255) NOT NULL, 
+  [Status]       int NOT NULL,
+  [sId] varchar(10) NOT NULL FOREIGN KEY ([sId]) REFERENCES Staff (Id),
   PRIMARY KEY (Id));
 
-CREATE TABLE RoomUsage (
-  ApartmentId varchar(10) NOT NULL FOREIGN KEY (ApartmentId) REFERENCES Apartment (Id), 
-  ServiceId   varchar(10) NOT NULL FOREIGN KEY (ServiceId) REFERENCES [Service] (Id), 
-  rId         varchar(10) NOT NULL, 
-  [sId]         varchar(10) NOT NULL, 
-  Quantity    int NOT NULL, 
-  total       int NOT NULL, 
-  PRIMARY KEY (ApartmentId, 
-  ServiceId));
+  CREATE TABLE MonthlyInvoice (
+  [sid] varchar(10) NOT NULL FOREIGN KEY ([sid]) REFERENCES [Service] (id), 
+  [aId] varchar(10) NOT NULL FOREIGN KEY ([aId]) REFERENCES Apartment (Id), 
+  quantity  int NOT NULL,  
+  PRIMARY KEY ([sid], [aId]));
 
-CREATE TABLE Feedback (
-  pId    varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
-  Title  varchar(255) NOT NULL, 
-  Detail varchar(255) NOT NULL, 
-  [Date] date NOT NULL, 
-  PRIMARY KEY (pId, 
-  [Date]));
 
 CREATE TABLE InvoiceDetail (
-  Invoiceid varchar(10) NOT NULL FOREIGN KEY (Invoiceid) REFERENCES Invoice (id), 
-  [sId]       varchar(10) NOT NULL FOREIGN KEY ([sId]) REFERENCES [Service] (Id), 
-  quantity  int NOT NULL, 
-  [date]    int NOT NULL, 
-  PRIMARY KEY (Invoiceid, 
-  sId));
+  [aId] varchar(10) NOT NULL , 
+  [sId] varchar(10) NOT NULL , 
+  [iId] varchar(10) NOT NULL FOREIGN KEY ([iId]) REFERENCES Invoice (Id), 
+  [date]    date NOT NULL, 
+  PRIMARY KEY ([aId],[sId],[iId]),
+  FOREIGN KEY ([sId], [aId]) REFERENCES MonthlyInvoice ([sId], [aId])
+  );
+
+
+  drop database apartment_management

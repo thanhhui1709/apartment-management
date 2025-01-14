@@ -55,10 +55,10 @@ public class ViewProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ResidentDAO rd = new ResidentDAO();
-        Resident re = rd.getById("P001");
-        request.setAttribute("name", re.getpId().getFullName());
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+//        ResidentDAO rd = new ResidentDAO();
+//        Resident re = rd.getById("P001");
+//        request.setAttribute("name", re.getpId().getFullName());
+//        request.getRequestDispatcher("profile.jsp").forward(request, response);
     } 
 
     /** 

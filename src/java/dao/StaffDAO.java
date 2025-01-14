@@ -17,29 +17,13 @@ import model.Account;
 
 /**
  *
- * @author thanh
+ * @author admin1711
  */
-public class ResidentDAO extends DBContext {
-    
-    public String getEmailByUserName(String username) {
-        String sql = "select email from Resident where username = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return rs.getString(1);
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-    
-    public List<Account> getAllResidentAccount() {
+public class StaffDAO extends DBContext {
+
+    public List<Account> getAllStaffAccount() {
         List<Account> list = new ArrayList<>();
-        String sql = "select username, password, email, id, roleId from Resident";
+        String sql = "select username, password, email, id,roleId from Staff";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
