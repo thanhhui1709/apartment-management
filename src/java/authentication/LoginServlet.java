@@ -44,50 +44,61 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+   protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        // Check if a "remembered" username cookie exists and pre-fill the username field
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("rememberedUser".equals(cookie.getName())) {
+                    request.setAttribute("rememberedUser", cookie.getValue());
+                    break;
+                }
+            }
+        }
+        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
+        String rememberMe = request.getParameter("saveUser"); // "saveUser" checkbox value
         AccountDAO dao = new AccountDAO();
         Account ac = dao.getAccountByUsername(user);
-        if (user.isEmpty() && pass.isEmpty()) {
-            request.setAttribute("error", "Username or Password is not allow a blank");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-        if (null == ac) {
-            request.setAttribute("error", "Username or Password is incorect");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else if (user.equals(ac.getUsername()) && pass.equals(ac.getPassword())) {
-            // push role to session
-            session.setAttribute("account", ac);
-            response.sendRedirect("index.html");
-        } else {
-            request.setAttribute("error", "Username or Password is incorect");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-    }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+        if (user.isEmpty() || pass.isEmpty()) {
+            request.setAttribute("error", "Username or Password cannot be blank.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
+        if (ac == null || !pass.equals(ac.getPassword())) {
+            request.setAttribute("error", "Username or Password is incorrect.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
+        // Successful login
+        session.setAttribute("account", ac);
+
+        // Handle "Remember Me" functionality
+        if ("save".equals(rememberMe)) {
+            // Create a cookie to store the username
+            Cookie cookie = new Cookie("rememberedUser", user);
+            cookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+            response.addCookie(cookie);
+        } else {
+            // Remove the cookie if "Remember Me" is unchecked
+            Cookie cookie = new Cookie("rememberedUser", null);
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+        }
+
+        response.sendRedirect("index.html");
+    }
     @Override
     public String getServletInfo() {
         return "Short description";

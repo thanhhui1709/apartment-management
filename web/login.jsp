@@ -54,13 +54,14 @@
                         </div>
                         <div class="login_form">
                             <c:if test="${requestScope.error != null}">
-                                <p class="error-message">${requestScope.error}</h3>
+                                <p class="error-message">${requestScope.error}</p>
                             </c:if>
                             <form action="login" method="post">
                                 <fieldset>
                                     <div class="field">
                                         <label class="label_field">User Name</label>
-                                        <input type="text" name="username" placeholder="Username" value=""/>
+                                        <input type="text" name="username" placeholder="Username" 
+                                               value="${requestScope.rememberedUser != null ? requestScope.rememberedUser : ''}" />
                                     </div>
                                     <div class="field">
                                         <label class="label_field">Password</label>
@@ -68,16 +69,19 @@
                                     </div>
                                     <div class="field">
                                         <label class="label_field hidden">hidden label</label>
-                                        <label class="form-check-label"><input type="checkbox" class="form-check-input" name="saveUser" value="save"> Remember Me</label>
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="saveUser" value="save"> Remember Me
+                                        </label>
                                         <a class="forgot" href="">Forgotten Password?</a>
                                     </div>
                                     <div class="field margin_0">
                                         <label class="label_field hidden">hidden label</label>
-                                        <button class="main_bt" type="submit">Sing In</button>
+                                        <button class="main_bt" type="submit">Sign In</button>
                                     </div>
                                 </fieldset>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>
