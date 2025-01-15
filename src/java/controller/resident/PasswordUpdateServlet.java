@@ -12,13 +12,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Resident;
 
 /**
  *
  * @author thanh
  */
-public class ViewProfileServlet extends HttpServlet {
+public class PasswordUpdateServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,10 +34,10 @@ public class ViewProfileServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewProfileServlet</title>");  
+            out.println("<title>Servlet PasswordUpdateServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewProfileServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet PasswordUpdateServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,10 +54,7 @@ public class ViewProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ResidentDAO rd = new ResidentDAO();
-        Resident re = rd.getById("P100");
-        request.setAttribute("resident", re);
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -71,7 +67,19 @@ public class ViewProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String pid="P100";
+        String oldpw = request.getParameter("oldpassword");
+        String newpw = request.getParameter("newpassword");
+        ResidentDAO rd = new ResidentDAO();
+        if(!oldpw.equals(rd.getById(pid).getPassword())){
+            request.setAttribute("resident", rd.getById(pid));
+            request.setAttribute("msg", "Password is not correct");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
+        rd.changPasswordById(pid, newpw);
+        request.setAttribute("resident", rd.getById(pid));
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
     /** 

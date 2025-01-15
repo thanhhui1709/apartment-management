@@ -104,4 +104,15 @@ public class ResidentDAO extends DBContext {
         }
         return null;
     }
+    public void changPasswordById(String id, String newpw){
+        String sql="update resident set password = ? where id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, newpw);
+            st.setString(2 , id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
