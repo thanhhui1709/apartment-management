@@ -4,7 +4,6 @@
  */
 package authentication;
 
-
 import dao.EmployeeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
-
 
 /**
  *
@@ -46,50 +44,70 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Check if a "remembered" username cookie exists and pre-fill the username field
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("rememberedUser".equals(cookie.getName())) {
-                    request.setAttribute("rememberedUser", cookie.getValue());
-                    break;
-                }
-            }
-        }
-        request.getRequestDispatcher("login.jsp").forward(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null) {
+//            for (Cookie cookie : cookies) {
+//                if ("rememberedUser".equals(cookie.getName())) {
+//                    request.setAttribute("rememberedUser", cookie.getValue());
+//                    break;
+//                }
+//            }
+//        }
+//        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
         String checkrole = request.getParameter("role");
-        int role = 0;
-        if(null == checkrole){
-            request.setAttribute("error", "Role is not allow a blank");
-            request.getRequestDispatcher("login.jsp").forward(request, response);            
-        }else{
+        int role;
+        if (checkrole == null) {
+            request.setAttribute("error", "Role is not allowed to be blank");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        } else {
             role = Integer.parseInt(checkrole);
         }
         EmployeeDAO dao = new EmployeeDAO();
-        Account ac = dao.getAccountByUsernameandRole(user,role);
-        if (user.isEmpty() && pass.isEmpty()) {
-            request.setAttribute("error", "Username or Password is not allow a blank");
+        Account ac = dao.getAccountByUsernameandRole(user, role);
+        if (user.isEmpty() || pass.isEmpty()) {
+            request.setAttribute("error", "Username or Password is not allowed to be blank");
             request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
         }
-        if (null == ac) {
-            request.setAttribute("error", "Username or Password is incorect");
+        if (ac == null) {
+            request.setAttribute("error", "Username or Password is incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else if (user.equals(ac.getUsername()) && pass.equals(ac.getPassword())) {
-            // push role to session
+            return;
+        }
+        if (user.equals(ac.getUsername()) && pass.equals(ac.getPassword())) {
             session.setAttribute("account", ac);
+            String remember = request.getParameter("remember");
+            if ("on".equals(remember)) {
+                // Create and configure cookies for username and password
+                Cookie cookieUser = new Cookie("rememberedUser", user);
+                Cookie cookiePass = new Cookie("rememberedPass", pass);
+                cookieUser.setMaxAge(60 * 60);
+                cookiePass.setMaxAge(60 * 60);
+                response.addCookie(cookieUser);
+                response.addCookie(cookiePass);
+            } 
+            else {
+                // Clear both cookies by setting max age to 0
+                Cookie cookieUser = new Cookie("rememberedUser", user);
+                Cookie cookiePass = new Cookie("rememberedPass", pass);
+                cookieUser.setMaxAge(0);
+                cookiePass.setMaxAge(0);
+                response.addCookie(cookieUser);
+                response.addCookie(cookiePass);
+            }
+
             response.sendRedirect("index.html");
         } else {
-            request.setAttribute("error", "Username or Password is incorect");
+            request.setAttribute("error", "Username or Password is incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
