@@ -91,6 +91,8 @@
                                             <label  class="label_field" for="remember-checkbox">Remember Me</label>
                                             <input type="checkbox" name="remember" id="remember-checkbox" value="on" style="width: 10%" />
                                         </div>
+                                         <h6 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h6>
+                                            <h6 style="color:red;text-align:center">${requestScope.error}</h6>
                                         <div class="field margin_0">
                                             <label class="label_field hidden">hidden label</label>
                                             <button class="main_bt" type="submit">Sign In</button>
