@@ -80,7 +80,7 @@ public class PasswordUpdateServlet extends HttpServlet {
             return;
         }
         rd.changPasswordById(account.getpId(), newpw);
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        request.getRequestDispatcher("logout").forward(request, response);
     }
 
     /** 
