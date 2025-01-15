@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Account;
+import model.Role;
 
 /**
  *
