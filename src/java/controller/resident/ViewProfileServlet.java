@@ -12,6 +12,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 import model.Resident;
 
 /**
@@ -56,8 +58,10 @@ public class ViewProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         ResidentDAO rd = new ResidentDAO();
-        Resident re = rd.getById("P100");
-        request.setAttribute("resident", re);
+        HttpSession session =request.getSession();
+        Account account =(Account) session.getAttribute("account");
+        Resident re = rd.getById(account.getpId());
+        session.setAttribute("resident", re);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     } 
 

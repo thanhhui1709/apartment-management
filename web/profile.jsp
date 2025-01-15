@@ -182,11 +182,11 @@
                                           <div class="profile_img"><img width="180" class="rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /></div>
                                           <div class="profile_contant">
                                              <div class="contact_inner">
-                                                 <h3>${requestScope.resident.name}</h3>
+                                                 <h3>${sessionScope.resident.name}</h3>
                                                 <p><strong>About: </strong>Resident</p>
                                                 <ul class="list-unstyled">
-                                                    <li><i class="fa fa-envelope-o"></i>: ${requestScope.resident.email}</li>
-                                                    <li><i class="fa fa-phone"></i> : ${requestScope.resident.phone}</li>
+                                                    <li><i class="fa fa-envelope-o"></i>: ${sessionScope.resident.email}</li>
+                                                    <li><i class="fa fa-phone"></i> : ${sessionScope.resident.phone}</li>
                                                 </ul>
                                                 <button onclick="showChangepw()">Change password</button>
                                                 <div style="display: none" id="hiddenChangepw" class="form-container">
