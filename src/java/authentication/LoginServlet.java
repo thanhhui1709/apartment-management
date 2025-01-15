@@ -5,7 +5,7 @@
 package authentication;
 
 
-import dao.AccountDAO;
+import dao.EmployeeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -74,7 +74,7 @@ public class LoginServlet extends HttpServlet {
         }else{
             role = Integer.parseInt(checkrole);
         }
-        AccountDAO dao = new AccountDAO();
+        EmployeeDAO dao = new EmployeeDAO();
         Account ac = dao.getAccountByUsernameandRole(user,role);
         if (user.isEmpty() && pass.isEmpty()) {
             request.setAttribute("error", "Username or Password is not allow a blank");
