@@ -5,6 +5,7 @@
 package authentication;
 
 
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Account;
 
 
 /**
@@ -61,26 +63,34 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        HttpSession session = request.getSession();
-//        String user = request.getParameter("username");
-//        String pass = request.getParameter("password");
-//        AccountDAO dao = new AccountDAO();
-//        Account ac = dao.getAccountByUsername(user);
-//        if (user.isEmpty() && pass.isEmpty()) {
-//            request.setAttribute("error", "Username or Password is not allow a blank");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);
-//        }
-//        if (null == ac) {
-//            request.setAttribute("error", "Username or Password is incorect");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);
-//        } else if (user.equals(ac.getUsername()) && pass.equals(ac.getPassword())) {
-//            // push role to session
-//            session.setAttribute("account", ac);
-//            response.sendRedirect("index.html");
-//        } else {
-//            request.setAttribute("error", "Username or Password is incorect");
-//            request.getRequestDispatcher("login.jsp").forward(request, response);
-//        }
+        HttpSession session = request.getSession();
+        String user = request.getParameter("username");
+        String pass = request.getParameter("password");
+        String checkrole = request.getParameter("role");
+        int role = 0;
+        if(null == checkrole){
+            request.setAttribute("error", "Role is not allow a blank");
+            request.getRequestDispatcher("login.jsp").forward(request, response);            
+        }else{
+            role = Integer.parseInt(checkrole);
+        }
+        AccountDAO dao = new AccountDAO();
+        Account ac = dao.getAccountByUsernameandRole(user,role);
+        if (user.isEmpty() && pass.isEmpty()) {
+            request.setAttribute("error", "Username or Password is not allow a blank");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
+        if (null == ac) {
+            request.setAttribute("error", "Username or Password is incorect");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        } else if (user.equals(ac.getUsername()) && pass.equals(ac.getPassword())) {
+            // push role to session
+            session.setAttribute("account", ac);
+            response.sendRedirect("index.html");
+        } else {
+            request.setAttribute("error", "Username or Password is incorect");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
     /**
