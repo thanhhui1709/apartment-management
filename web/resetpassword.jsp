@@ -1,23 +1,4 @@
-
-    <%-- 
-<<<<<<< HEAD
-    Document   : login
-    Created on : 13 Jan 2025, 22:12:51
-    Author     : Lenovo
-=======
-    Document   : login.jsp
-    Created on : Jan 13, 2025, 11:16:47 PM
-    Author     : PC
->>>>>>> d700b0225ea6300d7147d934b2b1aab1fb873155
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
 <html lang="en">
     <head>
         <!-- basic -->
@@ -27,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
-        <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
+        <title>Reset Password</title>
         <meta name="keywords" content="">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -66,27 +47,24 @@
                             </div>
                         </div>
                         <div class="login_form">
-                            <form action="login" method="post">
+                            <form action=""request-password" method="post">
                                 <fieldset>
                                     <div class="field">
                                         <label class="label_field">Username</label>
-                                        <input type="text" name="username" placeholder="Username" />
+                                        <input type="text" name="username" value="${sessionScope.username}" placeholder="Username" readonly />
                                     </div>
                                     <div class="field">
-                                        <label class="label_field">Password</label>
-                                        <input type="password" name="password" placeholder="Password" />
+                                        <label class="label_field">New Password</label>
+                                        <input type="password" name="new_password" placeholder="New Password" />
                                     </div>
                                     <div class="field">
-                                        <label class="label_field hidden">hidden label</label>
-                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> Remember Me</label>
-                                        <a class="forgot" href="requestpassword.jsp">Forgotten Password?</a>
-                                        <h6 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h6>
-                                        <h6 style="color:red;text-align:center">${requestScope.error}</h6>
+                                        <label class="label_field">Confirm Pass</label>
+                                        <input type="password" name="confirm_password" placeholder="Confirm Password" />
                                     </div>
                                     <div class="field margin_0">
+                                        <h5 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h5>
                                         <label class="label_field hidden">hidden label</label>
-                                        <button class="main_bt">Sign In</button>
-                                        <button class="main_bt" type="submit">Sing In</button>
+                                        <button class="main_bt">Reset Password</button>
                                     </div>
                                 </fieldset>
                             </form>
