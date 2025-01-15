@@ -12,6 +12,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -67,18 +69,17 @@ public class PasswordUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String pid="P100";
+        HttpSession session=request.getSession();
+        Account account=(Account)session.getAttribute("account");
         String oldpw = request.getParameter("oldpassword");
         String newpw = request.getParameter("newpassword");
         ResidentDAO rd = new ResidentDAO();
-        if(!oldpw.equals(rd.getById(pid).getPassword())){
-            request.setAttribute("resident", rd.getById(pid));
+        if(!oldpw.equals(rd.getById(account.getpId()).getPassword())){
             request.setAttribute("msg", "Password is not correct");
             request.getRequestDispatcher("profile.jsp").forward(request, response);
             return;
         }
-        rd.changPasswordById(pid, newpw);
-        request.setAttribute("resident", rd.getById(pid));
+        rd.changPasswordById(account.getpId(), newpw);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
