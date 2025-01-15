@@ -113,8 +113,14 @@ public class RoletFilter implements Filter {
         String uri = req.getServletPath();
         if (uri.endsWith(".jsp") && !uri.contains("login.jsp") && !uri.contains("requestpassword.jsp")) {
             Account a = (Account) session.getAttribute("account");
-            if(a == null){
+            if (a == null) {
                 res.sendRedirect("401_error.html");
+            }
+            if (uri.contains("resetpassword.jsp")) {
+                String token = (String) session.getAttribute("token");
+                if(token == null){
+                    res.sendRedirect("404_error.html");
+                }
             }
         }
 
