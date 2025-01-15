@@ -78,6 +78,9 @@
                                     </div>
                                     <div class="field">
                                         <label class="label_field hidden">hidden label</label>
+                                        <label class="form-check-label"><input type="radio" class="form-check-input" name="role" value="1"> Resident</label>
+                                        <label class="form-check-label"><input type="radio" class="form-check-input" name="role" value="2"> Staff</label>
+                                        <label class="form-check-label"><input type="radio" class="form-check-input" name="role" value="3"> Employee</label>
                                         <label class="form-check-label"><input type="checkbox" class="form-check-input"> Remember Me</label>
                                         <a class="forgot" href="requestpassword.jsp">Forgotten Password?</a>
                                         <h6 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h6>
@@ -85,7 +88,6 @@
                                     </div>
                                     <div class="field margin_0">
                                         <label class="label_field hidden">hidden label</label>
-                                        <button class="main_bt">Sign In</button>
                                         <button class="main_bt" type="submit">Sing In</button>
                                     </div>
                                 </fieldset>
