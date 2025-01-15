@@ -25,6 +25,7 @@ import model.Role;
  *
  * @author thanh
  */
+
 public class ResidentDAO extends DBContext {
 
     public boolean checkConnection() {
