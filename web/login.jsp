@@ -64,31 +64,36 @@
                                 <img width="210" src="images/logo/logo.png" alt="#" />
                             </div>
                         </div>
+                        
                         <div class="login_form">
-                            <form action="login" method="post">
-                                <fieldset>
-                                    <div class="field">
-                                        <label class="label_field">Username</label>
-                                        <input type="text" name="username" placeholder="Username" />
-                                    </div>
-                                    <div class="field">
-                                        <label class="label_field">Password</label>
-                                        <input type="password" name="password" placeholder="Password" />
-                                    </div>
-                                    <div class="field">
-                                        <label class="label_field hidden">hidden label</label>
-                                        <label class="form-check-label"><input type="checkbox" class="form-check-input"> Remember Me</label>
-                                        <a class="forgot" href="requestpassword.jsp">Forgotten Password?</a>
-                                        <h6 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h6>
-                                        <h6 style="color:red;text-align:center">${requestScope.error}</h6>
-                                    </div>
-                                    <div class="field margin_0">
-                                        <label class="label_field hidden">hidden label</label>
-                                        <button class="main_bt">Sign In</button>
-                                        <button class="main_bt" type="submit">Sing In</button>
-                                    </div>
-                                </fieldset>
-                            </form>
+                           <form action="login" method="post">
+                                    <fieldset>
+                                        <div class="field">
+                                            <label class="label_field">Username</label>
+                                            <input type="text" name="username" placeholder="Username" />
+                                        </div>
+                                        <div class="field">
+                                            <label class="label_field">Password</label>
+                                            <input type="password" name="password" placeholder="Password" />
+                                        </div>
+                                        <div class="field">
+                                            <label class="label_field">Role</label> 
+                                            <span><select id="role" name="role" class="form-control">
+                                                    <option value="1" selected="">Resident</option>
+                                                    <option value="2">Staff</option>
+                                                    <option value="3">Employee</option>
+                                                </select></span>
+                                            <a class="forgot" href="requestpassword.jsp">Forgotten Password?</a>
+                                            <h6 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h6>
+                                            <h6 style="color:red;text-align:center">${requestScope.error}</h6>
+                                        </div>
+
+                                        <div class="field margin_0">
+                                            <label class="label_field hidden">hidden label</label>
+                                            <button class="main_bt" type="submit">Sing In</button>
+                                        </div>
+                                    </fieldset>
+                                </form>
                         </div>
 
                     </div>

@@ -25,6 +25,7 @@ import model.Role;
  *
  * @author thanh
  */
+
 public class ResidentDAO extends DBContext {
 
     public boolean checkConnection() {
@@ -103,5 +104,16 @@ public class ResidentDAO extends DBContext {
                     .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    public void changPasswordById(String id, String newpw){
+        String sql="update resident set password = ? where id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, newpw);
+            st.setString(2 , id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }
