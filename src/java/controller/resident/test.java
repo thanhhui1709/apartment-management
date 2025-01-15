@@ -5,22 +5,18 @@
 
 package controller.resident;
 
-import dao.ResidentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Account;
-import model.Resident;
 
 /**
  *
  * @author thanh
  */
-public class ViewProfileServlet extends HttpServlet {
+public class test extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,12 +33,13 @@ public class ViewProfileServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewProfileServlet</title>");  
+            out.println("<title>Servlet test</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewProfileServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet test atdsa " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
+            return;
         }
     } 
 
@@ -57,12 +54,7 @@ public class ViewProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ResidentDAO rd = new ResidentDAO();
-        HttpSession session =request.getSession();
-        Account account =(Account) session.getAttribute("account");
-        Resident re = rd.getById(account.getpId());
-        session.setAttribute("resident", re);
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 

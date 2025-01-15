@@ -4,7 +4,8 @@
  */
 package authentication;
 
-import dao.AccountDAO;
+
+import dao.EmployeeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
+
 
 /**
  *
@@ -64,8 +66,16 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
-        AccountDAO dao = new AccountDAO();
-        Account ac = dao.getAccountByUsername(user);
+        String checkrole = request.getParameter("role");
+        int role = 0;
+        if(null == checkrole){
+            request.setAttribute("error", "Role is not allow a blank");
+            request.getRequestDispatcher("login.jsp").forward(request, response);            
+        }else{
+            role = Integer.parseInt(checkrole);
+        }
+        EmployeeDAO dao = new EmployeeDAO();
+        Account ac = dao.getAccountByUsernameandRole(user,role);
         if (user.isEmpty() && pass.isEmpty()) {
             request.setAttribute("error", "Username or Password is not allow a blank");
             request.getRequestDispatcher("login.jsp").forward(request, response);

@@ -170,7 +170,7 @@
                            <div class="white_shd full margin_bottom_30">
                               <div class="full graph_head">
                                  <div class="heading1 margin_0">
-                                    <h2>User profile</h2>
+                                     <h2>${requestScope.resident.name}</h2>
                                  </div>
                               </div>
                               <div class="full price_table padding_infor_info">
@@ -182,16 +182,28 @@
                                           <div class="profile_img"><img width="180" class="rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /></div>
                                           <div class="profile_contant">
                                              <div class="contact_inner">
-                                                 <h3>${requestScope.name}</h3>
-                                                <p><strong>About: </strong>Frontend Developer</p>
+                                                 <h3>${sessionScope.resident.name}</h3>
+                                                <p><strong>About: </strong>Resident</p>
                                                 <ul class="list-unstyled">
-                                                   <li><i class="fa fa-envelope-o"></i> : test@gmail.com</li>
-                                                   <li><i class="fa fa-phone"></i> : 987 654 3210</li>
+                                                    <li><i class="fa fa-envelope-o"></i>: ${sessionScope.resident.email}</li>
+                                                    <li><i class="fa fa-phone"></i> : ${sessionScope.resident.phone}</li>
                                                 </ul>
+                                                <button onclick="showChangepw()">Change password</button>
+                                                <div style="display: none" id="hiddenChangepw" class="form-container">
+                                                    <form action="update-password-resident" method="post">
+                                                        <label style="min-width: 130px" for="input1">Old password: </label>
+                                                        <input type="text" id="input1" name="oldpassword" required/><br>
+
+                                                        <label style="min-width: 130px" for="input2">New password: </label>
+                                                        <input type="text" id="input2" name="newpassword" required/><br>
+                                                        <button style="min-width: 130px" type="submit">Save</button>
+                                                        <p>${requestScope.msg}</p>
+                                                    </form>
+                                                </div>
                                              </div>
-                                             <div class="user_progress_bar">
+<!--                                             <div class="user_progress_bar">
                                                 <div class="progress_bar">
-                                                   <!-- Skill Bars -->
+                                                    Skill Bars 
                                                    <span class="skill" style="width:85%;">Web Applications <span class="info_valume">85%</span></span>                   
                                                    <div class="progress skill-bar ">
                                                       <div class="progress-bar progress-bar-animated progress-bar-striped" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;">
@@ -213,7 +225,7 @@
                                                       </div>
                                                    </div>
                                                 </div>
-                                             </div>
+                                             </div>-->
                                           </div>
                                        </div>
                                        <!-- profile contant section -->
@@ -314,4 +326,9 @@
       <!-- calendar file css -->    
       <script src="js/semantic.min.js"></script>
    </body>
+   <script>
+        function showChangepw() {
+            document.getElementById("hiddenChangepw").style.display = "block";
+        }
+    </script>
 </html>
