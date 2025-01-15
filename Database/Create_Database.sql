@@ -149,5 +149,3 @@ CREATE TABLE InvoiceDetail (
   FOREIGN KEY ([sId], [aId]) REFERENCES MonthlyInvoice ([sId], [aId])
   );
 
-
-  drop database apartment_management
