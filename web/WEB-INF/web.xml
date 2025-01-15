@@ -57,6 +57,10 @@
         <url-pattern>/request-password</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ResetPassServlet</servlet-name>
         <url-pattern>/reset-password</url-pattern>
     </servlet-mapping>
