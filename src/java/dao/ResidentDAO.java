@@ -18,7 +18,7 @@ import model.Person;
  *
  * @author thanh
  */
-string
+
 public class ResidentDAO extends DBContext{
     public boolean checkConnection(){
         return connection==null;
