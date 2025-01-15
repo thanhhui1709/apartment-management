@@ -1,4 +1,23 @@
+
+    <%-- 
+<<<<<<< HEAD
+    Document   : login
+    Created on : 13 Jan 2025, 22:12:51
+    Author     : Lenovo
+=======
+    Document   : login.jsp
+    Created on : Jan 13, 2025, 11:16:47 PM
+    Author     : PC
+>>>>>>> d700b0225ea6300d7147d934b2b1aab1fb873155
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
 <html lang="en">
     <head>
         <!-- basic -->
@@ -47,7 +66,7 @@
                             </div>
                         </div>
                         <div class="login_form">
-                            <form>
+                            <form action="login" method="post">
                                 <fieldset>
                                     <div class="field">
                                         <label class="label_field">Username</label>
@@ -66,7 +85,8 @@
                                     </div>
                                     <div class="field margin_0">
                                         <label class="label_field hidden">hidden label</label>
-                                        <button class="main_bt">Sing In</button>
+                                        <button class="main_bt">Sign In</button>
+                                        <button class="main_bt" type="submit">Sing In</button>
                                     </div>
                                 </fieldset>
                             </form>

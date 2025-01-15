@@ -16,6 +16,11 @@ import jdbc.DBContext;
 import model.Account;
 import model.Role;
 
+import model.Account;
+import model.Role;
+
+import model.Role;
+
 /**
  *
  * @author thanh
@@ -28,10 +33,12 @@ public class ResidentDAO extends DBContext {
 
     public List<Resident> getAll() {
         String sql = "select  * from resident";
+
         List<Resident> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
+
             while (rs.next()) {
                 String id = rs.getString("id");
                 String name = rs.getString("name");
@@ -69,10 +76,12 @@ public class ResidentDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 return rs.getString(1);
+
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResidentDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -88,8 +97,10 @@ public class ResidentDAO extends DBContext {
                 list.add(a);
             }
             return list;
+
         } catch (SQLException ex) {
-            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResidentDAO.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
