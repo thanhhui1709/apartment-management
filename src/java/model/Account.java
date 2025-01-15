@@ -4,22 +4,91 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
- * @author PC
+ * @author admin1711
  */
 public class Account {
+
     private String username;
     private String password;
-    private int role;
+    private String email;
+    private String pId;
+    private int roleId;
 
-    public Account() {
+    public int getRoleId() {
+        return roleId;
     }
 
-    public Account( String username, String password, int role) {
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public Account(String username, String password, String email, String pId, int roleId) {
         this.username = username;
         this.password = password;
-        this.role = role;
+        this.email = email;
+        this.pId = pId;
+        this.roleId = roleId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getpId() {
+        return pId;
+    }
+
+    public void setpId(String pId) {
+        this.pId = pId;
+    }
+
+    public Account(String username, String password, String email, String pId) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.pId = pId;
+    }
+
+    public Account(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Account other = (Account) obj;
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        return Objects.equals(this.password, other.password);
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" + "username=" + username + ", password=" + password + ", email=" + email + ", pId=" + pId + '}';
     }
 
     public String getUsername() {
@@ -38,11 +107,4 @@ public class Account {
         this.password = password;
     }
 
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
 }
