@@ -13,6 +13,10 @@
         <servlet-class>authentication.LoginServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>authentication.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ViewProfileServlet</servlet-name>
         <servlet-class>controller.resident.ViewProfileServlet</servlet-class>
     </servlet>
@@ -35,10 +39,6 @@
     <servlet>
         <servlet-name>PasswordUpdateServlet</servlet-name>
         <servlet-class>controller.resident.PasswordUpdateServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>authentication.LogoutServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -68,4 +68,9 @@
         <servlet-name>PasswordUpdateServlet</servlet-name>
         <url-pattern>/update-password-resident</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
 </web-app>
