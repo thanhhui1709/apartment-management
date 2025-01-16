@@ -3,10 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.resident;
+package controller.staff;
 
-import dao.AccountDAO;
 import dao.ResidentDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,12 +15,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
+import model.Resident;
+import model.Staff;
 
 /**
  *
  * @author thanh
  */
-public class PasswordUpdateServlet extends HttpServlet {
+public class ViewProfileStaff extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +39,10 @@ public class PasswordUpdateServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PasswordUpdateServlet</title>");  
+            out.println("<title>Servlet ViewProfileStaff</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PasswordUpdateServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewProfileStaff at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,7 +59,12 @@ public class PasswordUpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        StaffDAO sd = new StaffDAO();
+        HttpSession session =request.getSession();
+        Account account =(Account) session.getAttribute("account");
+        Staff staff = sd.getById(account.getpId());
+        session.setAttribute("person", staff);
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
     } 
 
     /** 
@@ -70,20 +77,7 @@ public class PasswordUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session=request.getSession();
-        Account account=(Account)session.getAttribute("account");
-        String oldpw = request.getParameter("oldpassword");
-        String newpw = request.getParameter("newpassword");
-        ResidentDAO rd = new ResidentDAO();
-        if(!oldpw.equals(account.getPassword())){
-            request.setAttribute("msg", "Password is not correct");
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
-            return;
-        }
-        AccountDAO ad = new AccountDAO();
-        ad.changePassword(account.getUsername(), newpw, account.getRoleId());
-//        rd.changPasswordById(account.getpId(), newpw);
-        request.getRequestDispatcher("logout").forward(request, response);
+        processRequest(request, response);
     }
 
     /** 

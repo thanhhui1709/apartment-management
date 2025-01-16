@@ -184,14 +184,14 @@
                                           <div class="profile_img"><img width="180" class="rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /></div>
                                           <div class="profile_contant">
                                              <div class="contact_inner">
-                                                 <h3>${sessionScope.resident.name}</h3>
+                                                 <h3>${sessionScope.person.name}</h3>
                                                 <p><strong>About: </strong>Resident</p>
                                                 <ul class="list-unstyled">
-                                                    <li><i class="fa-regular fa-envelope"></i>: ${sessionScope.resident.email}</li>
-                                                    <li><i class="fa fa-phone"></i> : ${sessionScope.resident.phone}</li>
-                                                    <li><i class="fa-solid fa-house"></i> : ${sessionScope.resident.address}</li>
-                                                    <li><i class="fa-regular fa-user"></i> : ${sessionScope.resident.cccd}</li>
-                                                    <li><i class="fa-solid fa-calendar-days"></i> : ${sessionScope.resident.bod}</li>
+                                                    <li><i class="fa-regular fa-envelope"></i>: ${sessionScope.person.email}</li>
+                                                    <li><i class="fa fa-phone"></i> : ${sessionScope.person.phone}</li>
+                                                    <li><i class="fa-solid fa-house"></i> : ${sessionScope.person.address}</li>
+                                                    <li><i class="fa-regular fa-user"></i> : ${sessionScope.person.cccd}</li>
+                                                    <li><i class="fa-solid fa-calendar-days"></i> : ${sessionScope.person.bod}</li>
                                                 </ul>
                                                 <button style="border-radius: 5px" onclick="toggleChangepw()">Change password</button>
                                                     <div style="display: none" id="hiddenChangepw" class="form-container">

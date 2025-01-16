@@ -24,6 +24,25 @@ public class Staff {
     private String password;
     private Role role; // Use Role object
 
+    public Staff(String id, String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, String username, String password, Role role) {
+        this.id = id;
+        this.name = name;
+        this.bod = bod;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.salary = salary;
+        this.education = education;
+        this.bank = bank;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public Staff() {
+    }
+
     // Getters and Setters
     public String getId() {
         return id;

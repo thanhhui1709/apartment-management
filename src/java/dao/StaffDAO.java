@@ -14,13 +14,55 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Account;
+import model.Employee;
+import model.Role;
+import model.ServiceProvider;
+import model.Staff;
 
 /**
  *
  * @author admin1711
  */
 public class StaffDAO extends DBContext {
-
+    
+    public List<Staff> getAll(){
+        ServiceProviderDAO sd  = new ServiceProviderDAO();
+        RoleDAO rd = new RoleDAO();
+        String sql="select * from Staff";
+        List<Staff> list = new ArrayList<>();
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                String id = rs.getString("id");
+                String name = rs.getString("Name");
+                String bod = rs.getDate("bod").toString();
+                String Email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address =rs.getString("address");
+                String cccd=rs.getString("cccd");
+                int salary = rs.getInt("salary");
+                String education = rs.getString("education");
+                String bank =rs.getString("bank");
+                String username  =rs.getString("username");
+                String password  =rs.getString("password");
+                Role r= rd.getById(rs.getString("roleid"));
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, username, password, r);
+                list.add(s);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    public Staff getById(String id){
+        List<Staff> list = this.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getId().equals(id)) return list.get(i);
+        }
+        return null;
+    }
+    
+    
     public List<Account> getAllStaffAccount() {
         List<Account> list = new ArrayList<>();
         String sql = "select username, password, email, id,roleId from Staff";
