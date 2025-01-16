@@ -25,6 +25,27 @@ public class Employee {
     private String password;
     private Role role; // Use Role object
 
+    public Employee() {
+    }
+
+    public Employee(String id, String name, String bod, String email, String phone, String address, String cccd, String companyId, String startDate, String endDate, int status, String username, String password, Role role) {
+        this.id = id;
+        this.name = name;
+        this.bod = bod;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.companyId = companyId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    
     // Getters and Setters
     public String getId() {
         return id;

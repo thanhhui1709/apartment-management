@@ -14,13 +14,54 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Account;
+import model.Employee;
+import model.Role;
+import model.ServiceProvider;
 
 /**
  *
  * @author admin1711
  */
 public class EmployeeDAO extends DBContext {
-
+    
+    public List<Employee> getAll(){
+        ServiceProviderDAO sd  = new ServiceProviderDAO();
+        RoleDAO rd = new RoleDAO();
+        String sql="select * from employee";
+        List<Employee> list = new ArrayList<>();
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                String id = rs.getString("id");
+                String name = rs.getString("Name");
+                String bod = rs.getDate("bod").toString();
+                String Email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address =rs.getString("address");
+                String cccd=rs.getString("cccd");
+                ServiceProvider sp =sd.getById(rs.getString("companyId"));
+                String startDate = rs.getDate("startDate").toString();
+                String endDate = rs.getDate("endDate").toString();
+                int status = rs.getInt("status");
+                String username  =rs.getString("username");
+                String password  =rs.getString("password");
+                Role r= rd.getById(rs.getString("roleid"));
+                Employee e = new Employee(id, name, bod, Email, phone, address, cccd, Email, startDate, endDate, status, username, password, r);
+                list.add(e);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    public Employee getById(String id){
+        List<Employee> list = this.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getId().equals(id)) return list.get(i);
+        }
+        return null;
+    }
+    
     public List<Account> getAllEmployeeAccount() {
         List<Account> list = new ArrayList<>();
         String sql = "select username, password, email, id, roleId from Employee";

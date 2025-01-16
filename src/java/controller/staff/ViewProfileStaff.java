@@ -3,9 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.resident;
+package controller.staff;
 
 import dao.ResidentDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,12 +16,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.Resident;
+import model.Staff;
 
 /**
  *
  * @author thanh
  */
-public class ViewProfileServlet extends HttpServlet {
+public class ViewProfileStaff extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +39,10 @@ public class ViewProfileServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewProfileServlet</title>");  
+            out.println("<title>Servlet ViewProfileStaff</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewProfileServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewProfileStaff at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,11 +59,11 @@ public class ViewProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ResidentDAO rd = new ResidentDAO();
+        StaffDAO sd = new StaffDAO();
         HttpSession session =request.getSession();
         Account account =(Account) session.getAttribute("account");
-        Resident re = rd.getById(account.getpId());
-        session.setAttribute("person", re);
+        Staff staff = sd.getById(account.getpId());
+        session.setAttribute("person", staff);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     } 
 

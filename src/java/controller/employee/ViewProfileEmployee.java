@@ -3,8 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.resident;
+package controller.employee;
 
+import dao.EmployeeDAO;
 import dao.ResidentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,13 +15,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
+import model.Employee;
 import model.Resident;
 
 /**
  *
  * @author thanh
  */
-public class ViewProfileServlet extends HttpServlet {
+public class ViewProfileEmployee extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +39,10 @@ public class ViewProfileServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewProfileServlet</title>");  
+            out.println("<title>Servlet ViewProfileEmployee</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewProfileServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewProfileEmployee at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,11 +59,11 @@ public class ViewProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ResidentDAO rd = new ResidentDAO();
+        EmployeeDAO ed = new EmployeeDAO();
         HttpSession session =request.getSession();
         Account account =(Account) session.getAttribute("account");
-        Resident re = rd.getById(account.getpId());
-        session.setAttribute("person", re);
+        Employee em = ed.getById(account.getpId());
+        session.setAttribute("person", em);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     } 
 
