@@ -11,10 +11,20 @@ package util;
 public class Util {
     public  String getTableNameByRoleId(int role){
         String destination = "";
-        if(role==3) destination= "employee";
-        else if(role==1) destination= "resident";
-        else if(role==4) destination= "render";
-        else destination="staff";
+        switch (role) {
+            case 3:
+                destination= "employee";
+                break;
+            case 1:
+                destination= "resident";
+                break;
+            case 4:
+                destination= "render";
+                break;
+            default:
+                destination="staff";
+                break;
+        }
         return "view-profile-"+destination;
     }
 }

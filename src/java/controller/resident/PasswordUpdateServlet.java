@@ -5,6 +5,7 @@
 
 package controller.resident;
 
+import dao.AccountDAO;
 import dao.ResidentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -74,12 +75,14 @@ public class PasswordUpdateServlet extends HttpServlet {
         String oldpw = request.getParameter("oldpassword");
         String newpw = request.getParameter("newpassword");
         ResidentDAO rd = new ResidentDAO();
-        if(!oldpw.equals(rd.getById(account.getpId()).getPassword())){
+        if(!oldpw.equals(account.getPassword())){
             request.setAttribute("msg", "Password is not correct");
             request.getRequestDispatcher("profile.jsp").forward(request, response);
             return;
         }
-        rd.changPasswordById(account.getpId(), newpw);
+        AccountDAO ad = new AccountDAO();
+        ad.changePassword(account.getUsername(), newpw, account.getRoleId());
+//        rd.changPasswordById(account.getpId(), newpw);
         request.getRequestDispatcher("logout").forward(request, response);
     }
 

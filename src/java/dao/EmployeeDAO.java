@@ -42,7 +42,7 @@ public class EmployeeDAO extends DBContext {
                 String cccd=rs.getString("cccd");
                 ServiceProvider sp =sd.getById(rs.getString("companyId"));
                 String startDate = rs.getDate("startDate").toString();
-                String endDate = rs.getDate("endDate").toString();
+                String endDate = rs.getDate("endDate")==null?"None":rs.getDate("enddate").toString();
                 int status = rs.getInt("status");
                 String username  =rs.getString("username");
                 String password  =rs.getString("password");
@@ -160,6 +160,7 @@ public class EmployeeDAO extends DBContext {
     
     public static void main(String[] args) {
         EmployeeDAO dao = new EmployeeDAO();
-        System.out.println(dao.getAccountByUsername("quang"));
+        System.out.println(dao.getAll().size());
+        System.out.println(dao.getById("E1001"));
     }
 }
