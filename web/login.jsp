@@ -93,10 +93,14 @@
                                         </div>
                                          <h6 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h6>
                                             <h6 style="color:red;text-align:center">${requestScope.error}</h6>
-                                        <div class="field margin_0">
-                                            <label class="label_field hidden">hidden label</label>
-                                            <button class="main_bt" type="submit">Sign In</button>
-                                        </div>
+                                            <div class="field margin_0">
+                                                <label class="label_field hidden">hidden label</label>
+                                                <button class="main_bt" type="submit">Sign In</button>
+                                                <div>
+                                                    <i class="fa fa-google" aria-hidden="true"></i>
+                                                    <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:6969/apartment-management/login-google&response_type=code&client_id=356880565891-7ehq5ej4qae557jaoor4d4jdi8pi4586.apps.googleusercontent.com&approval_prompt=force">Sign In With Google<a/>
+                                                </div>
+                                            </div>
                                     </fieldset>
                                 </form>
 

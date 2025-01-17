@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Account;
+import util.Util;
 
 /**
  *
@@ -38,5 +39,25 @@ public class AccountDAO extends DBContext {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    public Account getByEmail(String email){
+        Util util = new Util();
+        List<Account> list = this.getAllAccount();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getEmail().equals(email)) return list.get(i);
+        }
+        return null;
+    }
+    public List<Account> getAllAccount() {
+        ResidentDAO daoR = new ResidentDAO();
+        StaffDAO daoS = new StaffDAO();
+        EmployeeDAO daoE = new EmployeeDAO();
+
+        List<Account> list = new ArrayList<>();
+        list.addAll(daoR.getAllResidentAccount());
+        list.addAll(daoS.getAllStaffAccount());
+        list.addAll(daoE.getAllEmployeeAccount());
+
+        return list;
     }
 }
