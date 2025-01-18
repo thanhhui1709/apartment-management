@@ -34,6 +34,80 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style>
+            .form-container {
+                width: 100%;
+                max-width: 900px;
+                margin: 50px auto;
+                background: #ffffff;
+                padding: 40px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                border: 1px solid #e3e3e3;
+            }
+            .form-container h1 {
+                text-align: center;
+                margin-bottom: 30px;
+                font-size: 28px;
+                color: #333;
+            }
+            .form-group {
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            .form-group label {
+                display: block;
+                font-weight: 600;
+                margin-bottom: 8px;
+                color: #666;
+            }
+            .form-group input {
+                width: 100%;
+                padding: 15px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 16px;
+                color: #333;
+            }
+            .form-group input:focus {
+                border-color: #4a90e2;
+                outline: none;
+                box-shadow: 0 0 4px rgba(74, 144, 226, 0.5);
+            }
+            .two-cols {
+                display: flex;
+                justify-content: space-between;
+            }
+            .two-cols .col {
+                width: 48%;
+            }
+            .three-cols {
+                display: flex;
+                justify-content: space-between;
+            }
+            .three-cols .col {
+                width: 32%;
+            }
+            .form-button {
+                text-align: center;
+                margin-top: 30px;
+            }
+            .form-button button {
+                padding: 15px 30px;
+                font-size: 18px;
+                border: none;
+                border-radius: 6px;
+                background-color: #4a90e2;
+                color: #ffffff;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            .form-button button:hover {
+                background-color: #357ab8;
+            }
+        </style>
+
+
     </head>
     <body class="inner_page tables_page">
         <div class="full_container">
@@ -153,116 +227,97 @@
                         </nav>
                     </div>
                     <!-- end topbar -->
-                    <div class="midde_cont">
-                        <div class="container-fluid">
-                            <div class="row column_title">
-                                <div class="col-md-12">
-                                    <div class="page_title">
-                                        <h2>Tables</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <!-- table section -->
-                                <div class="col-md-12">
-                                    <div class="white_shd full margin_bottom_30">
-                                        <div class="full graph_head">
-                                            <div class="heading1 margin_0">
-                                                <h2>Resident Information</h2>
-                                            </div>
-                                        </div>
-                                        <div style="margin-left: 40px;">
-                                            <form action="/filter" method="GET">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-2">
-                                                        <input type="text" class="form-control" name="searchId" placeholder="Search by ID">
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <input type="text" class="form-control" name="searchName" placeholder="Search by Name">
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <select class="form-control" name="searchFloor">
-                                                            <option value="">Select Floor</option>
-                                                            <option value="1">Floor 1</option>
-                                                            <option value="2">Floor 2</option>
-                                                            <option value="3">Floor 3</option>
-                                                            <!-- Add more options as needed -->
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <select class="form-control" name="filterStatus">
-                                                            <option value="">Filter by Status</option>
-                                                            <option value="active">Active</option>
-                                                            <option value="inactive">Inactive</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4 d-flex">
-                                                        <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
-                                                        <a href="addnewresident.jsp"  class="btn btn-primary">Add new Resident</a>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-
-
-
-
-
-                                        <div class="table_section padding_infor_info">
-                                            <div class="table-responsive-sm">
-                                                <table class="table w-100">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Name</th>
-                                                            <th>BOD</th>
-                                                            <th>Phone</th>
-                                                            <th>Email</th>                                               
-                                                            <th>Address</th>
-                                                            <th>Status</th> 
-                                                            <th>View Detail</th>
-                                                            <th>Option</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <c:forEach items="${requestScope.listResident}" var="resident">
-                                                            <tr>
-                                                                <td>${resident.pId}</td>
-                                                                <td>${resident.name}</td>
-                                                                <td>${resident.bod}</td>
-                                                                <td>${resident.phone}</td>
-                                                                <td>${resident.email}</td>                                               
-                                                                <td>${resident.address}</td>
-                                                                <td>${resident.status}</td>
-                                                                <td><a href="#" class="btn btn-primary">View Detail</a></td> 
-                                                                <td><<a href="delete-resident?pId=${resident.pId}"><i class="material-icons" title="Delete">&#xE872;</i></a></td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- More tables can be added here -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- footer -->
-                    <div class="container-fluid">
-                        <div class="footer">
-                            <p>Copyright © 2018 Designed by html.design. All rights reserved.</p>
-                        </div>
-                    </div>
-                </div>
+                    <div class="midde_cont"> <div class="container-fluid"> <div class="form-container"> <h1>Add New Resident</h1> <form action="addNewResident"> <div class="form-group"> <div class="two-cols"> <div class="col"> <label for="name">Name</label> <input type="text" id="name" name="name" placeholder="Enter full name" required> </div> <div class="col"> <label for="dob">Date of Birth</label> <input type="date" id="dob" name="dob" required> </div> </div> </div> <div class="form-group"> <div class="one-col"> <label for="address">Address</label> <input type="text" id="address" name="address" placeholder="Enter address" required> </div> </div> <div class="form-group"> <div class="two-cols"> <div class="col"> <label for="phone">Phone</label> <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required> <span id="phone-error" style="color:red;"></span> </div> <div class="col"> <label for="email">Email</label> <input type="email" id="email" name="email" placeholder="Enter email" required> <span id="email-error" style="color:red;"></span> </div> </div> </div> <div class="form-group"> <div class="three-cols"> <div class="col"> <label for="id">ID</label> <input type="text" id="id" name="id" placeholder="Enter ID" required> <span id="id-error" style="color:red;"></span> </div> <div class="col"> <label for="username">Username</label> <input type="text" id="username" name="username" placeholder="Enter username" required> </div> <div class="col"> <label for="password">Password</label> <input type="password" id="password" name="password" placeholder="Enter password" required> </div> </div> </div> <div class="form-button"> <button type="submit">Add Resident</button> </div> </form> </div> </div> </div>                </div>
                 <!-- end dashboard inner -->
             </div>
         </div>
-    </div>
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
-</body>
-</html>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/custom.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+        <script>
+            $(document).ready(function () {
+                const submitButton = $('button[type="submit"]');
+
+                // Function to update the submit button's disabled state
+                function updateSubmitButtonState() {
+                    if ($('#email-error').text() || $('#phone-error').text() || $('#id-error').text()) {
+                        submitButton.prop('disabled', true);
+                    } else {
+                        submitButton.prop('disabled', false);
+                    }
+                }
+
+                $('#email').on('input', function () {
+                    var email = $(this).val();
+                    if (email) {
+                        $.ajax({
+                            url: 'checkDuplicateInfor',
+                            type: 'GET',
+                            data: {type: 'email', value: email},
+                            success: function (response) {
+                                if (response.exists) {
+                                    $('#email-error').text('Email already exists.');
+                                } else {
+                                    $('#email-error').text('');
+                                }
+                                updateSubmitButtonState();
+                            }
+                        });
+                    } else {
+                        $('#email-error').text('');
+                        updateSubmitButtonState();
+                    }
+                });
+
+                $('#phone').on('input', function () {
+                    var phone = $(this).val();
+                    if (phone) {
+                        $.ajax({
+                            url: 'checkDuplicateInfor',
+                            type: 'GET',
+                            data: {type: 'phone', value: phone},
+                            success: function (response) {
+                                if (response.exists) {
+                                    $('#phone-error').text('Phone number already exists.');
+                                } else {
+                                    $('#phone-error').text('');
+                                }
+                                updateSubmitButtonState();
+                            }
+                        });
+                    } else {
+                        $('#phone-error').text('');
+                        updateSubmitButtonState();
+                    }
+                });
+
+                $('#id').on('input', function () {
+                    var id = $(this).val();
+                    if (id) {
+                        $.ajax({
+                            url: 'checkDuplicateInfor',
+                            type: 'GET',
+                            data: {type: 'id', value: id},
+                            success: function (response) {
+                                if (response.exists) {
+                                    $('#id-error').text('ID already exists.');
+                                } else {
+                                    $('#id-error').text('');
+                                }
+                                updateSubmitButtonState();
+                            }
+                        });
+                    } else {
+                        $('#id-error').text('');
+                        updateSubmitButtonState();
+                    }
+                });
+            });
+        </script>
+
+
+    </body>
+</html> 
