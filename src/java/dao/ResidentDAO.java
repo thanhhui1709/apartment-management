@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Account;
 import model.Role;
-
+import util.Util;
 import model.Account;
 import model.Role;
 
@@ -116,4 +116,75 @@ public class ResidentDAO extends DBContext {
             System.out.println(e);
         }
     }
+<<<<<<< Updated upstream
+=======
+
+//    Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status)
+    public List<Resident> getAllResident() {
+        String sql = "select * from Resident r right join Apartment a\n"
+                + "on r.Id = a.rId ";
+        List<Resident> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Resident(rs.getString("id"), rs.getString("Name"),
+                        rs.getString("cccd"), rs.getString("phone"),
+                        rs.getString("email"), rs.getString("email"), rs.getString("address"), rs.getString("status")));
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public int insertNewResident(String name, String address, String email, String phone, String bod, String id, String username, String password) {
+        String sql = "INSERT INTO [dbo].[Resident]\n"
+                + "           ([Id]\n"
+                + "           ,[Name]\n"
+                + "           ,[Bod]\n"
+                + "           ,[Email]\n"
+                + "           ,[Phone]\n"
+                + "           ,[Address]\n"
+                + "           ,[CCCD]\n"
+                + "           ,[username]\n"
+                + "           ,[password]\n"
+                + "           ,[roleId])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?,?,?)";
+        Util u = new Util();
+        List<Resident> listResident = getAll();
+        int lastID = u.getNumberFromText(listResident.get(listResident.size() - 1).getpId());
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "P" + (lastID + 1));
+            st.setString(2, name);
+            st.setString(3, bod);
+            st.setString(4, email);
+            st.setString(5, phone);
+            st.setString(6, address);
+            st.setString(7, id);
+            st.setString(8, username);
+            st.setString(9, password);
+            st.setInt(10, 1);
+            st.executeUpdate();
+            return 0;
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        ResidentDAO dao = new ResidentDAO();
+        List<Resident> listResident = dao.getAll();
+
+        Util u = new Util();
+        int lastID = u.getNumberFromText(listResident.get(listResident.size() - 1).getpId());
+        System.out.println(lastID);
+        dao.insertNewResident("thanh", "abcd", "hui@gmail.com", "021331213", "1999-05-12", "001204035477", "hui", "123");
+    }
+>>>>>>> Stashed changes
 }
