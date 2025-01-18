@@ -15,23 +15,32 @@ import java.util.List;
  * @author thanh
  */
 public class Util {
-    public  String getTableNameByRoleId(int role){
+
+    public String getTableNameByRoleId(int role) {
         String destination = "";
         switch (role) {
             case 3:
-                destination= "employee";
+                destination = "employee";
                 break;
             case 1:
-                destination= "resident";
+                destination = "resident";
                 break;
             case 4:
-                destination= "render";
+                destination = "render";
                 break;
             default:
-                destination="staff";
+                destination = "staff";
                 break;
         }
-        return "view-profile-"+destination;
+        return "view-profile-" + destination;
+    }
+
+    public int getNumberFromText(String str) {
+        return Integer.parseInt(str.substring(1));
+    }
+    public static void main(String[] args) {
+        Util u=new  Util();
+        System.out.println(u.getNumberFromText("p11"));
     }
     public List<String> getAllEmail(){
         StaffDAO sd = new StaffDAO();

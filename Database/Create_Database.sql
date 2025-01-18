@@ -135,17 +135,22 @@ CREATE TABLE Expenditure (
 
   CREATE TABLE MonthlyInvoice (
   [sid] varchar(10) NOT NULL FOREIGN KEY ([sid]) REFERENCES [Service] (id), 
-  [aId] varchar(10) NOT NULL FOREIGN KEY ([aId]) REFERENCES Apartment (Id), 
+  [rId] varchar(10) NOT NULL FOREIGN KEY ([rId]) REFERENCES Resident (Id), 
   quantity  int NOT NULL,  
-  PRIMARY KEY ([sid], [aId]));
+  PRIMARY KEY ([sid], [rId]));
 
 
 CREATE TABLE InvoiceDetail (
-  [aId] varchar(10) NOT NULL , 
+  [rId] varchar(10) NOT NULL , 
   [sId] varchar(10) NOT NULL , 
   [iId] varchar(10) NOT NULL FOREIGN KEY ([iId]) REFERENCES Invoice (Id), 
   [date]    date NOT NULL, 
-  PRIMARY KEY ([aId],[sId],[iId]),
-  FOREIGN KEY ([sId], [aId]) REFERENCES MonthlyInvoice ([sId], [aId])
+  PRIMARY KEY ([rId],[sId],[iId]),
+  FOREIGN KEY ([sId], [rId]) REFERENCES MonthlyInvoice ([sId], [rId])
   );
 
+CREATE TABLE TypeNotification (
+  [Id] varchar(10) NOT NULL primary key , 
+  [Name] nvarchar(255) NOT NULL , 
+  [Discription] nvarchar(255) NOT NULL,
+  );
