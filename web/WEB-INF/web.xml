@@ -41,8 +41,17 @@
         <servlet-class>controller.resident.PasswordUpdateServlet</servlet-class>
     </servlet>
     <servlet>
+
         <servlet-name>ViewAllResident</servlet-name>
         <servlet-class>controller.admin.ViewAllResident</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewProfileEmployee</servlet-name>
+        <servlet-class>controller.employee.ViewProfileEmployee</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewProfileStaff</servlet-name>
+        <servlet-class>controller.staff.ViewProfileStaff</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -50,7 +59,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ViewProfileServlet</servlet-name>
-        <url-pattern>/view-profile</url-pattern>
+        <url-pattern>/view-profile-resident</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>test</servlet-name>
@@ -73,7 +82,17 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+
         <servlet-name>ViewAllResident</servlet-name>
         <url-pattern>/view-resident</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewProfileEmployee</servlet-name>
+        <url-pattern>/view-profile-employee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewProfileStaff</servlet-name>
+        <url-pattern>/view-profile-staff</url-pattern>
+
     </servlet-mapping>
 </web-app>
