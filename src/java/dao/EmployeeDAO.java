@@ -80,28 +80,7 @@ public class EmployeeDAO extends DBContext {
     }
 
     //-----------------------------------------------------------------------ACCOUNTDAO-----------------------------------------------------
-    public Account getAccountByUsernameandRole(String user,int role) {
-        String sql = null;
-        if(role == 1){
-            sql = "SELECT * FROM Resident WHERE [username]=?";
-        }else if(role == 2){
-            sql = "SELECT * FROM Staff WHERE [username]=?";
-        }else if(role == 3){
-            sql = "SELECT * FROM Employee WHERE [username]=?";
-        }    
-        Account s = null;
-        try {
-            PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, user);
-            ResultSet rs = pre.executeQuery();
-            if (rs.next()) {
-                s = new Account(rs.getString("username"), rs.getString("password"), rs.getString("Email"), rs.getString("Id"), rs.getInt("roleId"));
-            }
-        } catch (SQLException e) {
-            System.out.println("" + e);
-        }
-        return s;
-    }
+    
     
     public List<Account> getAllAccount() {
         ResidentDAO daoR = new ResidentDAO();

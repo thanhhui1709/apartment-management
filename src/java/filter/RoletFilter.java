@@ -115,6 +115,7 @@ public class RoletFilter implements Filter {
             Account a = (Account) session.getAttribute("account");
             if (a == null) {
                 res.sendRedirect("401_error.html");
+                return;
             }
             if (uri.contains("resetpassword.jsp")) {
                 String token = (String) session.getAttribute("token");

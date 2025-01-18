@@ -52,7 +52,7 @@
                      <div class="user_profle_side">
                         <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
                         <div class="user_info">
-                           <h6>John David</h6>
+                           <h6>Resident</h6>
                            <p><span class="online_animation"></span> Online</p>
                         </div>
                      </div>
@@ -141,7 +141,7 @@
                               <ul class="user_profile_dd">
                                  <li>
                                      <jsp:useBean id="ut" class="util.Util" scope="page"/>
-                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">John David</span></a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">User</span></a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="${ut.getTableNameByRoleId(sessionScope.account.roleId)}">My Profile</a>
                                        <a class="dropdown-item" href="settings.html">Settings</a>
