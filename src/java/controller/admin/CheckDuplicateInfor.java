@@ -64,13 +64,16 @@ public class CheckDuplicateInfor extends HttpServlet {
         boolean exists = false;
         switch (type) {
             case "email":
-                exists = rd.checkDeplicateEmail(value);
+                exists = rd.checkDuplicateEmail(value);
                 break;
             case "phone":
-                exists = rd.checkDeplicatePhone(value);
+                exists = rd.checkDuplicatePhone(value);
                 break;
             case "id":
-                exists = rd.checkDeplicateID(value);
+                exists = rd.checkDuplicateID(value);
+                break;
+            case "username":
+                exists=rd.checkDuplicateUser(value);
                 break;
         }
         response.setContentType("application/json");

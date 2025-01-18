@@ -185,27 +185,43 @@ public class ResidentDAO extends DBContext {
         }
         return -1;
     }
-    public boolean checkDeplicatePhone(String phone){
-      List<Resident> list=getAll();
+
+    public boolean checkDuplicatePhone(String phone) {
+        List<Resident> list = getAll();
         for (Resident resident : list) {
-            if(phone.equals(resident.getPhone()))
-            return true;
+            if (phone.equals(resident.getPhone())) {
+                return true;
+            }
         }
         return false;
     }
-     public boolean checkDeplicateEmail(String email){
-      List<Resident> list=getAll();
+
+    public boolean checkDuplicateEmail(String email) {
+        List<Resident> list = getAll();
         for (Resident resident : list) {
-            if(email.equals(resident.getEmail()))
-            return true;
+            if (email.equals(resident.getEmail())) {
+                return true;
+            }
         }
         return false;
     }
-      public boolean checkDeplicateID(String id){
-      List<Resident> list=getAll();
+
+    public boolean checkDuplicateID(String id) {
+        List<Resident> list = getAll();
         for (Resident resident : list) {
-            if(id.equals(resident.getCccd()))
-            return true;
+            if (id.equals(resident.getCccd())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkDuplicateUser(String user) {
+        List<Resident> list = getAll();
+        for (Resident resident : list) {
+            if (user.equals(resident.getUsername())) {
+                return true;
+            }
         }
         return false;
     }
@@ -216,6 +232,7 @@ public class ResidentDAO extends DBContext {
         for (Resident r : list) {
             System.out.println(r);
         }
-        System.out.println(dao.checkDeplicateID("1"));
+        System.out.println(dao.checkDuplicateUser("alice"));
+        System.out.println(dao.checkDuplicateID("1"));
     }
 }
