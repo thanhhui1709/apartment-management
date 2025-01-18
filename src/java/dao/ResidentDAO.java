@@ -119,28 +119,36 @@ public class ResidentDAO extends DBContext {
 
 //    Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status)
     public List<Resident> getAllResident() {
-        String sql = "select * from Resident r right join Apartment a\n"
-                + "on r.Id = a.rId ";
+        String sql = "select  * from resident";
+
         List<Resident> list = new ArrayList<>();
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
             while (rs.next()) {
-                list.add(new Resident(rs.getString("id"), rs.getString("Name"),
-                        rs.getString("cccd"), rs.getString("phone"),
-                        rs.getString("email"), rs.getString("email"), rs.getString("address"), rs.getString("status")));
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String bod = rs.getDate("bod").toString();
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String cccd = rs.getString("cccd");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                Role role = new Role("1", "resident", "--");
+                list.add(new Resident(id, name, cccd, phone, email, bod, address, username, password, rs.getInt("status") == 1 ? "Active" : "Inactive", "Sold", role));
             }
-            return list;
         } catch (SQLException ex) {
             Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return list;
     }
-    
+
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        List<Resident> list = dao.getAll();
-        for(Resident r: list){
+        List<Resident> list = dao.getAllResident();
+        for (Resident r : list) {
             System.out.println(r);
         }
     }

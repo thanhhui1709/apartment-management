@@ -59,7 +59,7 @@ public class ViewAllResident extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ResidentDAO daoR = new ResidentDAO();
-        List<Resident> listResident = daoR.getAll();
+        List<Resident> listResident = daoR.getAllResident();
 
         request.setAttribute("listResident", listResident);
         request.getRequestDispatcher("viewallresident.jsp").forward(request, response);

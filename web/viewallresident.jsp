@@ -228,7 +228,11 @@
                                                                 <td>${resident.phone}</td>
                                                                 <td>${resident.email}</td>                                               
                                                                 <td>${resident.address}</td>
-                                                                <td>${resident.status}</td>
+                                                                <td>
+                                                                    <span class="${resident.status == 'Active' ? 'status-active' : 'status-inactive'}">
+                                                                    </span>
+                                                                    <span style="display: inline-block; color: ${resident.status == 'Active' ? 'green' : 'red'}">${resident.status}</span>
+                                                                </td>
                                                                 <td><a href="#" class="btn btn-primary">View Detail</a></td> 
                                                             </tr>
                                                         </c:forEach>
