@@ -1,3 +1,4 @@
+<%@ page import="util.Util"%> 
 <!DOCTYPE html>
 <html lang="en">
    <head>
@@ -193,6 +194,22 @@
                                                     <li><i class="fa-regular fa-user"></i> : ${sessionScope.person.cccd}</li>
                                                     <li><i class="fa-solid fa-calendar-days"></i> : ${sessionScope.person.bod}</li>
                                                 </ul>
+                                                <li>
+                                 
+                                                <button style="border-radius: 5px" onclick="toggleChangepw2()">Change profile</button>
+                                                <jsp:useBean id="ut" class="util.UtilEdit" scope="page"/>
+                                                    <div style="display: none" id="hiddenChangepw" class="form-container">
+                                                        <form action="${ut.getTableNameByRoleIdEdit(sessionScope.account.roleId)}" method="post">
+                                                            <label style="min-width: 130px" for="input1">Email: </label>
+                                                            <input value="${sessionScope.person.email}" type="text" id="input1" name="editprofileemail" required/><br>
+                                                            <label style="min-width: 130px" for="input1">Phone: </label>
+                                                            <input value="${sessionScope.person.phone}" type="text" id="input1" name="editprofilephone" required/><br>
+                                                            <label style="min-width: 130px" for="input2">Address: </label>
+                                                            <input value="${sessionScope.person.address}" type="text" id="input2" name="editprofileaddress" required/><br>
+                                                            <button  style="min-width: 130px; display: inline;border-radius: 5px" type="submit">Save</button>
+                                                            <p style="display: inline-block">${requestScope.msg}</p>
+                                                        </form>
+                                                    </div>
                                                 <button style="border-radius: 5px" onclick="toggleChangepw()">Change password</button>
                                                     <div style="display: none" id="hiddenChangepw" class="form-container">
                                                         <form action="update-password-resident" method="post">
@@ -333,6 +350,14 @@
    </body>
    <script>
        function toggleChangepw() {
+        const form = document.getElementById("hiddenChangepw");
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block"; 
+        } else {
+            form.style.display = "none"; 
+        }
+    }
+    function toggleChangepw2() {
         const form = document.getElementById("hiddenChangepw");
         if (form.style.display === "none" || form.style.display === "") {
             form.style.display = "block"; 

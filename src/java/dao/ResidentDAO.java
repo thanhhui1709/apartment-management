@@ -116,7 +116,18 @@ public class ResidentDAO extends DBContext {
             System.out.println(e);
         }
     }
-
+    public void EditProfileRe(String id,String phone, String email, String address){
+        String sql="update Resident set Email=?, Phone=?, [Address]=? where id=?";
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, email);
+            pre.setString(2, phone);
+            pre.setString(3, address);
+            pre.setString(4, id);
+            pre.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
 //    Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status)
     public List<Resident> getAllResident() {
         String sql = "select * from Resident r right join Apartment a\n"
