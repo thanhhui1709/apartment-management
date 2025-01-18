@@ -34,7 +34,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-
     </head>
     <body class="inner_page tables_page">
         <div class="full_container">
@@ -172,9 +171,9 @@
                                                 <h2>Resident Information</h2>
                                             </div>
                                         </div>
-                                        <div class="text-center" style="margin-bottom: 20px;">
+                                        <div style="margin-left: 40px ">
                                             <form class="" action="/filter" method="GET">
-                                                <div class="row dis_flex justify-content-center align-items-center">
+                                                <div class="row align-items-center">
                                                     <div class="col-md-2">
                                                         <input type="text" class="form-control" name="searchId" placeholder="Search by ID">
                                                     </div>
@@ -197,15 +196,13 @@
                                                             <option value="inactive">Inactive</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-auto">
+                                                    <div class="col-md-2">
                                                         <button type="submit" class="btn btn-primary">Filter</button>
-                                                    </div>
-                                                    <div class="col-auto">
-                                                        <a href="addnewresident.jsp" class="btn btn-primary">Add New Resident</a>
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
+
 
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
@@ -216,10 +213,11 @@
                                                             <th>Name</th>
                                                             <th>BOD</th>
                                                             <th>Phone</th>
-                                                            <th>Email</th>
+                                                            <th>Email</th>                                               
                                                             <th>Address</th>
-                                                            <th>Status</th>
+                                                            <th>Status</th> 
                                                             <th>View Detail</th>
+                                                            <th>Option</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -229,10 +227,11 @@
                                                                 <td>${resident.name}</td>
                                                                 <td>${resident.bod}</td>
                                                                 <td>${resident.phone}</td>
-                                                                <td>${resident.email}</td>
+                                                                <td>${resident.email}</td>                                               
                                                                 <td>${resident.address}</td>
                                                                 <td>${resident.status}</td>
-                                                                <td><a href="#" class="btn btn-primary">View Detail</a></td>
+                                                                <td><a href="#" class="btn btn-primary">View Detail</a></td> 
+                                                                <td><<a href="delete-resident?pId=${resident.pId}"><i class="material-icons" title="Delete">&#xE872;</i></a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -241,8 +240,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <!-- More tables can be added here -->
                             </div>
                         </div>

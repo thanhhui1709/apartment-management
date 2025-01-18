@@ -61,7 +61,7 @@ public class ViewProfileServlet extends HttpServlet {
         HttpSession session =request.getSession();
         Account account =(Account) session.getAttribute("account");
         Resident re = rd.getById(account.getpId());
-        session.setAttribute("resident", re);
+        session.setAttribute("person", re);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     } 
 

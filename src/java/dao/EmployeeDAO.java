@@ -14,13 +14,54 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Account;
+import model.Employee;
+import model.Role;
+import model.ServiceProvider;
 
 /**
  *
  * @author admin1711
  */
 public class EmployeeDAO extends DBContext {
-
+    
+    public List<Employee> getAll(){
+        ServiceProviderDAO sd  = new ServiceProviderDAO();
+        RoleDAO rd = new RoleDAO();
+        String sql="select * from employee";
+        List<Employee> list = new ArrayList<>();
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                String id = rs.getString("id");
+                String name = rs.getString("Name");
+                String bod = rs.getDate("bod").toString();
+                String Email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address =rs.getString("address");
+                String cccd=rs.getString("cccd");
+                ServiceProvider sp =sd.getById(rs.getString("companyId"));
+                String startDate = rs.getDate("startDate").toString();
+                String endDate = rs.getDate("endDate")==null?"None":rs.getDate("enddate").toString();
+                int status = rs.getInt("status");
+                String username  =rs.getString("username");
+                String password  =rs.getString("password");
+                Role r= rd.getById(rs.getString("roleid"));
+                Employee e = new Employee(id, name, bod, Email, phone, address, cccd, Email, startDate, endDate, status, username, password, r);
+                list.add(e);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    public Employee getById(String id){
+        List<Employee> list = this.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getId().equals(id)) return list.get(i);
+        }
+        return null;
+    }
+    
     public List<Account> getAllEmployeeAccount() {
         List<Account> list = new ArrayList<>();
         String sql = "select username, password, email, id, roleId from Employee";
@@ -39,28 +80,7 @@ public class EmployeeDAO extends DBContext {
     }
 
     //-----------------------------------------------------------------------ACCOUNTDAO-----------------------------------------------------
-    public Account getAccountByUsernameandRole(String user,int role) {
-        String sql = null;
-        if(role == 1){
-            sql = "SELECT * FROM Resident WHERE [username]=?";
-        }else if(role == 2){
-            sql = "SELECT * FROM Staff WHERE [username]=?";
-        }else if(role == 3){
-            sql = "SELECT * FROM Employee WHERE [username]=?";
-        }    
-        Account s = null;
-        try {
-            PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, user);
-            ResultSet rs = pre.executeQuery();
-            if (rs.next()) {
-                s = new Account(rs.getString("username"), rs.getString("password"), rs.getString("Email"), rs.getString("Id"), rs.getInt("roleId"));
-            }
-        } catch (SQLException e) {
-            System.out.println("" + e);
-        }
-        return s;
-    }
+    
     
     public List<Account> getAllAccount() {
         ResidentDAO daoR = new ResidentDAO();
@@ -119,6 +139,7 @@ public class EmployeeDAO extends DBContext {
     
     public static void main(String[] args) {
         EmployeeDAO dao = new EmployeeDAO();
-        System.out.println(dao.getAccountByUsername("quang"));
+        System.out.println(dao.getAll().size());
+        System.out.println(dao.getById("E1001"));
     }
 }

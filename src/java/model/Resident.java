@@ -38,6 +38,22 @@ public class Resident {
         this.role = role;
     }
 
+    public Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status) {
+        this.pId = pId;
+        this.name = name;
+        this.cccd = cccd;
+        this.phone = phone;
+        this.email = email;
+        this.bod = bod;
+        this.address = address;
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Resident{" + "pId=" + pId + ", name=" + name + ", cccd=" + cccd + ", phone=" + phone + ", email=" + email + ", bod=" + bod + ", address=" + address + ", username=" + username + ", password=" + password + ", status=" + status + ", note=" + note + ", role=" + role + '}';
+    }
+
     public String getCccd() {
         return cccd;
     }

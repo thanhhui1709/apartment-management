@@ -25,7 +25,6 @@ import model.Role;
  *
  * @author thanh
  */
-
 public class ResidentDAO extends DBContext {
 
     public boolean checkConnection() {
@@ -50,7 +49,7 @@ public class ResidentDAO extends DBContext {
                 String cccd = rs.getString("cccd");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                Role role = new Role("1", "resident", "keke");
+                Role role = new Role("1", "resident", "--");
                 list.add(new Resident(id, name, cccd, phone, email, bod, address, username, password, email, name, role));
             }
         } catch (SQLException ex) {
@@ -105,19 +104,18 @@ public class ResidentDAO extends DBContext {
         }
         return null;
     }
-    public void changPasswordById(String id, String newpw){
-        String sql="update resident set password = ? where id =?";
+
+    public void changPasswordById(String id, String newpw) {
+        String sql = "update resident set password = ? where id =?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, newpw);
-            st.setString(2 , id);
+            st.setString(2, id);
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
-<<<<<<< Updated upstream
-=======
 
 //    Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status)
     public List<Resident> getAllResident() {
@@ -138,53 +136,22 @@ public class ResidentDAO extends DBContext {
         }
         return null;
     }
-
-    public int insertNewResident(String name, String address, String email, String phone, String bod, String id, String username, String password) {
-        String sql = "INSERT INTO [dbo].[Resident]\n"
-                + "           ([Id]\n"
-                + "           ,[Name]\n"
-                + "           ,[Bod]\n"
-                + "           ,[Email]\n"
-                + "           ,[Phone]\n"
-                + "           ,[Address]\n"
-                + "           ,[CCCD]\n"
-                + "           ,[username]\n"
-                + "           ,[password]\n"
-                + "           ,[roleId])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,?)";
-        Util u = new Util();
-        List<Resident> listResident = getAll();
-        int lastID = u.getNumberFromText(listResident.get(listResident.size() - 1).getpId());
+    public void deleteResident(String pId){
+        String sql="delete Resident where id=?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, "P" + (lastID + 1));
-            st.setString(2, name);
-            st.setString(3, bod);
-            st.setString(4, email);
-            st.setString(5, phone);
-            st.setString(6, address);
-            st.setString(7, id);
-            st.setString(8, username);
-            st.setString(9, password);
-            st.setInt(10, 1);
-            st.executeUpdate();
-            return 0;
-
-        } catch (SQLException e) {
-            System.out.println(e);
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, pId);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return -1;
     }
-
+    
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        List<Resident> listResident = dao.getAll();
-
-        Util u = new Util();
-        int lastID = u.getNumberFromText(listResident.get(listResident.size() - 1).getpId());
-        System.out.println(lastID);
-        dao.insertNewResident("thanh", "abcd", "hui@gmail.com", "021331213", "1999-05-12", "001204035477", "hui", "123");
+        List<Resident> list = dao.getAll();
+        for(Resident r: list){
+            System.out.println(r);
+        }
     }
->>>>>>> Stashed changes
 }

@@ -4,11 +4,6 @@
  */
 package util;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.sql.Date;
-
 /**
  *
  * @author thanh
@@ -31,23 +26,5 @@ public class Util {
                 break;
         }
         return "view-profile-"+destination;
-    }
-    public int getNumberFromText(String str){
-    String temp=str.substring(1);
-    int result =Integer.parseInt(temp);
-    
-    return result;
-    }
-    
-    public String covertDateOfHTMLToSQL(String date){
-        LocalDate startDate = LocalDate.parse(date);
-         Date sqlStartDate = Date.valueOf(startDate);
-     return sqlStartDate.toString();
-    }
-    public static void main(String[] args) {
-        String str="p11";
-        Util u=new Util();
-        System.out.println(u.getNumberFromText(str));
-        System.out.println(u.covertDateOfHTMLToSQL("16/01/2025"));
     }
 }

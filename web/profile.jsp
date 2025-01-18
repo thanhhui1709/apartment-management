@@ -34,6 +34,8 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
       <![endif]-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
    </head>
    <body class="inner_page profile_page">
       <div class="full_container">
@@ -167,7 +169,7 @@
                      <div class="row column1">
                         <div class="col-md-2"></div>
                         <div class="col-md-8">
-                           <div class="white_shd full margin_bottom_30">
+                            <div style="width: 100% " class="white_shd full margin_bottom_30">
                               <div class="full graph_head">
                                  <div class="heading1 margin_0">
                                      <h2>${requestScope.resident.name}</h2>
@@ -182,24 +184,27 @@
                                           <div class="profile_img"><img width="180" class="rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /></div>
                                           <div class="profile_contant">
                                              <div class="contact_inner">
-                                                 <h3>${sessionScope.resident.name}</h3>
+                                                 <h3>${sessionScope.person.name}</h3>
                                                 <p><strong>About: </strong>Resident</p>
                                                 <ul class="list-unstyled">
-                                                    <li><i class="fa fa-envelope-o"></i>: ${sessionScope.resident.email}</li>
-                                                    <li><i class="fa fa-phone"></i> : ${sessionScope.resident.phone}</li>
+                                                    <li><i class="fa-regular fa-envelope"></i>: ${sessionScope.person.email}</li>
+                                                    <li><i class="fa fa-phone"></i> : ${sessionScope.person.phone}</li>
+                                                    <li><i class="fa-solid fa-house"></i> : ${sessionScope.person.address}</li>
+                                                    <li><i class="fa-regular fa-user"></i> : ${sessionScope.person.cccd}</li>
+                                                    <li><i class="fa-solid fa-calendar-days"></i> : ${sessionScope.person.bod}</li>
                                                 </ul>
-                                                <button onclick="showChangepw()">Change password</button>
-                                                <div style="display: none" id="hiddenChangepw" class="form-container">
-                                                    <form action="update-password-resident" method="post">
-                                                        <label style="min-width: 130px" for="input1">Old password: </label>
-                                                        <input type="text" id="input1" name="oldpassword" required/><br>
+                                                <button style="border-radius: 5px" onclick="toggleChangepw()">Change password</button>
+                                                    <div style="display: none" id="hiddenChangepw" class="form-container">
+                                                        <form action="update-password-resident" method="post">
+                                                            <label style="min-width: 130px" for="input1">Old password: </label>
+                                                            <input type="text" id="input1" name="oldpassword" required/><br>
 
-                                                        <label style="min-width: 130px" for="input2">New password: </label>
-                                                        <input type="text" id="input2" name="newpassword" required/><br>
-                                                        <button style="min-width: 130px" type="submit">Save</button>
-                                                        <p>${requestScope.msg}</p>
-                                                    </form>
-                                                </div>
+                                                            <label style="min-width: 130px" for="input2">New password: </label>
+                                                            <input type="text" id="input2" name="newpassword" required/><br>
+                                                            <button  style="min-width: 130px; display: inline;border-radius: 5px" type="submit">Save</button>
+                                                            <p style="display: inline-block">${requestScope.msg}</p>
+                                                        </form>
+                                                    </div>
                                              </div>
 <!--                                             <div class="user_progress_bar">
                                                 <div class="progress_bar">
@@ -229,7 +234,7 @@
                                           </div>
                                        </div>
                                        <!-- profile contant section -->
-                                       <div class="full inner_elements margin_top_30">
+<!--                                       <div class="full inner_elements margin_top_30">
                                           <div class="tab_style2">
                                              <div class="tabbar">
                                                 <nav>
@@ -278,7 +283,7 @@
                                              </div>
                                           </div>
                                        </div>
-                                       <!-- end user profile section -->
+                                        end user profile section -->
                                     </div>
                                  </div>
                               </div>
@@ -327,8 +332,13 @@
       <script src="js/semantic.min.js"></script>
    </body>
    <script>
-        function showChangepw() {
-            document.getElementById("hiddenChangepw").style.display = "block";
+       function toggleChangepw() {
+        const form = document.getElementById("hiddenChangepw");
+        if (form.style.display === "none" || form.style.display === "") {
+            form.style.display = "block"; 
+        } else {
+            form.style.display = "none"; 
         }
+    }
     </script>
 </html>

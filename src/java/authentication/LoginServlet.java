@@ -4,7 +4,7 @@
  */
 package authentication;
 
-import dao.EmployeeDAO;
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
         } else {
             role = Integer.parseInt(checkrole);
         }
-        EmployeeDAO dao = new EmployeeDAO();
+        AccountDAO dao = new AccountDAO();
         Account ac = dao.getAccountByUsernameandRole(user, role);
         if (user.isEmpty() || pass.isEmpty()) {
             request.setAttribute("error", "Username or Password is not allowed to be blank");
@@ -105,7 +105,7 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(cookiePass);
             }
 
-            response.sendRedirect("index.html");
+            response.sendRedirect("index.jsp");
         } else {
             request.setAttribute("error", "Username or Password is incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
