@@ -56,8 +56,8 @@ public class AccountDAO extends DBContext {
             }else{
                 table="Empty";
             }
-        } catch (SQLException e) {
-            System.out.println("" + e);
+        } catch (SQLException ex) {
+            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return table;
     }
@@ -87,8 +87,8 @@ public class AccountDAO extends DBContext {
             if (rs.next()) {
                 s = new Account(rs.getString("username"), rs.getString("password"), rs.getString("Email"), rs.getString("Id"), rs.getInt("roleId"));
             }
-        } catch (SQLException e) {
-            System.out.println("" + e);
+        } catch (SQLException ex) {
+           Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s;
     }

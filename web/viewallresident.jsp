@@ -216,7 +216,8 @@
                                                             <th>Email</th>                                               
                                                             <th>Address</th>
                                                             <th>Status</th> 
-                                                            <th>View Detail</th> 
+                                                            <th>View Detail</th>
+                                                            <th>Option</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -230,6 +231,7 @@
                                                                 <td>${resident.address}</td>
                                                                 <td>${resident.status}</td>
                                                                 <td><a href="#" class="btn btn-primary">View Detail</a></td> 
+                                                                <td><<a href="delete-resident?pId=${resident.pId}"><i class="material-icons" title="Delete">&#xE872;</i></a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>

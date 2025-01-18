@@ -136,6 +136,16 @@ public class ResidentDAO extends DBContext {
         }
         return null;
     }
+    public void deleteResident(String pId){
+        String sql="delete Resident where id=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, pId);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
