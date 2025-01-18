@@ -171,8 +171,8 @@
                                                 <h2>Resident Information</h2>
                                             </div>
                                         </div>
-                                        <div style="margin-left: 40px ">
-                                            <form class="" action="/filter" method="GET">
+                                        <div style="margin-left: 40px;">
+                                            <form action="/filter" method="GET">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-2">
                                                         <input type="text" class="form-control" name="searchId" placeholder="Search by ID">
@@ -196,12 +196,16 @@
                                                             <option value="inactive">Inactive</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-md-2">
-                                                        <button type="submit" class="btn btn-primary">Filter</button>
+                                                    <div class="col-md-4 d-flex">
+                                                        <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
+                                                        <a href="addnewresident.jsp"  class="btn btn-primary">Add new Resident</a>
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
+
+
+
 
 
                                         <div class="table_section padding_infor_info">

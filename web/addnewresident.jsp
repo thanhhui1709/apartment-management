@@ -227,73 +227,7 @@
                         </nav>
                     </div>
                     <!-- end topbar -->
-                    <div class="midde_cont">
-                        <div class="container-fluid">
-                            <div class="form-container">
-                                <h1>Add New Resident</h1>
-                                <form  action="addNewResident">
-                                    <div class="form-group">
-                                        <div class="two-cols">
-                                            <div class="col">
-                                                <label for="name">Name</label>
-                                                <input type="text" id="name" name="name" placeholder="Enter full name" required>
-                                            </div>
-                                            <div class="col">
-                                                <label for="dob">Date of Birth</label>
-                                                <input type="date" id="dob" name="dob" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="one-col">
-                                            <label for="address">Address</label>
-                                            <input type="text" id="address" name="address" placeholder="Enter address" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="two-cols">
-                                            <div class="col">
-                                                <label for="phone">Phone</label>
-                                                <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required>
-                                            </div>
-                                            <div class="col">
-                                                <label for="email">Email</label>
-                                                <input type="email" id="email" name="email" placeholder="Enter email" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="three-cols">
-                                            <div class="col">
-                                                <label for="id">ID</label>
-                                                <input type="text" id="id" name="id" placeholder="Enter ID" required>
-                                            </div>
-                                            <div class="col">
-                                                <label for="username">Username</label>
-                                                <input type="text" id="username" name="username" placeholder="Enter username" required>
-                                            </div>
-                                            <div class="col">
-                                                <label for="password">Password</label>
-                                                <input type="password" id="password" name="password" placeholder="Enter password" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-button">
-                                        <button type="submit">Add Resident</button>
-         
-                                    </div>
-                                </form>
-                            </div>
-
-
-                        </div>
-                    </div>
-                    <!-- footer -->
-                </div>
+                    <div class="midde_cont"> <div class="container-fluid"> <div class="form-container"> <h1>Add New Resident</h1> <form action="addNewResident"> <div class="form-group"> <div class="two-cols"> <div class="col"> <label for="name">Name</label> <input type="text" id="name" name="name" placeholder="Enter full name" required> </div> <div class="col"> <label for="dob">Date of Birth</label> <input type="date" id="dob" name="dob" required> </div> </div> </div> <div class="form-group"> <div class="one-col"> <label for="address">Address</label> <input type="text" id="address" name="address" placeholder="Enter address" required> </div> </div> <div class="form-group"> <div class="two-cols"> <div class="col"> <label for="phone">Phone</label> <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required> <span id="phone-error" style="color:red;"></span> </div> <div class="col"> <label for="email">Email</label> <input type="email" id="email" name="email" placeholder="Enter email" required> <span id="email-error" style="color:red;"></span> </div> </div> </div> <div class="form-group"> <div class="three-cols"> <div class="col"> <label for="id">ID</label> <input type="text" id="id" name="id" placeholder="Enter ID" required> <span id="id-error" style="color:red;"></span> </div> <div class="col"> <label for="username">Username</label> <input type="text" id="username" name="username" placeholder="Enter username" required> </div> <div class="col"> <label for="password">Password</label> <input type="password" id="password" name="password" placeholder="Enter password" required> </div> </div> </div> <div class="form-button"> <button type="submit">Add Resident</button> </div> </form> </div> </div> </div>                </div>
                 <!-- end dashboard inner -->
             </div>
         </div>
@@ -302,5 +236,88 @@
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/custom.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+        <script>
+            $(document).ready(function () {
+                const submitButton = $('button[type="submit"]');
+
+                // Function to update the submit button's disabled state
+                function updateSubmitButtonState() {
+                    if ($('#email-error').text() || $('#phone-error').text() || $('#id-error').text()) {
+                        submitButton.prop('disabled', true);
+                    } else {
+                        submitButton.prop('disabled', false);
+                    }
+                }
+
+                $('#email').on('input', function () {
+                    var email = $(this).val();
+                    if (email) {
+                        $.ajax({
+                            url: 'checkDuplicateInfor',
+                            type: 'GET',
+                            data: {type: 'email', value: email},
+                            success: function (response) {
+                                if (response.exists) {
+                                    $('#email-error').text('Email already exists.');
+                                } else {
+                                    $('#email-error').text('');
+                                }
+                                updateSubmitButtonState();
+                            }
+                        });
+                    } else {
+                        $('#email-error').text('');
+                        updateSubmitButtonState();
+                    }
+                });
+
+                $('#phone').on('input', function () {
+                    var phone = $(this).val();
+                    if (phone) {
+                        $.ajax({
+                            url: 'checkDuplicateInfor',
+                            type: 'GET',
+                            data: {type: 'phone', value: phone},
+                            success: function (response) {
+                                if (response.exists) {
+                                    $('#phone-error').text('Phone number already exists.');
+                                } else {
+                                    $('#phone-error').text('');
+                                }
+                                updateSubmitButtonState();
+                            }
+                        });
+                    } else {
+                        $('#phone-error').text('');
+                        updateSubmitButtonState();
+                    }
+                });
+
+                $('#id').on('input', function () {
+                    var id = $(this).val();
+                    if (id) {
+                        $.ajax({
+                            url: 'checkDuplicateInfor',
+                            type: 'GET',
+                            data: {type: 'id', value: id},
+                            success: function (response) {
+                                if (response.exists) {
+                                    $('#id-error').text('ID already exists.');
+                                } else {
+                                    $('#id-error').text('');
+                                }
+                                updateSubmitButtonState();
+                            }
+                        });
+                    } else {
+                        $('#id-error').text('');
+                        updateSubmitButtonState();
+                    }
+                });
+            });
+        </script>
+
+
     </body>
 </html> 
