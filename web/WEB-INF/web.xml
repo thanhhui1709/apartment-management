@@ -52,6 +52,10 @@
         <servlet-name>ViewProfileStaff</servlet-name>
         <servlet-class>controller.staff.ViewProfileStaff</servlet-class>
     </servlet>
+     <servlet>
+        <servlet-name>LoginByGoogleServlet</servlet-name>
+        <servlet-class>authentication.LoginByGoogleServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>DeleteResidentServlet</servlet-name>
         <servlet-class>controller.admin.DeleteResidentServlet</servlet-class>
@@ -99,5 +103,9 @@
     <servlet-mapping>
         <servlet-name>DeleteResidentServlet</servlet-name>
         <url-pattern>/delete-resident</url-pattern>
+    </servlet-mapping>
+      <servlet-mapping>
+        <servlet-name>LoginByGoogleServlet</servlet-name>
+        <url-pattern>/login-google</url-pattern>
     </servlet-mapping>
 </web-app>
