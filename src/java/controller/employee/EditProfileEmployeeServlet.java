@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.Employee;
+import util.Util;
 
 /**
  *
@@ -78,7 +79,8 @@ public class EditProfileEmployeeServlet extends HttpServlet {
         String ephone=request.getParameter("editprofilephone");
         String eaddress=request.getParameter("editprofileaddress");
         ed.EditProfileEm(em.getId(), ephone, eemail, eaddress);
-        response.sendRedirect("profile.jsp");
+        Util editem = new Util();
+        response.sendRedirect(editem.getTableNameByRoleId(account.getRoleId()));
     }
 
     /** 

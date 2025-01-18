@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.Resident;
 import model.Staff;
+import util.Util;
 
 /**
  *
@@ -79,7 +80,8 @@ public class EditProfileStaffServlet extends HttpServlet {
         String ephone=request.getParameter("editprofilephone");
         String eaddress=request.getParameter("editprofileaddress");
         sd.EditProfileSt(staff.getId(), ephone, eemail, eaddress);
-        response.sendRedirect("profile.jsp");
+        Util editst = new Util();
+        response.sendRedirect(editst.getTableNameByRoleId(account.getRoleId()));
     }
 
     /** 
