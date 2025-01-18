@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Account;
+import util.Util;
 
 /**
  *
@@ -95,19 +96,12 @@ public class AccountDAO extends DBContext {
 
     public void changePassword(String username, String password, int roleId) {
         String sql = "Update ";
-        AccountDAO dao = new AccountDAO();
-        String table =dao.getcheckTable(username,roleId);
-        if(table.equals("Empty")){
-            return;
-        }
-        else if(table.equals("Resident")){
-            sql ="SELECT * FROM Resident WHERE [username]=?";
-        }
-        else if(table.equals("Staff")){
-            sql ="SELECT * FROM Staff WHERE [username]=?";
-        }
-        else if(table.equals("Employee")){
-            sql ="SELECT * FROM Employee WHERE [username]=?";
+        if (roleId == 1) {
+            sql += "Resident set password = ? where username = ? ";
+        } else if (roleId == 3) {
+            sql += "Employee set password = ? where username = ? ";
+        } else {
+            sql += "Staff set password = ? where username = ? ";
         }
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -118,6 +112,26 @@ public class AccountDAO extends DBContext {
             Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    public Account getByEmail(String email){
+        Util util = new Util();
+        List<Account> list = this.getAllAccount();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getEmail().equals(email)) return list.get(i);
+        }
+        return null;
+    }
+    public List<Account> getAllAccount() {
+        ResidentDAO daoR = new ResidentDAO();
+        StaffDAO daoS = new StaffDAO();
+        EmployeeDAO daoE = new EmployeeDAO();
+
+        List<Account> list = new ArrayList<>();
+        list.addAll(daoR.getAllResidentAccount());
+        list.addAll(daoS.getAllStaffAccount());
+        list.addAll(daoE.getAllEmployeeAccount());
+
+        return list;
     }
 
 }
