@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Account;
 import model.Role;
-
+import util.Util;
 import model.Account;
 import model.Role;
 
@@ -145,11 +145,83 @@ public class ResidentDAO extends DBContext {
         return list;
     }
 
-    public static void main(String[] args) {
-        ResidentDAO dao = new ResidentDAO();
-        List<Resident> list = dao.getAllResident();
-        for (Resident r : list) {
-            System.out.println(r);
+    public void deleteResident(String pId) {
+        String sql = "delete Resident where id=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, pId);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public int insertNewResident(String name, String address, String email, String phone, String bod, String id, String username, String password) {
+        String sql = "INSERT INTO [dbo].[Resident]\n"
+                + "           ([Id]\n"
+                + "           ,[Name]\n"
+                + "           ,[Bod]\n"
+                + "           ,[Email]\n"
+                + "           ,[Phone]\n"
+                + "           ,[Address]\n"
+                + "           ,[CCCD]\n"
+                + "           ,[username]\n"
+                + "           ,[password]\n"
+                + "           ,[roleId])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?,?,?)";
+        Util u = new Util();
+        List<Resident> listResident = getAll();
+        int lastID = u.getNumberFromText(listResident.get(listResident.size() - 1).getpId());
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "P" + (lastID + 1));
+            st.setString(2, name);
+            st.setString(3, bod);
+            st.setString(4, email);
+            st.setString(5, phone);
+            st.setString(6, address);
+            st.setString(7, id);
+            st.setString(8, username);
+            st.setString(9, password);
+            st.setInt(10, 1);
+            st.executeUpdate();
+            return 0;
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    public boolean checkDeplicatePhone(String phone) {
+        List<Resident> list = getAll();
+        for (Resident resident : list) {
+            if (phone.equals(resident.getPhone())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkDeplicateEmail(String email) {
+        List<Resident> list = getAll();
+        for (Resident resident : list) {
+            if (email.equals(resident.getEmail())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkDeplicateID(String id) {
+        List<Resident> list = getAll();
+        for (Resident resident : list) {
+            if (id.equals(resident.getCccd())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

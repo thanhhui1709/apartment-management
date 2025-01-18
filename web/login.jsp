@@ -10,7 +10,8 @@
 >>>>>>>>> Temporary merge branch 2
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="dao.RoleDAO,model.Role,java.util.List,java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html>
@@ -54,7 +55,12 @@
             <![endif]-->
         </head>
         <body class="inner_page login">
-
+            <%
+               RoleDAO dao = new RoleDAO();
+               List<Role> list = new ArrayList<>();
+               list=dao.getAll();
+               request.setAttribute("rolelist",list);
+            %>
             <div class="full_container">
                 <div class="container">
                     <div class="center verticle_center full_height">
@@ -80,9 +86,9 @@
                                             <label class="label_field">Role</label>
                                             <span>
                                                 <select id="role" name="role" class="form-control">
-                                                    <option value="1" selected="">Resident</option>
-                                                    <option value="2">Staff</option>
-                                                    <option value="3">Employee</option>
+                                                    <c:forEach items="${requestScope.rolelist}" var="o">
+                                                    <option value="${o.id}" selected="">${o.name}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </span>
                                             <a class="forgot" href="requestpassword.jsp">Forgotten Password?</a>
