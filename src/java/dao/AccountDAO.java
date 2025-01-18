@@ -96,19 +96,12 @@ public class AccountDAO extends DBContext {
 
     public void changePassword(String username, String password, int roleId) {
         String sql = "Update ";
-        AccountDAO dao = new AccountDAO();
-        String table =dao.getcheckTable(username,roleId);
-        if(table.equals("Empty")){
-            return;
-        }
-        else if(table.equals("Resident")){
-            sql ="SELECT * FROM Resident WHERE [username]=?";
-        }
-        else if(table.equals("Staff")){
-            sql ="SELECT * FROM Staff WHERE [username]=?";
-        }
-        else if(table.equals("Employee")){
-            sql ="SELECT * FROM Employee WHERE [username]=?";
+        if (roleId == 1) {
+            sql += "Resident set password = ? where username = ? ";
+        } else if (roleId == 3) {
+            sql += "Employee set password = ? where username = ? ";
+        } else {
+            sql += "Staff set password = ? where username = ? ";
         }
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
