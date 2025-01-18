@@ -25,7 +25,6 @@ import model.Role;
  *
  * @author thanh
  */
-
 public class ResidentDAO extends DBContext {
 
     public boolean checkConnection() {
@@ -50,7 +49,7 @@ public class ResidentDAO extends DBContext {
                 String cccd = rs.getString("cccd");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                Role role = new Role("1", "resident", "keke");
+                Role role = new Role("1", "resident", "--");
                 list.add(new Resident(id, name, cccd, phone, email, bod, address, username, password, email, name, role));
             }
         } catch (SQLException ex) {
@@ -105,15 +104,44 @@ public class ResidentDAO extends DBContext {
         }
         return null;
     }
-    public void changPasswordById(String id, String newpw){
-        String sql="update resident set password = ? where id =?";
+
+    public void changPasswordById(String id, String newpw) {
+        String sql = "update resident set password = ? where id =?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, newpw);
-            st.setString(2 , id);
+            st.setString(2, id);
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
+        }
+    }
+
+//    Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status)
+    public List<Resident> getAllResident() {
+        String sql = "select * from Resident r right join Apartment a\n"
+                + "on r.Id = a.rId ";
+        List<Resident> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Resident(rs.getString("id"), rs.getString("Name"),
+                        rs.getString("cccd"), rs.getString("phone"),
+                        rs.getString("email"), rs.getString("email"), rs.getString("address"), rs.getString("status")));
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public static void main(String[] args) {
+        ResidentDAO dao = new ResidentDAO();
+        List<Resident> list = dao.getAll();
+        for(Resident r: list){
+            System.out.println(r);
         }
     }
 }
