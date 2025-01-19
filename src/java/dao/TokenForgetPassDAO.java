@@ -59,7 +59,7 @@ public class TokenForgetPassDAO extends DBContext {
 
     public TokenForgetPassword getTokenPassword(String token) {
         String sql = "select * from tokenForgetPassword where token = ?";
-        EmployeeDAO daoA = new EmployeeDAO();
+        AccountDAO daoA = new AccountDAO();
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, token);
@@ -104,7 +104,7 @@ public class TokenForgetPassDAO extends DBContext {
 
     public static void main(String[] args) {
         TokenForgetPassDAO dao = new TokenForgetPassDAO();
-        EmployeeDAO daoA = new EmployeeDAO();
+        AccountDAO daoA = new AccountDAO();
         SendEmail send = new SendEmail();
         Timestamp time = Timestamp.valueOf(send.expireDateTime());
         TokenForgetPassword token = new TokenForgetPassword(send.generateToken(), false, daoA.getAccountById("P110"), send.expireDateTime());

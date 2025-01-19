@@ -47,13 +47,45 @@ public class EmployeeDAO extends DBContext {
                 String username  =rs.getString("username");
                 String password  =rs.getString("password");
                 Role r= rd.getById(rs.getString("roleid"));
-                Employee e = new Employee(id, name, bod, Email, phone, address, cccd, Email, startDate, endDate, status, username, password, r);
+                Employee e = new Employee(id, name, bod, Email, phone, address, cccd, sp, startDate, endDate, status, username, password, r);
                 list.add(e);
             }
         } catch (Exception e) {
         }
         return list;
     }
+    
+    public List<Employee> getAllWorkingEmployee(){
+        ServiceProviderDAO sd  = new ServiceProviderDAO();
+        RoleDAO rd = new RoleDAO();
+        String sql="select * from employee where status=1";
+        List<Employee> list = new ArrayList<>();
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                String id = rs.getString("id");
+                String name = rs.getString("Name");
+                String bod = rs.getDate("bod").toString();
+                String Email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address =rs.getString("address");
+                String cccd=rs.getString("cccd");
+                ServiceProvider sp =sd.getById(rs.getString("companyId"));
+                String startDate = rs.getDate("startDate").toString();
+                String endDate = rs.getDate("endDate")==null?"None":rs.getDate("enddate").toString();
+                int status = rs.getInt("status");
+                String username  =rs.getString("username");
+                String password  =rs.getString("password");
+                Role r= rd.getById(rs.getString("roleid"));
+                Employee e = new Employee(id, name, bod, Email, phone, address, cccd, sp, startDate, endDate, status, username, password, r);
+                list.add(e);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
     public Employee getById(String id){
         List<Employee> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
@@ -79,63 +111,7 @@ public class EmployeeDAO extends DBContext {
         return null;
     }
 
-    //-----------------------------------------------------------------------ACCOUNTDAO-----------------------------------------------------
     
-    
-    public List<Account> getAllAccount() {
-        ResidentDAO daoR = new ResidentDAO();
-        StaffDAO daoS = new StaffDAO();
-        EmployeeDAO daoE = new EmployeeDAO();
-
-        List<Account> list = new ArrayList<>();
-        list.addAll(daoR.getAllResidentAccount());
-        list.addAll(daoS.getAllStaffAccount());
-        list.addAll(daoE.getAllEmployeeAccount());
-
-        return list;
-    }
-
-    public Account getAccountById(String pId) {
-        EmployeeDAO dao = new EmployeeDAO();
-        List<Account> list = dao.getAllAccount();
-        for (Account a : list) {
-            if (a.getpId().equals(pId)) {
-                return a;
-            }
-        }
-        return null;
-    }
-
-    public Account getAccountByUsername(String username) {
-        EmployeeDAO dao = new EmployeeDAO();
-        List<Account> list = dao.getAllAccount();
-        for (Account a : list) {
-            if (a.getUsername().equals(username)) {
-                return a;
-            }
-        }
-        return null;
-    }
-
-    public void changePassword(String username, String password, int roleId) {
-        String sql = "Update ";
-        if (roleId == 1) {
-            sql += "Resident set password = ? where username = ? ";
-        } else if (roleId == 2) {
-            sql += "Staff set password = ? where username = ? ";
-        } else {
-            sql += "Employee set password = ? where username = ? ";
-        }
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, password);
-            ps.setString(2, username);
-            ps.executeQuery();
-        } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
     public void EditProfileEm(String id,String phone, String email, String address){
         String sql="update Employee set Email=?, Phone=?, [Address]=? where id=?";
         try {

@@ -134,4 +134,28 @@ public class AccountDAO extends DBContext {
         return list;
     }
 
+    //-----------------------------------------------------------------------ACCOUNTDAO-----------------------------------------------------
+   
+
+    public Account getAccountById(String pId) {
+        List<Account> list = this.getAllAccount();
+        for (Account a : list) {
+            if (a.getpId().equals(pId)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    public Account getAccountByUsername(String username) {
+        List<Account> list = this.getAllAccount();
+        for (Account a : list) {
+            if (a.getUsername().equals(username)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+
 }

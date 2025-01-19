@@ -4,7 +4,7 @@
  */
 package authentication;
 
-import dao.EmployeeDAO;
+import dao.AccountDAO;
 import dao.TokenForgetPassDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -112,7 +112,7 @@ public class ResetPassServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("new_password");
         String confirmPassword = request.getParameter("confirm_password");
-        EmployeeDAO daoA = new EmployeeDAO();
+        AccountDAO daoA = new AccountDAO();
         TokenForgetPassDAO daoT = new TokenForgetPassDAO();
         String token = daoT.getTokenBypId(daoA.getAccountByUsername(username).getpId());
 
