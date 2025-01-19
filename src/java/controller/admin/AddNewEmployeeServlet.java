@@ -122,7 +122,7 @@ public class AddNewEmployeeServlet extends HttpServlet {
                     age--; 
                 }
                 
-                if (age <= 118) {
+                if (age <= 18) {
                     request.setAttribute("error", "The employee's age must be greater than 18.");
                     request.getRequestDispatcher("addnewemployee.jsp").forward(request, response);
                     return;
