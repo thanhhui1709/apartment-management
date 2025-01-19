@@ -44,7 +44,7 @@
                <div class="sidebar_blog_1">
                   <div class="sidebar-header">
                      <div class="logo_section">
-                        <a href="index.html"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
+                        <a href="index.jsp"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
                      </div>
                   </div>
                   <div class="sidebar_user_info">
@@ -52,7 +52,7 @@
                      <div class="user_profle_side">
                         <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
                         <div class="user_info">
-                           <h6>John David</h6>
+                           <h6>Resident</h6>
                            <p><span class="online_animation"></span> Online</p>
                         </div>
                      </div>
@@ -83,6 +83,7 @@
                         </ul>
                      </li>
                      <li><a href="view-resident"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
+                     <li><a href="view-all-staff"><i class="fa fa-table purple_color2"></i> <span>Staff Information</span></a></li>
                      <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
                         <ul class="collapse list-unstyled" id="apps">
@@ -129,7 +130,7 @@
                      <div class="full">
                         <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
                         <div class="logo_section">
-                           <a href="index.html"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
+                           <a href="index.jsp"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
                         </div>
                         <div class="right_topbar">
                            <div class="icon_info">
@@ -141,7 +142,7 @@
                               <ul class="user_profile_dd">
                                  <li>
                                      <jsp:useBean id="ut" class="util.Util" scope="page"/>
-                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">John David</span></a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">User</span></a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="${ut.getTableNameByRoleId(sessionScope.account.roleId)}">My Profile</a>
                                        <a class="dropdown-item" href="settings.html">Settings</a>

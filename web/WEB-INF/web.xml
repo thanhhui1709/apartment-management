@@ -53,6 +53,22 @@
         <servlet-class>controller.staff.ViewProfileStaff</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>EditProfileResidentServlet</servlet-name>
+        <servlet-class>controller.resident.EditProfileResidentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileStaffServlet</servlet-name>
+        <servlet-class>controller.staff.EditProfileStaffServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileEmployeeServlet</servlet-name>
+        <servlet-class>controller.employee.EditProfileEmployeeServlet</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>LoginByGoogleServlet</servlet-name>
+        <servlet-class>authentication.LoginByGoogleServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DeleteResidentServlet</servlet-name>
         <servlet-class>controller.admin.DeleteResidentServlet</servlet-class>
     </servlet>
@@ -68,7 +84,7 @@
         <servlet-name>test</servlet-name>
         <url-pattern>/test</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
+<servlet-mapping>
         <servlet-name>RequestPasswordServlet</servlet-name>
         <url-pattern>/request-password</url-pattern>
     </servlet-mapping>
@@ -99,5 +115,21 @@
     <servlet-mapping>
         <servlet-name>DeleteResidentServlet</servlet-name>
         <url-pattern>/delete-resident</url-pattern>
+    </servlet-mapping>
+      <servlet-mapping>
+        <servlet-name>LoginByGoogleServlet</servlet-name>
+        <url-pattern>/login-google</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileResidentServlet</servlet-name>
+        <url-pattern>/editprofile-resident</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileStaffServlet</servlet-name>
+        <url-pattern>/editprofile-staff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileEmployeeServlet</servlet-name>
+        <url-pattern>/editprofile-employee</url-pattern>
     </servlet-mapping>
 </web-app>
