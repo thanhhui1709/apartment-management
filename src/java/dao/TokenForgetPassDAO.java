@@ -59,7 +59,7 @@ public class TokenForgetPassDAO extends DBContext {
 
     public TokenForgetPassword getTokenPassword(String token) {
         String sql = "select * from tokenForgetPassword where token = ?";
-        EmployeeDAO daoA = new EmployeeDAO();
+        AccountDAO daoA = new AccountDAO();
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, token);
@@ -100,17 +100,6 @@ public class TokenForgetPassDAO extends DBContext {
             Logger.getLogger(TokenForgetPassDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
-    }
-
-    public static void main(String[] args) {
-        TokenForgetPassDAO dao = new TokenForgetPassDAO();
-        EmployeeDAO daoA = new EmployeeDAO();
-        SendEmail send = new SendEmail();
-        Timestamp time = Timestamp.valueOf(send.expireDateTime());
-        TokenForgetPassword token = new TokenForgetPassword(send.generateToken(), false, daoA.getAccountById("P110"), send.expireDateTime());
-
-        TokenForgetPassword newToken = dao.getTokenPassword("8b6492d4-6618-4d8e-bf42-f92f88498209");
-        System.out.println(dao.getTokenBypId("P110"));
     }
 
 }

@@ -6,6 +6,7 @@ package authentication;
 
 
 
+import dao.AccountDAO;
 import dao.EmployeeDAO;
 import dao.TokenForgetPassDAO;
 import java.io.IOException;
@@ -79,7 +80,7 @@ public class RequestPasswordServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            EmployeeDAO dao = new EmployeeDAO();
+             AccountDAO dao = new AccountDAO();
             String username = request.getParameter("username");
 //            String email = daoA.getEmailByUsername(username);
 //            String fullName = daoA.getFullNameByUsername(username);
