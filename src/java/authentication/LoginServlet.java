@@ -5,7 +5,6 @@
 package authentication;
 
 import dao.AccountDAO;
-import dao.RoleDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,10 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
 import model.Account;
-import model.Role;
 
 /**
  *
@@ -49,13 +45,16 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        RoleDAO dao = new RoleDAO();
-        List<Role> list = new ArrayList<>();
-        list = dao.getAll();
-        session.setAttribute("rolelist", list);
-        request.getRequestDispatcher("login.jsp").forward(request, response);
-
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null) {
+//            for (Cookie cookie : cookies) {
+//                if ("rememberedUser".equals(cookie.getName())) {
+//                    request.setAttribute("rememberedUser", cookie.getValue());
+//                    break;
+//                }
+//            }
+//        }
+//        request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     @Override
@@ -95,7 +94,8 @@ public class LoginServlet extends HttpServlet {
                 cookiePass.setMaxAge(60 * 60);
                 response.addCookie(cookieUser);
                 response.addCookie(cookiePass);
-            } else {
+            } 
+            else {
                 // Clear both cookies by setting max age to 0
                 Cookie cookieUser = new Cookie("rememberedUser", user);
                 Cookie cookiePass = new Cookie("rememberedPass", pass);
