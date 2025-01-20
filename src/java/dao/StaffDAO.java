@@ -125,4 +125,39 @@ public class StaffDAO extends DBContext {
         return -1;
 
     }
+
+    public boolean insertStaff(Staff s) {
+        String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,username,password,roleId) \n"
+                + "values(?,?,?,?,?,?,?,?,?,?,?,?,2)";
+        Util u = new Util();
+        List<Staff> list = this.getAll();
+        
+        int lastIdNum = 1; // Giá trị mặc định nếu danh sách rỗng
+    if (!list.isEmpty()) {
+        String lastId = list.get(list.size() - 1).getId(); // Lấy ID cuối
+        lastIdNum = Integer.parseInt(lastId.substring(1)) + 1; // Chuyển "S001" -> 1, tăng lên 2
+    }
+    String newId = String.format("S%03d", lastIdNum);
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, newId);
+            ps.setString(2, s.getName());
+            ps.setString(3, s.getBod());
+            ps.setString(4, s.getEmail());
+            ps.setString(5, s.getPhone());
+            ps.setString(6, s.getAddress());
+            ps.setString(7, s.getCccd());
+            ps.setInt(8, s.getSalary());
+            ps.setString(9, s.getEducation());
+            ps.setString(10, s.getBank());
+            ps.setString(11, s.getUsername());
+            ps.setString(12, s.getPassword());
+
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(StaffDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 }
