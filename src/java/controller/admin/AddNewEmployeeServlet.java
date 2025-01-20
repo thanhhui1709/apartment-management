@@ -101,8 +101,10 @@ public class AddNewEmployeeServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         EmployeeDAO daoE = new EmployeeDAO();
+        ServiceProviderDAO daoSP = new ServiceProviderDAO();
+        ServiceProvider sp = daoSP.getById(company);
         List<Employee> listEmployee = daoE.getAll();
-        Employee newE = new Employee(name, dob, email, phone, address, cccd, company, startDate, username, password);
+        Employee newE = new Employee(name, dob, email, phone, address, cccd, sp, startDate, username, password);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         ZoneId zone = ZoneId.systemDefault();
         for (Employee e : listEmployee) {
@@ -119,9 +121,9 @@ public class AddNewEmployeeServlet extends HttpServlet {
 
                 int age = currentDate.getYear() - birthDate.getYear();
                 if (currentDate.getDayOfYear() < birthDate.getDayOfYear()) {
-                    age--; 
+                    age--;
                 }
-                
+
                 if (age <= 18) {
                     request.setAttribute("error", "The employee's age must be greater than 18.");
                     request.getRequestDispatcher("addnewemployee.jsp").forward(request, response);

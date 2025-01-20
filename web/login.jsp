@@ -11,7 +11,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" import="dao.RoleDAO,model.Role,java.util.List,java.util.ArrayList"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html>
@@ -55,12 +55,6 @@
             <![endif]-->
         </head>
         <body class="inner_page login">
-            <%
-               RoleDAO dao = new RoleDAO();
-               List<Role> list = new ArrayList<>();
-               list=dao.getAll();
-               request.setAttribute("rolelist",list);
-            %>
             <div class="full_container">
                 <div class="container">
                     <div class="center verticle_center full_height">
@@ -86,8 +80,8 @@
                                             <label class="label_field">Role</label>
                                             <span>
                                                 <select id="role" name="role" class="form-control">
-                                                    <c:forEach items="${requestScope.rolelist}" var="o">
-                                                    <option value="${o.id}" <c:if test="${o.id == cookie.rememberedRole.value}">selected</c:if> <c:if test="${null == cookie.rememberedRole.value}"><c:if test="${o.id == 1}">selected</c:if></c:if>>${o.name}</option>
+                                                    <c:forEach items="${sessionScope.rolelist}" var="o">
+                                                        <option value="${o.id}" <c:if test="${o.id == cookie.rememberedRole.value}">selected</c:if> <c:if test="${null == cookie.rememberedRole.value}"><c:if test="${o.id == 1}">selected</c:if></c:if>>${o.name}</option>
                                                     </c:forEach>
                                                 </select>
                                             </span>
@@ -97,16 +91,16 @@
                                             <label  class="label_field" for="remember-checkbox">Remember Me</label>
                                             <input type="checkbox" name="remember" id="remember-checkbox" value="on" style="width: 10%" />
                                         </div>
-                                         <h6 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h6>
-                                            <h6 style="color:red;text-align:center">${requestScope.error}</h6>
-                                            <div class="field margin_0">
-                                                <label class="label_field hidden">hidden label</label>
-                                                <button class="main_bt" type="submit">Sign In</button>
-                                                <div>
-                                                    <i class="fa fa-google" aria-hidden="true"></i>
-                                                    <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:6969/apartment-management/login-google&response_type=code&client_id=356880565891-7ehq5ej4qae557jaoor4d4jdi8pi4586.apps.googleusercontent.com&approval_prompt=force">Sign In With Google<a/>
-                                                </div>
+                                        <h6 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h6>
+                                        <h6 style="color:red;text-align:center">${requestScope.error}</h6>
+                                        <div class="field margin_0">
+                                            <label class="label_field hidden">hidden label</label>
+                                            <button class="main_bt" type="submit">Sign In</button>
+                                            <div>
+                                                <i class="fa fa-google" aria-hidden="true"></i>
+                                                <a href="https://accounts.google.com/o/oauth2/auth?scope=email&redirect_uri=http://localhost:6969/apartment-management/login-google&response_type=code&client_id=356880565891-7ehq5ej4qae557jaoor4d4jdi8pi4586.apps.googleusercontent.com&approval_prompt=force">Sign In With Google<a/>
                                             </div>
+                                        </div>
                                     </fieldset>
                                 </form>
 

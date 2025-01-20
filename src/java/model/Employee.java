@@ -47,14 +47,14 @@ public class Employee {
         this.role = role;
     }
 
-    public Employee(String name, String bod, String email, String phone, String address, String cccd, String companyId, String startDate, String username, String password) {
+    public Employee(String name, String bod, String email, String phone, String address, String cccd, ServiceProvider company, String startDate, String username, String password) {
         this.name = name;
         this.bod = bod;
         this.email = email;
         this.phone = phone;
         this.address = address;
         this.cccd = cccd;
-        this.companyId = companyId;
+        this.company = company;
         this.startDate = startDate;
         this.username = username;
         this.password = password;
@@ -203,5 +203,4 @@ public class Employee {
         this.role = role;
     }
 
-  
 }
