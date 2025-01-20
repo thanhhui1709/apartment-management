@@ -23,18 +23,18 @@ public class AccountDAO extends DBContext {
 
     public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
-        String a = dao.getcheckTable("alice",3);
-        System.out.println(""+a);
+        String a = dao.getcheckTable("alice", 3);
+        System.out.println("" + a);
     }
-    
-    public String getcheckTable(String user,int roleId) {
+
+    public String getcheckTable(String user, int roleId) {
         String check_table_1 = null;
         String check_table_2 = null;
         String check_table_3 = null;
         check_table_1 = "SELECT * FROM Resident WHERE [username]=? and [roleId]=?";
         check_table_2 = "SELECT * FROM Staff WHERE [username]=? and [roleId]=?";
         check_table_3 = "SELECT * FROM Employee WHERE [username]=? and [roleId]=?";
-        String table=null;
+        String table = null;
         try {
             PreparedStatement pre_1 = connection.prepareStatement(check_table_1);
             pre_1.setString(1, user);
@@ -48,14 +48,14 @@ public class AccountDAO extends DBContext {
             pre_3.setString(1, user);
             pre_3.setInt(2, roleId);
             ResultSet rs_3 = pre_3.executeQuery();
-            if(rs_2.next()){
-                table="Staff";
-            }else if(rs_1.next()){
-                table="Resident";
-            }else if(rs_3.next()){
-                table="Employee";
-            }else{
-                table="Empty";
+            if (rs_2.next()) {
+                table = "Staff";
+            } else if (rs_1.next()) {
+                table = "Resident";
+            } else if (rs_3.next()) {
+                table = "Employee";
+            } else {
+                table = "Empty";
             }
         } catch (SQLException ex) {
             Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,19 +67,16 @@ public class AccountDAO extends DBContext {
         String sql = null;
         Account s = null;
         AccountDAO dao = new AccountDAO();
-        String table =null;
-        table=dao.getcheckTable(user,roleId);
-        if(table.equals("Empty")){
+        String table = null;
+        table = dao.getcheckTable(user, roleId);
+        if (table.equals("Empty")) {
             return s;
-        }
-        else if(table.equals("Resident")){
-            sql ="SELECT * FROM Resident WHERE [username]=?";
-        }
-        else if(table.equals("Staff")){
-            sql ="SELECT * FROM Staff WHERE [username]=?";
-        }
-        else if(table.equals("Employee")){
-            sql ="SELECT * FROM Employee WHERE [username]=?";
+        } else if (table.equals("Resident")) {
+            sql = "SELECT * FROM Resident WHERE [username]=?";
+        } else if (table.equals("Staff")) {
+            sql = "SELECT * FROM Staff WHERE [username]=?";
+        } else if (table.equals("Employee")) {
+            sql = "SELECT * FROM Employee WHERE [username]=?";
         }
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -89,7 +86,7 @@ public class AccountDAO extends DBContext {
                 s = new Account(rs.getString("username"), rs.getString("password"), rs.getString("Email"), rs.getString("Id"), rs.getInt("roleId"));
             }
         } catch (SQLException ex) {
-           Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return s;
     }
@@ -113,14 +110,18 @@ public class AccountDAO extends DBContext {
         }
 
     }
-    public Account getByEmail(String email){
+
+    public Account getByEmail(String email) {
         Util util = new Util();
         List<Account> list = this.getAllAccount();
         for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getEmail().equals(email)) return list.get(i);
+            if (list.get(i).getEmail().equals(email)) {
+                return list.get(i);
+            }
         }
         return null;
     }
+
     public List<Account> getAllAccount() {
         ResidentDAO daoR = new ResidentDAO();
         StaffDAO daoS = new StaffDAO();
@@ -156,6 +157,5 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
-
 
 }

@@ -130,22 +130,30 @@ public class ResidentDAO extends DBContext {
     }
 //    Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status)
     public List<Resident> getAllResident() {
-        String sql = "select * from Resident r right join Apartment a\n"
-                + "on r.Id = a.rId ";
+        String sql = "select  * from resident";
+
         List<Resident> list = new ArrayList<>();
         try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
             while (rs.next()) {
-                list.add(new Resident(rs.getString("id"), rs.getString("Name"),
-                        rs.getString("cccd"), rs.getString("phone"),
-                        rs.getString("email"), rs.getString("email"), rs.getString("address"), rs.getString("status")));
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String bod = rs.getDate("bod").toString();
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String cccd = rs.getString("cccd");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                Role role = new Role("1", "resident", "--");
+                list.add(new Resident(id, name, cccd, phone, email, bod, address, username, password, rs.getInt("status") == 1 ? "Active" : "Inactive", "Sold", role));
             }
-            return list;
         } catch (SQLException ex) {
             Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return list;
     }
 
     public void deleteResident(String pId) {
@@ -197,6 +205,7 @@ public class ResidentDAO extends DBContext {
         return -1;
     }
 
+
     public boolean checkDuplicatePhone(String phone) {
         List<Resident> list = getAll();
         for (Resident resident : list) {
@@ -237,13 +246,25 @@ public class ResidentDAO extends DBContext {
         return false;
     }
 
-    public static void main(String[] args) {
-        ResidentDAO dao = new ResidentDAO();
-        List<Resident> list = dao.getAll();
-        for (Resident r : list) {
-            System.out.println(r);
+    public boolean checkDeplicateEmail(String email) {
+        List<Resident> list = getAll();
+        for (Resident resident : list) {
+            if (email.equals(resident.getEmail())) {
+                return true;
+            }
         }
-        System.out.println(dao.checkDuplicateUser("alice"));
-        System.out.println(dao.checkDuplicateID("1"));
+
+        return false;
     }
+
+    public boolean checkDeplicateID(String id) {
+        List<Resident> list = getAll();
+        for (Resident resident : list) {
+            if (id.equals(resident.getCccd())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
