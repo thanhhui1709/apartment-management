@@ -60,10 +60,11 @@ public class ViewAllResident extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ResidentDAO daoR = new ResidentDAO();
-        List<Resident> listResident = daoR.getAll();
-        request.setAttribute("listResident", listResident);
-        request.getRequestDispatcher("viewallresident.jsp").forward(request, response);
+        EmployeeDAO daoE = new EmployeeDAO();
+        List<Employee> listEmployee = daoE.getAllWorkingEmployee();
+        request.setAttribute("listEmployee", listEmployee);
+        request.getRequestDispatcher("viewallemployee.jsp").forward(request, response);
+
     }
 
     /**

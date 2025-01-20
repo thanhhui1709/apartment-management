@@ -770,7 +770,7 @@ a:focus {
 }
 .icon_info ul.user_profile_dd li{
     border-left:1px;
-    border-left-color: #fff;
+    border-left-color: #fff; 
     background-color: #214162;
 }
 .fa-bars:hover{
@@ -1232,8 +1232,7 @@ a[data-toggle="collapse"] {
     margin-top: 10px;
 }
 
-#rebenue {
-}
+#rebenue {}
 
 .graph_revenue {
     padding: 0;
@@ -2428,8 +2427,7 @@ h2.invoice_head small {
     background-color: #fff;
 }
 
-.table_row tbody {
-}
+.table_row tbody {}
 
 .table_row tbody tr {
     border: none;
@@ -2663,8 +2661,7 @@ ul.inbox-nav li a i {
     top: 1px;
 }
 
-ul.inbox-nav li a span.label {
-}
+ul.inbox-nav li a span.label {}
 
 ul.labels-info li h4 {
     color: #5c5c5e;
@@ -3196,8 +3193,7 @@ ul.labels-category li p {
     padding: 7px 0;
 }
 
-.bottom_list .left_rating p.ratings a {
-}
+.bottom_list .left_rating p.ratings a {}
 
 .fa.fa-star {
     color: #ff9800;
@@ -3467,23 +3463,3 @@ table.projects tr td:first-child {
     color: #f26d5b;
 }
 
-<<<<<<< Updated upstream
-
-.status-active {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: green; /* Màu xanh cho active */
-    border-radius: 50%;
-}
-
-.status-inactive {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: red; /* Màu đỏ cho inactive */
-    border-radius: 50%;
-}
-
-=======
->>>>>>> Stashed changes
