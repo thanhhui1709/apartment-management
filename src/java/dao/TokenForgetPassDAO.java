@@ -102,4 +102,15 @@ public class TokenForgetPassDAO extends DBContext {
         return -1;
     }
 
+    public static void main(String[] args) {
+        TokenForgetPassDAO dao = new TokenForgetPassDAO();
+        AccountDAO daoA = new AccountDAO();
+        SendEmail send = new SendEmail();
+        Timestamp time = Timestamp.valueOf(send.expireDateTime());
+        TokenForgetPassword token = new TokenForgetPassword(send.generateToken(), false, daoA.getAccountById("P110"), send.expireDateTime());
+
+        TokenForgetPassword newToken = dao.getTokenPassword("8b6492d4-6618-4d8e-bf42-f92f88498209");
+        System.out.println(dao.getTokenBypId("P110"));
+    }
+
 }

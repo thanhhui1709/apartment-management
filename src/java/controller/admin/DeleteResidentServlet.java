@@ -5,6 +5,7 @@
 
 package controller.admin;
 
+import dao.ResidentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -54,6 +55,9 @@ public class DeleteResidentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String pId = request.getParameter("pId");
+        ResidentDAO dao = new ResidentDAO();
+        dao.deleteResident(pId);
+        response.sendRedirect("view-resident");
     } 
 
     /** 

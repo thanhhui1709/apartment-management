@@ -135,9 +135,11 @@ public class AccountDAO extends DBContext {
         return list;
     }
 
+    //-----------------------------------------------------------------------ACCOUNTDAO-----------------------------------------------------
+   
+
     public Account getAccountById(String pId) {
-        AccountDAO dao = new AccountDAO();
-        List<Account> list = dao.getAllAccount();
+        List<Account> list = this.getAllAccount();
         for (Account a : list) {
             if (a.getpId().equals(pId)) {
                 return a;
@@ -147,8 +149,7 @@ public class AccountDAO extends DBContext {
     }
 
     public Account getAccountByUsername(String username) {
-        AccountDAO dao = new AccountDAO();
-        List<Account> list = dao.getAllAccount();
+        List<Account> list = this.getAllAccount();
         for (Account a : list) {
             if (a.getUsername().equals(username)) {
                 return a;

@@ -45,18 +45,49 @@ public class EmployeeDAO extends DBContext {
                 String startDate = rs.getDate("startDate").toString();
                 String endDate = rs.getDate("endDate") == null ? "None" : rs.getDate("enddate").toString();
                 int status = rs.getInt("status");
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-                Role r = rd.getById(rs.getString("roleid"));
-                Employee e = new Employee(id, name, bod, Email, phone, address, cccd, Email, startDate, endDate, status, username, password, r);
+                String username  =rs.getString("username");
+                String password  =rs.getString("password");
+                Role r= rd.getById(rs.getString("roleid"));
+                Employee e = new Employee(id, name, bod, Email, phone, address, cccd, sp, startDate, endDate, status, username, password, r);
                 list.add(e);
             }
         } catch (Exception e) {
         }
         return list;
     }
-
-    public Employee getById(String id) {
+    
+    public List<Employee> getAllWorkingEmployee(){
+        ServiceProviderDAO sd  = new ServiceProviderDAO();
+        RoleDAO rd = new RoleDAO();
+        String sql="select * from employee where status=1";
+        List<Employee> list = new ArrayList<>();
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                String id = rs.getString("id");
+                String name = rs.getString("Name");
+                String bod = rs.getDate("bod").toString();
+                String Email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address =rs.getString("address");
+                String cccd=rs.getString("cccd");
+                ServiceProvider sp =sd.getById(rs.getString("companyId"));
+                String startDate = rs.getDate("startDate").toString();
+                String endDate = rs.getDate("endDate")==null?"None":rs.getDate("enddate").toString();
+                int status = rs.getInt("status");
+                String username  =rs.getString("username");
+                String password  =rs.getString("password");
+                Role r= rd.getById(rs.getString("roleid"));
+                Employee e = new Employee(id, name, bod, Email, phone, address, cccd, sp, startDate, endDate, status, username, password, r);
+                list.add(e);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    public Employee getById(String id){
         List<Employee> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId().equals(id)) {
@@ -83,8 +114,9 @@ public class EmployeeDAO extends DBContext {
         return null;
     }
 
-    public void EditProfileEm(String id, String phone, String email, String address) {
-        String sql = "update Employee set Email=?, Phone=?, [Address]=? where id=?";
+    
+    public void EditProfileEm(String id,String phone, String email, String address){
+        String sql="update Employee set Email=?, Phone=?, [Address]=? where id=?";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, email);

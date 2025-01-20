@@ -87,7 +87,7 @@
                                             <span>
                                                 <select id="role" name="role" class="form-control">
                                                     <c:forEach items="${requestScope.rolelist}" var="o">
-                                                    <option value="${o.id}" selected="">${o.name}</option>
+                                                    <option value="${o.id}" <c:if test="${o.id == cookie.rememberedRole.value}">selected</c:if> <c:if test="${null == cookie.rememberedRole.value}"><c:if test="${o.id == 1}">selected</c:if></c:if>>${o.name}</option>
                                                     </c:forEach>
                                                 </select>
                                             </span>
