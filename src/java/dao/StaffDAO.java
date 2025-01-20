@@ -126,9 +126,7 @@ public class StaffDAO extends DBContext {
         return -1;
 
     }
-    public static void main(String[] args) {
-        StaffDAO sd=new StaffDAO();
-        System.out.println(  sd.updateStaffInfor("S1002", "Hui", "2024-01-01", "123", "cec", "123", "ngu", "mb-1231231"));
+
     public boolean insertStaff(Staff s) {
         String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,username,password,roleId) \n"
                 + "values(?,?,?,?,?,?,?,?,?,?,?,?,2)";

@@ -42,4 +42,8 @@ public class ServiceProviderDAO extends DBContext{
         }
         return null;
     }
+    public static void main(String[] args) {
+        ServiceProviderDAO dao = new ServiceProviderDAO();
+        System.out.println(dao.getAll().size());
+    }
 }
