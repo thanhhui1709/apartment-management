@@ -43,6 +43,22 @@ public class Staff {
     public Staff() {
     }
 
+    public Staff(String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, String username, String password) {
+        this.name = name;
+        this.bod = bod;
+        this.email= email;
+        this.phone=phone;
+        this.address=address;
+        this.cccd=cccd;
+        this.salary=salary;
+        this.education=education;
+        this.bank=bank;
+        this.username=username;
+        this.password=password;
+        
+        
+    }
+
     // Getters and Setters
     public String getId() {
         return id;
