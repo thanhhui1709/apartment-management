@@ -90,4 +90,34 @@ public class StaffDAO extends DBContext {
         }
         return null;
     }
+     public int updateStaffInfor(String id,String name, String bod, String phone, String address, String cccd, String education, String bank) {
+        String sql = "UPDATE [dbo].[Staff]\n"
+                + "   SET \n"
+                + "      [Name] = ?\n"
+                + "      ,[Bod] = ?\n"
+                + "      ,[Phone] = ?\n"
+                + "      ,[Address] = ?\n"
+                + "      ,[CCCD] = ?\n"
+                + "      ,[Education] = ?\n"
+                + "      ,[Bank] = ?\n"
+                + "     \n"
+                + " WHERE ID=?";
+        try {
+            PreparedStatement st=connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setString(2, bod);
+            st.setString(3, phone);
+            st.setString(4, address);
+            st.setString(5, cccd);
+            st.setString(6, education);
+            st.setString(7, bank);
+            st.setString(8, id);
+            st.executeUpdate();
+            return 0;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return -1;
+
+    }
 }
