@@ -227,7 +227,7 @@
                                                                 <td>${staff.education}</td>
                                                                 <td>${staff.role.name}</td>
                                                                 <td>Chưa có status</td>
-                                                                <td>Cho cái update vào đây</td>
+                                                                <td><a href="updateStaffInfor?id=${staff.id}">Update</a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
