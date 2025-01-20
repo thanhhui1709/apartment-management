@@ -17,8 +17,8 @@ import javax.mail.internet.MimeMessage;
 public class SendEmail {
 
     private final int LIMIT_MINUS = 10;
-    private final String from = "playunknowquangoc@gmail.com"; // Địa chỉ email gửi
-    private final String password = "tven yxhi haaw wrnk"; // Mật khẩu email
+    private final String from = "baviapartment@gmail.com"; // Địa chỉ email gửi
+    private final String password = "tcwv klff kvlg ccwr"; // Mật khẩu email
 
     /**
      * Tạo mã xác nhận ngẫu nhiên.
@@ -35,9 +35,7 @@ public class SendEmail {
         return LocalDateTime.now().isAfter(time);
     }
 
-    /**
-     * Gửi email chứa mật khẩu cũ hoặc thông tin xác nhận đơn hàng.
-     */
+
     public boolean sendEmail(String to, String subject, String content) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
