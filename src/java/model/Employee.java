@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Objects;
+
 /**
  *
  * @author admin1711
@@ -45,7 +47,19 @@ public class Employee {
         this.role = role;
     }
 
-    
+    public Employee(String name, String bod, String email, String phone, String address, String cccd, ServiceProvider company, String startDate, String username, String password) {
+        this.name = name;
+        this.bod = bod;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.company = company;
+        this.startDate = startDate;
+        this.username = username;
+        this.password = password;
+    }
+
     // Getters and Setters
     public String getId() {
         return id;
@@ -155,7 +169,38 @@ public class Employee {
         return role;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Employee other = (Employee) obj;
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.phone, other.phone)) {
+            return false;
+        }
+        if (!Objects.equals(this.cccd, other.cccd)) {
+            return false;
+        }
+        return Objects.equals(this.username, other.username);
+    }
+
     public void setRole(Role role) {
         this.role = role;
     }
+
 }

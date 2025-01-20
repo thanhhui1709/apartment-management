@@ -4,7 +4,12 @@
  */
 package authentication;
 
+<<<<<<< Updated upstream
 import dao.AccountDAO;
+import dao.RoleDAO;
+=======
+import dao.EmployeeDAO;
+>>>>>>> Stashed changes
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,7 +18,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import model.Account;
+<<<<<<< Updated upstream
+import model.Role;
+=======
+>>>>>>> Stashed changes
 
 /**
  *
@@ -45,6 +56,15 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+<<<<<<< Updated upstream
+        HttpSession session = request.getSession();
+        RoleDAO dao = new RoleDAO();
+        List<Role> list = new ArrayList<>();
+        list = dao.getAll();
+        session.setAttribute("rolelist", list);
+        request.getRequestDispatcher("login.jsp").forward(request, response);
+
+=======
 //        Cookie[] cookies = request.getCookies();
 //        if (cookies != null) {
 //            for (Cookie cookie : cookies) {
@@ -55,6 +75,7 @@ public class LoginServlet extends HttpServlet {
 //            }
 //        }
 //        request.getRequestDispatcher("login.jsp").forward(request, response);
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -71,7 +92,11 @@ public class LoginServlet extends HttpServlet {
         } else {
             role = Integer.parseInt(checkrole);
         }
+<<<<<<< Updated upstream
         AccountDAO dao = new AccountDAO();
+=======
+        EmployeeDAO dao = new EmployeeDAO();
+>>>>>>> Stashed changes
         Account ac = dao.getAccountByUsernameandRole(user, role);
         if (user.isEmpty() || pass.isEmpty()) {
             request.setAttribute("error", "Username or Password is not allowed to be blank");
@@ -94,8 +119,12 @@ public class LoginServlet extends HttpServlet {
                 cookiePass.setMaxAge(60 * 60);
                 response.addCookie(cookieUser);
                 response.addCookie(cookiePass);
+<<<<<<< Updated upstream
+            } else {
+=======
             } 
             else {
+>>>>>>> Stashed changes
                 // Clear both cookies by setting max age to 0
                 Cookie cookieUser = new Cookie("rememberedUser", user);
                 Cookie cookiePass = new Cookie("rememberedPass", pass);
@@ -105,7 +134,11 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(cookiePass);
             }
 
+<<<<<<< Updated upstream
             response.sendRedirect("index.jsp");
+=======
+            response.sendRedirect("index.html");
+>>>>>>> Stashed changes
         } else {
             request.setAttribute("error", "Username or Password is incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
