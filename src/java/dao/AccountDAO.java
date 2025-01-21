@@ -26,7 +26,6 @@ public class AccountDAO extends DBContext {
     public String getcheckTable(String user,int roleId) {
         String check_table_1 = null;
         String check_table_2 = null;
-        String check_table_3 = null;
         check_table_1 = "SELECT * FROM Resident WHERE [username]=? and [roleId]=?";
         check_table_2 = "SELECT * FROM Staff WHERE [username]=? and [roleId]=?";
         String table=null;
@@ -84,8 +83,6 @@ public class AccountDAO extends DBContext {
         String sql = "Update ";
         if (roleId == 1) {
             sql += "Resident set password = ? where username = ? ";
-        } else if (roleId == 3) {
-            sql += "Employee set password = ? where username = ? ";
         } else {
             sql += "Staff set password = ? where username = ? ";
         }

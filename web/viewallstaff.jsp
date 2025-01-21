@@ -172,19 +172,16 @@
                                             </div>
                                         </div>
                                         <div style="margin-left: 40px;">
-                                            <form action="/filter" method="GET">
+                                            <form action="view-all-staff" method="GET">
                                                 <div class="row align-items-center">
-                                                    <div class="col-md-2">
-                                                        <input type="text" class="form-control" name="searchId" placeholder="Search by ID">
-                                                    </div>
                                                     <div class="col-md-2">
                                                         <input type="text" class="form-control" name="searchName" placeholder="Search by Name">
                                                     </div>
                                                     <div class="col-md-2">
                                                         <select class="form-control" name="filterStatus">
-                                                            <option value="">Filter by Status</option>
-                                                            <option value="active">Active</option>
-                                                            <option value="inactive">Inactive</option>
+                                                            <option value="-1">Filter by Status</option>
+                                                            <option value="1">Active</option>
+                                                            <option value="0">Inactive</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4 d-flex">
@@ -240,6 +237,19 @@
                             </div>
                         </div>
                     </div>
+                    <form method="get" action="view-all-staff" style="display: flex; align-items: center; gap: 10px;">
+                        <!-- Dropdown chọn trang -->
+                        <label for="page" style="font-size: 14px; font-weight: bold;">Trang:</label>
+                        <select id="page" name="page" onchange="this.form.submit()" 
+                                style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
+                            <c:forEach begin="1" end="${requestScope.totalPage}" var="page">
+                                <option value="${page}" <c:if test="${page == requestScope.currentPage}">selected</c:if>>
+                                    ${page}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </form>
+
                     <!-- footer -->
                     <div class="container-fluid">
                         <div class="footer">

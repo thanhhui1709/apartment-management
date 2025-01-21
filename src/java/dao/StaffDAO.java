@@ -48,14 +48,21 @@ public class StaffDAO extends DBContext {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 Role r = rd.getById(rs.getString("roleid"));
-                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, username, password, r);
+                int status  =rs.getInt("status");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, username, password, r,status);
                 list.add(s);
             }
         } catch (Exception e) {
         }
         return list;
     }
-
+    public static void main(String[] args) {
+        StaffDAO sd =new StaffDAO();
+        List<Staff> list = sd.getByStatus(1);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getStatus());
+        }
+    }
     public Staff getById(String id) {
         List<Staff> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
@@ -160,4 +167,33 @@ public class StaffDAO extends DBContext {
         }
         return false;
     }
+    public List<Staff> searchByName(List<Staff> list,String name){
+        List<Staff> rs  = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getName().toLowerCase().contains(name.toLowerCase())) rs.add(list.get(i));
+        }
+        return rs;
+    }
+    public List<Staff> getPageByNumber(List<Staff> list,int page,int number){
+        List<Staff> listpage = new ArrayList<>();
+        int start = number * (page - 1);
+        int end = number * page - 1;
+        for (int i = start; i <= end; i++) {
+            listpage.add(list.get(i));
+            if (i == list.size() - 1) {
+                break;
+            }
+        }
+        return listpage;
+    }
+    public List<Staff> getByStatus(int status){
+        if(status==-1) return this.getAll();
+        List<Staff> list= this.getAll();
+        List<Staff> rs=  new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getStatus()==status) rs.add(list.get(i));
+        }
+        return rs;
+    }
+    
 }

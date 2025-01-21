@@ -6,6 +6,7 @@
 package controller.admin;
 
 import dao.AdminDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Staff;
 
 /**
  *
@@ -57,7 +61,49 @@ public class ViewAllStaff extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         AdminDAO ad = new AdminDAO();
-        request.setAttribute("staffs", ad.getAllStaffExceptAdmin());
+        List<Staff> list;
+        HttpSession session =request.getSession();
+        if(session.getAttribute("staffs")==null){
+            list = ad.getAllStaffExceptAdmin();
+            session.setAttribute("staffs", list);
+        }
+        else{
+            list = (List<Staff>) session.getAttribute("staffs");
+        }
+        StaffDAO sd= new StaffDAO();
+        String filterStatus_raw = request.getParameter("filterStatus");
+        if(filterStatus_raw!=null){
+            int filterStatus=Integer.parseInt(filterStatus_raw);
+            list= sd.getByStatus(filterStatus);
+            if(list.size()==0){
+                request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
+                return;
+            }
+            session.setAttribute("staffs", list);
+        }
+        String searchName = request.getParameter("searchName");
+        if(searchName!=null){
+            list = sd.searchByName(list, searchName);
+            if(list.size()==0){
+                request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
+                return;
+            }
+            session.setAttribute("staffs", list);
+        }
+        String page = request.getParameter("page");
+        if(page==null){
+            page ="1";
+        }
+        int numberPerPape=3;
+        int totalPage;
+        if(list.size()%numberPerPape==0){
+            totalPage=list.size()/numberPerPape;
+        }
+        else totalPage= list.size()/numberPerPape+1;
+        list = sd.getPageByNumber(list, Integer.parseInt(page),numberPerPape );
+        request.setAttribute("totalPage", totalPage);
+        request.setAttribute("currentPage", Integer.parseInt(page));
+        request.setAttribute("staffs", list);
         request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
     } 
 
