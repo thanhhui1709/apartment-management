@@ -198,13 +198,13 @@
                                  
                                                 <button style="border-radius: 5px" onclick="toggleChangepw2()">Change profile</button>
                                                 <jsp:useBean id="ut" class="util.UtilEdit" scope="page"/>
-                                                    <div style="display: none" id="hiddenChangepw" class="form-container">
+                                                    <div style="display: none" id="hiddenChangeprofile" class="form-container">
                                                         <form action="${ut.getTableNameByRoleIdEdit(sessionScope.account.roleId)}" method="post">
-                                                            <label style="min-width: 130px" for="input1">Email: </label>
+                                                            <label style="min-width: 150px" for="input1">Email: </label>
                                                             <input value="${sessionScope.person.email}" type="text" id="input1" name="editprofileemail" required/><br>
-                                                            <label style="min-width: 130px" for="input1">Phone: </label>
+                                                            <label style="min-width: 150px" for="input1">Phone: </label>
                                                             <input value="${sessionScope.person.phone}" type="text" id="input1" name="editprofilephone" required/><br>
-                                                            <label style="min-width: 130px" for="input2">Address: </label>
+                                                            <label style="min-width: 150px" for="input2">Address: </label>
                                                             <input value="${sessionScope.person.address}" type="text" id="input2" name="editprofileaddress" required/><br>
                                                             <button  style="min-width: 130px; display: inline;border-radius: 5px" type="submit">Save</button>
                                                             <p style="display: inline-block">${requestScope.msg}</p>
@@ -358,7 +358,7 @@
         }
     }
     function toggleChangepw2() {
-        const form = document.getElementById("hiddenChangepw");
+        const form = document.getElementById("hiddenChangeprofile");
         if (form.style.display === "none" || form.style.display === "") {
             form.style.display = "block"; 
         } else {

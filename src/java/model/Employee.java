@@ -44,8 +44,21 @@ public class Employee {
         this.password = password;
         this.role = role;
     }
+//name, dob, email, phone, address, cccd, sp, startDate, username, password
 
-    
+    public Employee(String name, String bod, String email, String phone, String address, String cccd, ServiceProvider company, String startDate, String username, String password) {
+        this.name = name;
+        this.bod = bod;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.company = company;
+        this.startDate = startDate;
+        this.username = username;
+        this.password = password;
+    }
+
     // Getters and Setters
     public String getId() {
         return id;
