@@ -4,23 +4,23 @@
  */
 package controller.admin;
 
-import dao.EmployeeDAO;
 import dao.ResidentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Employee;
 import model.Resident;
 
 /**
  *
  * @author quang
  */
-public class ViewAllResident extends HttpServlet {
+@WebServlet(name = "FilterResidentServlet", urlPatterns = {"/filter-resident"})
+public class FilterResidentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +39,10 @@ public class ViewAllResident extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewAllResident</title>");
+            out.println("<title>Servlet FilterResidentServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewAllResident at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet FilterResidentServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,29 +60,35 @@ public class ViewAllResident extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String name = request.getParameter("searchName");
+        String status = request.getParameter("filterStatus");
+        ResidentDAO daoR = new ResidentDAO();
         String numPage = request.getParameter("numPage");
         int index = 0;
         if (numPage == null) {
             index = 1;
-            
+
         } else {
             index = Integer.parseInt(numPage);
         }
-
-        ResidentDAO daoR = new ResidentDAO();
         int itemPerPage = 10;
         int numOfPage = 0;
-        if (daoR.getAll().size() % 10 == 0) {
-            numOfPage = daoR.getAll().size() / 10;
+        List<Resident> listResident = daoR.filterListResident(name, status);
+        if (listResident.size() % 10 == 0) {
+            numOfPage = listResident.size() / 10;
         } else {
-            numOfPage = (daoR.getAll().size() / 10) + 1;
+            numOfPage = (listResident.size() / 10) + 1;
         }
-        List<Resident> listResident = daoR.pagingResident(index - 1);
-        request.setAttribute("listResident", listResident);
+
+        int start = (index - 1) * 10;
+        int end = index * 10 <= listResident.size() ? index * 10 : listResident.size();
+        List<Resident> listPagingResident = daoR.pagingResident2(listResident, start, end);
+
+        request.setAttribute("listResident", listPagingResident);
         request.setAttribute("numOfPage", numOfPage);
         request.setAttribute("index", index);
+        request.setAttribute("isFilter", "true");
         request.getRequestDispatcher("viewallresident.jsp").forward(request, response);
-
     }
 
     /**
@@ -96,10 +102,7 @@ public class ViewAllResident extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ResidentDAO daoR = new ResidentDAO();
-        List<Resident> listResident = daoR.getAll();
-        request.setAttribute("listResident", listResident);
-        request.getRequestDispatcher("viewallresident.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

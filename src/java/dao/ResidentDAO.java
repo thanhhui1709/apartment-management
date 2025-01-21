@@ -68,6 +68,32 @@ public class ResidentDAO extends DBContext {
         return null;
     }
 
+    public List<Resident> pagingResident(int n) {
+        String sql = "select * from Resident order by Id offset ? rows fetch next 10 rows only";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, (n * 10));
+            List<Resident> list = new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                //(String pId, String name, String cccd, String phone, String email, String bod, String address, String status
+                list.add(new Resident(rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("cccd"),
+                        rs.getString("phone"),
+                        rs.getString("email"),
+                        rs.getString("bod"),
+                        rs.getString("address"),
+                        rs.getString("phone")));
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
     public String getEmailByUserName(String username) {
         String sql = "select email from Resident where username = ?";
         try {
@@ -116,8 +142,9 @@ public class ResidentDAO extends DBContext {
             System.out.println(e);
         }
     }
-    public void EditProfileRe(String id,String phone, String email, String address){
-        String sql="update Resident set Email=?, Phone=?, [Address]=? where id=?";
+
+    public void EditProfileRe(String id, String phone, String email, String address) {
+        String sql = "update Resident set Email=?, Phone=?, [Address]=? where id=?";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, email);
@@ -129,6 +156,7 @@ public class ResidentDAO extends DBContext {
         }
     }
 //    Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status)
+
     public List<Resident> getAllResident() {
         String sql = "select * from Resident r right join Apartment a\n"
                 + "on r.Id = a.rId ";
@@ -237,13 +265,47 @@ public class ResidentDAO extends DBContext {
         return false;
     }
 
+    public List<Resident> pagingResident2(List<Resident> list, int start, int end) {
+        List<Resident> listResident = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            listResident.add(list.get(i));
+        }
+        return listResident;
+    }
+
+    public List<Resident> filterListResident( String name, String status) {
+        String sql = "select * from Resident where 1=1 ";
+        int count = 0;
+
+        if (name.trim() != "") {
+            sql += "and name like '%" + name + "%' ";
+        }
+        if (status.trim() != "") {
+            sql += "and status = " + status + " ";
+        }
+        try {
+            List<Resident> list = new ArrayList<>();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Resident(rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("cccd"),
+                        rs.getString("phone"),
+                        rs.getString("email"),
+                        rs.getString("bod"),
+                        rs.getString("address"),
+                        rs.getString("phone")));
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        List<Resident> list = dao.getAll();
-        for (Resident r : list) {
-            System.out.println(r);
-        }
-        System.out.println(dao.checkDuplicateUser("alice"));
-        System.out.println(dao.checkDuplicateID("1"));
+        System.out.println(dao.filterListResident("quang", "1"));
     }
 }

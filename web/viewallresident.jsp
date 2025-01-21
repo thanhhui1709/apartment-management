@@ -34,6 +34,35 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+        <style>
+            .pagination {
+                margin-top: 20px;
+                margin-left: 1250px;
+                text-align: right;
+            }
+            .pagination a {
+                display: inline-block;      /* Hiển thị như khối inline */
+                width: 30px;                /* Đặt độ rộng bằng nhau cho các ô */
+                margin: 0 1px;
+                padding: 5px 10px;
+                border: 1px solid #007bff;
+                color: #007bff;
+                text-decoration: none;
+                border-radius: 5px;
+                text-align: center;
+            }
+            .pagination a:hover {
+                background-color: #007bff;
+                color: white;
+            }
+
+            .pagination a.active {
+                font-weight: bold;          /* In đậm chữ cho trang hiện tại */
+                background-color: #007bff; /* Thay đổi màu nền cho trang hiện tại */
+                color: white;               /* Thay đổi màu chữ cho trang hiện tại */
+            }
+        </style>
     </head>
     <body class="inner_page tables_page">
         <div class="full_container">
@@ -172,28 +201,17 @@
                                             </div>
                                         </div>
                                         <div style="margin-left: 40px;">
-                                            <form action="/filter" method="GET">
+                                            <form action="filter-resident" method="GET">
                                                 <div class="row align-items-center">
+
                                                     <div class="col-md-2">
-                                                        <input type="text" class="form-control" name="searchId" placeholder="Search by ID">
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <input type="text" class="form-control" name="searchName" placeholder="Search by Name">
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <select class="form-control" name="searchFloor">
-                                                            <option value="">Select Floor</option>
-                                                            <option value="1">Floor 1</option>
-                                                            <option value="2">Floor 2</option>
-                                                            <option value="3">Floor 3</option>
-                                                            <!-- Add more options as needed -->
-                                                        </select>
+                                                        <input type="text" value="${param.searchName}" class="form-control" name="searchName" placeholder="Search by Name">
                                                     </div>
                                                     <div class="col-md-2">
                                                         <select class="form-control" name="filterStatus">
                                                             <option value="">Filter by Status</option>
-                                                            <option value="active">Active</option>
-                                                            <option value="inactive">Inactive</option>
+                                                            <option value="1" ${param.filterStatus == '1' ? 'selected' : ''}>Active</option>
+                                                            <option value="0" ${param.filterStatus == '0' ? 'selected' : ''}>Inactive</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4 d-flex">
@@ -203,10 +221,6 @@
                                                 </div>
                                             </form>
                                         </div>
-
-
-
-
 
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
@@ -239,7 +253,26 @@
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
+
                                                 </table>
+
+                                            </div>
+                                            <div class="pagination">
+
+                                                <c:choose>
+                                                    <c:when test="${requestScope.isFilter == 'true'}">
+                                                        <c:forEach begin="1" end="${numOfPage}" var="i">
+                                                            <a href="filter-resident?numPage=${i}&searchName=${param.searchName}&filterStatus=${param.filterStatus}" 
+                                                               class="${i == index ? 'active' : ''}">${i}</a>
+                                                        </c:forEach>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:forEach begin="1" end="${numOfPage}" var="i">
+                                                            <a href="view-resident?numPage=${i}" 
+                                                               class="${i == index ? 'active' : ''}">${i}</a>
+                                                        </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </div>
