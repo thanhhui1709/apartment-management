@@ -770,7 +770,7 @@ a:focus {
 }
 .icon_info ul.user_profile_dd li{
     border-left:1px;
-    border-left-color: #fff; 
+    border-left-color: #fff;
     background-color: #214162;
 }
 .fa-bars:hover{
@@ -1232,7 +1232,8 @@ a[data-toggle="collapse"] {
     margin-top: 10px;
 }
 
-#rebenue {}
+#rebenue {
+}
 
 .graph_revenue {
     padding: 0;
@@ -2427,7 +2428,8 @@ h2.invoice_head small {
     background-color: #fff;
 }
 
-.table_row tbody {}
+.table_row tbody {
+}
 
 .table_row tbody tr {
     border: none;
@@ -2661,7 +2663,8 @@ ul.inbox-nav li a i {
     top: 1px;
 }
 
-ul.inbox-nav li a span.label {}
+ul.inbox-nav li a span.label {
+}
 
 ul.labels-info li h4 {
     color: #5c5c5e;
@@ -3193,7 +3196,8 @@ ul.labels-category li p {
     padding: 7px 0;
 }
 
-.bottom_list .left_rating p.ratings a {}
+.bottom_list .left_rating p.ratings a {
+}
 
 .fa.fa-star {
     color: #ff9800;
@@ -3462,4 +3466,24 @@ table.projects tr td:first-child {
     text-align: right;
     color: #f26d5b;
 }
-
+.pagination-container {
+    margin-top: 20px;
+    text-align: right;
+    border: 1px solid #007bff;  /* Viền cho ô vuông */
+    padding: 10px;               /* Khoảng cách bên trong */
+    border-radius: 5px;          /* Bo tròn góc */
+    display: inline-block;        /* Hiển thị như một khối inline */
+    background-color: #f9f9f9;   /* Màu nền cho ô vuông */
+}
+.pagination a {
+    margin: 0 5px;
+    padding: 5px 10px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+}
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
