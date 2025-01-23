@@ -17,7 +17,7 @@ public class Employee {
     private String phone;
     private String address;
     private String cccd; // Citizen ID
-    private ServiceProvider company; // Foreign key reference
+    private Company company; // Foreign key reference
     private String startDate; // Start date as String
     private String endDate; // End date as String
     private int status;
@@ -28,7 +28,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String id, String name, String bod, String email, String phone, String address, String cccd, ServiceProvider company, String startDate, String endDate, int status, String username, String password, Role role) {
+    public Employee(String id, String name, String bod, String email, String phone, String address, String cccd, Company company, String startDate, String endDate, int status, String username, String password, Role role) {
         this.id = id;
         this.name = name;
         this.bod = bod;
@@ -46,7 +46,7 @@ public class Employee {
     }
 //name, dob, email, phone, address, cccd, sp, startDate, username, password
 
-    public Employee(String name, String bod, String email, String phone, String address, String cccd, ServiceProvider company, String startDate, String username, String password) {
+    public Employee(String name, String bod, String email, String phone, String address, String cccd, Company company, String startDate, String username, String password) {
         this.name = name;
         this.bod = bod;
         this.email = email;
@@ -116,11 +116,11 @@ public class Employee {
         this.cccd = cccd;
     }
 
-    public ServiceProvider getCompany() {
+    public Company getCompany() {
         return company;
     }
 
-    public void setCompany(ServiceProvider company) {
+    public void setCompany(Company company) {
         this.company = company;
     }
 
