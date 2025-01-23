@@ -70,10 +70,10 @@
                                 <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a>
                                 <ul class="collapse list-unstyled" id="dashboard">
                                     <li>
-                                        <a href="dashboard.html">> <span>Default Dashboard</span></a>
+                                        <a href="dashboard.html"><span>Default Dashboard</span></a>
                                     </li>
                                     <li>
-                                        <a href="dashboard_2.html">> <span>Dashboard style 2</span></a>
+                                        <a href="dashboard_2.html"> <span>Dashboard style 2</span></a>
                                     </li>
                                 </ul>
                             </li>
@@ -81,19 +81,19 @@
                             <li>
                                 <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Elements</span></a>
                                 <ul class="collapse list-unstyled" id="element">
-                                    <li><a href="general_elements.html">> <span>General Elements</span></a></li>
-                                    <li><a href="media_gallery.html">> <span>Media Gallery</span></a></li>
-                                    <li><a href="icons.html">> <span>Icons</span></a></li>
-                                    <li><a href="invoice.html">> <span>Invoice</span></a></li>
+                                    <li><a href="general_elements.html"> <span>General Elements</span></a></li>
+                                    <li><a href="media_gallery.html"> <span>Media Gallery</span></a></li>
+                                    <li><a href="icons.html"> <span>Icons</span></a></li>
+                                    <li><a href="invoice.html"> <span>Invoice</span></a></li>
                                 </ul>
                             </li>
                             <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
                             <li>
                                 <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
                                 <ul class="collapse list-unstyled" id="apps">
-                                    <li><a href="email.html">> <span>Email</span></a></li>
-                                    <li><a href="calendar.html">> <span>Calendar</span></a></li>
-                                    <li><a href="media_gallery.html">> <span>Media Gallery</span></a></li>
+                                    <li><a href="email.html"> <span>Email</span></a></li>
+                                    <li><a href="calendar.html"> <span>Calendar</span></a></li>
+                                    <li><a href="media_gallery.html"> <span>Media Gallery</span></a></li>
                                 </ul>
                             </li>
                             <li><a href="price.html"><i class="fa fa-briefcase blue1_color"></i> <span>Pricing Tables</span></a></li>
@@ -105,16 +105,16 @@
                                 <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Additional Pages</span></a>
                                 <ul class="collapse list-unstyled" id="additional_page">
                                     <li>
-                                        <a href="profile.html">> <span>Profile</span></a>
+                                        <a href="profile.html"> <span>Profile</span></a>
                                     </li>
                                     <li>
-                                        <a href="project.html">> <span>Projects</span></a>
+                                        <a href="project.html"> <span>Projects</span></a>
                                     </li>
                                     <li>
-                                        <a href="login.html">> <span>Login</span></a>
+                                        <a href="login.html"><span>Login</span></a>
                                     </li>
                                     <li>
-                                        <a href="404_error.html">> <span>404 Error</span></a>
+                                        <a href="404_error.html"> <span>404 Error</span></a>
                                     </li>
                                 </ul>
                             </li>
@@ -133,7 +133,7 @@
                             <div class="full">
                                 <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
                                 <div class="logo_section">
-                                    <a href="index.html"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
+                                    <a href="index.jsp"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
                                 </div>
                                 <div class="right_topbar">
                                     <div class="icon_info">
@@ -174,48 +174,25 @@
                                     <div class="white_shd full margin_bottom_30">
                                         <div class="full graph_head">
                                             <div class="heading1 margin_0">
-                                                <h2>Employee Information</h2>
+                                                <h2>Company Information</h2>
                                             </div>
                                         </div>
                                         <div style="margin-left: 40px;">
-                                            <form action="/filter" method="GET">
+                                            <form action="view-all-company" method="GET">
                                                 <div class="row align-items-center">
-                                                    <div class="col-md-2">
-                                                        <input type="text" class="form-control" name="searchId" placeholder="Search by ID">
-                                                    </div>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-4">
                                                         <input type="text" class="form-control" name="searchName" placeholder="Search by Name">
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <select class="form-control" name="searchCompany">
-                                                            <option value="">Select Company</option>
-                                                            <c:forEach items="${requestScope.listServiceProvider}" var="company">
-                                                                <option value="${company.id}">${company.name}</option>
-                                                            </c:forEach>
-                                                            <!-- Add more options as needed -->
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <select class="form-control" name="filterStatus">
-                                                            <option value="">Filter by Status</option>
-                                                            <option value="active">Active</option>
-                                                            <option value="inactive">Inactive</option>
-                                                        </select>
                                                     </div>
                                                     <div class="col-md-4 d-flex">
                                                         <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
-                                                        <a href="add-employee"  class="btn btn-primary">Add new Employee</a>
+                                                        <a href="addnewcompany.jsp"  class="btn btn-primary">Add new Company</a>
                                                     </div>
                                                 </div>
                                             </form>
                                         </div>
-
-
-
-
-
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
+                                                
                                                 <table class="table w-100">
                                                     <thead>
                                                         <tr>
@@ -229,14 +206,14 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <c:forEach items="${requestScope.listEmployee}" var="employee">
+                                                        <c:forEach items="${requestScope.companies}" var="o">
                                                             <tr>
-                                                                <td>${employee.id}</td>
-                                                                <td>${employee.name}</td>
-                                                                <td>${company.description}</td>
-                                                                <td>${employee.phone}</td>
-                                                                <td>${employee.email}</td>                                               
-                                                                <td>${employee.address}</td>
+                                                                <td>${o.id}</td>
+                                                                <td>${o.name}</td>
+                                                                <td>${o.description}</td>
+                                                                <td>${o.sdt}</td>
+                                                                <td>${o.email}</td>                                               
+                                                                <td>${o.address}</td>
                                                                 <td><a href="#">Update</a></td>
                                                             </tr>
                                                         </c:forEach>
@@ -250,6 +227,18 @@
                             </div>
                         </div>
                     </div>
+                    <form method="get" action="view-all-staff" style="display: flex; align-items: center; gap: 10px;">
+                        <!-- Dropdown chọn trang -->
+                        <label for="page" style="font-size: 14px; font-weight: bold;">Trang:</label>
+                        <select id="page" name="page" onchange="this.form.submit()" 
+                                style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
+                            <c:forEach begin="1" end="${requestScope.totalPage}" var="page">
+                                <option value="${page}" <c:if test="${page == requestScope.currentPage}">selected</c:if>>
+                                    ${page}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </form>
                     <!-- footer -->
                     <div class="container-fluid">
                         <div class="footer">

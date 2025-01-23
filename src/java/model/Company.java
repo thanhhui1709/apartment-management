@@ -8,7 +8,7 @@ package model;
  *
  * @author thanh
  */
-public class ServiceProvider {
+public class Company {
     private String id;
     private String name;
     private String description;
@@ -16,10 +16,18 @@ public class ServiceProvider {
     private String email;
     private String address;
 
-    public ServiceProvider() {
+    public Company() {
     }
 
-    public ServiceProvider(String id, String name, String description, String sdt, String email, String address) {
+    public Company(String name, String description, String sdt, String email, String address) {
+        this.name = name;
+        this.description = description;
+        this.sdt = sdt;
+        this.email = email;
+        this.address = address;
+    }
+
+    public Company(String id, String name, String description, String sdt, String email, String address) {
         this.id = id;
         this.name = name;
         this.description = description;
