@@ -4,8 +4,6 @@
  */
 package authentication;
 
-
-
 import dao.AccountDAO;
 import dao.TokenForgetPassDAO;
 import java.io.IOException;
@@ -101,8 +99,13 @@ public class RequestPasswordServlet extends HttpServlet {
             TokenForgetPassword newToken = new TokenForgetPassword(token, false, a, send.expireDateTime());
             TokenForgetPassDAO daoT = new TokenForgetPassDAO();
             daoT.addToken(newToken);
-            send.sendEmail(email, "APARTMENT MANAGEMENT SYSTEM: RESET PASSWORD", "<h2>Please click the link to "
-                    + "reset your password: <a href=" + link + ">Click here</a></h2>");
+            if (!send.sendEmail(email, "APARTMENT MANAGEMENT SYSTEM: RESET PASSWORD", "<h2>Please click the link to "
+                    + "reset your password: <a href=" + link + ">Click here</a></h2>")) {
+                request.setAttribute("message", "Cannot send email!");
+                request.setAttribute("status", "false");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
             request.setAttribute("message", "Your password has been sent to your email!");
             request.setAttribute("status", "true");
             request.getRequestDispatcher("login.jsp").forward(request, response);

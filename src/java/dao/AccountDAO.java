@@ -107,17 +107,14 @@ public class AccountDAO extends DBContext {
     public List<Account> getAllAccount() {
         ResidentDAO daoR = new ResidentDAO();
         StaffDAO daoS = new StaffDAO();
-        EmployeeDAO daoE = new EmployeeDAO();
 
         List<Account> list = new ArrayList<>();
         list.addAll(daoR.getAllResidentAccount());
         list.addAll(daoS.getAllStaffAccount());
-        list.addAll(daoE.getAllEmployeeAccount());
 
         return list;
     }
 
-    //-----------------------------------------------------------------------ACCOUNTDAO-----------------------------------------------------
    
 
     public Account getAccountById(String pId) {
@@ -142,7 +139,7 @@ public class AccountDAO extends DBContext {
     
     public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
-        System.out.println(dao.getcheckTable("quang", 1));
+        System.out.println(dao.getAccountByUsername("quang"));
     }
 
 
