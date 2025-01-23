@@ -21,19 +21,13 @@ import util.Util;
  */
 public class AccountDAO extends DBContext {
 
-    public static void main(String[] args) {
-        AccountDAO dao = new AccountDAO();
-        String a = dao.getcheckTable("alice",3);
-        System.out.println(""+a);
-    }
+   
     
     public String getcheckTable(String user,int roleId) {
         String check_table_1 = null;
         String check_table_2 = null;
-        String check_table_3 = null;
         check_table_1 = "SELECT * FROM Resident WHERE [username]=? and [roleId]=?";
         check_table_2 = "SELECT * FROM Staff WHERE [username]=? and [roleId]=?";
-        check_table_3 = "SELECT * FROM Employee WHERE [username]=? and [roleId]=?";
         String table=null;
         try {
             PreparedStatement pre_1 = connection.prepareStatement(check_table_1);
@@ -44,16 +38,10 @@ public class AccountDAO extends DBContext {
             pre_2.setString(1, user);
             pre_2.setInt(2, roleId);
             ResultSet rs_2 = pre_2.executeQuery();
-            PreparedStatement pre_3 = connection.prepareStatement(check_table_3);
-            pre_3.setString(1, user);
-            pre_3.setInt(2, roleId);
-            ResultSet rs_3 = pre_3.executeQuery();
             if(rs_2.next()){
                 table="Staff";
             }else if(rs_1.next()){
                 table="Resident";
-            }else if(rs_3.next()){
-                table="Employee";
             }else{
                 table="Empty";
             }
@@ -78,9 +66,6 @@ public class AccountDAO extends DBContext {
         else if(table.equals("Staff")){
             sql ="SELECT * FROM Staff WHERE [username]=?";
         }
-        else if(table.equals("Employee")){
-            sql ="SELECT * FROM Employee WHERE [username]=?";
-        }
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
             pre.setString(1, user);
@@ -98,8 +83,6 @@ public class AccountDAO extends DBContext {
         String sql = "Update ";
         if (roleId == 1) {
             sql += "Resident set password = ? where username = ? ";
-        } else if (roleId == 3) {
-            sql += "Employee set password = ? where username = ? ";
         } else {
             sql += "Staff set password = ? where username = ? ";
         }
@@ -155,6 +138,11 @@ public class AccountDAO extends DBContext {
             }
         }
         return null;
+    }
+    
+    public static void main(String[] args) {
+        AccountDAO dao = new AccountDAO();
+        System.out.println(dao.getcheckTable("quang", 1));
     }
 
 
