@@ -92,7 +92,7 @@ public class AccountDAO extends DBContext {
             ps.setString(2, username);
             ps.executeQuery();
         } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
 
     }
