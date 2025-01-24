@@ -17,7 +17,7 @@ import model.Account;
 import model.Company;
 import model.Employee;
 import model.Role;
-//import model.ServiceProvider;
+import model.Company;
 import model.Staff;
 import util.Util;
 
@@ -28,7 +28,7 @@ import util.Util;
 public class StaffDAO extends DBContext {
 
     public List<Staff> getAll() {
-        CompanyDAO daoCP = new CompanyDAO();
+        CompanyDAO sd = new CompanyDAO();
         RoleDAO rd = new RoleDAO();
         String sql = "select * from Staff";
         List<Staff> list = new ArrayList<>();

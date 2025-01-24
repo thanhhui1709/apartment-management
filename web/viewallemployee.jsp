@@ -221,13 +221,10 @@
                                                         <tr>
                                                             <th>ID</th>
                                                             <th>Name</th>
-                                                            <th>BOD</th>
+                                                            <th>Description</th>
                                                             <th>Phone</th>
                                                             <th>Email</th>                                               
                                                             <th>Address</th>
-                                                            <th>Company</th>
-                                                            <th>Status</th> 
-                                                            <th>View Detail</th>
                                                             <th>Option</th>
                                                         </tr>
                                                     </thead>
@@ -236,14 +233,11 @@
                                                             <tr>
                                                                 <td>${employee.id}</td>
                                                                 <td>${employee.name}</td>
-                                                                <td>${employee.bod}</td>
+                                                                <td>${company.description}</td>
                                                                 <td>${employee.phone}</td>
                                                                 <td>${employee.email}</td>                                               
                                                                 <td>${employee.address}</td>
-                                                                <td>${employee.company.name}</td>
-                                                                <td>${employee.status}</td>
-                                                                <td><a href="#" class="btn btn-primary">View Detail</a></td> 
-
+                                                                <td><a href="#">Update</a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>

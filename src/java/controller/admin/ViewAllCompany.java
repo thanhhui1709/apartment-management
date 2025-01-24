@@ -59,7 +59,7 @@ public class ViewAllCompany extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session =request.getSession();
         CompanyDAO cd = new CompanyDAO();
-        List<Company> list = cd.getAll();       
+        List<Company> list;       
         if(null==session.getAttribute("companies")){
             list = cd.getAll();
             session.setAttribute("companies", list);
