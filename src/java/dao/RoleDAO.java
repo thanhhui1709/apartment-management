@@ -10,20 +10,22 @@ import model.Role;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
 /**
  *
  * @author thanh
  */
-public class RoleDAO extends DBContext{
-    public List<Role> getAll(){
+public class RoleDAO extends DBContext {
+
+    public List<Role> getAll() {
         String sql = "select * from role";
         List<Role> list = new ArrayList<>();
         try {
-            PreparedStatement st =connection.prepareStatement(sql);
-            ResultSet rs =st.executeQuery();
-            while(rs.next()){
-                String id =rs.getString("id");
-                String name =rs.getString("name");
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("name");
                 String description = rs.getString("description");
                 Role r = new Role(id, name, description);
                 list.add(r);
@@ -32,11 +34,22 @@ public class RoleDAO extends DBContext{
         }
         return list;
     }
-    public Role getById(String id){
+
+    public Role getById(String id) {
         List<Role> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getId().equals(id)) return list.get(i);
+            if (list.get(i).getId().equals(id)) {
+                return list.get(i);
+            }
         }
         return null;
     }
+    
+    public static void main(String[] args) {
+        
+        RoleDAO dao= new RoleDAO();
+        System.out.println(dao.getById("3"));
+    }
+
+  
 }

@@ -4,6 +4,8 @@
  */
 package controller.admin;
 
+import dao.CompanyDAO;
+import dao.RoleDAO;
 import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +14,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Company;
+import model.Role;
 import model.Staff;
 
 /**
@@ -59,7 +65,7 @@ public class UpdateStaffInfor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
         String id = request.getParameter("id");
         StaffDAO sd = new StaffDAO();
         Staff staff = sd.getById(id);
@@ -78,17 +84,58 @@ public class UpdateStaffInfor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//        Update staff set name = ?, bod = ? ,email = ? , phone = ?, address = ? , cccd = ? , salary = ? , education = ? , bank = ?"
+//                + ", status = ? ,roleid = ? ,companyid = ?, startdate = ?, enddate= ? ";
         String id = request.getParameter("staffID");
         String name = request.getParameter("name");
         String dob = request.getParameter("dob");
+        String email = request.getParameter("email");
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String cccd = request.getParameter("cccd");
         String education = request.getParameter("education");
         String bank = request.getParameter("bank");
-        StaffDAO sd = new StaffDAO();
-        sd.updateStaffInfor(id, name, dob, phone, address, cccd, education, bank);
-        response.sendRedirect("view-all-staff");
+        String salary_raw = request.getParameter("salary");
+        String companyId = request.getParameter("company");
+        String status_raw = request.getParameter("status");
+        String role = request.getParameter("role");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+
+        CompanyDAO daoCp = new CompanyDAO();
+        RoleDAO daoR = new RoleDAO();
+        StaffDAO daoSt = new StaffDAO();
+        try {
+            int status = Integer.parseInt(status_raw);
+            int salary = Integer.parseInt(salary_raw);
+            Staff s = null;
+            if (endDate == null || endDate =="") {
+                s = new Staff(id, name, dob, email, phone, address, cccd, salary, education, bank, status,
+                        daoR.getById(role), daoCp.getById(companyId), startDate, null);
+            } else {
+                s = new Staff(id, name, dob, email, phone, address, cccd, salary, education, bank, status,
+                        daoR.getById(role), daoCp.getById(companyId), startDate, endDate);
+            }
+
+            if (!daoSt.updateStaffInfor(s)) {
+                request.setAttribute("status", "false");
+                request.setAttribute("message", "Can not update");
+                request.setAttribute("staff", daoSt.getById(id));
+                request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
+                return;
+            } else {
+                request.setAttribute("status", "true");
+                request.setAttribute("staff", daoSt.getById(id));
+                request.setAttribute("message", "Update successfully");
+                request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
+            }
+
+        } catch (NumberFormatException e) {
+            request.setAttribute("status", "false");
+            request.setAttribute("message", "Can not update");
+            request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
+            return;
+        }
 
     }
 

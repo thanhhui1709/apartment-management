@@ -5,29 +5,22 @@
 
 package controller.admin;
 
-import dao.AdminDAO;
 import dao.CompanyDAO;
-import dao.RoleDAO;
-import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Company;
-import model.Role;
-import model.Staff;
 
 /**
  *
- * @author thanh
+ * @author PC
  */
-@WebServlet(name="ViewAllStaff", urlPatterns={"/view-all-staff"})
-public class ViewAllStaff extends HttpServlet {
+public class ViewAllCompany extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -44,10 +37,10 @@ public class ViewAllStaff extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewAllStaff</title>");  
+            out.println("<title>Servlet ViewAllCompany</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewAllStaff at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewAllCompany at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,57 +57,40 @@ public class ViewAllStaff extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        AdminDAO ad = new AdminDAO();
-        List<Staff> list;
         HttpSession session =request.getSession();
-        if(session.getAttribute("staffs")==null){
-            list = ad.getAllStaffExceptAdmin();
-            session.setAttribute("staffs", list);
+        CompanyDAO cd = new CompanyDAO();
+        List<Company> list = cd.getAll();       
+        if(null==session.getAttribute("companies")){
+            list = cd.getAll();
+            session.setAttribute("companies", list);
         }
         else{
-            list = (List<Staff>) session.getAttribute("staffs");
-        }
-        StaffDAO sd= new StaffDAO();
-        String filterStatus_raw = request.getParameter("filterStatus");
-        if(filterStatus_raw!=null){
-            int filterStatus=Integer.parseInt(filterStatus_raw);
-            list= sd.getByStatus(filterStatus);
-            if(list.size()==0){
-                request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
-                return;
-            }
-            session.setAttribute("staffs", list);
+            list = (List<Company>) session.getAttribute("companies");
         }
         String searchName = request.getParameter("searchName");
-        if(searchName!=null){
-            list = sd.searchByName(list, searchName);
+        if(null!=searchName){
+            list = cd.searchCompaniesbyName(searchName);
             if(list.size()==0){
-                request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
+                request.getRequestDispatcher("viewallcompany.jsp").forward(request, response);
                 return;
             }
-            session.setAttribute("staffs", list);
+            session.setAttribute("companies", list);
         }
         String page = request.getParameter("page");
-        if(page==null){
+        if(null==page){
             page ="1";
         }
-        int numberPerPape=3;
+        int numberPerPage=3;
         int totalPage;
-        if(list.size()%numberPerPape==0){
-            totalPage=list.size()/numberPerPape;
+        if(list.size()%numberPerPage==0){
+            totalPage=list.size()/numberPerPage;
         }
-        else totalPage= list.size()/numberPerPape+1;
-        list = sd.getPageByNumber(list, Integer.parseInt(page),numberPerPape );
-        RoleDAO daoR = new RoleDAO();
-        CompanyDAO daoCp = new CompanyDAO();
-        List<Company> listCompany = daoCp.getAll();
-        List<Role> listRole = daoR.getAll();
-        session.setAttribute("listCompany", listCompany);
-        session.setAttribute("listRole", listRole);
+        else totalPage= list.size()/numberPerPage+1;
+        list = cd.getPageByNumber(list, Integer.parseInt(page),numberPerPage );
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("currentPage", Integer.parseInt(page));
-        request.setAttribute("staffs", list);
-        request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
+        request.setAttribute("companies", list);
+        request.getRequestDispatcher("viewallcompany.jsp").forward(request, response);
     } 
 
     /** 

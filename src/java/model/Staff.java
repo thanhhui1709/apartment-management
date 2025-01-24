@@ -20,13 +20,56 @@ public class Staff {
     private int salary;
     private String education;
     private String bank;
+    private int status;
     private String username;
     private String password;
     private Role role; // Use Role object
-    private int status;
+    private Company company; // Foreign key reference
+    private String startDate; // Start date as String
+    private String endDate; // End date as String
 
-    public Staff(String id, String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, String username, String password, Role role,int status) {
+    public Staff() {
+    }
+
+    public Staff(String id, String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, int status, Role role, Company company, String startDate, String endDate) {
         this.id = id;
+        this.name = name;
+        this.bod = bod;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.salary = salary;
+        this.education = education;
+        this.bank = bank;
+        this.status = status;
+        this.role = role;
+        this.company = company;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Staff(String id, String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, int status, String username, String password, Role role, Company company, String startDate, String endDate) {
+        this.id = id;
+        this.name = name;
+        this.bod = bod;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.salary = salary;
+        this.education = education;
+        this.bank = bank;
+        this.status = status;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.company = company;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Staff(String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, String username, String password, Role role, Company company, String startDate) {
         this.name = name;
         this.bod = bod;
         this.email = email;
@@ -39,34 +82,65 @@ public class Staff {
         this.username = username;
         this.password = password;
         this.role = role;
-        this.status=status;
-    }
-
-    public Staff() {
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+        this.company = company;
+        this.startDate = startDate;
     }
     
-    public Staff(String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, String username, String password) {
+    
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public void setEducation(String education) {
+        this.education = education;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public Staff(String id, String name, String bod, String email, String phone, String address, String cccd, Company company, String startDate, String endDate, int status, String username, String password, Role role) {
+        this.id = id;
         this.name = name;
         this.bod = bod;
-        this.email= email;
-        this.phone=phone;
-        this.address=address;
-        this.cccd=cccd;
-        this.salary=salary;
-        this.education=education;
-        this.bank=bank;
-        this.username=username;
-        this.password=password;
-        
-        
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.company = company;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+//name, dob, email, phone, address, cccd, sp, startDate, username, password
+
+    public Staff(String name, String bod, String email, String phone, String address, String cccd, Company company, String startDate, String username, String password) {
+        this.name = name;
+        this.bod = bod;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.company = company;
+        this.startDate = startDate;
+        this.username = username;
+        this.password = password;
     }
 
     // Getters and Setters
@@ -126,28 +200,36 @@ public class Staff {
         this.cccd = cccd;
     }
 
-    public int getSalary() {
-        return salary;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setSalary(int salary) {
-        this.salary = salary;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
-    public String getEducation() {
-        return education;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setEducation(String education) {
-        this.education = education;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 
-    public String getBank() {
-        return bank;
+    public String getEndDate() {
+        return endDate;
     }
 
-    public void setBank(String bank) {
-        this.bank = bank;
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getUsername() {

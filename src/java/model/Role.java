@@ -16,6 +16,11 @@ public class Role {
     public Role() {
     }
 
+    @Override
+    public String toString() {
+        return "Role{" + "id=" + id + ", Name=" + Name + ", description=" + description + '}';
+    }
+
     public Role(String id, String Name, String description) {
         this.id = id;
         this.Name = Name;

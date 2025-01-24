@@ -8,23 +8,58 @@ package model;
  *
  * @author thanh
  */
-public class ServiceProvider {
+public class Company {
+
     private String id;
     private String name;
-    private String description;
-    private String sdt;
+    private String phone;
+    private String contactPhone;
+    private String fax;
     private String email;
+    private String contactemail;
+    private String website;
+    private String taxCode;
+    private String bank;
+    private String description;
     private String address;
 
     public ServiceProvider() {
     }
 
-    public ServiceProvider(String id, String name, String description, String sdt, String email, String address) {
+    public String getContactemail() {
+        return contactemail;
+    }
+
+    public void setContactemail(String contactemail) {
+        this.contactemail = contactemail;
+    }
+
+    public Company(String id, String name, String phone, String contactPhone, String fax, String email, String contactemail, String website, String taxCode, String bank, String description, String address) {
         this.id = id;
         this.name = name;
-        this.description = description;
-        this.sdt = sdt;
+        this.phone = phone;
+        this.contactPhone = contactPhone;
+        this.fax = fax;
         this.email = email;
+        this.contactemail = contactemail;
+        this.website = website;
+        this.taxCode = taxCode;
+        this.bank = bank;
+        this.description = description;
+        this.address = address;
+    }
+
+    public Company(String name, String phone, String contactPhone, String fax, String email, String contactemail, String website, String taxCode, String bank, String description, String address) {
+        this.name = name;
+        this.phone = phone;
+        this.contactPhone = contactPhone;
+        this.fax = fax;
+        this.email = email;
+        this.contactemail = contactemail;
+        this.website = website;
+        this.taxCode = taxCode;
+        this.bank = bank;
+        this.description = description;
         this.address = address;
     }
 
@@ -44,20 +79,28 @@ public class ServiceProvider {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getSdt() {
-        return sdt;
+    public String getContactPhone() {
+        return contactPhone;
     }
 
-    public void setSdt(String sdt) {
-        this.sdt = sdt;
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
 
     public String getEmail() {
@@ -68,6 +111,38 @@ public class ServiceProvider {
         this.email = email;
     }
 
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getTaxCode() {
+        return taxCode;
+    }
+
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
+    }
+
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public String getdescription() {
+        return description;
+    }
+
+    public void setdescription(String desription) {
+        this.description = desription;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -75,6 +150,5 @@ public class ServiceProvider {
     public void setAddress(String address) {
         this.address = address;
     }
-    
-    
+
 }
