@@ -38,6 +38,9 @@ public class Util {
     public int getNumberFromText(String str) {
         return Integer.parseInt(str.substring(1));
     }
+    public int getNumberFromTextPlusOne(String str) {
+        return Integer.parseInt(str.substring(1))+1;
+    }
     public static void main(String[] args) {
         Util u=new  Util();
         System.out.println(u.getNumberFromText("p11"));

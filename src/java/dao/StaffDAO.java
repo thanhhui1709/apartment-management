@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -51,7 +52,7 @@ public class StaffDAO extends DBContext {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 Role r = rd.getById(rs.getString("roleid"));
-                Company cp = sd.getById(rs.getString("companyId"));
+                Company cp = sd.getById(rs.getString("cid"));
                 String startDate = rs.getString("startdate");
                 String enddate = rs.getString("enddate");
                 Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate);
@@ -61,7 +62,14 @@ public class StaffDAO extends DBContext {
         }
         return list;
     }
-
+    public Staff getByRequestType(RequestType rt){
+        List<Staff> list  =this.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getRole().getId().equalsIgnoreCase(rt.getDestination().getId())
+                    && list.get(i).getStatus()==1) return list.get(i);
+        }
+        return null;
+    }
     public Staff getById(String id) {
         List<Staff> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
@@ -220,7 +228,7 @@ public class StaffDAO extends DBContext {
 //        company.setId("C001"); // Set company ID
 //
 //        // Create the Staff object
-        Staff staff = new Staff();
+//        Staff staff = new Staff();
 //        staff.setId("S001"); // or leave it empty; it will be generated in your method
 //        staff.setName("John Doe");
 //        staff.setBod("1990-01-01"); // Format as needed
@@ -239,17 +247,9 @@ public class StaffDAO extends DBContext {
 //
 //        // Now you can use this staff object to insert it into the database
         StaffDAO staffDAO = new StaffDAO();
-        System.out.println(staffDAO.getAll().size());
 //        boolean isInserted = staffDAO.insertStaff(staff);
 //        System.out.println("Staff inserted: " + isInserted);
-    }
-    public Staff getByRequestType(RequestType rt){
-        List<Staff> list  =this.getAll();
-        for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getRole().getId().equalsIgnoreCase(rt.getId())
-                    && list.get(i).getStatus()==1) return list.get(i);
-        }
-        return null;
+        System.out.println(staffDAO.getAll().size());
     }
 
 }

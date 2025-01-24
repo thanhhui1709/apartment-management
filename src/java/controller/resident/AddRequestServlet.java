@@ -85,7 +85,7 @@ public class AddRequestServlet extends HttpServlet {
         String typeRequestId = request.getParameter("typeRequest");
         RequestTypeDAO rtd = new RequestTypeDAO();
         RequestDAO rd = new RequestDAO();
-        rd.addRequest(rid, detail, rtd.getById(typeRequestId));
+        int addRequest =rd.addRequest(rid, detail, rtd.getById(typeRequestId));
         response.sendRedirect("index.jsp");
     }
 
