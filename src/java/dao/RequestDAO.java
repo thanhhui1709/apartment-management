@@ -65,7 +65,7 @@ public class RequestDAO extends DBContext {
         String sql = "insert into request(id,rid,sid,detail,date,status,tid) values(?,?,?,?,?,?,?)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, "R" + util.getNumberFromTextPlusOne(list.get(list.size() - 1).getId())+1);
+            st.setString(1, "R" + util.getNumberFromTextPlusOne(list.get(list.size() - 1).getId()));
             st.setString(2, rId);
             st.setString(3, sd.getByRequestType(rt).getId());
             st.setString(4, detail);
