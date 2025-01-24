@@ -16,7 +16,7 @@ import jdbc.DBContext;
 import model.Account;
 import model.Employee;
 import model.Role;
-import model.ServiceProvider;
+import model.Company;
 import util.Util;
 
 /**
@@ -26,7 +26,7 @@ import util.Util;
 public class EmployeeDAO extends DBContext {
 
     public List<Employee> getAll() {
-        ServiceProviderDAO sd = new ServiceProviderDAO();
+        CompanyDAO sd = new CompanyDAO();
         RoleDAO rd = new RoleDAO();
         String sql = "select * from employee";
         List<Employee> list = new ArrayList<>();
@@ -41,7 +41,7 @@ public class EmployeeDAO extends DBContext {
                 String phone = rs.getString("phone");
                 String address = rs.getString("address");
                 String cccd = rs.getString("cccd");
-                ServiceProvider sp = sd.getById(rs.getString("companyId"));
+                Company sp = sd.getById(rs.getString("companyId"));
                 String startDate = rs.getDate("startDate").toString();
                 String endDate = rs.getDate("endDate") == null ? "None" : rs.getDate("enddate").toString();
                 int status = rs.getInt("status");
@@ -57,7 +57,7 @@ public class EmployeeDAO extends DBContext {
     }
 
     public List<Employee> getAllWorkingEmployee() {
-        ServiceProviderDAO sd = new ServiceProviderDAO();
+        CompanyDAO sd = new CompanyDAO();
         RoleDAO rd = new RoleDAO();
         String sql = "select * from employee where status=1";
         List<Employee> list = new ArrayList<>();
@@ -72,7 +72,7 @@ public class EmployeeDAO extends DBContext {
                 String phone = rs.getString("phone");
                 String address = rs.getString("address");
                 String cccd = rs.getString("cccd");
-                ServiceProvider sp = sd.getById(rs.getString("companyId"));
+                Company sp = sd.getById(rs.getString("companyId"));
                 String startDate = rs.getDate("startDate").toString();
                 String endDate = rs.getDate("endDate") == null ? "None" : rs.getDate("enddate").toString();
                 int status = rs.getInt("status");
@@ -158,8 +158,8 @@ public class EmployeeDAO extends DBContext {
 
     public static void main(String[] args) {
         EmployeeDAO dao = new EmployeeDAO();
-        ServiceProviderDAO daox = new ServiceProviderDAO();
-        ServiceProvider s = daox.getById("1");
+        CompanyDAO daox = new CompanyDAO();
+        Company s = daox.getById("1");
         Employee e = new Employee("nhatquangx", "1-1-2000", "concxxdaxbvccaaaxc@gmail.com", "21ccsxx5d15", "Ttd", "020sxxs22", s, "1-1-2025", "gonzytxz", "3xxz4");
         System.out.println(dao.insertEmployee(e));
     }

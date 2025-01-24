@@ -3,10 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.employee;
+package controller.admin;
 
-import dao.EmployeeDAO;
-import dao.ResidentDAO;
+import dao.CompanyDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +13,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Account;
-import model.Employee;
-import model.Resident;
+import java.util.List;
+import model.Company;
 
 /**
  *
- * @author thanh
+ * @author PC
  */
-public class ViewProfileEmployee extends HttpServlet {
+public class ViewAllCompany extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +37,10 @@ public class ViewProfileEmployee extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewProfileEmployee</title>");  
+            out.println("<title>Servlet ViewAllCompany</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewProfileEmployee at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewAllCompany at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,12 +57,40 @@ public class ViewProfileEmployee extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        EmployeeDAO ed = new EmployeeDAO();
         HttpSession session =request.getSession();
-        Account account =(Account) session.getAttribute("account");
-        Employee em = ed.getById(account.getpId());
-        session.setAttribute("person", em);
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        CompanyDAO cd = new CompanyDAO();
+        List<Company> list;       
+        if(null==session.getAttribute("companies")){
+            list = cd.getAll();
+            session.setAttribute("companies", list);
+        }
+        else{
+            list = (List<Company>) session.getAttribute("companies");
+        }
+        String searchName = request.getParameter("searchName");
+        if(null!=searchName){
+            list = cd.searchCompaniesbyName(searchName);
+            if(list.size()==0){
+                request.getRequestDispatcher("viewallcompany.jsp").forward(request, response);
+                return;
+            }
+            session.setAttribute("companies", list);
+        }
+        String page = request.getParameter("page");
+        if(null==page){
+            page ="1";
+        }
+        int numberPerPage=3;
+        int totalPage;
+        if(list.size()%numberPerPage==0){
+            totalPage=list.size()/numberPerPage;
+        }
+        else totalPage= list.size()/numberPerPage+1;
+        list = cd.getPageByNumber(list, Integer.parseInt(page),numberPerPage );
+        request.setAttribute("totalPage", totalPage);
+        request.setAttribute("currentPage", Integer.parseInt(page));
+        request.setAttribute("companies", list);
+        request.getRequestDispatcher("viewallcompany.jsp").forward(request, response);
     } 
 
     /** 

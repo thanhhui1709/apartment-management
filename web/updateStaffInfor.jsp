@@ -35,65 +35,69 @@
               <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
             <![endif]-->
             <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f9;
+                    margin: 0;
+                    padding: 0px;
+                }
+
                 .form-container {
-                    width: 100%;
-                    max-width: 900px;
-                    margin: 50px auto;
                     background: #ffffff;
                     padding: 40px;
-                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                     border-radius: 8px;
-                    border: 1px solid #e3e3e3;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    max-width: 800px;
+                    margin: auto;
                 }
+
                 .form-container h1 {
                     text-align: center;
                     margin-bottom: 30px;
-                    font-size: 28px;
                     color: #333;
                 }
+
                 .form-group {
-                    margin-bottom: 20px;
-                    width: 100%;
+                    margin-bottom: 10px;
                 }
+
                 .form-group label {
                     display: block;
-                    font-weight: 600;
                     margin-bottom: 8px;
-                    color: #666;
+                    font-weight: bold;
+                    color: #555;
                 }
-                .form-group input {
+
+                .form-group input,
+                .form-group select {
                     width: 100%;
-                    padding: 15px;
+                    padding: 12px;
                     border: 1px solid #ccc;
                     border-radius: 6px;
                     font-size: 16px;
-                    color: #333;
+                    line-height: 1.5;
+                    box-sizing: border-box;
+                    transition: border-color 0.3s;
                 }
-                .form-group input:focus {
+
+                .form-group input:focus,
+                .form-group select:focus {
                     border-color: #4a90e2;
                     outline: none;
-                    box-shadow: 0 0 4px rgba(74, 144, 226, 0.5);
                 }
+
                 .two-cols {
                     display: flex;
                     justify-content: space-between;
                 }
-                .two-cols .col {
-                    width: 48%;
-                }
-                .three-cols {
-                    display: flex;
-                    justify-content: space-between;
-                }
-                .three-cols .col {
-                    width: 32%;
-                }
+
                 .form-button {
                     text-align: center;
                     margin-top: 30px;
                 }
+
                 .form-button button {
-                    padding: 15px 30px;
+                    padding: 12px 25px;
                     font-size: 18px;
                     border: none;
                     border-radius: 6px;
@@ -102,9 +106,11 @@
                     cursor: pointer;
                     transition: background-color 0.3s;
                 }
+
                 .form-button button:hover {
                     background-color: #357ab8;
                 }
+
             </style>
         </head>
         <body class="inner_page tables_page">
@@ -362,7 +368,7 @@
                                         <div class="form-group">
                                             <input type="text" id="staffID" name="staffID" value="${staff.id}" hidden=""/>
                                             <div class="two-cols">
-                                                <div class="col">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="name">Name</label>
                                                     <input
                                                         type="text"
@@ -372,14 +378,14 @@
                                                         value="${staff.name}"
                                                         />
                                                 </div>
-                                                <div class="col">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="dob">Date of Birth</label>
                                                     <input type="date" id="dob" name="dob" value="${staff.bod}"/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="one-col">
+                                            <div class="one-col" style="padding: 0; margin-right: 5px">
                                                 <label for="address">Address</label>
                                                 <input
                                                     type="text"
@@ -392,7 +398,7 @@
                                         </div>
                                         <div class="form-group">
                                             <div class="two-cols">
-                                                <div class="col">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="phone">Phone</label>
                                                     <input
                                                         type="tel"
@@ -403,11 +409,22 @@
                                                         />
                                                     <span id="phone-error" style="color: red"></span>
                                                 </div>
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="email">Email</label>
+                                                    <input
+                                                        type="email"
+                                                        id="email"
+                                                        name="email"
+                                                        placeholder="Enter email"
+                                                        value="${staff.email}"
+                                                        />
+                                                    <span id="email-error" style="color: red"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" >
                                             <div class="three-cols">
-                                                <div class="col">
+                                                <div class="col" style="padding: 0; margin-right: 5px ">
                                                     <label for="cccd">CCCD</label>
                                                     <input
                                                         type="text"
@@ -418,7 +435,7 @@
                                                         />
                                                     <span id="CCCD-error" style="color: red"></span>
                                                 </div>
-                                                <div class="col">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="education">Education</label>
                                                     <input
                                                         type="text"
@@ -428,10 +445,20 @@
                                                         value="${staff.education}"
                                                         />
                                                 </div>
-                                                <div class="col">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="salary">Salary</label>
+                                                    <input
+                                                        type="text"
+                                                        id="salary"
+                                                        name="salary"
+                                                        placeholder="Enter education"
+                                                        value="${staff.salary}"
+                                                        />
+                                                </div>
+                                                <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="bank">Bank Account</label>
                                                     <input
-                                                        type="bank"
+                                                        type="text"
                                                         id="bank"
                                                         name="bank"
                                                         placeholder="Enter bank account"
@@ -440,8 +467,49 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <div class="two-cols">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="company">Company</label>
+                                                    <select id="company" name="company">
+
+                                                        <c:forEach items="${sessionScope.listCompany}" var="cp">
+                                                            <option value="${cp.id}" ${staff.company.id == cp.id?'selected':''}>${cp.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="startDate">Start Date</label>
+                                                    <input type="date" id="startDate" name="startDate" value="${staff.startDate}"/>
+                                                </div>
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="endDate">End Date</label>
+                                                    <input type="date" id="endDate" name="endDate" value="${staff.endDate != null ? staff.endDate : ''}"}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="two-cols">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="status">Status</label>
+                                                    <select id="status" name="status">
+                                                        <option value="1" ${staff.status == '1' ? 'selected' : ''}>Active</option>
+                                                        <option value="0" ${staff.status == '0' ? 'selected' : ''}>Inactive</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="role">Role</label>
+                                                    <select id="role" name="role">
+                                                        <c:forEach items="${sessionScope.listRole}" var="role">
+                                                            <option value="${role.id}" ${role.id == staff.role.id?'selected':''}>${role.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-button">
                                             <button type="submit">Update</button>
+                                            <h5 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h5>
                                         </div>
                                     </form>
                                 </div>

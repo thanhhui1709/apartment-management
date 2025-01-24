@@ -6,7 +6,7 @@
 package controller.admin;
 
 import dao.EmployeeDAO;
-import dao.ServiceProviderDAO;
+import dao.CompanyDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Employee;
 import model.Resident;
-import model.ServiceProvider;
+import model.Company;
 
 /**
  *
@@ -60,9 +60,9 @@ public class ViewAllEmployee extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         EmployeeDAO daoR = new EmployeeDAO();
-        ServiceProviderDAO daoS = new ServiceProviderDAO();
+        CompanyDAO daoS = new CompanyDAO();
         List<Employee> listEmployee = daoR.getAllWorkingEmployee();
-        List<ServiceProvider> listServiceProvider = daoS.getAll();
+        List<Company> listServiceProvider = daoS.getAll();
         request.setAttribute("listServiceProvider", listServiceProvider);
         request.setAttribute("listEmployee", listEmployee);
         request.getRequestDispatcher("viewallemployee.jsp").forward(request, response);
@@ -79,9 +79,9 @@ public class ViewAllEmployee extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         EmployeeDAO daoR = new EmployeeDAO();
-        ServiceProviderDAO daoS = new ServiceProviderDAO();
+        CompanyDAO daoS = new CompanyDAO();
         List<Employee> listEmployee = daoR.getAll();
-        List<ServiceProvider> listServiceProvider = daoS.getAll();
+        List<Company> listServiceProvider = daoS.getAll();
         request.setAttribute("listServiceProvider", listServiceProvider);
         request.setAttribute("listEmployee", listEmployee);
         request.getRequestDispatcher("viewallemployee.jsp").forward(request, response);

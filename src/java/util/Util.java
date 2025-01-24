@@ -4,7 +4,7 @@
  */
 package util;
 
-import dao.EmployeeDAO;
+
 import dao.ResidentDAO;
 import dao.StaffDAO;
 import java.util.ArrayList;
@@ -44,14 +44,10 @@ public class Util {
     }
     public List<String> getAllEmail(){
         StaffDAO sd = new StaffDAO();
-        EmployeeDAO ed = new EmployeeDAO();
         ResidentDAO rd = new ResidentDAO();
         List<String> rs = new ArrayList<>();
         for (int i = 0; i < sd.getAll().size(); i++) {
             rs.add(sd.getAll().get(i).getEmail());
-        }
-        for (int i = 0; i < ed.getAll().size(); i++) {
-            rs.add(ed.getAll().get(i).getEmail());
         }
         for (int i = 0; i < rd.getAll().size(); i++) {
             rs.add(rd.getAll().get(i).getEmail());

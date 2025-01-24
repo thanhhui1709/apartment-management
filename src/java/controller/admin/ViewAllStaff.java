@@ -6,6 +6,8 @@
 package controller.admin;
 
 import dao.AdminDAO;
+import dao.CompanyDAO;
+import dao.RoleDAO;
 import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Company;
+import model.Role;
 import model.Staff;
 
 /**
@@ -101,6 +105,12 @@ public class ViewAllStaff extends HttpServlet {
         }
         else totalPage= list.size()/numberPerPape+1;
         list = sd.getPageByNumber(list, Integer.parseInt(page),numberPerPape );
+        RoleDAO daoR = new RoleDAO();
+        CompanyDAO daoCp = new CompanyDAO();
+        List<Company> listCompany = daoCp.getAll();
+        List<Role> listRole = daoR.getAll();
+        session.setAttribute("listCompany", listCompany);
+        session.setAttribute("listRole", listRole);
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("staffs", list);

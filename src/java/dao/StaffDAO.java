@@ -14,9 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Account;
+import model.Company;
 import model.Employee;
 import model.Role;
-import model.ServiceProvider;
+import model.Company;
 import model.Staff;
 import util.Util;
 
@@ -27,7 +28,7 @@ import util.Util;
 public class StaffDAO extends DBContext {
 
     public List<Staff> getAll() {
-        ServiceProviderDAO sd = new ServiceProviderDAO();
+        CompanyDAO sd = new CompanyDAO();
         RoleDAO rd = new RoleDAO();
         String sql = "select * from Staff";
         List<Staff> list = new ArrayList<>();
@@ -45,24 +46,21 @@ public class StaffDAO extends DBContext {
                 int salary = rs.getInt("salary");
                 String education = rs.getString("education");
                 String bank = rs.getString("bank");
+                int status = rs.getInt("status");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 Role r = rd.getById(rs.getString("roleid"));
-                int status  =rs.getInt("status");
-                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, username, password, r,status);
+                Company cp = daoCP.getById(rs.getString("companyId"));
+                String startDate = rs.getString("startdate");
+                String enddate = rs.getString("enddate");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate);
                 list.add(s);
             }
         } catch (Exception e) {
         }
         return list;
     }
-    public static void main(String[] args) {
-        StaffDAO sd =new StaffDAO();
-        List<Staff> list = sd.getByStatus(1);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getStatus());
-        }
-    }
+
     public Staff getById(String id) {
         List<Staff> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
@@ -102,49 +100,54 @@ public class StaffDAO extends DBContext {
         }
         return null;
     }
-     public int updateStaffInfor(String id,String name, String bod, String phone, String address, String cccd, String education, String bank) {
-        String sql = "UPDATE [dbo].[Staff]\n"
-                + "   SET \n"
-                + "      [Name] = ?\n"
-                + "      ,[Bod] = ?\n"
-                + "      ,[Phone] = ?\n"
-                + "      ,[Address] = ?\n"
-                + "      ,[CCCD] = ?\n"
-                + "      ,[Education] = ?\n"
-                + "      ,[Bank] = ?\n"
-                + "     \n"
-                + " WHERE ID=?";
+
+    public boolean updateStaffInfor(Staff s) {
+        String sql = "Update staff set name = ?, bod = ? ,email = ? , phone = ?, address = ? , cccd = ? , salary = ? , education = ? , bank = ?"
+                + ", status = ? ,roleid = ? ,companyid = ?, startdate = ?, enddate = ? where id = ? ";
         try {
-            PreparedStatement st=connection.prepareStatement(sql);
-            st.setString(1, name);
-            st.setString(2, bod);
-            st.setString(3, phone);
-            st.setString(4, address);
-            st.setString(5, cccd);
-            st.setString(6, education);
-            st.setString(7, bank);
-            st.setString(8, id);
-            st.executeUpdate();
-            return 0;
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, s.getName());
+            st.setString(2, s.getBod());
+            st.setString(3, s.getEmail());
+            st.setString(4, s.getPhone());
+            st.setString(5, s.getAddress());
+            st.setString(6, s.getCccd());
+            st.setInt(7, s.getSalary());
+            st.setString(8, s.getEducation());
+            st.setString(9, s.getBank());
+            st.setInt(10, s.getStatus());
+            st.setString(11, s.getRole().getId());
+            st.setString(12, s.getCompany().getId());
+            st.setString(13, s.getStartDate());
+            st.setString(14, s.getEndDate());
+            st.setString(15, s.getId());
+
+            return st.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return -1;
+        return false;
 
     }
 
     public boolean insertStaff(Staff s) {
-        String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,username,password,roleId) \n"
-                + "values(?,?,?,?,?,?,?,?,?,?,?,?,2)";
+        String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,status,username,password,roleId, companyid,startdate) \n"
+                + "values(?,?,?,?,?,?,?,?,?,?,1,?,?,?,?,?)";
         Util u = new Util();
         List<Staff> list = this.getAll();
-        
-        int lastIdNum = 1; // Giá trị mặc định nếu danh sách rỗng
-    if (!list.isEmpty()) {
-        String lastId = list.get(list.size() - 1).getId(); // Lấy ID cuối
-        lastIdNum = Integer.parseInt(lastId.substring(1)) + 1; // Chuyển "S001" -> 1, tăng lên 2
-    }
-    String newId = String.format("S%03d", lastIdNum);
+        String newId = "";
+        if (list.isEmpty()) {
+            newId = "S001";
+        } else {
+            int lastIdNum = u.getNumberFromText(list.get(list.size() - 1).getId()) + 1;
+            if (lastIdNum <= 9) {
+                newId = "S00" + lastIdNum;
+            } else if (lastIdNum >= 10 && lastIdNum <= 99) {
+                newId = "S0" + lastIdNum;
+            } else {
+                newId = "S" + lastIdNum;
+            }
+        }
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, newId);
@@ -159,7 +162,9 @@ public class StaffDAO extends DBContext {
             ps.setString(10, s.getBank());
             ps.setString(11, s.getUsername());
             ps.setString(12, s.getPassword());
-
+            ps.setString(13, s.getRole().getId());
+            ps.setString(14, s.getCompany().getId());
+            ps.setString(15, s.getStartDate());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException ex) {
@@ -167,14 +172,18 @@ public class StaffDAO extends DBContext {
         }
         return false;
     }
-    public List<Staff> searchByName(List<Staff> list,String name){
-        List<Staff> rs  = new ArrayList<>();
+
+    public List<Staff> searchByName(List<Staff> list, String name) {
+        List<Staff> rs = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getName().toLowerCase().contains(name.toLowerCase())) rs.add(list.get(i));
+            if (list.get(i).getName().toLowerCase().contains(name.toLowerCase())) {
+                rs.add(list.get(i));
+            }
         }
         return rs;
     }
-    public List<Staff> getPageByNumber(List<Staff> list,int page,int number){
+
+    public List<Staff> getPageByNumber(List<Staff> list, int page, int number) {
         List<Staff> listpage = new ArrayList<>();
         int start = number * (page - 1);
         int end = number * page - 1;
@@ -186,14 +195,51 @@ public class StaffDAO extends DBContext {
         }
         return listpage;
     }
-    public List<Staff> getByStatus(int status){
-        if(status==-1) return this.getAll();
-        List<Staff> list= this.getAll();
-        List<Staff> rs=  new ArrayList<>();
+
+    public List<Staff> getByStatus(int status) {
+        if (status == -1) {
+            return this.getAll();
+        }
+        List<Staff> list = this.getAll();
+        List<Staff> rs = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getStatus()==status) rs.add(list.get(i));
+            if (list.get(i).getStatus() == status) {
+                rs.add(list.get(i));
+            }
         }
         return rs;
     }
-    
+
+    public static void main(String[] args) {
+        Role role = new Role();
+        role.setId("2"); // Set role ID
+
+        // Create a company object (assuming Company class exists)
+        Company company = new Company();
+        company.setId("C001"); // Set company ID
+
+        // Create the Staff object
+        Staff staff = new Staff();
+        staff.setId("S001"); // or leave it empty; it will be generated in your method
+        staff.setName("John Doe");
+        staff.setBod("1990-01-01"); // Format as needed
+        staff.setEmail("johndoe@example.com");
+        staff.setPhone("1234567890");
+        staff.setAddress("123 Main St, Anytown, USA");
+        staff.setCccd("CCCD123456");
+        staff.setSalary(50000);
+        staff.setEducation("Bachelor's Degree");
+        staff.setBank("Bank Name");
+        staff.setUsername("johndoe");
+        staff.setPassword("securePassword");
+        staff.setRole(role);
+        staff.setCompany(company);
+        staff.setStartDate("2023-01-01"); // Format as needed
+
+        // Now you can use this staff object to insert it into the database
+        StaffDAO staffDAO = new StaffDAO();
+        boolean isInserted = staffDAO.insertStaff(staff);
+        System.out.println("Staff inserted: " + isInserted);
+    }
+
 }
