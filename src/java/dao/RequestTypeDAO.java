@@ -19,7 +19,7 @@ import model.Role;
 public class RequestTypeDAO extends DBContext {
 
     public List<RequestType> getAll() {
-        String sql = " select * from requestType";
+        String sql = " select * from TypeRequest";
         RoleDAO rd = new RoleDAO();
         List<RequestType> list = new ArrayList<>();
         try {
@@ -43,5 +43,9 @@ public class RequestTypeDAO extends DBContext {
             if(list.get(i).getId().equalsIgnoreCase(id)) return list.get(i);
         }
         return null;
+    }
+    public static void main(String[] args) {
+        RequestTypeDAO dao = new RequestTypeDAO();
+        System.out.println(dao.getAll().size());
     }
 }

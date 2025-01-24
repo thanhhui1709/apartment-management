@@ -23,7 +23,7 @@ import util.Util;
  */
 public class RequestDAO extends DBContext{
     public List<Request> getAll(){
-        String sql = " select * from request";
+        String sql = "select * from Request";
         List<Request> list = new ArrayList<>();
         ResidentDAO rd = new ResidentDAO();
         StaffDAO sd = new StaffDAO();
@@ -31,17 +31,20 @@ public class RequestDAO extends DBContext{
         try {
             PreparedStatement st  = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            String idd =rs.getString("id");
+            String id =rs.getString("id");
             Resident r = rd.getById(rs.getString("rid"));
             Staff s  = sd.getById(rs.getString("sid"));
+            System.out.println("ok");
             String detail =rs.getString("detail");
+            String response = rs.getString("response");
             String date  =rs.getDate("date").toString();
-            String responseDate = rs.getDate("responseDate").toString();
+            String responseDate = rs.getDate("responeDate").toString();
             String status = rs.getString("status");
             RequestType rt = rtd.getById(rs.getString("tid"));
-            Request rq = new Request(idd, r, s, detail, responseDate, date, responseDate, status, rt);
+            Request rq = new Request(id, r, s, detail, responseDate, date, responseDate, status, rt);
             list.add(rq);
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            System.out.println(e);
         }
         return list;
     }
@@ -62,5 +65,9 @@ public class RequestDAO extends DBContext{
             st.executeUpdate();
         } catch (SQLException e) {
         }
+    }
+    public static void main(String[] args) {
+        RequestDAO dao = new RequestDAO();
+        System.out.println(dao.getAll().size());
     }
 }

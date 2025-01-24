@@ -212,35 +212,36 @@ public class StaffDAO extends DBContext {
     }
 
     public static void main(String[] args) {
-        Role role = new Role();
-        role.setId("2"); // Set role ID
-
-        // Create a company object (assuming Company class exists)
-        Company company = new Company();
-        company.setId("C001"); // Set company ID
-
-        // Create the Staff object
+//        Role role = new Role();
+//        role.setId("2"); // Set role ID
+//
+//        // Create a company object (assuming Company class exists)
+//        Company company = new Company();
+//        company.setId("C001"); // Set company ID
+//
+//        // Create the Staff object
         Staff staff = new Staff();
-        staff.setId("S001"); // or leave it empty; it will be generated in your method
-        staff.setName("John Doe");
-        staff.setBod("1990-01-01"); // Format as needed
-        staff.setEmail("johndoe@example.com");
-        staff.setPhone("1234567890");
-        staff.setAddress("123 Main St, Anytown, USA");
-        staff.setCccd("CCCD123456");
-        staff.setSalary(50000);
-        staff.setEducation("Bachelor's Degree");
-        staff.setBank("Bank Name");
-        staff.setUsername("johndoe");
-        staff.setPassword("securePassword");
-        staff.setRole(role);
-        staff.setCompany(company);
-        staff.setStartDate("2023-01-01"); // Format as needed
-
-        // Now you can use this staff object to insert it into the database
+//        staff.setId("S001"); // or leave it empty; it will be generated in your method
+//        staff.setName("John Doe");
+//        staff.setBod("1990-01-01"); // Format as needed
+//        staff.setEmail("johndoe@example.com");
+//        staff.setPhone("1234567890");
+//        staff.setAddress("123 Main St, Anytown, USA");
+//        staff.setCccd("CCCD123456");
+//        staff.setSalary(50000);
+//        staff.setEducation("Bachelor's Degree");
+//        staff.setBank("Bank Name");
+//        staff.setUsername("johndoe");
+//        staff.setPassword("securePassword");
+//        staff.setRole(role);
+//        staff.setCompany(company);
+//        staff.setStartDate("2023-01-01"); // Format as needed
+//
+//        // Now you can use this staff object to insert it into the database
         StaffDAO staffDAO = new StaffDAO();
-        boolean isInserted = staffDAO.insertStaff(staff);
-        System.out.println("Staff inserted: " + isInserted);
+        System.out.println(staffDAO.getAll().size());
+//        boolean isInserted = staffDAO.insertStaff(staff);
+//        System.out.println("Staff inserted: " + isInserted);
     }
     public Staff getByRequestType(RequestType rt){
         List<Staff> list  =this.getAll();
