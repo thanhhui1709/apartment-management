@@ -18,6 +18,7 @@ import model.Company;
 import model.Employee;
 import model.Role;
 import model.Company;
+import model.RequestType;
 import model.Staff;
 import util.Util;
 
@@ -240,6 +241,14 @@ public class StaffDAO extends DBContext {
         StaffDAO staffDAO = new StaffDAO();
         boolean isInserted = staffDAO.insertStaff(staff);
         System.out.println("Staff inserted: " + isInserted);
+    }
+    public Staff getByRequestType(RequestType rt){
+        List<Staff> list  =this.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            if(list.get(i).getRole().getId().equalsIgnoreCase(rt.getId())
+                    && list.get(i).getStatus()==1) return list.get(i);
+        }
+        return null;
     }
 
 }
