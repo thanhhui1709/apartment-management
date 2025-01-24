@@ -50,7 +50,7 @@ public class StaffDAO extends DBContext {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 Role r = rd.getById(rs.getString("roleid"));
-                Company cp = daoCP.getById(rs.getString("companyId"));
+                Company cp = sd.getById(rs.getString("companyId"));
                 String startDate = rs.getString("startdate");
                 String enddate = rs.getString("enddate");
                 Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate);
