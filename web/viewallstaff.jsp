@@ -225,7 +225,7 @@
                                                                 <td>${staff.salary}</td>
                                                                 <td>${staff.education}</td>
                                                                 <td>${staff.role.name}</td>
-                                                                <td>Chưa có status</td>
+                                                                <td>${staff.status}</td>
                                                                 <td><a href="updateStaffInfor?id=${staff.id}">Update</a></td>
                                                             </tr>
                                                         </c:forEach>

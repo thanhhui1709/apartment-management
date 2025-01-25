@@ -5,7 +5,7 @@
 package controller.admin;
 
 import dao.EmployeeDAO;
-import dao.ServiceProviderDAO;
+import dao.CompanyDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Employee;
-import model.ServiceProvider;
+import model.Company;
 
 /**
  *
@@ -61,9 +61,9 @@ public class AddEmployee extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ServiceProviderDAO daoSP = new ServiceProviderDAO();
+        CompanyDAO daoSP = new CompanyDAO();
         HttpSession session = request.getSession();
-        List<ServiceProvider> list = daoSP.getAll();
+        List<Company> list = daoSP.getAll();
 
         session.setAttribute("listServiceProvider", list);
         request.getRequestDispatcher("addnewemployee.jsp").forward(request, response);
@@ -91,8 +91,8 @@ public class AddEmployee extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         EmployeeDAO daoE = new EmployeeDAO();
-        ServiceProviderDAO daoSP = new ServiceProviderDAO();
-        ServiceProvider sp = daoSP.getById(company);
+        CompanyDAO daoSP = new CompanyDAO();
+        Company sp = daoSP.getById(company);
         List<Employee> listEmployee = daoE.getAll();
         Employee newE = new Employee(name, dob, email, phone, address, cccd, sp, startDate, username, password);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.admin;
 
+import dao.CompanyDAO;
+import dao.RoleDAO;
 import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,42 +24,46 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Employee;
+import model.Role;
 import model.Staff;
 
 /**
  *
  * @author pc
  */
-@WebServlet(name="AddNewStaffServlet", urlPatterns={"/add-new-staff"})
+@WebServlet(name = "AddNewStaffServlet", urlPatterns = {"/add-new-staff"})
 public class AddNewStaffServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddNewStaffServlet</title>");  
+            out.println("<title>Servlet AddNewStaffServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddNewStaffServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AddNewStaffServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -66,12 +71,13 @@ public class AddNewStaffServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -79,85 +85,113 @@ public class AddNewStaffServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        String cccd = request.getParameter("cccd");
+            throws ServletException, IOException {
+
         String name = request.getParameter("name");
+        String dob = request.getParameter("dob");
+        String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
-        String address = request.getParameter("address");
-        String bod = request.getParameter("dob");
-        String salary_raw = request.getParameter("salary");
+        String cccd = request.getParameter("cccd");
         String education = request.getParameter("education");
+        String salary_raw = request.getParameter("salary");
         String bank = request.getParameter("bank");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        int salary=Integer.parseInt(salary_raw);
+        String company = request.getParameter("company");
+        String startDate = request.getParameter("startDate");
+        String roleId = request.getParameter("role");
+
+        RoleDAO daoR = new RoleDAO();
+        CompanyDAO daoCp = new CompanyDAO();
         StaffDAO stDao = new StaffDAO();
         List<Staff> listStaff = stDao.getAll();
-        if (listStaff == null) 
-        {
-        listStaff = new ArrayList<>();
+
+        if (listStaff == null) {
+            listStaff = new ArrayList<>();
         }
-        
-        Staff newS= new Staff(name, bod, email, phone, address, cccd, salary, education, bank, username, password);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        ZoneId zone = ZoneId.systemDefault();
-        for (Staff e : listStaff) {
-            try {
-                if (e.getCccd().equals(newS.getCccd())) {
-                    request.setAttribute("error", "CCCD is existed");
-                    request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
-                    return;
-                }
 
-                Date dateOfBirth = format.parse(bod);
-                LocalDate birthDate = dateOfBirth.toInstant().atZone(zone).toLocalDate();
-                LocalDate currentDate = LocalDate.now();
+        Staff s = null;
 
-                int age = currentDate.getYear() - birthDate.getYear();
-                if (currentDate.getDayOfYear() < birthDate.getDayOfYear()) {
-                    age--;
-                }
+        try {
+            int salary = Integer.parseInt(salary_raw);
+            Role role = daoR.getById(roleId);
 
-                if (age <= 18) {
-                    request.setAttribute("error", "The staff's age must be greater than 18.");
-                    request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
-                    return;
-                }
-
-                if (e.getPhone().equals(newS.getPhone())) {
-                    request.setAttribute("error", "Phone is existed");
-                    request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
-                    return;
-                }
-                if (e.getEmail().equals(newS.getEmail())) {
-                    request.setAttribute("error", "Email is existed");
-                    request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
-                    return;
-                }
-
-                if (e.getUsername().equals(newS.getUsername())) {
-                    request.setAttribute("error", "Username is existed");
-                    request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
-                    return;
-                }
-            } catch (ParseException ex) {
-                Logger.getLogger(AddNewStaffServlet.class.getName()).log(Level.SEVERE, null, ex);
+            if (role == null) {
+                request.setAttribute("error", "Invalid role selected.");
+                request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                return;
             }
-        }
-        if (stDao.insertStaff(newS)) {
-            request.setAttribute("status", "true");
-            request.setAttribute("message", "Add new staff successfully!");
+
+            s = new Staff(name, dob, email, phone, address, cccd, salary, education, bank, username, password, role,
+                    daoCp.getById(company), startDate);
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            ZoneId zone = ZoneId.systemDefault();
+
+            for (Staff e : listStaff) {
+                try {
+                    if (e.getCccd().equals(s.getCccd())) {
+                        request.setAttribute("error", "CCCD already exists.");
+                        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                        return;
+                    }
+
+                    Date dateOfBirth = format.parse(dob);
+                    LocalDate birthDate = dateOfBirth.toInstant().atZone(zone).toLocalDate();
+                    LocalDate currentDate = LocalDate.now();
+
+                    int age = currentDate.getYear() - birthDate.getYear();
+                    if (currentDate.getDayOfYear() < birthDate.getDayOfYear()) {
+                        age--;
+                    }
+
+                    if (age <= 18) {
+                        request.setAttribute("error", "Staff must be older than 18.");
+                        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                        return;
+                    }
+
+                    if (e.getPhone().equals(s.getPhone())) {
+                        request.setAttribute("error", "Phone number already exists.");
+                        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                        return;
+                    }
+                    if (e.getEmail().equals(s.getEmail())) {
+                        request.setAttribute("error", "Email already exists.");
+                        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                        return;
+                    }
+                    if (e.getUsername().equals(s.getUsername())) {
+                        request.setAttribute("error", "Username already exists.");
+                        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                        return;
+                    }
+                } catch (ParseException ex) {
+                    request.setAttribute("error", "Invalid date format.");
+                    request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                    return;
+                }
+            }
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid salary format.");
             request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+            return;
+        }
+
+        if (stDao.insertStaff(s)) {
+            request.setAttribute("status", "true");
+            request.setAttribute("message", "Staff added successfully!");
         } else {
             request.setAttribute("status", "false");
-            request.setAttribute("message", "Cannot add new staff!");
-            request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+            request.setAttribute("message", "Failed to add staff.");
         }
+        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

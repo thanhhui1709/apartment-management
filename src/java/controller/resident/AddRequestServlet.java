@@ -3,25 +3,29 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.employee;
+package controller.resident;
 
-import dao.EmployeeDAO;
+import dao.RequestDAO;
+import dao.RequestTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.Account;
-import model.Employee;
-import util.Util;
+import model.Request;
+import model.RequestType;
 
 /**
  *
- * @author pc
+ * @author thanh
  */
-public class EditProfileEmployeeServlet extends HttpServlet {
+@WebServlet(name="AddRequestServlet", urlPatterns={"/resident-add-request"})
+public class AddRequestServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +42,10 @@ public class EditProfileEmployeeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfileEmployeeServlet</title>");  
+            out.println("<title>Servlet AddRequestServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditProfileEmployeeServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet AddRequestServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +62,10 @@ public class EditProfileEmployeeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        RequestTypeDAO rtd = new RequestTypeDAO();
+        List<RequestType> listTypeRquest = rtd.getAll();
+        request.setAttribute("listTypeRquest", listTypeRquest);
+        request.getRequestDispatcher("addrequest.jsp").forward(request, response);
     } 
 
     /** 
@@ -71,16 +78,15 @@ public class EditProfileEmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        EmployeeDAO ed = new EmployeeDAO();
         HttpSession session =request.getSession();
-        Account account =(Account) session.getAttribute("account");
-        Employee em = ed.getById(account.getpId());
-        String eemail=request.getParameter("editprofileemail");
-        String ephone=request.getParameter("editprofilephone");
-        String eaddress=request.getParameter("editprofileaddress");
-        ed.EditProfileEm(em.getId(), ephone, eemail, eaddress);
-        Util editem = new Util();
-        response.sendRedirect(editem.getTableNameByRoleId(account.getRoleId()));
+        Account account = (Account) session.getAttribute("account");
+        String rid= account.getpId();
+        String detail =request.getParameter("detail");
+        String typeRequestId = request.getParameter("typeRequest");
+        RequestTypeDAO rtd = new RequestTypeDAO();
+        RequestDAO rd = new RequestDAO();
+        int addRequest =rd.addRequest(rid, detail, rtd.getById(typeRequestId));
+        response.sendRedirect("index.jsp");
     }
 
     /** 

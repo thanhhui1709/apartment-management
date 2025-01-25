@@ -1,3 +1,9 @@
+<%-- 
+    Document   : addnewcompany
+    Created on : Jan 23, 2025, 2:23:52 PM
+    Author     : PC
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,7 +119,7 @@
                     <div class="sidebar_blog_1">
                         <div class="sidebar-header">
                             <div class="logo_section">
-                                <a href="index.jsp"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
+                                <a href="index.html"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
                             </div>
                         </div>
                         <div class="sidebar_user_info">
@@ -121,7 +127,7 @@
                             <div class="user_profle_side">
                                 <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
                                 <div class="user_info">
-                                    <h6>Resident</h6>
+                                    <h6>John David</h6>
                                     <p><span class="online_animation"></span> Online</p>
                                 </div>
                             </div>
@@ -151,8 +157,7 @@
                                     <li><a href="invoice.html">> <span>Invoice</span></a></li>
                                 </ul>
                             </li>
-                            <li><a href="view-resident"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
-                            <li><a href="view-all-staff"><i class="fa fa-table purple_color2"></i> <span>Staff Information</span></a></li>
+                            <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
                             <li>
                                 <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
                                 <ul class="collapse list-unstyled" id="apps">
@@ -170,7 +175,7 @@
                                 <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Additional Pages</span></a>
                                 <ul class="collapse list-unstyled" id="additional_page">
                                     <li>
-                                        <a href="profile.jsp">> <span>Profile</span></a>
+                                        <a href="profile.html">> <span>Profile</span></a>
                                     </li>
                                     <li>
                                         <a href="project.html">> <span>Projects</span></a>
@@ -198,7 +203,7 @@
                             <div class="full">
                                 <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
                                 <div class="logo_section">
-                                    <a href="index.jsp"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
+                                    <a href="index.html"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
                                 </div>
                                 <div class="right_topbar">
                                     <div class="icon_info">
@@ -209,13 +214,12 @@
                                         </ul>
                                         <ul class="user_profile_dd">
                                             <li>
-                                                <jsp:useBean id="ut" class="util.Util" scope="page"/>
-                                                <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">User</span></a>
+                                                <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">John David</span></a>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="${ut.getTableNameByRoleId(sessionScope.account.roleId)}">My Profile</a>
+                                                    <a class="dropdown-item" href="profile.html">My Profile</a>
                                                     <a class="dropdown-item" href="settings.html">Settings</a>
                                                     <a class="dropdown-item" href="help.html">Help</a>
-                                                    <a class="dropdown-item" href="logout"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
+                                                    <a class="dropdown-item" href="#"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -230,160 +234,58 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-container">
-                                    <h1>Update Staff Information</h1>
-                                    <form action="add-new-staff" method="post">
+                                    <h1>Add New Company</h1>
+                                    <form action="add-new-company" method="post">
                                         <div class="form-group">
-                                            <input type="text" id="staffID" name="staffID" value="" hidden=""/>
                                             <div class="two-cols">
-                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                <div class="col" style="padding: 0; margin-left: 5px">
                                                     <label for="name">Name</label>
-                                                    <input
-                                                        type="text"
-                                                        id="name"
-                                                        name="name"
-                                                        placeholder="Enter full name"
-                                                        value=""
-                                                        />
+                                                    <input type="text" id="name" name="name" placeholder="Enter full name" required />
                                                 </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="dob">Date of Birth</label>
-                                                    <input type="date" id="dob" name="dob" value=""/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="one-col" style="padding: 0; margin-right: 5px">
-                                                <label for="address">Address</label>
-                                                <input
-                                                    type="text"
-                                                    id="address"
-                                                    name="address"
-                                                    placeholder="Enter address"
-                                                    value=""
-                                                    />
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="two-cols">
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="phone">Phone</label>
-                                                    <input
-                                                        type="tel"
-                                                        id="phone"
-                                                        name="phone"
-                                                        placeholder="Enter phone number"
-                                                        value=""
-                                                        />
-                                                    <span id="phone-error" style="color: red"></span>
-                                                </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="email">Email</label>
-                                                    <input
-                                                        type="email"
-                                                        id="email"
-                                                        name="email"
-                                                        placeholder="Enter email"
-                                                        value=""
-                                                        />
-                                                    <span id="email-error" style="color: red"></span>
+                                                    <input type="tel" id="phone" name="phone" placeholder="Enter phone number" required />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <div class="three-cols">
-                                                <div class="col" style="padding: 0; margin-right: 5px ">
-                                                    <label for="cccd">CCCD</label>
-                                                    <input
-                                                        type="text"
-                                                        id="cccd"
-                                                        name="cccd"
-                                                        placeholder="Enter CCCD"
-                                                        value=""
-                                                        />
-                                                    <span id="CCCD-error" style="color: red"></span>
-                                                </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="education">Education</label>
-                                                    <input
-                                                        type="text"
-                                                        id="education"
-                                                        name="education"
-                                                        placeholder="Enter education"
-                                                        value=""
-                                                        />
-                                                </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="salary">Salary</label>
-                                                    <input
-                                                        type="text"
-                                                        id="salary"
-                                                        name="salary"
-                                                        placeholder="Enter salary"
-                                                        value=""
-                                                        />
-                                                </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="bank">Bank Account</label>
-                                                    <input
-                                                        type="text"
-                                                        id="bank"
-                                                        name="bank"
-                                                        placeholder="Enter bank account"
-                                                        value=""
-                                                        />
-                                                </div>
-                                            </div>
+                                            <label for="contactPhone">Contact Phone</label>
+                                            <input type="tel" id="contactPhone" name="contactPhone" placeholder="Enter contact phone number" required />
                                         </div>
                                         <div class="form-group">
-                                            <div class="two-cols">
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="username">Username</label>
-                                                    <input
-                                                        type="text"
-                                                        id="username"
-                                                        name="username"
-                                                        placeholder="Enter username"
-                                                        value=""
-                                                        />
-                                                </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="password">Password</label>
-                                                    <input
-                                                        type="password"
-                                                        id="password"
-                                                        name="password"
-                                                        placeholder="Enter password"
-                                                        value=""
-                                                        />
-                                                </div>
-                                            </div>
+                                            <label for="fax">Fax</label>
+                                            <input type="text" id="fax" name="fax" placeholder="Enter fax number" required />
                                         </div>
                                         <div class="form-group">
-                                            <div class="two-cols">
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="company">Company</label>
-                                                    <select id="company" name="company">
-                                                        <c:forEach items="${sessionScope.listCompany}" var="cp">
-                                                            <option value="${cp.id}">${cp.name}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="startDate">Start Date</label>
-                                                    <input type="date" id="startDate" name="startDate" value=""/>
-                                                </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="role">Role</label>
-                                                    <select id="role" name="role">
-                                                        <c:forEach items="${sessionScope.listRole}" var="role">
-                                                            <option value="${role.id}">${role.name}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <label for="email">Email</label>
+                                            <input type="email" id="email" name="email" placeholder="Enter email" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contactemail">Contact Email</label>
+                                            <input type="email" id="contactemail" name="contactemail" placeholder="Enter contact email" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="website">Website</label>
+                                            <input type="text" id="website" name="website" placeholder="Enter website URL" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="taxCode">Tax Code</label>
+                                            <input type="text" id="taxCode" name="taxCode" placeholder="Enter tax code" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="bank">Bank</label>
+                                            <input type="text" id="bank" name="bank" placeholder="Enter bank name" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="address">Address</label>
+                                            <input type="text" id="address" name="address" placeholder="Enter address" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <input type="text" id="description" name="description" placeholder="Enter description" />
                                         </div>
                                         <div class="form-button">
-                                            <button type="submit">Add Staff</button>
+                                            <button type="submit">Add Company</button>
                                             <h5 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h5>
                                             <h5 style="color:red;text-align:center">${requestScope.error}</h5>
                                         </div>
@@ -391,15 +293,16 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- end form -->
                     </div>
+                    <!-- end form -->
                 </div>
             </div>
-            <!-- jQuery -->
-            <script src="js/jquery.min.js"></script>
-            <script src="js/popper.min.js"></script>
-            <script src="js/bootstrap.min.js"></script>
-            <!-- custom js -->
-            <script src="js/custom.js"></script>
+        </div>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- custom js -->
+        <script src="js/custom.js"></script>
     </body>
 </html>

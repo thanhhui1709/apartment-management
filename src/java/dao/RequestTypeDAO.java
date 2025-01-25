@@ -6,50 +6,46 @@ package dao;
 
 import java.util.List;
 import jdbc.DBContext;
-import model.Role;
+import model.RequestType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import model.Role;
 
 /**
  *
  * @author thanh
  */
-public class RoleDAO extends DBContext {
+public class RequestTypeDAO extends DBContext {
 
-    public List<Role> getAll() {
-        String sql = "select * from role";
-        List<Role> list = new ArrayList<>();
+    public List<RequestType> getAll() {
+        String sql = " select * from TypeRequest";
+        RoleDAO rd = new RoleDAO();
+        List<RequestType> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("id");
                 String name = rs.getString("name");
-                String description = rs.getString("description");
-                Role r = new Role(id, name, description);
-                list.add(r);
+                Role r = rd.getById(rs.getString("destination"));
+                String detail = rs.getString("detail");
+                RequestType rt = new RequestType(id, name, r, detail);
+                list.add(rt);
             }
         } catch (Exception e) {
         }
         return list;
     }
-
-    public Role getById(String id) {
-        List<Role> list = this.getAll();
+    public RequestType getById(String id){
+        List<RequestType> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId().equals(id)) {
-                return list.get(i);
-            }
+            if(list.get(i).getId().equalsIgnoreCase(id)) return list.get(i);
         }
         return null;
     }
-    
     public static void main(String[] args) {
-        
-        RoleDAO dao= new RoleDAO();
-        System.out.println(dao.getById("3"));
+        RequestTypeDAO dao = new RequestTypeDAO();
+        System.out.println(dao.getAll().size());
     }
-
-  
 }
