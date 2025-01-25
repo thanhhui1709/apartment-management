@@ -38,6 +38,10 @@ public class Util {
     public int getNumberFromText(String str) {
         return Integer.parseInt(str.substring(1));
     }
+    
+     public int getNumberFromTextOnlyNumber(String str) {
+        return Integer.parseInt(str);
+    }
     public int getNumberFromTextPlusOne(String str) {
         return Integer.parseInt(str.substring(1))+1;
     }

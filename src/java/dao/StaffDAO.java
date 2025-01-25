@@ -140,7 +140,7 @@ public class StaffDAO extends DBContext {
     }
 
     public boolean insertStaff(Staff s) {
-        String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,status,username,password,roleId, companyid,startdate) \n"
+        String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,status,username,password,roleId, cid,startdate) \n"
                 + "values(?,?,?,?,?,?,?,?,?,?,1,?,?,?,?,?)";
         Util u = new Util();
         List<Staff> list = this.getAll();
@@ -248,8 +248,8 @@ public class StaffDAO extends DBContext {
 //        // Now you can use this staff object to insert it into the database
         StaffDAO staffDAO = new StaffDAO();
 //        boolean isInserted = staffDAO.insertStaff(staff);
-//        System.out.println("Staff inserted: " + isInserted);
-        System.out.println(staffDAO.getAll().size());
+        System.out.println("Staff inserted: " + staffDAO.getById("S1012"));
+
     }
 
 }

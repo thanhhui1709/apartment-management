@@ -28,6 +28,11 @@ public class Staff {
     private String startDate; // Start date as String
     private String endDate; // End date as String
 
+    @Override
+    public String toString() {
+        return "Staff{" + "id=" + id + ", name=" + name + ", bod=" + bod + ", email=" + email + ", phone=" + phone + ", address=" + address + ", cccd=" + cccd + ", salary=" + salary + ", education=" + education + ", bank=" + bank + ", status=" + status + ", username=" + username + ", password=" + password + ", role=" + role + ", company=" + company + ", startDate=" + startDate + ", endDate=" + endDate + '}';
+    }
+
     public Staff() {
     }
 

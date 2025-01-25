@@ -84,6 +84,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
         if (user.equals(ac.getUsername()) && pass.equals(ac.getPassword())) {
+            ac.setpId(dao.getIdByUsernameAndRole(user, checkrole));
             session.setAttribute("account", ac);
             String remember = request.getParameter("remember");
             if ("on".equals(remember)) {
@@ -94,8 +95,7 @@ public class LoginServlet extends HttpServlet {
                 cookiePass.setMaxAge(60 * 60);
                 response.addCookie(cookieUser);
                 response.addCookie(cookiePass);
-            } 
-            else {
+            } else {
                 // Clear both cookies by setting max age to 0
                 Cookie cookieUser = new Cookie("rememberedUser", user);
                 Cookie cookiePass = new Cookie("rememberedPass", pass);
