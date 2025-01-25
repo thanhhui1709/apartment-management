@@ -21,6 +21,7 @@ import model.Employee;
 import model.Role;
 import model.Company;
 import model.Feedback;
+import model.RequestType;
 import util.Util;
 
 /**
@@ -80,6 +81,39 @@ public class FeedbackDAO extends DBContext {
         return -1;
     }
 
+    public List<Feedback> getAllFeedbackUser(String residentID) {
+    String sql = "SELECT * FROM Feedback WHERE rId = ?";
+    ResidentDAO daoR = new ResidentDAO();
+    RequestTypeDAO daoRT = new RequestTypeDAO();
+    List<Feedback> list = new ArrayList<>();
+
+    try {
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setString(1, residentID); 
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Resident resident = daoR.getById(rs.getString("rId"));
+            RequestType requestType = daoRT.getById(rs.getString("tId"));
+
+            Feedback feedback = new Feedback(
+                rs.getString("id"), 
+                rs.getString("detail"), 
+                rs.getString("date"), 
+                resident,
+                requestType
+            );
+            list.add(feedback);
+        }
+
+        return list;
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return new ArrayList<>(); 
+}
+
+    
     public static void main(String[] args) {
         FeedbackDAO dao = new FeedbackDAO();
         System.out.println(dao.getAllFeedback().size());
