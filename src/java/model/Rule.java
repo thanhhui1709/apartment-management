@@ -32,6 +32,14 @@ public class Rule {
         this.status = status;
         this.staff = staff;
     }
+    public Rule(String id,String title, String description, String date, String effectiveDate) {
+        this.id=id;
+        this.title = title;
+        this.description = description;
+        this.date = date;
+        this.effectiveDate = effectiveDate;  
+
+    }
 
     public String getId() {
         return id;

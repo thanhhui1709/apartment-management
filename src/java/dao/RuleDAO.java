@@ -66,6 +66,37 @@ public class RuleDAO extends DBContext {
         }
         return false;
     }
+    public boolean updateRule(Rule rule) {
+    try {
+        String sql = "UPDATE [Rule] SET title = ?, description = ?, date = ?, effectivedate = ? WHERE id = ?";
+        PreparedStatement pre = connection.prepareStatement(sql);
+        pre.setString(1, rule.getTitle());
+        pre.setString(2, rule.getDescription());
+        pre.setString(3, rule.getDate());
+        pre.setString(4, rule.getEffectiveDate());
+        pre.setString(5, rule.getId());
+
+        int rowsUpdated = pre.executeUpdate();
+
+        if (rowsUpdated > 0) {
+            return true;
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();  
+    }
+    return false; 
+}
+
+
+    public Rule getById(String id) {
+        List<Rule> all = this.getAllRule();
+        for (int i = 0; i < all.size(); i++) {
+            if (all.get(i).getId().equals(id)) {
+                return all.get(i);
+            }
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         RuleDAO dao = new RuleDAO();

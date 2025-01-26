@@ -1,6 +1,11 @@
+<%-- 
+    Document   : addnewcompany
+    Created on : Jan 23, 2025, 2:23:52 PM
+    Author     : PC
+--%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
     <head>
         <!-- basic -->
@@ -11,6 +16,10 @@
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
         <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- site icon -->
         <link rel="icon" href="images/fevicon.png" type="image/png" />
         <!-- bootstrap css -->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -34,16 +43,83 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style> body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f9;
+                margin: 0;
+                padding: 0px;
+            }
+            .form-container {
+                background: #ffffff;
+                padding: 40px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                max-width: 800px;
+                margin: auto;
+            }
+            .form-container h1 {
+                text-align: center;
+                margin-bottom: 30px;
+                color: #333;
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .form-group label {
+                display: block;
+                margin-bottom: 8px;
+                font-weight: bold;
+                color: #555;
+            }
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 16px;
+                line-height: 1.5;
+                box-sizing: border-box;
+                transition: border-color 0.3s;
+            }
+            .form-group input:focus,
+            .form-group select:focus {
+                border-color: #4a90e2;
+                outline: none;
+            }
+            .two-cols {
+                display: flex;
+                justify-content: space-between;
+
+            }
+            .form-button {
+                text-align: center;
+                margin-top: 30px;
+            }
+            .form-button button {
+                padding: 12px 25px;
+                font-size: 18px;
+                border: none;
+                border-radius: 6px;
+                background-color: #4a90e2;
+                color: #ffffff;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            .form-button button:hover {
+                background-color: #357ab8;
+            }</style>
+
+
     </head>
-    <body class="inner_page tables_page">
+    <body class="dashboard dashboard_1">
         <div class="full_container">
             <div class="inner_container">
-                <!-- Sidebar  -->
                 <nav id="sidebar">
                     <div class="sidebar_blog_1">
                         <div class="sidebar-header">
                             <div class="logo_section">
-                                <a href="index.jsp"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
+                                <a href="index.html"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
                             </div>
                         </div>
                         <div class="sidebar_user_info">
@@ -51,7 +127,7 @@
                             <div class="user_profle_side">
                                 <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
                                 <div class="user_info">
-                                    <h6>Resident</h6>
+                                    <h6>John David</h6>
                                     <p><span class="online_animation"></span> Online</p>
                                 </div>
                             </div>
@@ -81,8 +157,7 @@
                                     <li><a href="invoice.html">> <span>Invoice</span></a></li>
                                 </ul>
                             </li>
-                            <li><a href="view-resident"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
-                            <li><a href="view-all-staff"><i class="fa fa-table purple_color2"></i> <span>Staff Information</span></a></li>
+                            <li><a href="tables.html"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
                             <li>
                                 <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
                                 <ul class="collapse list-unstyled" id="apps">
@@ -100,7 +175,7 @@
                                 <a href="#additional_page" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clone yellow_color"></i> <span>Additional Pages</span></a>
                                 <ul class="collapse list-unstyled" id="additional_page">
                                     <li>
-                                        <a href="profile.jsp">> <span>Profile</span></a>
+                                        <a href="profile.html">> <span>Profile</span></a>
                                     </li>
                                     <li>
                                         <a href="project.html">> <span>Projects</span></a>
@@ -128,7 +203,7 @@
                             <div class="full">
                                 <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
                                 <div class="logo_section">
-                                    <a href="index.jsp"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
+                                    <a href="index.html"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
                                 </div>
                                 <div class="right_topbar">
                                     <div class="icon_info">
@@ -139,13 +214,12 @@
                                         </ul>
                                         <ul class="user_profile_dd">
                                             <li>
-                                                <jsp:useBean id="ut" class="util.Util" scope="page"/>
-                                                <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">User</span></a>
+                                                <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">John David</span></a>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="${ut.getTableNameByRoleId(sessionScope.account.roleId)}">My Profile</a>
+                                                    <a class="dropdown-item" href="profile.html">My Profile</a>
                                                     <a class="dropdown-item" href="settings.html">Settings</a>
                                                     <a class="dropdown-item" href="help.html">Help</a>
-                                                    <a class="dropdown-item" href="logout"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
+                                                    <a class="dropdown-item" href="#"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -155,85 +229,51 @@
                         </nav>
                     </div>
                     <!-- end topbar -->
-                    <div class="midde_cont">
-                        <div class="container-fluid">
-                            <div class="row column_title">
-                                <div class="col-md-12">
-                                    <div class="page_title">
-                                        <h2>Tables</h2>
-                                    </div>
+                    <!-- Form to Add New Employee -->
+                    <div class="container mt-5">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-container">
+                                    <h1>Update Rule</h1>
+                                    <form action="update-rule" method="post">
+                                        <input type="hidden" id="id" name="id" value="${rule.id}" />
+                                        <div class="form-group">
+                                            <label for="title">Title</label>
+                                            <input type="text" id="title" name="title" value="${rule.title}" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <input type="text" id="description" name="description" value="${rule.description}" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="date">Date</label>
+                                            <input type="date" id="date" name="date" value="${rule.date}" required />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="effectiveDate">Effective Date</label>
+                                            <input type="date" id="effectiveDate" name="effectiveDate" value="${rule.effectiveDate}" required />
+                                        </div>
+                                        <div class="form-button">
+                                            <button type="submit">Update Rule</button>
+                                            <h5 style="color:${requestScope.status == 'true' ? 'green' : 'red'}; text-align:center">
+                                                ${requestScope.message}
+                                            </h5>
+
+                                        </div>
+                                    </form>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <!-- table section -->
-                                <div class="col-md-12">
-                                    <div class="white_shd full margin_bottom_30">
-                                        <div class="full graph_head">
-                                            <div class="heading1 margin_0">
-                                                <h2>Rule Information</h2>
-                                            </div>
-                                        </div>
-                                        <div style="margin-left: 40px;">
-                                            <form action="view-rule-admin" method="GET">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-4 d-flex">
-                                                        <a href="addnewrule.jsp"  class="btn btn-primary">Add new Rule</a>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="table_section padding_infor_info">
-                                            <div class="table-responsive-sm">
-                                                <table class="table w-100">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Title</th>
-                                                            <th>Description</th>
-                                                            <th>Created Date</th>
-                                                            <th>Effective Date</th>                                               
-                                                            <th>Status</th>                                               
-                                                            <th>Created By</th>                                               
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <c:forEach items="${requestScope.rules}" var="rule">
-                                                            <tr>
-                                                                <td>${rule.id}</td>
-                                                                <td>${rule.title}</td>
-                                                                <td>${rule.description}</td>
-                                                                <td>${rule.date}</td>
-                                                                <td>${rule.effectiveDate}</td>                                               
-                                                                <td>${rule.status}</td>                                               
-                                                                <td>${rule.staff.name}</td>  
-                                                                <td><a href="update-rule?id=${rule.id}">Update</a></td>
-                                                            </tr>
-                                                        </c:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- More tables can be added here -->
                             </div>
                         </div>
                     </div>
-                    <!-- footer -->
-                    <div class="container-fluid">
-                        <div class="footer">
-                            <p>Copyright © 2018 Designed by html.design. All rights reserved.</p>
-                        </div>
-                    </div>
+                    <!-- end form -->
                 </div>
-                <!-- end dashboard inner -->
             </div>
         </div>
-    </div>
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
-</body>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- custom js -->
+        <script src="js/custom.js"></script>
+    </body>
 </html>
