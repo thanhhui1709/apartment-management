@@ -37,6 +37,7 @@
       <![endif]-->
    </head>
    <body class="dashboard dashboard_1">
+        <jsp:useBean id="ut" class="util.Util" scope="page"/>
       <div class="full_container">
          <div class="inner_container">
             <!-- Sidebar  -->
@@ -88,6 +89,7 @@
                      <li><a href="view-all-request"><i class="fa fa-table purple_color2"></i> <span>Request Information</span></a></li>
                      <li><a href="view-feed-back-user"><i class="fa fa-table purple_color2"></i> <span>Feedback User</span></a></li>
                      <li><a href="view-all-feedback"><i class="fa fa-table purple_color2"></i> <span>Feedback Admin</span></a></li>
+                     <li><a href="${ut.getSiteToViewRule(sessionScope.account.roleId)}"><i class="fa fa-table purple_color2"></i> <span>Rule of apartment</span></a></li>
                      
                      <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
@@ -146,7 +148,6 @@
                               </ul>
                               <ul class="user_profile_dd">
                                  <li>
-                                     <jsp:useBean id="ut" class="util.Util" scope="page"/>
                                     <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">User</span></a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="${ut.getTableNameByRoleId(sessionScope.account.roleId)}">My Profile</a>

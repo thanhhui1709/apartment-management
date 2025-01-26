@@ -31,12 +31,12 @@ public class RuleDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 listRule.add(new Rule(rs.getString("id"), rs.getString("title"),
-                        rs.getString("description"), rs.getString("date"),
-                        rs.getString("effectivedate"), rs.getString("status"), daoS.getById(rs.getString("sid"))));
+                        rs.getString("description"), rs.getDate("date").toString(),
+                        rs.getDate("effectivedate").toString(), rs.getString("status"), daoS.getById(rs.getString("sid"))));
             }
             return listRule;
         } catch (SQLException ex) {
-            Logger.getLogger(RuleDAO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex);
         }
         return null;
     }
@@ -70,8 +70,6 @@ public class RuleDAO extends DBContext {
     public static void main(String[] args) {
         RuleDAO dao = new RuleDAO();
         StaffDAO daoS = new StaffDAO();
-        Rule r = new Rule("1", "CAM DAI LEN BE BON CAU", "CAM DAI", "1-1-2025",
-                "1-1-2025", "1", daoS.getById("S1002"));
-        System.out.println(dao.insertRule(r));
+        System.out.println(dao.getAllRule().size());
     }
 }

@@ -34,7 +34,10 @@ public class Util {
         }
         return "view-profile-" + destination;
     }
-
+    public String getSiteToViewRule(int role){
+        if(role==1) return "view-rule-resident";
+        return "view-rule-admin";
+    }
     public int getNumberFromText(String str) {
         return Integer.parseInt(str.substring(1));
     }
