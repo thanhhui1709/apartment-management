@@ -9,6 +9,7 @@ import dao.ResidentDAO;
 import dao.StaffDAO;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 /**
  *
@@ -50,7 +51,11 @@ public class Util {
     }
     public static void main(String[] args) {
         Util u=new  Util();
-        System.out.println(u.getNumberFromText("p11"));
+    }
+    public Date convertStringToDate(String str){
+       String[] number=str.split("-");
+          Date date = new Date(Integer.parseInt(number[0]), Integer.parseInt(number[1]), Integer.parseInt(number[2]));
+       return date;
     }
     public List<String> getAllEmail(){
         StaffDAO sd = new StaffDAO();

@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import model.Request;
 import model.Resident;
@@ -41,11 +41,10 @@ public class RequestDAO extends DBContext {
                 String response = rs.getString("response");
                 String date = rs.getDate("date").toString();
                 String responseDate;
-                if(rs.getDate("responseDate")==null){
-                    responseDate=null;
-                }
-                else{
-                    responseDate=rs.getDate("responseDate").toString();
+                if (rs.getDate("responseDate") == null) {
+                    responseDate = null;
+                } else {
+                    responseDate = rs.getDate("responseDate").toString();
                 }
                 String status = rs.getString("status");
                 RequestType rt = rtd.getById(rs.getString("tid"));
@@ -57,7 +56,7 @@ public class RequestDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Request> getRequestByRoles(int role) {
         String sql = "select Request.Id as id,rId,sid,detail,Response,date,responsedate,Request.Status as status, tId ,roleId from Request join Staff on Request.[sId]=Staff.Id  ";
         List<Request> list = new ArrayList<>();
@@ -68,24 +67,23 @@ public class RequestDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                if(role == rs.getInt("roleId")){
-                String id = rs.getString("id");
-                Resident r = rd.getById(rs.getString("rid"));
-                Staff s = sd.getById(rs.getString("sid"));
-                String detail = rs.getString("detail");
-                String response = rs.getString("response");
-                String date = rs.getDate("date").toString();
-                String responseDate;
-                if(rs.getDate("responseDate")==null){
-                    responseDate=null;
-                }
-                else{
-                    responseDate=rs.getDate("responseDate").toString();
-                }
-                String status = rs.getString("status");
-                RequestType rt = rtd.getById(rs.getString("tid"));
-                Request rq = new Request(id, r, s, detail, response, date, responseDate, status, rt);
-                list.add(rq);
+                if (role == rs.getInt("roleId")) {
+                    String id = rs.getString("id");
+                    Resident r = rd.getById(rs.getString("rid"));
+                    Staff s = sd.getById(rs.getString("sid"));
+                    String detail = rs.getString("detail");
+                    String response = rs.getString("response");
+                    String date = rs.getDate("date").toString();
+                    String responseDate;
+                    if (rs.getDate("responseDate") == null) {
+                        responseDate = null;
+                    } else {
+                        responseDate = rs.getDate("responseDate").toString();
+                    }
+                    String status = rs.getString("status");
+                    RequestType rt = rtd.getById(rs.getString("tid"));
+                    Request rq = new Request(id, r, s, detail, response, date, responseDate, status, rt);
+                    list.add(rq);
                 }
             }
         } catch (SQLException e) {
@@ -112,11 +110,10 @@ public class RequestDAO extends DBContext {
                 String response = rs.getString("response");
                 String date = rs.getDate("date").toString();
                 String responseDate;
-                if(rs.getDate("responseDate")==null){
-                    responseDate=null;
-                }
-                else{
-                    responseDate=rs.getDate("responseDate").toString();
+                if (rs.getDate("responseDate") == null) {
+                    responseDate = null;
+                } else {
+                    responseDate = rs.getDate("responseDate").toString();
                 }
                 String status = rs.getString("status");
                 RequestType rt = rtd.getById(rs.getString("tid"));
@@ -128,7 +125,7 @@ public class RequestDAO extends DBContext {
         }
         return list;
     }
-    
+
     public int addRequest(String rId, String detail, RequestType rt) {
         StaffDAO sd = new StaffDAO();
         List<Request> list = this.getAll();
@@ -150,7 +147,7 @@ public class RequestDAO extends DBContext {
             return 0;
         }
     }
-    
+
     public List<Request> getPageByNumber(List<Request> list, int page, int number) {
         List<Request> listpage = new ArrayList<>();
         int start = number * (page - 1);
@@ -163,24 +160,13 @@ public class RequestDAO extends DBContext {
         }
         return listpage;
     }
+
     public List<Request> getByStatus(List<Request> list, int status) {
         List<Request> ls = this.getRequestByStatus(status);
         List<Request> sl = new ArrayList<>();
-        for (Request l : ls ) {
+        for (Request l : ls) {
             for (Request request : list) {
-                if(l.getId().equals(request.getId())){
-                    sl.add(request);
-                }
-            }
-        }
-        return sl;
-    }
-    public List<Request> getByRoles(List<Request> list, int role) {
-        List<Request> ls = this.getRequestByRoles(role);
-        List<Request> sl = new ArrayList<>();
-        for (Request l : ls ) {
-            for (Request request : list) {
-                if(l.getId().equals(request.getId())){
+                if (l.getId().equals(request.getId())) {
                     sl.add(request);
                 }
             }
@@ -188,11 +174,85 @@ public class RequestDAO extends DBContext {
         return sl;
     }
 
+    public List<Request> getByRoles(List<Request> list, int role) {
+        List<Request> ls = this.getRequestByRoles(role);
+        List<Request> sl = new ArrayList<>();
+        for (Request l : ls) {
+            for (Request request : list) {
+                if (l.getId().equals(request.getId())) {
+                    sl.add(request);
+                }
+            }
+        }
+        return sl;
+    }
+
+    public List<Request> getByResidentID(String id) {
+        List<Request> result = new ArrayList<>();
+        List<Request> getAllRequest = getAll();
+        for (Request request : getAllRequest) {
+            if (request.getResidentId().getpId().equals(id)) {
+                result.add(request);
+            }
+        }
+        return result;
+
+    }
+
+    public List<Request> getByResidentIDAndDate(String id, String from, String to, String requestType) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM Request WHERE rId = ?");
+        List<Request> list = new ArrayList<>();
+        ResidentDAO rd = new ResidentDAO();
+        StaffDAO sd = new StaffDAO();
+        RequestTypeDAO rtd = new RequestTypeDAO();
+
+        // Handle optional parameters
+        if (from != null && to != null) {
+            sql.append(" AND (date BETWEEN ? AND ?)");
+        }
+        if (requestType != null && !requestType.isEmpty()) {
+            sql.append(" AND tId = ?");
+        }
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql.toString());
+            st.setString(1, id);
+
+            int paramIndex = 2;
+            if (from != null && to != null) {
+                st.setString(paramIndex++, from);
+                st.setString(paramIndex++, to);
+            }
+            if (requestType != null && !requestType.isEmpty()) {
+                st.setString(paramIndex++, requestType);
+            }
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Resident r = rd.getById(id);
+                Staff s = sd.getById(rs.getString("sid"));
+                String detail = rs.getString("detail");
+                String response = rs.getString("response");
+                String date = rs.getDate("date").toString();
+                String responseDate = rs.getDate("responseDate") != null ? rs.getDate("responseDate").toString() : null;
+                String status = rs.getString("status");
+                RequestType rt = rtd.getById(rs.getString("tid"));
+                Request rq = new Request(id, r, s, detail, response, date, responseDate, status, rt);
+                list.add(rq);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Consider using a logger for real applications
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         RequestDAO dao = new RequestDAO();
         List<Request> list = new ArrayList<>();
-        list=dao.getAll();
+        list = dao.getAll();
         list = dao.getByRoles(list, 5);
-        System.out.println(list.size());
+        List<Request> getByRID = dao.getByResidentIDAndDate("P110", "2025-01-01", "2025-01-25", "R001");
+        System.out.println(getByRID.get(0).getRequestType().getName());
+
     }
 }
