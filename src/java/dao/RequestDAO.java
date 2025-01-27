@@ -148,6 +148,18 @@ public class RequestDAO extends DBContext {
         }
     }
 
+    public void AssignRequest(String requestid,String staffid){
+        String sql = "update Request set sid = ? , Status = 'In process' , Response = 'In process' where id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, staffid);
+            st.setString(2, requestid);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
     public List<Request> getPageByNumber(List<Request> list, int page, int number) {
         List<Request> listpage = new ArrayList<>();
         int start = number * (page - 1);
@@ -249,10 +261,11 @@ public class RequestDAO extends DBContext {
     public static void main(String[] args) {
         RequestDAO dao = new RequestDAO();
         List<Request> list = new ArrayList<>();
-        list = dao.getAll();
-        list = dao.getByRoles(list, 5);
-        List<Request> getByRID = dao.getByResidentIDAndDate("P110", "2025-01-01", "2025-01-25", "R001");
-        System.out.println(getByRID.get(0).getRequestType().getName());
+//        list = dao.getAll();
+//        list = dao.getByRoles(list, 5);
+//        List<Request> getByRID = dao.getByResidentIDAndDate("P110", "2025-01-01", "2025-01-25", "R001");
+//        System.out.println(getByRID.get(0).getRequestType().getName());
+        dao.AssignRequest("R005","S1005" );
 
     }
 }

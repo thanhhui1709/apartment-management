@@ -62,6 +62,42 @@ public class StaffDAO extends DBContext {
         }
         return list;
     }
+    
+    public List<Staff> getStaffByRequestName(String nametype) {
+        CompanyDAO sd = new CompanyDAO();
+        RoleDAO rd = new RoleDAO();
+        String sql = "select Staff.id as id, Staff.name as name,bod,email,phone,address,cccd,salary,education,bank,status,username,password,roleid,cid,startdate,enddate from Staff join TypeRequest on Staff.roleId = TypeRequest.destination where TypeRequest.name = ?";
+        List<Staff> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, nametype);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("Name");
+                String bod = rs.getDate("bod").toString();
+                String Email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String cccd = rs.getString("cccd");
+                int salary = rs.getInt("salary");
+                String education = rs.getString("education");
+                String bank = rs.getString("bank");
+                int status = rs.getInt("status");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                Role r = rd.getById(rs.getString("roleid"));
+                Company cp = sd.getById(rs.getString("cid"));
+                String startDate = rs.getString("startdate");
+                String enddate = rs.getString("enddate");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate);
+                list.add(s);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
     public Staff getByRequestType(RequestType rt){
         List<Staff> list  =this.getAll();
         for (int i = 0; i < list.size(); i++) {
@@ -248,7 +284,11 @@ public class StaffDAO extends DBContext {
 //        // Now you can use this staff object to insert it into the database
         StaffDAO staffDAO = new StaffDAO();
 //        boolean isInserted = staffDAO.insertStaff(staff);
-        System.out.println("Staff inserted: " + staffDAO.getById("S1012"));
+        List<Staff> list =  staffDAO.getStaffByRequestName("Clean apartment");
+        
+        for (Staff staff : list) {
+            System.out.println(""+staff.getName());
+        }
 
     }
 
