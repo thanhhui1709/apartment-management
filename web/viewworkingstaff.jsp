@@ -1,6 +1,6 @@
 <%-- 
-    Document   : viewallrequest.jsp
-    Created on : Jan 24, 2025, 8:31:15 PM
+    Document   : viewworkingstaff
+    Created on : Jan 27, 2025, 5:48:08 PM
     Author     : PC
 --%>
 
@@ -174,7 +174,9 @@
                                     <div class="white_shd full margin_bottom_30">
                                         <div class="full graph_head">
                                             <div class="heading1 margin_0">
-                                                <h2>Resident Request Information</h2>
+                                                <h2>Working Staff Information</h2>
+                                                <p>123 ${sessionScope.typename}</p>
+                                                <p>123 ${sessionScope.requestid}</p>
                                             </div>
                                         </div>
                                         <div style="margin-left: 40px;">
@@ -205,42 +207,36 @@
                                         </div>
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
-                                                               
-                                                    <table class="table w-100">
-                                                        <thead>
+
+                                                <table class="table w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Name</th>                                                            
+                                                            <th>Email</th>
+                                                            <th>Phone</th>                                               
+                                                            <th>Address</th>
+                                                            <th>Option</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach items="${requestScope.staffs}" var="staff">
                                                             <tr>
-                                                                <th>ID</th>
-                                                                <th>Resident Name</th>                                                            
-                                                                <th>Detail</th>
-                                                                <th>Date</th>                                               
-                                                                <th>Type</th>
-                                                                <th>Status</th>
-                                                                <th>Reception Staff</th>
-                                                                <th>Option</th>
+                                                                <td>${staff.id}</td>
+                                                                <td>${staff.name}</td>
+                                                                <td>${staff.email}</td>
+                                                                <td>${staff.phone}</td> 
+                                                                <td>${request.address}</td>                                             
+                                                                <td>
+                                                                    <form action="assign-request" method="get">
+                                                                        <input type="hidden" name="staffid" value="${staff.id}">
+                                                                        <button type="submit">Assign</button>
+                                                                    </form>
+                                                                </td>   
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <c:forEach items="${requestScope.requestes}" var="o">
-                                                                <tr>
-                                                                    <td>${o.id}</td>
-                                                                    <td>${o.residentId.name}</td>
-                                                                    <td>${o.detail}</td>
-                                                                    <td>${o.date}</td> 
-                                                                    <td>${o.requestType.name}</td>                                             
-                                                                    <td>${o.status}</td>
-                                                                    <td>${o.status != 'No response' ? o.staffId.name : ''}</td> 
-                                                                        <td>
-                                                                            <form action="assign-request" method="post"> 
-                                                                            <input type="hidden" name="requestid" value="${o.id}">
-                                                                            <input type="hidden" name="typename" value="${o.requestType.name}">
-                                                                            <button type="submit">Assign</button>
-                                                                            </form>
-                                                                        </td>   
-                                                                </tr>
-                                                            </c:forEach>
-                                                        </tbody>
-                                                    </table>
-                                                
+                                                        </c:forEach>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -249,18 +245,6 @@
                             </div>
                         </div>
                     </div>
-                    <form method="get" action="view-all-request" style="display: flex; align-items: center; gap: 10px;">
-                        <!-- Dropdown chọn trang -->
-                        <label for="page" style="font-size: 14px; font-weight: bold;">Trang:</label>
-                        <select id="page" name="page" onchange="this.form.submit()" 
-                                style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
-                            <c:forEach begin="1" end="${requestScope.totalPage}" var="page">
-                                <option value="${page}" <c:if test="${page == requestScope.currentPage}">selected</c:if>>
-                                    ${page}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </form>
                     <!-- footer -->
                     <div class="container-fluid">
                         <div class="footer">
