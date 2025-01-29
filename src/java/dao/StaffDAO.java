@@ -185,7 +185,7 @@ public class StaffDAO extends DBContext {
     public List<Staff> searchByName(List<Staff> list, String name) {
         List<Staff> rs = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getName().toLowerCase().contains(name.toLowerCase())) {
+            if (list.get(i).getName().toLowerCase().contains(name.trim().toLowerCase())) {
                 rs.add(list.get(i));
             }
         }
