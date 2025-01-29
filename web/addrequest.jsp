@@ -102,7 +102,9 @@
             }
             .form-button button:hover {
                 background-color: #357ab8;
-            }</style>
+            }
+
+        </style>
 
 
     </head>
@@ -253,6 +255,23 @@
                             </div>
                         </div>
                     </div>
+                    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; width: 60%; margin: auto; background-color: #f9f9f9;">
+                        <h3 style="text-align: center; color: #333;">Guideline</h3>
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                            <tr style="background-color: #898989; color: white;">
+                                <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Type Request</th>
+                                <th style="padding: 10px; border: 1px solid #ddd;text-align: center;">Department Receive</th>
+                            </tr>
+                            <c:forEach items="${requestScope.listTypeRquest}" var="tr">
+                                <tr style="background-color: #fff; text-align: center;">
+                                    <td style="padding: 8px; border: 1px solid #ddd;">${tr.name}</td>
+                                    <td style="padding: 8px; border: 1px solid #ddd;">${tr.destination.name}</td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+
+
                     <!-- end form -->
                 </div>
             </div>
