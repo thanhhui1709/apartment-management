@@ -76,9 +76,9 @@ public class EditProfileResidentServlet extends HttpServlet {
         Account account =(Account) session.getAttribute("account");
         Resident re = rd.getById(account.getpId());
         
-        String eemail=request.getParameter("editprofileemail");
-        String ephone=request.getParameter("editprofilephone");
-        String eaddress=request.getParameter("editprofileaddress");
+        String eemail=request.getParameter("editProfileEmail");
+        String ephone=request.getParameter("editProfilePhone");
+        String eaddress=request.getParameter("editProfileAddress");
         rd.EditProfileRe(re.getpId(), ephone, eemail, eaddress);
         Util editre = new Util();
         response.sendRedirect(editre.getTableNameByRoleId(account.getRoleId()));

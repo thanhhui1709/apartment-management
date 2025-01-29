@@ -72,8 +72,8 @@ public class PasswordUpdateServlet extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session=request.getSession();
         Account account=(Account)session.getAttribute("account");
-        String oldpw = request.getParameter("oldpassword");
-        String newpw = request.getParameter("newpassword");
+        String oldpw = request.getParameter("oldPassword");
+        String newpw = request.getParameter("newPassword");
         ResidentDAO rd = new ResidentDAO();
         if(!oldpw.equals(account.getPassword())){
             request.setAttribute("msg", "Password is not correct");
