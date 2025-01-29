@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Feedback;
 
 /**
@@ -62,8 +63,9 @@ public class ViewAllFeedback extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("account");
         FeedbackDAO daoF = new FeedbackDAO();
-        List<Feedback> listFeedback = daoF.getAllFeedback();
+        List<Feedback> listFeedback = daoF.getFeedbackByRole(String.valueOf(acc.getRoleId()));
         session.setAttribute("listFeedback", listFeedback);
         request.getRequestDispatcher("viewallfeedback.jsp").forward(request, response);
     }
@@ -80,8 +82,9 @@ public class ViewAllFeedback extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("account");
         FeedbackDAO daoF = new FeedbackDAO();
-        List<Feedback> listFeedback = daoF.getAllFeedback();
+        List<Feedback> listFeedback = daoF.getFeedbackByRole(String.valueOf(acc.getRoleId()));
         session.setAttribute("listFeedback", listFeedback);
         request.getRequestDispatcher("viewallfeedback.jsp").forward(request, response);
     }
