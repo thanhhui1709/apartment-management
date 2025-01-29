@@ -251,7 +251,6 @@
                                                                     <c:choose>
                                                                         <c:when test="${l.status == '0'}">In process</c:when>
                                                                         <c:when test="${l.status == '1'}">Done</c:when>
-                                                                        <c:otherwise>Unknown</c:otherwise>
                                                                     </c:choose>
                                                                 </td>
                                                             </tr>
