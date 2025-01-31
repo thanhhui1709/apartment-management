@@ -106,7 +106,7 @@
                                                                 <td>${o.phone}</td>
                                                                 <td>${o.email}</td>                                               
                                                                 <td>${o.address}</td>
-                                                                <td><a href="#">Update</a></td>
+                                                                <td><a href="update-company?id=${o.id}">Update</a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -134,7 +134,7 @@
                     <!-- footer -->
                     <div class="container-fluid">
                         <div class="footer">
-                            <p>Copyright © 2018 Designed by html.design. All rights reserved.</p>
+                            <p>Copyright ? 2018 Designed by html.design. All rights reserved.</p>
                         </div>
                     </div>
                 </div>

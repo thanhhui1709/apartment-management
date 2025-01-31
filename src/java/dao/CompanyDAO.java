@@ -127,7 +127,16 @@ public class CompanyDAO extends DBContext {
         }
         return false;
     }
-
+    public void updateCompany(Company company){
+        String sql = "update company set name=?, phone=?,contactphone=?,fax=?,email=?,contactemail=?,"
+                + "website=?,taxcode=?,bank=?,description=?,address=?"
+                + " where id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            
+        } catch (Exception e) {
+        }
+    }
     public static void main(String[] args) {
         CompanyDAO dao = new CompanyDAO();
         Company cp = new Company("324ss", "09113467", "091231247", "142322312", "caon4cass@gmail.com", "caon2s4ca@gmail.com", "xx",
