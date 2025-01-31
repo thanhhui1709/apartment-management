@@ -177,6 +177,9 @@
                                             <label for="description">Description</label>
                                             <input type="text" id="description" name="description" value="${requestScope.company.description}"  placeholder="Enter description" />
                                         </div>
+                                            <c:if test="${requestScope.company!=null}">
+                                            <input type="text" hidden name="id" value="${requestScope.company.id}"/>
+                                        </c:if>
                                         <div class="form-button">
                                             <button type="submit">Save Company</button>
                                             <h5 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h5>

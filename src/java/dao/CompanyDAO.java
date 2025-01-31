@@ -133,8 +133,21 @@ public class CompanyDAO extends DBContext {
                 + " where id=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            
-        } catch (Exception e) {
+            st.setString(1, company.getName());
+            st.setString(2, company.getPhone());
+            st.setString(3, company.getContactPhone());
+            st.setString(4, company.getFax());
+            st.setString(5, company.getEmail());
+            st.setString(6, company.getContactemail());
+            st.setString(7, company.getWebsite());
+            st.setString(8, company.getTaxCode());
+            st.setString(9, company.getBank());
+            st.setString(10, company.getdescription());
+            st.setString(11, company.getAddress());
+            st.setString(12, company.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
     public static void main(String[] args) {

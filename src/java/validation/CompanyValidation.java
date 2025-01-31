@@ -5,6 +5,7 @@
 package validation;
 
 import dao.CompanyDAO;
+import java.util.ArrayList;
 import java.util.List;
 import model.Company;
 
@@ -14,7 +15,19 @@ import model.Company;
  */
 public class CompanyValidation {
     private CompanyDAO cd  = new CompanyDAO();
-    private List<Company> list = cd.getAll();
+    private List<Company> list;
+
+    public CompanyValidation() {
+    }
+     public CompanyValidation(Company company) {
+         list= cd.getAll();
+         List<Company> newList =  new ArrayList<>();
+         for (int i = 0; i < list.size(); i++) {
+             if(list.get(i).getId().equals(company.getId())) continue;
+             newList.add(list.get(i));
+         }
+         list = newList;
+    }
     public boolean isValidCompany(Company company){
         return !(isExistContactEmail(company.getContactemail())
                 || this.isExistContactPhone(company.getContactPhone())
@@ -28,6 +41,20 @@ public class CompanyValidation {
                 || this.isExistDescription(company.getdescription())
                 || this.isExistAddress(company.getAddress())
                 );
+    }
+    public String findErrorMsgCompany(Company company){
+        if(this.isExistAddress(company.getAddress())) return "Address is existed";
+        if(this.isExistBank(company.getBank())) return "Bank is existed";
+        if(this.isExistContactEmail(company.getContactemail())) return "Contact Email is existed";
+        if(this.isExistContactPhone(company.getContactPhone())) return "Contact Phone is existed";
+        if(this.isExistDescription(company.getdescription())) return "Description is existed";
+        if(this.isExistEmail(company.getEmail())) return "Email is existed";
+        if(this.isExistFax(company.getFax())) return "Fax is existed";
+        if(this.isExistName(company.getName())) return "Name is existed";
+        if(this.isExistPhone(company.getPhone())) return "Phone is existed";
+        if(this.isExistTaxCode(company.getTaxCode())) return "Tax code is existed";
+        if(this.isExistWebsite(company.getWebsite())) return "Website is existed";
+        return null;
     }
     public boolean isExistEmail(String email){
         for (int i = 0; i < list.size(); i++) {
