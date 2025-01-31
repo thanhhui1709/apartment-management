@@ -91,18 +91,24 @@ public class LoginServlet extends HttpServlet {
                 // Create and configure cookies for username and password
                 Cookie cookieUser = new Cookie("rememberedUser", user);
                 Cookie cookiePass = new Cookie("rememberedPass", pass);
-                cookieUser.setMaxAge(60 * 60);
-                cookiePass.setMaxAge(60 * 60);
+                Cookie cookieRemember=new Cookie("remembered", "remember");
+                cookieUser.setMaxAge(60 * 60*60);
+                cookiePass.setMaxAge(60 * 60*60);
+                cookieRemember.setMaxAge(60*60*60);
                 response.addCookie(cookieUser);
                 response.addCookie(cookiePass);
+                response.addCookie(cookieRemember);
             } else {
                 // Clear both cookies by setting max age to 0
                 Cookie cookieUser = new Cookie("rememberedUser", user);
                 Cookie cookiePass = new Cookie("rememberedPass", pass);
+                Cookie cookieRemember=new Cookie("remembered", "remember");
                 cookieUser.setMaxAge(0);
                 cookiePass.setMaxAge(0);
+                cookieRemember.setMaxAge(0);
                 response.addCookie(cookieUser);
                 response.addCookie(cookiePass);
+                response.addCookie(cookieRemember);
             }
 
             response.sendRedirect("index.jsp");

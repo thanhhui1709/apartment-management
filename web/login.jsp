@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="field remember-me" style="display: flex ;justify-content: start">
                                             <label  class="label_field" for="remember-checkbox">Remember Me</label>
-                                            <input type="checkbox" name="remember" id="remember-checkbox" value="on" style="width: 10%" />
+                                            <input type="checkbox" name="remember" id="remember-checkbox" value="on" style="width: 10%" <c:if test="${cookie.remembered !=null}">checked="" </c:if> />
                                         </div>
                                          <h6 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h6>
                                             <h6 style="color:red;text-align:center">${requestScope.error}</h6>
