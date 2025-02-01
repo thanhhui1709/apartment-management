@@ -92,9 +92,8 @@ public class ViewAllRequest extends HttpServlet {
                 session.setAttribute("requestes", list);
             }
         }
-        if (null != filterStatus_raw && !filterStatus_raw.isBlank()) {
-            int filterStatus = Integer.parseInt(filterStatus_raw);
-            list = rd.getByStatus(list, filterStatus);
+        if (null != filterStatus_raw && !filterStatus_raw.isBlank()) {         
+            list = rd.getByStatus(list, filterStatus_raw);
             if (list.size() == 0) {
                 request.getRequestDispatcher("viewallrequest.jsp").forward(request, response);
                 return;
