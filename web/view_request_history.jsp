@@ -92,7 +92,7 @@
 
                                                     <div class="col-md-4 d-flex">
                                                         <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
-                                                        <a href=""  class="btn btn-primary">Create new Request</a>
+                                                        <a href="resident-add-request"  class="btn btn-primary">Create new Request</a>
                                                     </div>
                                                 </div>
 

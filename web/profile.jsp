@@ -141,7 +141,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="full dis_flex center_text">
                                                         <div class="profile_img">
-                                                            <img width="180" class="rounded-circle" src="images/layout_img/user_img.jpg" alt="User Image">
+                                                            <img width="180" class="rounded-circle" src="images/logo/5ee082781b8c41406a2a50a0f32d6aa6.jpg" alt="User Image">
                                                         </div>
                                                         <div class="profile_contant">
                                                             <div class="contact_inner">
