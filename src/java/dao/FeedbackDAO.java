@@ -49,6 +49,21 @@ public class FeedbackDAO extends DBContext {
         return null;
     }
 
+    public List<Feedback> getFeedbackByRole(String role) {
+        FeedbackDAO dao = new FeedbackDAO();
+        List<Feedback> list = dao.getAllFeedback();
+        List<Feedback> listFeedbackGetByRole = new ArrayList<>();
+        if (role.equals("2")) {
+            return list;
+        }
+        for (Feedback f : list) {
+            if (f.getRequestType().getDestination().getId().equals(role)) {
+                listFeedbackGetByRole.add(f);
+            }
+        }
+        return listFeedbackGetByRole;
+    }
+
     public int sendFeedback(String detail, String rID, String tID) {
         String sql = "INSERT INTO [dbo].[Feedback]\n"
                 + "           ([Id]\n"
@@ -82,38 +97,37 @@ public class FeedbackDAO extends DBContext {
     }
 
     public List<Feedback> getAllFeedbackUser(String residentID) {
-    String sql = "SELECT * FROM Feedback WHERE rId = ?";
-    ResidentDAO daoR = new ResidentDAO();
-    RequestTypeDAO daoRT = new RequestTypeDAO();
-    List<Feedback> list = new ArrayList<>();
+        String sql = "SELECT * FROM Feedback WHERE rId = ?";
+        ResidentDAO daoR = new ResidentDAO();
+        RequestTypeDAO daoRT = new RequestTypeDAO();
+        List<Feedback> list = new ArrayList<>();
 
-    try {
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, residentID); 
-        ResultSet rs = ps.executeQuery();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, residentID);
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            Resident resident = daoR.getById(rs.getString("rId"));
-            RequestType requestType = daoRT.getById(rs.getString("tId"));
+            while (rs.next()) {
+                Resident resident = daoR.getById(rs.getString("rId"));
+                RequestType requestType = daoRT.getById(rs.getString("tId"));
 
-            Feedback feedback = new Feedback(
-                rs.getString("id"), 
-                rs.getString("detail"), 
-                rs.getString("date"), 
-                resident,
-                requestType
-            );
-            list.add(feedback);
+                Feedback feedback = new Feedback(
+                        rs.getString("id"),
+                        rs.getString("detail"),
+                        rs.getString("date"),
+                        resident,
+                        requestType
+                );
+                list.add(feedback);
+            }
+
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-
-        return list;
-    } catch (SQLException ex) {
-        ex.printStackTrace();
+        return new ArrayList<>();
     }
-    return new ArrayList<>(); 
-}
 
-    
     public static void main(String[] args) {
         FeedbackDAO dao = new FeedbackDAO();
         System.out.println(dao.getAllFeedback().size());

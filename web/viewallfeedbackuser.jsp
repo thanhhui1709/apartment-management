@@ -52,12 +52,12 @@
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->
-             <%@include file="sidebar.jsp" %>
+                <%@include file="sidebar.jsp" %>
                 <!-- end sidebar -->
                 <!-- right content -->
                 <div id="content">
                     <!-- topbar -->
-                  <%@include file="topbar.jsp" %>
+                    <%@include file="topbar.jsp" %>
                     <!-- end topbar -->
                     <div class="midde_cont">
                         <div class="container-fluid">
@@ -72,10 +72,11 @@
                                 <!-- Feedback Information Table -->
                                 <div class="col-md-12">
                                     <div class="white_shd full margin_bottom_30">
-                                        <div class="full graph_head">
+                                        <div class="full graph_head d-flex justify-content-between align-items-center">
                                             <div class="heading1 margin_0">
                                                 <h2>Feedback Table</h2>
                                             </div>
+                                            <button class="btn btn-primary" onclick="location.href = 'sendfeedback'">Send New Feedback</button>
                                         </div>
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
@@ -106,22 +107,19 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <!-- footer -->
-                    <div class="container-fluid">
-                        <div class="footer">
-                            <p>Copyright © 2018 Designed by html.design. All rights reserved.</p>
-                        </div>
-                    </div>
+                  
                 </div>
                 <!-- end dashboard inner -->
             </div>
         </div>
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
-</body>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/custom.js"></script>
+    </body>
 </html>

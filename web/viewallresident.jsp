@@ -34,7 +34,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <style>
             .pagination {
                 margin-top: 20px;
@@ -142,7 +142,7 @@
                                                                 <td>${resident.address}</td>
                                                                 <td>${resident.status}</td>
                                                                 <td><a href="#" class="btn btn-primary">View Detail</a></td> 
-                                                                <td><<a href="delete-resident?pId=${resident.pId}"><i class="material-icons" title="Delete">&#xE872;</i></a></td>
+                                                                <td><a href="delete-resident?pId=${resident.pId}"><i class="material-icons" title="Delete">&#xE872;</i></a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>

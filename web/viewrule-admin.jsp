@@ -34,6 +34,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     </head>
     <body class="inner_page tables_page">
         <div class="full_container">
@@ -97,7 +98,9 @@
                                                                 <td>${rule.effectiveDate}</td>                                               
                                                                 <td>${rule.status}</td>                                               
                                                                 <td>${rule.staff.name}</td>  
-                                                                <td><a href="update-rule?id=${rule.id}">Update</a></td>
+                                                                <td><a href="update-rule?id=${rule.id}">Update</a>
+                                                                <a href="delete-rule?id=${rule.id}" onclick="return confirm('Are you sure to delete this rule?')""><i class="material-icons" title="Delete">&#xE872;</i></a>
+                                                                </td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>

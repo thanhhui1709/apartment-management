@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.staff;
+package controller.resident;
 
-import dao.FeedbackDAO;
+import dao.NewDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,17 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Account;
-import model.Feedback;
+import model.News;
 
 /**
  *
  * @author quang
  */
-@WebServlet(name = "ViewAllFeedback", urlPatterns = {"/view-all-feedback"})
-public class ViewAllFeedback extends HttpServlet {
+@WebServlet(name = "ViewNewsDetailServlet", urlPatterns = {"/news-detail"})
+public class ViewNewsDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +39,10 @@ public class ViewAllFeedback extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewAllFeedback</title>");
+            out.println("<title>Servlet ViewNewsDetailServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewAllFeedback at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewNewsDetailServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,12 +60,14 @@ public class ViewAllFeedback extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account acc = (Account) session.getAttribute("account");
-        FeedbackDAO daoF = new FeedbackDAO();
-        List<Feedback> listFeedback = daoF.getFeedbackByRole(String.valueOf(acc.getRoleId()));
-        session.setAttribute("listFeedback", listFeedback);
-        request.getRequestDispatcher("viewallfeedback.jsp").forward(request, response);
+        NewDAO daoN = new NewDAO();
+        String id = request.getParameter("id");
+        News news = daoN.getNewById(id);
+        List<News> listOtherNews = daoN.getOtherNews(id);
+
+        request.setAttribute("listOtherNews", listOtherNews);
+        request.setAttribute("news", news);
+        request.getRequestDispatcher("newsdetail.jsp").forward(request, response);
     }
 
     /**
@@ -81,12 +81,7 @@ public class ViewAllFeedback extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Account acc = (Account) session.getAttribute("account");
-        FeedbackDAO daoF = new FeedbackDAO();
-        List<Feedback> listFeedback = daoF.getFeedbackByRole(String.valueOf(acc.getRoleId()));
-        session.setAttribute("listFeedback", listFeedback);
-        request.getRequestDispatcher("viewallfeedback.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

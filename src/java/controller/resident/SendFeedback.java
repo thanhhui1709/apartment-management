@@ -89,7 +89,7 @@ public class SendFeedback extends HttpServlet {
         String detail=request.getParameter("content");
         FeedbackDAO fd=new FeedbackDAO();
         fd.sendFeedback(detail, rID, tID);
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("view-feed-back-user");
 
     }
 
