@@ -92,7 +92,13 @@
                                                             <th>Name</th>
                                                             <th>Description</th>
                                                             <th>Phone</th>
-                                                            <th>Email</th>                                               
+                                                            <th>Contact Phone</th>
+                                                            <th>Fax</th>
+                                                            <th>Email</th>
+                                                            <th>Contact Email</th>
+                                                            <th>Website</th>
+                                                            <th>Tax code</th>
+                                                            <th>Bank</th>
                                                             <th>Address</th>
                                                             <th>Option</th>
                                                         </tr>
@@ -104,7 +110,13 @@
                                                                 <td>${o.name}</td>
                                                                 <td>${o.description}</td>
                                                                 <td>${o.phone}</td>
-                                                                <td>${o.email}</td>                                               
+                                                                <td>${o.contactPhone}</td>
+                                                                <td>${o.fax}</td>
+                                                                <td>${o.email}</td>   
+                                                                <td>${o.contactemail}</td> 
+                                                                <td>${o.website}</td>
+                                                                <td>${o.taxCode}</td>
+                                                                <td>${o.bank}</td>
                                                                 <td>${o.address}</td>
                                                                 <td><a href="#">Update</a></td>
                                                             </tr>

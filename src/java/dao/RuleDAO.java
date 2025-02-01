@@ -86,8 +86,18 @@ public class RuleDAO extends DBContext {
     }
     return false; 
 }
-
-
+    
+    public void deleteRule(String id) {
+    try {
+        String sql = "Delete from [Rule] where id=?";
+        PreparedStatement pre = connection.prepareStatement(sql);
+        pre.setString(1, id);
+        pre.executeUpdate();
+    } catch (SQLException ex) {
+        ex.printStackTrace();  
+    }
+}
+    
     public Rule getById(String id) {
         List<Rule> all = this.getAllRule();
         for (int i = 0; i < all.size(); i++) {
