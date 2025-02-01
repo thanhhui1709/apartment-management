@@ -86,8 +86,9 @@
                                                     <div class="col-md-2">
                                                         <select class="form-control" name="filterStatus">
                                                             <option value="">Filter by Status</option>
-                                                            <option value="0" ${requestScope.filterStatus == '0' ? 'selected' : ''}>In Process</option>
-                                                            <option value="1" ${requestScope.filterStatus == '1' ? 'selected' : ''}>Done</option>
+                                                            <option value="In process" ${requestScope.filterStatus == 'In process' ? 'selected' : ''}>In Process</option>
+                                                            <option value="No response" ${requestScope.filterStatus == 'No response' ? 'selected' : ''}>No response</option>
+                                                            <option value="Done" ${requestScope.filterStatus == 'Done' ? 'selected' : ''}>Done</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4 d-flex">

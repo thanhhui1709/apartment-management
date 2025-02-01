@@ -68,33 +68,11 @@
                                         <div class="full graph_head">
                                             <div class="heading1 margin_0">
                                                 <h2>Working Staff Information</h2>
-                                                <p>123 ${sessionScope.typename}</p>
-                                                <p>123 ${sessionScope.requestid}</p>
                                             </div>
                                         </div>
                                         <div style="margin-left: 40px;">
                                             <form action="view-all-request" method="GET">
                                                 <div class="row align-items-center">
-                                                    <div class="col-md-2">
-                                                        <select class="form-control" name="filterRoles">
-                                                            <option value="">Filter by Roles</option>
-                                                            <c:forEach items="${requestScope.rolelist}" var="o">
-                                                                <c:if test="${o.id >= 2 and o.id != 3}">
-                                                                    <option value="${o.id}" <c:if test="${requestScope.filterRoles == o.id}">selected</c:if>>${o.name}</option>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <select class="form-control" name="filterStatus">
-                                                            <option value="">Filter by Status</option>
-                                                            <option value="0" ${requestScope.filterStatus == '0' ? 'selected' : ''}>In Process</option>
-                                                            <option value="1" ${requestScope.filterStatus == '1' ? 'selected' : ''}>Done</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4 d-flex">
-                                                        <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
-                                                    </div>
                                                 </div>
                                             </form>
                                         </div>

@@ -92,7 +92,7 @@ public class RequestDAO extends DBContext {
         return list;
     }
 
-    public List<Request> getRequestByStatus(int statu) {
+    public List<Request> getRequestByStatus(String statu) {
         String sql = "select * from Request where status=?";
         List<Request> list = new ArrayList<>();
         ResidentDAO rd = new ResidentDAO();
@@ -100,7 +100,7 @@ public class RequestDAO extends DBContext {
         RequestTypeDAO rtd = new RequestTypeDAO();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, statu);
+            st.setString(1, statu);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("id");
@@ -173,7 +173,7 @@ public class RequestDAO extends DBContext {
         return listpage;
     }
 
-    public List<Request> getByStatus(List<Request> list, int status) {
+    public List<Request> getByStatus(List<Request> list, String status) {
         List<Request> ls = this.getRequestByStatus(status);
         List<Request> sl = new ArrayList<>();
         for (Request l : ls) {
