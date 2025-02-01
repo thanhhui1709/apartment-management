@@ -153,24 +153,14 @@
                                                                     <li><i class="fa-solid fa-house"></i> ${sessionScope.person.address}</li>
                                                                     <li><i class="fa-regular fa-user"></i> ${sessionScope.person.cccd}</li>
                                                                     <li><i class="fa-solid fa-calendar-days"></i> ${sessionScope.person.bod}</li>
-                                                                    
+
                                                                 </ul>
-                                                                <button class="action-button" onclick="toggleVisibility('hiddenChangeProfile')">Change Profile</button>
+                                                                    <h6><a href="${ut.getTableNameByRoleIdEdit(sessionScope.account.roleId)}" class="button">Edit profile</a></h6>
+                                                                
+
                                                                 <button class="action-button" onclick="toggleVisibility('hiddenChangePassword')">Change Password</button>
 
-                                                                <div style="display: none" id="hiddenChangeProfile" class="form-container">
-
-                                                                    <form action="${ut.getTableNameByRoleId(sessionScope.account.roleId)}" method="post">
-                                                                        <label for="input1">Email:</label>
-                                                                        <input value="${sessionScope.person.email}" type="text" id="input1" name="editProfileEmail" required />
-                                                                        <label for="input1">Phone:</label>
-                                                                        <input value="${sessionScope.person.phone}" type="text" id="input1" name="editProfilePhone" required />
-                                                                        <label for="input2">Address:</label>
-                                                                        <input value="${sessionScope.person.address}" type="text" id="input2" name="editProfileAddress" required />
-                                                                        <button type="submit">Save</button>
-                                                                        <p>${requestScope.msg}</p>
-                                                                    </form>
-                                                                </div>
+                                                                
                                                                 <div id="hiddenChangePassword" class="form-container" style="display: none;">
                                                                     <form action="update-password-resident" method="post">
                                                                         <label for="oldPassword">Old Password:</label>
@@ -196,7 +186,7 @@
                 </div>
             </div>
         </div>
-       
+
     </body>
 
 </html>

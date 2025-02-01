@@ -121,7 +121,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-container">
-                                    <h1>Update Staff Information</h1>
+                                    <h1>Add Staff Information</h1>
                                     <form action="add-new-staff" method="post">
                                         <div class="form-group">
                                             <input type="text" id="staffID" name="staffID" value="" hidden=""/>

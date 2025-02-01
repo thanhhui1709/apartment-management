@@ -3,25 +3,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.resident;
+package controller.staff;
 
 import dao.ResidentDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.Resident;
-import util.Util;
+import model.Staff;
 
 /**
  *
  * @author pc
  */
-public class EditProfileResidentServlet extends HttpServlet {
+@WebServlet(name="EditprofileSTServlet", urlPatterns={"/editprofileSTServlet"})
+public class EditprofileSTServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +41,10 @@ public class EditProfileResidentServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfileResidentServlet</title>");  
+            out.println("<title>Servlet EditprofileSTServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditProfileResidentServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet EditprofileSTServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,18 +74,56 @@ public class EditProfileResidentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ResidentDAO rd= new ResidentDAO();
-        HttpSession session =request.getSession();
-        Account account =(Account) session.getAttribute("account");
-        Resident re = rd.getById(account.getpId());
-        
-        String eemail=request.getParameter("editProfileEmail");
-        String ephone=request.getParameter("editProfilePhone");
-        String eaddress=request.getParameter("editProfileAddress");
-        rd.EditProfileRe(re.getpId(), ephone, eemail, eaddress);
-        Util editre = new Util();
-        response.sendRedirect(editre.getTableNameByRoleId(account.getRoleId()));
+    
+    HttpSession session = request.getSession();
+    Account account = (Account) session.getAttribute("account");
+
+    if (account == null) {
+        response.sendRedirect("login.jsp");
+        return;
     }
+
+        StaffDAO st= new StaffDAO();
+        Staff s= st.getById(account.getpId());
+
+    if (s == null) {
+        request.setAttribute("msg", "User not found.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+
+    String eemail = request.getParameter("editProfileEmail");
+    String ephone = request.getParameter("editProfilePhone");
+    String eaddress = request.getParameter("editProfileAddress");
+    String ebank= request.getParameter("editProfileBank");
+
+    if (!eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+        request.setAttribute("msg", "Invalid email format.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+
+    if (!ephone.matches("[0-9]+")) {
+        request.setAttribute("msg", "Phone number should contain only digits.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+
+    if (eaddress.trim().isEmpty()) {
+        request.setAttribute("msg", "Address cannot be empty.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+    if (ebank.trim().isEmpty()) {
+        request.setAttribute("msg", "Bank cannot be empty.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+
+    st.EditProfileSt(s.getId(), ephone, eemail,ebank, eaddress);
+
+    response.sendRedirect("profile.jsp");
+}
 
     /** 
      * Returns a short description of the servlet.
