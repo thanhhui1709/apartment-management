@@ -79,6 +79,7 @@
                     <li><a href="view-all-request"><i class="fa fa-table purple_color2"></i> <span>Request Information</span></a></li>
                     <li><a href="view-feed-back-user"><i class="fa fa-table purple_color2"></i> <span>Feedback User</span></a></li>
                     <li><a href="view-all-feedback"><i class="fa fa-table purple_color2"></i> <span>Feedback Admin</span></a></li>
+                    <li><a href="view-news"><i class="fa fa-newspaper-o yellow_color"></i> <span>News</span></a></li>
                     <li><a href="${ut.getSiteToViewRule(sessionScope.account.roleId)}"><i class="fa fa-table purple_color2"></i> <span>Rule of apartment</span></a></li>
 
                     <li>
