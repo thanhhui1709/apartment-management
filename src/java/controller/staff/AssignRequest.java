@@ -61,12 +61,10 @@ public class AssignRequest extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
        HttpSession session =request.getSession();
-       String requestid =(String) session.getAttribute("requestid");
+       String requestid = request.getParameter("requestid");
        String staffid= request.getParameter("staffid");
        RequestDAO rd = new RequestDAO();
        rd.AssignRequest(requestid, staffid);
-       session.removeAttribute("requestid");
-       session.removeAttribute("typename");
        request.getRequestDispatcher("view-all-request").forward(request, response);
     } 
 
@@ -80,15 +78,7 @@ public class AssignRequest extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session =request.getSession();
-        String requestid = request.getParameter("requestid");
-        String typename = request.getParameter("typename");
-        StaffDAO sd = new StaffDAO();
-        List<Staff> list =  sd.getStaffByRequestName(typename);
-        request.setAttribute("staffs", list);
-        session.setAttribute("requestid", requestid);
-        session.setAttribute("typename", typename);
-        request.getRequestDispatcher("viewworkingstaff.jsp").forward(request, response);
+        
     }
 
     /** 

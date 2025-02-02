@@ -6,6 +6,7 @@ package controller.staff;
 
 import dao.RequestDAO;
 import dao.RoleDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -19,6 +20,7 @@ import java.util.List;
 import model.Account;
 import model.Request;
 import model.Role;
+import model.Staff;
 
 /**
  *
@@ -66,6 +68,11 @@ public class ViewAllRequest extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        StaffDAO sd = new StaffDAO();
+        List<Staff> list4 =  sd.getStaffbyRole("4");
+        List<Staff> list5 =  sd.getStaffbyRole("5");
+        request.setAttribute("engineer", list4);
+        request.setAttribute("environmental", list5);       
         RequestDAO rd = new RequestDAO();
         List<Request> list = null;
         RoleDAO dao = new RoleDAO();
