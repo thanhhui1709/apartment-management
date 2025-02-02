@@ -5,6 +5,7 @@
 package controller.staff;
 
 import dao.FeedbackDAO;
+import dao.RequestTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,9 +14,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import model.Account;
 import model.Feedback;
+import model.RequestType;
 
 /**
  *
@@ -63,10 +66,63 @@ public class ViewAllFeedback extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        List<Feedback> listFeedback;
+        RequestTypeDAO daoRT = new RequestTypeDAO();
         Account acc = (Account) session.getAttribute("account");
         FeedbackDAO daoF = new FeedbackDAO();
-        List<Feedback> listFeedback = daoF.getFeedbackByRole(String.valueOf(acc.getRoleId()));
+        listFeedback = daoF.getFeedbackByRole(String.valueOf(acc.getRoleId()));
+        String searchName = request.getParameter("searchName");
+        if (searchName != null) {
+            listFeedback = daoF.getByResidentName(listFeedback, searchName);
+            if (listFeedback.size() == 0) {
+                request.setAttribute("listFeedback", listFeedback);
+                request.getRequestDispatcher("viewallfeedback.jsp").forward(request, response);
+                return;
+            }
+        }
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+
+        PrintWriter out = response.getWriter();
+        if (startDate != null || endDate != null) {
+            if (startDate != "" || endDate != "") {
+                listFeedback = daoF.getByDate(listFeedback, startDate, endDate);
+                if (listFeedback.size() == 0) {
+                    request.setAttribute("listFeedback", listFeedback);
+                    request.getRequestDispatcher("viewallfeedback.jsp").forward(request, response);
+                    return;
+                }
+            }
+        }
+        String serviceType = request.getParameter("serviceType");
+        if (serviceType != null) {
+            if (serviceType != "") {
+                listFeedback = daoF.getByServiceType(listFeedback, serviceType);
+                if (listFeedback.size() == 0) {
+                    request.setAttribute("listFeedback", listFeedback);
+                    request.getRequestDispatcher("viewallfeedback.jsp").forward(request, response);
+                    return;
+                }
+            }
+        }
+        String page = request.getParameter("page");
+        if (page == null) {
+            page = "1";
+        }
+        List<RequestType> listRequestType = daoRT.getAll();
+        int numberPerPape = 3;
+        int totalPage;
+        if (listFeedback.size() % numberPerPape == 0) {
+            totalPage = listFeedback.size() / numberPerPape;
+        } else {
+            totalPage = listFeedback.size() / numberPerPape + 1;
+        }
+        listFeedback = daoF.getPageByNumber(listFeedback, Integer.parseInt(page), numberPerPape);
+
+        session.setAttribute("listRequestType", listRequestType);
         session.setAttribute("listFeedback", listFeedback);
+        request.setAttribute("totalPage", totalPage);
+        request.setAttribute("currentPage", Integer.parseInt(page));
         request.getRequestDispatcher("viewallfeedback.jsp").forward(request, response);
     }
 

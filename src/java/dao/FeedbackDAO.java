@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,10 +129,100 @@ public class FeedbackDAO extends DBContext {
         return new ArrayList<>();
     }
 
+    public List<Feedback> getByResidentName(List<Feedback> listFeedback, String name) {
+        String sql = "select * from Feedback f join Resident r on r.Id = f.rId  where name like '%" + name + "%'";
+        List<Feedback> list = new ArrayList<>();
+        ResidentDAO daoR = new ResidentDAO();
+        RequestTypeDAO daoRT = new RequestTypeDAO();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Feedback(rs.getString("id"),
+                        rs.getString("detail"),
+                        rs.getString("date"),
+                        daoR.getById(rs.getString("rid")),
+                        daoRT.getById(rs.getString("tid"))));
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public List<Feedback> getByDate(List<Feedback> listFeedback, String startDate, String endDate) {
+        String sql = "select * from Feedback where date ";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        if (startDate != null) {
+            Date date = Date.valueOf(startDate);
+            String formatDate = format.format(date);
+            sql += ">= '" + formatDate + "'";
+        }
+        if (endDate != null) {
+            Date date = Date.valueOf(endDate);
+            String formatDate = format.format(date);
+            sql += " and date <= '" + formatDate + "'";
+        }
+        List<Feedback> list = new ArrayList<>();
+        ResidentDAO daoR = new ResidentDAO();
+        RequestTypeDAO daoRT = new RequestTypeDAO();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Feedback(rs.getString("id"),
+                        rs.getString("detail"),
+                        rs.getString("date"),
+                        daoR.getById(rs.getString("rid")),
+                        daoRT.getById(rs.getString("tid"))));
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public List<Feedback> getByServiceType(List<Feedback> listFeedback, String serviceId) {
+        String sql = "select * from Feedback where tid = '" + serviceId + "'";
+        List<Feedback> list = new ArrayList<>();
+        ResidentDAO daoR = new ResidentDAO();
+        RequestTypeDAO daoRT = new RequestTypeDAO();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Feedback(rs.getString("id"),
+                        rs.getString("detail"),
+                        rs.getString("date"),
+                        daoR.getById(rs.getString("rid")),
+                        daoRT.getById(rs.getString("tid"))));
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public List<Feedback> getPageByNumber(List<Feedback> list, int page, int number) {
+        List<Feedback> listpage = new ArrayList<>();
+        int start = number * (page - 1);
+        int end = number * page - 1;
+        for (int i = start; i <= end; i++) {
+            listpage.add(list.get(i));
+            if (i == list.size() - 1) {
+                break;
+            }
+        }
+        return listpage;
+    }
+
     public static void main(String[] args) {
         FeedbackDAO dao = new FeedbackDAO();
-        System.out.println(dao.getAllFeedback().size());
-        System.out.println(dao.sendFeedback("nhu cec", "P100", "R001"));
+//        System.out.println(dao.getAllFeedback().size());
+        System.out.println(dao.getByServiceType(dao.getAllFeedback(), "R004").size());
 
         // Define the date format
     }

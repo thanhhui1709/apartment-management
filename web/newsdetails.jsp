@@ -1,12 +1,6 @@
-<%-- 
-    Document   : newjsp
-    Created on : Feb 1, 2025, 9:56:13 PM
-    Author     : quang
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <!-- basic -->
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,7 +17,7 @@
                 background-color: #f8f9fa;
                 margin: 0;
                 padding: 0;
-                font-family: 'Times New Roman', Times, serif; /* Sử dụng font Roboto và các font dự phòng */
+                font-family: 'Roboto', Arial, sans-serif; /* S? d?ng font Roboto v� c�c font d? ph�ng */
             }
             .news-container {
                 background: #ffffff;
@@ -46,11 +40,11 @@
                 line-height: 1.4;
             }
             .news-date {
-                text-align: left; /* Căn lề bên trái */
+                text-align: left; /* C?n l? b�n tr�i */
                 color: #6c757d;
                 margin-bottom: 30px;
-                font-size: 16px; /* Kích thước chữ nhỏ hơn */
-                padding-left: 15px; /* Khoảng cách từ lề bên trái */
+                font-size: 16px; /* K�ch th??c ch? nh? h?n */
+                padding-left: 15px; /* Kho?ng c�ch t? l? b�n tr�i */
             }
             .news-content {
                 font-size: 22px;
@@ -76,44 +70,44 @@
             }
         </style>
     </head>
-    <div class="full_container">
-        <div class="inner_container">
-            <%@ include file="sidebar.jsp" %>
-            <!-- end sidebar -->
-            <!-- right content -->
-            <div id="content">
-                <%@ include file="topbar.jsp" %>
-                <!-- end topbar -->
-                <!-- News Detail -->
-                <div class="container-fluid mt-5"> 
-                    <div class="row">
-                        <div class="col-12"> 
-                            <div class="news-container">
-                                <h2 class="news-title" style="color: #004175;">${requestScope.news.title}</h2>
-                                <p class="news-date">Date: February 1, 2025, Post by: Phùng Nhật Quang</p>
-                                <p class="news-content">
-                                    ${requestScope.news.content}
-                                </p>
-                                <div class="related-links">
-                                    <ul>
-                                        <li style="font-weight: bold; text-decoration: underline">Related Articles<li>
-                                            <c:forEach items="${requestScope.listOtherNews}" var="n">
-                                            <li>- <a href="news-detail?id=${n.id}">${n.title}</a></li>
-                                            </c:forEach>
-                                        <li><a href="view-news" class="btn-link yellow_color">Back to News List</a></li>
-                                    </ul>
-                                    
+    <body>
+        <div class="full_container">
+            <div class="inner_container">
+                <%@ include file="sidebar.jsp" %>
+                <!-- end sidebar -->
+                <!-- right content -->
+                <div id="content">
+                    <%@ include file="topbar.jsp" %>
+                    <!-- end topbar -->
+                    <!-- News Detail -->
+                    <div class="container-fluid mt-5"> 
+                        <div class="row">
+                            <div class="col-12"> 
+                                <div class="news-container">
+                                    <h2 class="news-title" style="color: #004175;">${requestScope.news.title}</h2>
+                                    <p class="news-date">Date: February 1, 2025, Post by: Ph�ng Nh?t Quang</p>
+                                    <p class="news-content">
+                                        ${requestScope.news.content}
+                                    </p>
+                                    <div class="related-links">
+                                        <ul>
+                                            <li style="color: blue">Related Articles<li>
+                                                <c:forEach items="${requestScope.listOtherNews}" var="n">
+                                                <li>- <a href="news-detail?id=${n.id}">${n.title}</a></li>
+                                                </c:forEach>
+                                                <li><a href="view-news" class="btn">Back to News List</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- end news detail -->
                 </div>
-                <!-- end news detail -->
             </div>
         </div>
-    </div>
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-</body>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
 </html>
