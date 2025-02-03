@@ -65,6 +65,20 @@ public class FeedbackDAO extends DBContext {
         return listFeedbackGetByRole;
     }
 
+    public List<Feedback> getFeebackAfterFilter(List<Feedback> list, String role) {
+        FeedbackDAO dao = new FeedbackDAO();
+        List<Feedback> listFeedbackGetByRole = new ArrayList<>();
+        if (role.equals("2")) {
+            return list;
+        }
+        for (Feedback f : list) {
+            if (f.getRequestType().getDestination().getId().equals(role)) {
+                listFeedbackGetByRole.add(f);
+            }
+        }
+        return listFeedbackGetByRole;
+    }
+
     public int sendFeedback(String detail, String rID, String tID) {
         String sql = "INSERT INTO [dbo].[Feedback]\n"
                 + "           ([Id]\n"
@@ -206,6 +220,48 @@ public class FeedbackDAO extends DBContext {
         return null;
     }
 
+    public List<Feedback> filterFeedback(String residentName, String serviceId, String startDate, String endDate, String role) {
+        String sql = "select * from Feedback f join Resident r on r.Id = f.rId  where 1 = 1 ";
+        FeedbackDAO dao = new FeedbackDAO();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        if (residentName != null) {
+            sql += " and r.name like '%" + residentName + "%'";
+        }
+        if (serviceId != "") {
+            sql += " and f.tid = '" + serviceId + "'";
+        }
+
+        if (startDate != "") {
+            Date date = Date.valueOf(startDate);
+            String formatDate = format.format(date);
+            sql += " and f.date >= '" + formatDate + "'";
+        }
+        if (endDate != "") {
+            Date date = Date.valueOf(endDate);
+            String formatDate = format.format(date);
+            sql += " and f.date <= '" + formatDate + "'";
+        }
+        List<Feedback> list = new ArrayList<>();
+        ResidentDAO daoR = new ResidentDAO();
+        RequestTypeDAO daoRT = new RequestTypeDAO();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Feedback(rs.getString("id"),
+                        rs.getString("detail"),
+                        rs.getString("date"),
+                        daoR.getById(rs.getString("rid")),
+                        daoRT.getById(rs.getString("tid"))));
+            }
+            return dao.getFeebackAfterFilter(list, role);
+        } catch (SQLException ex) {
+            Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+
     public List<Feedback> getPageByNumber(List<Feedback> list, int page, int number) {
         List<Feedback> listpage = new ArrayList<>();
         int start = number * (page - 1);
@@ -221,9 +277,7 @@ public class FeedbackDAO extends DBContext {
 
     public static void main(String[] args) {
         FeedbackDAO dao = new FeedbackDAO();
-//        System.out.println(dao.getAllFeedback().size());
-        System.out.println(dao.getByServiceType(dao.getAllFeedback(), "R004").size());
-
+        System.out.println(dao.filterFeedback("quang", "", "", "", "2").size());
         // Define the date format
     }
 }

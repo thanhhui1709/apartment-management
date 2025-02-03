@@ -175,7 +175,7 @@ public class ResidentDAO extends DBContext {
             while (rs.next()) {
                 list.add(new Resident(rs.getString("id"), rs.getString("Name"),
                         rs.getString("cccd"), rs.getString("phone"),
-                        rs.getString("email"), rs.getString("email"), rs.getString("address"), rs.getString("status")));
+                        rs.getString("email"), rs.getString("email"), rs.getString("address"), rs.getString("active")));
             }
             return list;
         } catch (SQLException ex) {
@@ -303,7 +303,7 @@ public class ResidentDAO extends DBContext {
                         rs.getString("email"),
                         rs.getString("bod"),
                         rs.getString("address"),
-                        rs.getString("status"), 
+                        rs.getString("active"), 
                         rs.getString("gender")));
             }
             return list;
@@ -315,6 +315,6 @@ public class ResidentDAO extends DBContext {
 
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        System.out.println(dao.pagingResident(0).get(0).getStatus());
+        System.out.println(dao.filterListResident("", "1").size());
     }
 }

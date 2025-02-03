@@ -112,15 +112,16 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <c:forEach items="${sessionScope.listFeedback}" var="feedback">
-                                                            <tr>
-                                                                <td>${feedback.id}</td>
-                                                                <td>${feedback.resident.name}</td>
-                                                                <td>${feedback.detail}</td>
-                                                                <td>${feedback.date}</td>
-                                                                <td>${feedback.requestType.name}</td>
-                                                            </tr>
-                                                        </c:forEach>
+                                                    <h3>${requestScope.message}</h3>
+                                                    <c:forEach items="${sessionScope.listFeedback}" var="feedback">
+                                                        <tr>
+                                                            <td>${feedback.id}</td>
+                                                            <td>${feedback.resident.name}</td>
+                                                            <td>${feedback.detail}</td>
+                                                            <td>${feedback.date}</td>
+                                                            <td>${feedback.requestType.name}</td>
+                                                        </tr>
+                                                    </c:forEach>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -141,6 +142,11 @@
                                 </option>
                             </c:forEach>
                         </select>
+
+                        <input type="text" value="${param.searchName}" class="form-control" name="searchName" hidden="">
+                        <input type="date"  name="startDate" placeholder="Start Date" value="${param.startDate}" hidden="">
+                        <input type="date"  name="endDate" placeholder="End Date" value="${param.endDate}" hidden="">
+                        <input type="text"  name="endDate" placeholder="End Date" value="${param.serviceType}" hidden="">
                     </form>
                     <div class="container-fluid">
                         <div class="footer">
