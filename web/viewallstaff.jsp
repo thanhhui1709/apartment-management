@@ -34,12 +34,15 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     </head>
     <body class="inner_page tables_page">
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->
-           <%@include file="sidebar.jsp" %>
+                <%@include file="sidebar.jsp" %>
                 <!-- end sidebar -->
                 <!-- right content -->
                 <div id="content">
@@ -91,15 +94,11 @@
                                                         <tr>
                                                             <th>ID</th>
                                                             <th>Name</th>
-                                                            <th>BOD</th>
-                                                            <th>Phone</th>
                                                             <th>Email</th>                                               
                                                             <th>Address</th>
-                                                            <th>Bank</th>
-                                                            <th>Salary</th>
-                                                            <th>Education</th>
                                                             <th>Role</th>
                                                             <th>Status</th> 
+                                                            <th>Detail</th>
                                                             <th>Option</th>
                                                         </tr>
                                                     </thead>
@@ -108,18 +107,50 @@
                                                             <tr>
                                                                 <td>${staff.id}</td>
                                                                 <td>${staff.name}</td>
-                                                                <td>${staff.bod}</td>
-                                                                <td>${staff.phone}</td>
                                                                 <td>${staff.email}</td>                                               
                                                                 <td>${staff.address}</td>
-                                                                <td>${staff.bank}</td>
-                                                                <td>${staff.salary}</td>
-                                                                <td>${staff.education}</td>
                                                                 <td>${staff.role.name}</td>
-                                                                <td>${staff.status}</td>
+                                                                <td>${staff.status==1?'Working':'Retired'}</td>
+                                                                <td style="text-align: center">
+                                                                    <a href="#" data-toggle="modal" data-target="#staffDetail${staff.id}">
+                                                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </td>
+
                                                                 <td><a href="updateStaffInfor?id=${staff.id}">Update</a></td>
                                                             </tr>
-                                                        </c:forEach>
+                                                        <div id="staffDetail${staff.id}" class="modal fade">
+                                                            <div class="modal-dialog" style="max-width: 60%">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h3>Staff Information</h3>
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                    </div>
+                                                                    <div class="modal-body" style="display: flex ">
+                                                                        <div style="width: 50%;text-align: center;">
+                                                                            <img style="width: 70%; border-radius: 50%;margin-top: 15%" src="images/logo/person.jpg" alt="alt"/>
+                                                                        </div>
+                                                                        <div style="width: 50%">
+                                                                            <p><strong>ID:</strong> ${staff.id}</p>
+                                                                            <p><strong>Name:</strong> ${staff.name}</p>
+                                                                            <p><strong>Bod</strong> ${staff.bod}</p>
+                                                                            <p><strong>Email:</strong> ${staff.email}</p>
+                                                                            <p><strong>Phone:</strong> ${staff.phone}</p>
+                                                                            <p><strong>Address:</strong> ${staff.address}</p>
+                                                                            <p><strong>CCCD:</strong> ${staff.cccd}</p>
+                                                                            <p><strong>Salary:</strong> ${staff.salary} VND</p>
+                                                                                <p><strong>Education: </strong> ${staff.education}</p>
+                                                                            <p><strong>Bank: </strong> ${staff.bank}</p>
+                                                                            <p><strong>Start date :</strong> ${staff.startDate}</p>
+                                                                            <p><strong>End date :</strong> ${staff.endDate}</p>
+                                                                            <p><strong>Role:</strong> ${staff.role.name}</p>
+                                                                            <p><strong>Status:</strong> ${staff.status == 1 ? 'Working' : 'Retired'}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </c:forEach>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -153,10 +184,10 @@
                 <!-- end dashboard inner -->
             </div>
         </div>
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
-</body>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/custom.js"></script>
+    </body>
 </html>
