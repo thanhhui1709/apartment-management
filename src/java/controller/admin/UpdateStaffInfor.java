@@ -84,8 +84,7 @@ public class UpdateStaffInfor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        Update staff set name = ?, bod = ? ,email = ? , phone = ?, address = ? , cccd = ? , salary = ? , education = ? , bank = ?"
-//                + ", status = ? ,roleid = ? ,companyid = ?, startdate = ?, enddate= ? ";
+
         String id = request.getParameter("staffID");
         String name = request.getParameter("name");
         String dob = request.getParameter("dob");
@@ -102,41 +101,28 @@ public class UpdateStaffInfor extends HttpServlet {
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
 
+        StaffDAO daoSt = new StaffDAO();
         CompanyDAO daoCp = new CompanyDAO();
         RoleDAO daoR = new RoleDAO();
-        StaffDAO daoSt = new StaffDAO();
+
         try {
             int status = Integer.parseInt(status_raw);
             int salary = Integer.parseInt(salary_raw);
-            Staff s = null;
-            if (endDate == null || endDate =="") {
-                s = new Staff(id, name, dob, email, phone, address, cccd, salary, education, bank, status,
-                        daoR.getById(role), daoCp.getById(companyId), startDate, null);
-            } else {
-                s = new Staff(id, name, dob, email, phone, address, cccd, salary, education, bank, status,
-                        daoR.getById(role), daoCp.getById(companyId), startDate, endDate);
-            }
 
-            if (!daoSt.updateStaffInfor(s)) {
-                request.setAttribute("status", "false");
-                request.setAttribute("message", "Can not update");
-                request.setAttribute("staff", daoSt.getById(id));
-                request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
-                return;
-            } else {
-                request.setAttribute("status", "true");
-                request.setAttribute("staff", daoSt.getById(id));
-                request.setAttribute("message", "Update successfully");
-                request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
-            }
+            Staff staff = new Staff(
+                    id, name, dob, email, phone, address, cccd, salary,
+                    education, bank, status, daoR.getById(role), daoCp.getById(companyId),
+                    startDate, (endDate == null || endDate.isEmpty()) ? null : endDate
+            );
+
+            daoSt.updateStaffInfor(staff);
+            response.sendRedirect("view-all-staff");
 
         } catch (NumberFormatException e) {
             request.setAttribute("status", "false");
-            request.setAttribute("message", "Can not update");
+            request.setAttribute("message", "Invalid salary format.");
             request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
-            return;
         }
-
     }
 
     /**

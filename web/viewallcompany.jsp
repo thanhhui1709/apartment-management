@@ -35,6 +35,7 @@
         <link rel="stylesheet" href="js/semantic.min.css" />
         <!-- fancy box js -->
         <link rel="stylesheet" href="css/jquery.fancybox.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -118,7 +119,7 @@
                                                                 <td>${o.taxCode}</td>
                                                                 <td>${o.bank}</td>
                                                                 <td>${o.address}</td>
-                                                                <td><a href="#">Update</a></td>
+                                                                <td><a href="update-company?id=${o.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -146,7 +147,7 @@
                     <!-- footer -->
                     <div class="container-fluid">
                         <div class="footer">
-                            <p>Copyright © 2018 Designed by html.design. All rights reserved.</p>
+                            <p>Copyright ? 2018 Designed by html.design. All rights reserved.</p>
                         </div>
                     </div>
                 </div>

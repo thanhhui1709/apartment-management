@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="css/perfect-scrollbar.css" />
         <!-- custom css -->
         <link rel="stylesheet" href="css/custom.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -41,9 +42,9 @@
                 <div class="sidebar_user_info">
                     <div class="icon_setting"></div>
                     <div class="user_profle_side">
-                        <div class="user_img"><img class="img-responsive" src="images/layout_img/user_img.jpg" alt="#" /></div>
+                        <div class="user_img"><img class="img-responsive" src="images/logo/5ee082781b8c41406a2a50a0f32d6aa6.jpg" alt="#" /></div>
                         <div class="user_info">
-                            <h6>Resident</h6>
+                            <h6>${sessionScope.person.name}</h6>
                             <p><span class="online_animation"></span> Online</p>
                         </div>
                     </div>
@@ -73,14 +74,14 @@
                             <li><a href="invoice.html">> <span>Invoice</span></a></li>
                         </ul>
                     </li>
-                    <li><a href="view-resident"><i class="fa fa-table purple_color2"></i> <span>Tables</span></a></li>
-                    <li><a href="view-all-staff"><i class="fa fa-table purple_color2"></i> <span>Staff Information</span></a></li>
-                    <li><a href="view-all-company"><i class="fa fa-table purple_color2"></i> <span>Company Information</span></a></li>
-                    <li><a href="view-all-request"><i class="fa fa-table purple_color2"></i> <span>Request Information</span></a></li>
-                    <li><a href="view-feed-back-user"><i class="fa fa-table purple_color2"></i> <span>Feedback User</span></a></li>
-                    <li><a href="view-all-feedback"><i class="fa fa-table purple_color2"></i> <span>Feedback Admin</span></a></li>
-                    <li><a href="view-news"><i class="fa fa-newspaper-o yellow_color"></i> <span>News</span></a></li>
-                    <li><a href="${ut.getSiteToViewRule(sessionScope.account.roleId)}"><i class="fa fa-table purple_color2"></i> <span>Rule of apartment</span></a></li>
+                    <li><a href="view-resident"><i class="fa-solid fa-person"></i> <span>Resident Information</span></a></li>
+                    <li><a href="view-all-staff"><i class="fa-solid fa-users-line"></i> <span>Staff Information</span></a></li>
+                    <li><a href="view-all-company"><i class="fa-solid fa-building"></i> <span>Company Information</span></a></li>
+                    <li><a href="view-all-request"><i class="fa-solid fa-repeat"></i> <span>Request Information</span></a></li>
+                    <li><a href="viewrequest_history"><i class="fa-solid fa-hand"></i> <span>View Request History</span></a></li>
+                    <li><a href="view-feed-back-user"><i class="fa-solid fa-comment"></i><span>Feedback User</span></a></li>
+                    <li><a href="view-all-feedback"><i class="fa-solid fa-comment"></i> <span>Feedback Admin</span></a></li>
+                    <li><a href="${ut.getSiteToViewRule(sessionScope.account.roleId)}"><i class="fa-solid fa-scale-balanced"></i><span>Rule of apartment</span></a></li>
 
                     <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>

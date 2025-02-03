@@ -5,7 +5,7 @@
 
 package controller.staff;
 
-import dao.RequestDAO;
+import dao.ResidentDAO;
 import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,15 +15,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
+import model.Account;
+import model.Resident;
 import model.Staff;
 
 /**
  *
- * @author PC
+ * @author pc
  */
-@WebServlet(name="AssignRequest", urlPatterns={"/assign-request"})
-public class AssignRequest extends HttpServlet {
+@WebServlet(name="EditprofileSTServlet", urlPatterns={"/editprofileSTServlet"})
+public class EditprofileSTServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,10 +41,10 @@ public class AssignRequest extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AssignRequest</title>");  
+            out.println("<title>Servlet EditprofileSTServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AssignRequest at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet EditprofileSTServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,12 +61,7 @@ public class AssignRequest extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-       HttpSession session =request.getSession();
-       String requestid = request.getParameter("requestid");
-       String staffid= request.getParameter("staffid");
-       RequestDAO rd = new RequestDAO();
-       rd.AssignRequest(requestid, staffid);
-       request.getRequestDispatcher("view-all-request").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -78,8 +74,56 @@ public class AssignRequest extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
+    
+    HttpSession session = request.getSession();
+    Account account = (Account) session.getAttribute("account");
+
+    if (account == null) {
+        response.sendRedirect("login.jsp");
+        return;
     }
+
+        StaffDAO st= new StaffDAO();
+        Staff s= st.getById(account.getpId());
+
+    if (s == null) {
+        request.setAttribute("msg", "User not found.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+
+    String eemail = request.getParameter("editProfileEmail");
+    String ephone = request.getParameter("editProfilePhone");
+    String eaddress = request.getParameter("editProfileAddress");
+    String ebank= request.getParameter("editProfileBank");
+
+    if (!eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+        request.setAttribute("msg", "Invalid email format.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+
+    if (!ephone.matches("[0-9]+")) {
+        request.setAttribute("msg", "Phone number should contain only digits.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+
+    if (eaddress.trim().isEmpty()) {
+        request.setAttribute("msg", "Address cannot be empty.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+    if (ebank.trim().isEmpty()) {
+        request.setAttribute("msg", "Bank cannot be empty.");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        return;
+    }
+
+    st.EditProfileSt(s.getId(), ephone, eemail,ebank, eaddress);
+
+    response.sendRedirect("profile.jsp");
+}
 
     /** 
      * Returns a short description of the servlet.

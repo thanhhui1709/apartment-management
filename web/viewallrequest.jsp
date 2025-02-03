@@ -36,21 +36,107 @@
         <link rel="stylesheet" href="js/semantic.min.css" />
         <!-- fancy box js -->
         <link rel="stylesheet" href="css/jquery.fancybox.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style>
+            /* Custom checkbox */
+            .custom-checkbox {
+                position: relative;
+            }
+            .custom-checkbox input[type="checkbox"] {
+                opacity: 0;
+                position: absolute;
+                margin: 5px 0 0 3px;
+                z-index: 9;
+            }
+            .custom-checkbox label:before{
+                width: 18px;
+                height: 18px;
+            }
+            .custom-checkbox label:before {
+                content: '';
+                margin-right: 10px;
+                display: inline-block;
+                vertical-align: text-top;
+                background: white;
+                border: 1px solid #bbb;
+                border-radius: 2px;
+                box-sizing: border-box;
+                z-index: 2;
+            }
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                content: '';
+                position: absolute;
+                left: 6px;
+                top: 3px;
+                width: 6px;
+                height: 11px;
+                border: solid #000;
+                border-width: 0 3px 3px 0;
+                transform: inherit;
+                z-index: 3;
+                transform: rotateZ(45deg);
+            }
+            .custom-checkbox input[type="checkbox"]:checked + label:before {
+                border-color: #03A9F4;
+                background: #03A9F4;
+            }
+            .custom-checkbox input[type="checkbox"]:checked + label:after {
+                border-color: #fff;
+            }
+            .custom-checkbox input[type="checkbox"]:disabled + label:before {
+                color: #b8b8b8;
+                cursor: auto;
+                box-shadow: none;
+                background: #ddd;
+            }
+            /* Modal styles */
+            .modal .modal-dialog {
+                max-width: 80%;
+            }
+            .modal .modal-header, .modal .modal-body, .modal .modal-footer {
+                padding: 20px 30px;
+            }
+            .modal .modal-content {
+                border-radius: 3px;
+            }
+            .modal .modal-footer {
+                background: #ecf0f1;
+                border-radius: 0 0 3px 3px;
+            }
+            .modal .modal-title {
+                display: inline-block;
+            }
+            .modal .form-control {
+                border-radius: 2px;
+                box-shadow: none;
+                border-color: #dddddd;
+            }
+            .modal textarea.form-control {
+                resize: vertical;
+            }
+            .modal .btn {
+                border-radius: 2px;
+                min-width: 100px;
+            }
+            .modal form label {
+                font-weight: normal;
+            }
+        </style>
     </head>
     <body class="inner_page tables_page">
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->
-           <%@include file="sidebar.jsp" %>
+                <%@include file="sidebar.jsp" %>
                 <!-- end sidebar -->
                 <!-- right content -->
                 <div id="content">
                     <!-- topbar -->
-                   <%@include file="topbar.jsp" %>
+                    <%@include file="topbar.jsp" %>
                     <!-- end topbar -->
                     <div class="midde_cont">
                         <div class="container-fluid">
@@ -99,42 +185,93 @@
                                         </div>
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
-                                                               
-                                                    <table class="table w-100">
-                                                        <thead>
+
+                                                <table class="table w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Resident Name</th>                                                            
+                                                            <th>Detail</th>
+                                                            <th>Date</th>                                               
+                                                            <th>Type</th>
+                                                            <th>Status</th>
+                                                            <th>Reception Staff</th>
+                                                            <th>Option</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <c:forEach items="${requestScope.requestes}" var="o" varStatus="status">
                                                             <tr>
-                                                                <th>ID</th>
-                                                                <th>Resident Name</th>                                                            
-                                                                <th>Detail</th>
-                                                                <th>Date</th>                                               
-                                                                <th>Type</th>
-                                                                <th>Status</th>
-                                                                <th>Reception Staff</th>
-                                                                <th>Option</th>
+                                                                <td>${o.id}</td>
+                                                                <td>${o.residentId.name}</td>
+                                                                <td>${o.detail}</td>
+                                                                <td>${o.date}</td> 
+                                                                <td>${o.requestType.name}</td>                                             
+                                                                <td>${o.status}</td>
+                                                                <td>${o.status != 'No response' ? o.staffId.name : ''}</td> 
+                                                                <td>
+                                                                    <a href="#assignRequest${status.index}" class="edit" data-toggle="modal">
+                                                                        <i class="material-icons" data-toggle="tooltip" title="Assign">&#xE254;</i>
+                                                                    </a>
+
+                                                                    <div id="assignRequest${status.index}" class="modal fade">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <h3>Working Staff Information</h3>
+                                                                                <div class="table_section padding_infor_info">
+                                                                                    <div class="table-responsive-sm">
+                                                                                        <table class="table w-100">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>ID</th>
+                                                                                                    <th>Name</th>                                                            
+                                                                                                    <th>Email</th>
+                                                                                                    <th>Phone</th>                                               
+                                                                                                    <th>Address</th>
+                                                                                                    <th>Option</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <!-- Gán giá trị danh sách staff dựa trên điều kiện -->
+                                                                                                <c:choose>
+                                                                                                    <c:when test="${o.requestType.destination.id == '5'}">
+                                                                                                        <c:set var="targetList" value="${requestScope.environmental}" />
+                                                                                                    </c:when>
+                                                                                                    <c:otherwise>
+                                                                                                        <c:set var="targetList" value="${requestScope.engineer}" />
+                                                                                                    </c:otherwise>
+                                                                                                </c:choose>
+
+                                                                                                <c:forEach items="${targetList}" var="staff">
+                                                                                                    <tr>
+                                                                                                        <td>${staff.id}</td>
+                                                                                                        <td>${staff.name}</td>
+                                                                                                        <td>${staff.email}</td>
+                                                                                                        <td>${staff.phone}</td> 
+                                                                                                        <td>${request.address}</td>                                             
+                                                                                                        <td>
+                                                                                                            <form action="assign-request" method="get">
+                                                                                                                <input type="hidden" name="requestid" value="${o.id}">
+                                                                                                                <input type="hidden" name="staffid" value="${staff.id}">
+                                                                                                                <button type="submit">Assign</button>
+                                                                                                            </form>
+                                                                                                        </td>   
+                                                                                                    </tr>
+                                                                                                </c:forEach>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>                                                           
+                                                                </td>   
                                                             </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <c:forEach items="${requestScope.requestes}" var="o">
-                                                                <tr>
-                                                                    <td>${o.id}</td>
-                                                                    <td>${o.residentId.name}</td>
-                                                                    <td>${o.detail}</td>
-                                                                    <td>${o.date}</td> 
-                                                                    <td>${o.requestType.name}</td>                                             
-                                                                    <td>${o.status}</td>
-                                                                    <td>${o.status != 'No response' ? o.staffId.name : ''}</td> 
-                                                                        <td>
-                                                                            <form action="assign-request" method="post"> 
-                                                                            <input type="hidden" name="requestid" value="${o.id}">
-                                                                            <input type="hidden" name="typename" value="${o.requestType.name}">
-                                                                            <button type="submit">Assign</button>
-                                                                            </form>
-                                                                        </td>   
-                                                                </tr>
-                                                            </c:forEach>
-                                                        </tbody>
-                                                    </table>
-                                                
+                                                        </c:forEach>
+
+                                                    </tbody>
+                                                </table>
+
                                             </div>
                                         </div>
                                     </div>
@@ -166,10 +303,10 @@
             </div>
         </div>
 
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
-</body>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/custom.js"></script>
+    </body>
 </html>

@@ -35,6 +35,10 @@ public class Util {
         }
         return "view-profile-" + destination;
     }
+    public  String getTableNameByRoleIdEdit(int role){
+        if(role==1) return "editprofileRE.jsp";
+        return "editprofileST.jsp";
+    }
     public String getSiteToViewRule(int role){
         if(role==1) return "view-rule-resident";
         return "view-rule-admin";

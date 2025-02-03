@@ -3,25 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.resident;
+package validation;
 
 import dao.ResidentDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Account;
-import model.Resident;
-import util.Util;
 
 /**
  *
- * @author pc
+ * @author NCPC
  */
-public class EditProfileResidentServlet extends HttpServlet {
+@WebServlet(name="checkDuplicateStaffInfor", urlPatterns={"/checkDuplicateStaffInfor"})
+public class checkDuplicateStaffInfor extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +37,10 @@ public class EditProfileResidentServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfileResidentServlet</title>");  
+            out.println("<title>Servlet checkDuplicateStaffInfor</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditProfileResidentServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet checkDuplicateStaffInfor at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +57,24 @@ public class EditProfileResidentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+         String type = request.getParameter("type");
+        String value = request.getParameter("value");
+        StaffDAO sd = new StaffDAO();
+        boolean exists = false;
+        switch (type) {
+            case "email":
+                exists = sd.checkDuplicateEmail(value);
+                break;
+            case "phone":
+                exists = sd.checkDuplicatePhone(value);
+                break;
+            case "cccd":
+                exists = sd.checkDuplicateID(value);
+                break;
+           
+        }
+        response.setContentType("application/json");
+        response.getWriter().write("{\"exists\": " + exists + "}");
     } 
 
     /** 
@@ -71,17 +87,7 @@ public class EditProfileResidentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        ResidentDAO rd= new ResidentDAO();
-        HttpSession session =request.getSession();
-        Account account =(Account) session.getAttribute("account");
-        Resident re = rd.getById(account.getpId());
-        
-        String eemail=request.getParameter("editProfileEmail");
-        String ephone=request.getParameter("editProfilePhone");
-        String eaddress=request.getParameter("editProfileAddress");
-        rd.EditProfileRe(re.getpId(), ephone, eemail, eaddress);
-        Util editre = new Util();
-        response.sendRedirect(editre.getTableNameByRoleId(account.getRoleId()));
+        processRequest(request, response);
     }
 
     /** 

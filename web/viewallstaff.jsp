@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="js/semantic.min.css" />
         <!-- fancy box js -->
         <link rel="stylesheet" href="css/jquery.fancybox.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -39,7 +40,7 @@
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->
-           <%@include file="sidebar.jsp" %>
+                <%@include file="sidebar.jsp" %>
                 <!-- end sidebar -->
                 <!-- right content -->
                 <div id="content">
@@ -117,7 +118,7 @@
                                                                 <td>${staff.education}</td>
                                                                 <td>${staff.role.name}</td>
                                                                 <td>${staff.status}</td>
-                                                                <td><a href="updateStaffInfor?id=${staff.id}">Update</a></td>
+                                                                <td><a href="updateStaffInfor?id=${staff.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -153,10 +154,10 @@
                 <!-- end dashboard inner -->
             </div>
         </div>
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
-</body>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/custom.js"></script>
+    </body>
 </html>

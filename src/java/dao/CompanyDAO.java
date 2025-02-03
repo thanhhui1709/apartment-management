@@ -127,7 +127,29 @@ public class CompanyDAO extends DBContext {
         }
         return false;
     }
-
+    public void updateCompany(Company company){
+        String sql = "update company set name=?, phone=?,contactphone=?,fax=?,email=?,contactemail=?,"
+                + "website=?,taxcode=?,bank=?,description=?,address=?"
+                + " where id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, company.getName());
+            st.setString(2, company.getPhone());
+            st.setString(3, company.getContactPhone());
+            st.setString(4, company.getFax());
+            st.setString(5, company.getEmail());
+            st.setString(6, company.getContactemail());
+            st.setString(7, company.getWebsite());
+            st.setString(8, company.getTaxCode());
+            st.setString(9, company.getBank());
+            st.setString(10, company.getdescription());
+            st.setString(11, company.getAddress());
+            st.setString(12, company.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
     public static void main(String[] args) {
         CompanyDAO dao = new CompanyDAO();
         Company cp = new Company("324ss", "09113467", "091231247", "142322312", "caon4cass@gmail.com", "caon2s4ca@gmail.com", "xx",
