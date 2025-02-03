@@ -9,6 +9,7 @@ package model;
  * @author thanh
  */
 public class Resident {
+
     /*CREATE TABLE Resident (
   pId    varchar(10) NOT NULL FOREIGN KEY (pId) REFERENCES Person (Id), 
   Bank   varchar(255) unique NOT NULL, 
@@ -16,9 +17,10 @@ public class Resident {
   [Status] varchar(255) NOT NULL, 
   PRIMARY KEY (pId));*/
     private String pId;
-    private String name,cccd;
-    private String phone,email,bod,address,username,password,status,note;
+    private String name, cccd;
+    private String phone, email, bod, address, username, password, status, note;
     private Role role;
+    private String gender;
 
     public Resident() {
     }
@@ -49,6 +51,26 @@ public class Resident {
         this.status = status;
     }
 
+    public Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status, String gender) {
+        this.pId = pId;
+        this.name = name;
+        this.cccd = cccd;
+        this.phone = phone;
+        this.email = email;
+        this.bod = bod;
+        this.address = address;
+        this.status = status;
+        this.gender = gender;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     @Override
     public String toString() {
         return "Resident{" + "pId=" + pId + ", name=" + name + ", cccd=" + cccd + ", phone=" + phone + ", email=" + email + ", bod=" + bod + ", address=" + address + ", username=" + username + ", password=" + password + ", status=" + status + ", note=" + note + ", role=" + role + '}';
@@ -77,7 +99,6 @@ public class Resident {
     public void setNote(String note) {
         this.note = note;
     }
-
 
     public String getpId() {
         return pId;
@@ -150,5 +171,5 @@ public class Resident {
     public void setRole(Role role) {
         this.role = role;
     }
-    
+
 }
