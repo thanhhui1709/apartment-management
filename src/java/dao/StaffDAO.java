@@ -62,7 +62,7 @@ public class StaffDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Staff> getStaffbyRole(String role) {
         CompanyDAO sd = new CompanyDAO();
         RoleDAO rd = new RoleDAO();
@@ -97,7 +97,7 @@ public class StaffDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Staff> getStaffByRequestName(String nametype) {
         CompanyDAO sd = new CompanyDAO();
         RoleDAO rd = new RoleDAO();
@@ -132,15 +132,18 @@ public class StaffDAO extends DBContext {
         }
         return list;
     }
-    
-    public Staff getByRequestType(RequestType rt){
-        List<Staff> list  =this.getAll();
+
+    public Staff getByRequestType(RequestType rt) {
+        List<Staff> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getRole().getId().equalsIgnoreCase(rt.getDestination().getId())
-                    && list.get(i).getStatus()==1) return list.get(i);
+            if (list.get(i).getRole().getId().equalsIgnoreCase(rt.getDestination().getId())
+                    && list.get(i).getStatus() == 1) {
+                return list.get(i);
+            }
         }
         return null;
     }
+
     public Staff getById(String id) {
         List<Staff> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
@@ -151,7 +154,7 @@ public class StaffDAO extends DBContext {
         return null;
     }
 
-    public void EditProfileSt(String id, String phone, String email,String bank, String address) {
+    public void EditProfileSt(String id, String phone, String email, String bank, String address) {
         String sql = "update Staff set Email=?, Phone=?,Bank=?, [Address]=? where id=?";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
@@ -184,7 +187,7 @@ public class StaffDAO extends DBContext {
 
     public boolean updateStaffInfor(Staff s) {
         String sql = "Update staff set name = ?, bod = ? ,email = ? , phone = ?, address = ? , cccd = ? , salary = ? , education = ? , bank = ?"
-                + ", status = ? ,roleid = ? ,companyid = ?, startdate = ?, enddate = ? where id = ? ";
+                + ", status = ? ,roleid = ? ,cID = ?, startdate = ?, enddate = ? where id = ? ";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, s.getName());
@@ -202,8 +205,9 @@ public class StaffDAO extends DBContext {
             st.setString(13, s.getStartDate());
             st.setString(14, s.getEndDate());
             st.setString(15, s.getId());
+            st.executeUpdate();
+            return true;
 
-            return st.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -291,40 +295,47 @@ public class StaffDAO extends DBContext {
         return rs;
     }
 
-    public static void main(String[] args) {
-//        Role role = new Role();
-//        role.setId("2"); // Set role ID
-//
-//        // Create a company object (assuming Company class exists)
-//        Company company = new Company();
-//        company.setId("C001"); // Set company ID
-//
-//        // Create the Staff object
-//        Staff staff = new Staff();
-//        staff.setId("S001"); // or leave it empty; it will be generated in your method
-//        staff.setName("John Doe");
-//        staff.setBod("1990-01-01"); // Format as needed
-//        staff.setEmail("johndoe@example.com");
-//        staff.setPhone("1234567890");
-//        staff.setAddress("123 Main St, Anytown, USA");
-//        staff.setCccd("CCCD123456");
-//        staff.setSalary(50000);
-//        staff.setEducation("Bachelor's Degree");
-//        staff.setBank("Bank Name");
-//        staff.setUsername("johndoe");
-//        staff.setPassword("securePassword");
-//        staff.setRole(role);
-//        staff.setCompany(company);
-//        staff.setStartDate("2023-01-01"); // Format as needed
-//
-//        // Now you can use this staff object to insert it into the database
-        StaffDAO staffDAO = new StaffDAO();
-//        boolean isInserted = staffDAO.insertStaff(staff);
-        List<Staff> list =  staffDAO.getStaffByRequestName("Clean apartment");
-        
+    public boolean checkDuplicatePhone(String phone) {
+        List<Staff> list = getAll();
         for (Staff staff : list) {
-            System.out.println(""+staff.getName());
+            if (staff.getPhone().equals(phone)) {
+                return true;
+            }
         }
+        return false;
+
+    }
+
+    public boolean checkDuplicateEmail(String email) {
+        List<Staff> list = getAll();
+        for (Staff staff : list) {
+            if (staff.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public boolean checkDuplicateID(String id) {
+        List<Staff> list = getAll();
+        for (Staff staff : list) {
+            if (staff.getCccd().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+    
+
+    public static void main(String[] args) {
+
+        StaffDAO staffDAO = new StaffDAO();
+        Staff s = staffDAO.getById("S1002");
+        s.setName("hello");
+        System.out.println(s.getCompany().getName());
+        System.out.println(staffDAO.updateStaffInfor(s));
 
     }
 

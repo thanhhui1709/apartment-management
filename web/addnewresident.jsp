@@ -253,7 +253,7 @@
                             var email = $(this).val();
                             if (email) {
                                 $.ajax({
-                                    url: "checkDuplicateInfor",
+                                    url: "checkDuplicateResidentInfor",
                                     type: "GET",
                                     data: {type: "email", value: email},
                                     success: function (response) {
@@ -275,7 +275,7 @@
                             var phone = $(this).val();
                             if (phone) {
                                 $.ajax({
-                                    url: "checkDuplicateInfor",
+                                    url: "checkDuplicateResidentInfor",
                                     type: "GET",
                                     data: {type: "phone", value: phone},
                                     success: function (response) {
@@ -297,7 +297,7 @@
                             var id = $(this).val();
                             if (id) {
                                 $.ajax({
-                                    url: "checkDuplicateInfor",
+                                    url: "checkDuplicateResidentInfor",
                                     type: "GET",
                                     data: {type: "id", value: id},
                                     success: function (response) {
@@ -321,7 +321,7 @@
                                 $("#username-error").text("Username cannot contain spaces.");
                             } else {
                                 $.ajax({
-                                    url: "checkDuplicateInfor",
+                                    url: "checkDuplicateResidentInfor",
                                     type: "GET",
                                     data: {type: "username", value: username},
                                     success: function (response) {

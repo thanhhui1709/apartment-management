@@ -54,7 +54,7 @@
                             </ul>
                             <ul class="user_profile_dd">
                                 <li>
-                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_img.jpg" alt="#" /><span class="name_user">User</span></a>
+                                    <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/logo/5ee082781b8c41406a2a50a0f32d6aa6.jpg"alt="#" /><span class="name_user">${sessionScope.person.name}</span></a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="${util.getTableNameByRoleId(sessionScope.account.roleId)}">My Profile</a>
                                         <a class="dropdown-item" href="settings.html">Settings</a>

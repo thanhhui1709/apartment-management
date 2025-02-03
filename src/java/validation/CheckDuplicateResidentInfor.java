@@ -2,11 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.admin;
+package validation;
 
-import dao.CompanyDAO;
-import dao.RoleDAO;
-import dao.StaffDAO;
+import dao.ResidentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,18 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import model.Company;
-import model.Role;
-import model.Staff;
 
 /**
  *
  * @author Lenovo
  */
-@WebServlet(name = "UpdateStaffInfor", urlPatterns = {"/updateStaffInfor"})
-public class UpdateStaffInfor extends HttpServlet {
+@WebServlet(name = "CheckDuplicateInfor", urlPatterns = {"/checkDuplicateResidentInfor"})
+public class CheckDuplicateResidentInfor extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +37,10 @@ public class UpdateStaffInfor extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateStaffInfor</title>");
+            out.println("<title>Servlet CheckDuplicateInfor</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateStaffInfor at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CheckDuplicateInfor at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,12 +58,26 @@ public class UpdateStaffInfor extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String id = request.getParameter("id");
-        StaffDAO sd = new StaffDAO();
-        Staff staff = sd.getById(id);
-        request.setAttribute("staff", staff);
-        request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
+        String type = request.getParameter("type");
+        String value = request.getParameter("value");
+        ResidentDAO rd = new ResidentDAO();
+        boolean exists = false;
+        switch (type) {
+            case "email":
+                exists = rd.checkDuplicateEmail(value);
+                break;
+            case "phone":
+                exists = rd.checkDuplicatePhone(value);
+                break;
+            case "id":
+                exists = rd.checkDuplicateID(value);
+                break;
+            case "username":
+                exists=rd.checkDuplicateUser(value);
+                break;
+        }
+        response.setContentType("application/json");
+        response.getWriter().write("{\"exists\": " + exists + "}");
     }
 
     /**
@@ -84,45 +91,7 @@ public class UpdateStaffInfor extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String id = request.getParameter("staffID");
-        String name = request.getParameter("name");
-        String dob = request.getParameter("dob");
-        String email = request.getParameter("email");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        String cccd = request.getParameter("cccd");
-        String education = request.getParameter("education");
-        String bank = request.getParameter("bank");
-        String salary_raw = request.getParameter("salary");
-        String companyId = request.getParameter("company");
-        String status_raw = request.getParameter("status");
-        String role = request.getParameter("role");
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-
-        StaffDAO daoSt = new StaffDAO();
-        CompanyDAO daoCp = new CompanyDAO();
-        RoleDAO daoR = new RoleDAO();
-
-        try {
-            int status = Integer.parseInt(status_raw);
-            int salary = Integer.parseInt(salary_raw);
-
-            Staff staff = new Staff(
-                    id, name, dob, email, phone, address, cccd, salary,
-                    education, bank, status, daoR.getById(role), daoCp.getById(companyId),
-                    startDate, (endDate == null || endDate.isEmpty()) ? null : endDate
-            );
-
-            daoSt.updateStaffInfor(staff);
-            response.sendRedirect("view-all-staff");
-
-        } catch (NumberFormatException e) {
-            request.setAttribute("status", "false");
-            request.setAttribute("message", "Invalid salary format.");
-            request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

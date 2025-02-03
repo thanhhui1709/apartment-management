@@ -197,7 +197,7 @@
                                                         placeholder="Enter CCCD"
                                                         value="${staff.cccd}"
                                                         />
-                                                    <span id="CCCD-error" style="color: red"></span>
+                                                    <span id="cccd-error" style="color: red"></span>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="education">Education</label>
@@ -310,7 +310,7 @@
                             var email = $(this).val();
                             if (email) {
                                 $.ajax({
-                                    url: "checkDuplicateInfor",
+                                    url: "checkDuplicateStaffInfor",
                                     type: "GET",
                                     data: {type: "email", value: email},
                                     success: function (response) {
@@ -332,7 +332,7 @@
                             var phone = $(this).val();
                             if (phone) {
                                 $.ajax({
-                                    url: "checkDuplicateInfor",
+                                    url: "checkDuplicateStaffInfor",
                                     type: "GET",
                                     data: {type: "phone", value: phone},
                                     success: function (response) {
@@ -350,18 +350,18 @@
                             }
                         });
 
-                        $("#CCCD").on("input", function () {
+                        $("#cccd").on("input", function () {
                             var cccd = $(this).val();
                             if (cccd) {
                                 $.ajax({
-                                    url: "checkDuplicateInfor",
+                                    url: "checkDuplicateStaffInfor",
                                     type: "GET",
                                     data: {type: "cccd", value: cccd},
                                     success: function (response) {
                                         if (response.exists) {
-                                            $("#CCCD-error").text("CCCD already exists.");
+                                            $("#cccd-error").text("CCCD already exists.");
                                         } else {
-                                            $("#CCCD-error").text("");
+                                            $("#cccd-error").text("");
                                         }
                                         updateSubmitButtonState();
                                     }
@@ -370,28 +370,6 @@
                                 $("#CCCD-error").text("");
                                 updateSubmitButtonState();
                             }
-                        });
-
-                        $("#username").on("input", function () {
-                            var username = $(this).val();
-                            if (username.includes(" ")) {
-                                $("#username-error").text("Username cannot contain spaces.");
-                            } else {
-                                $.ajax({
-                                    url: "checkDuplicateInfor",
-                                    type: "GET",
-                                    data: {type: "username", value: username},
-                                    success: function (response) {
-                                        if (response.exists) {
-                                            $("#username-error").text("Username already exists.");
-                                        } else {
-                                            $("#username-error").text("");
-                                        }
-                                        updateSubmitButtonState();
-                                    }
-                                });
-                            }
-                            updateSubmitButtonState();
                         });
                     });
                 </script>
