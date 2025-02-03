@@ -43,4 +43,10 @@ public class CommonValidation {
         String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return email.matches(regex);
     }
+    public boolean isValidUsername(String username){
+        return username.length()>3;
+    }
+    public boolean isValidPassword(String password){
+        return password.length()>=3;
+    }
 }
