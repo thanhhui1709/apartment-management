@@ -90,7 +90,7 @@
                         <div class="col-12"> 
                             <div class="news-container">
                                 <h2 class="news-title" style="color: #004175;">${requestScope.news.title}</h2>
-                                <p class="news-date">Date: February 1, 2025, Post by: Phùng Nhật Quang</p>
+                                <p class="news-date">Date: ${requestScope.news.date}, Post by: Phùng Nhật Quang</p>
                                 <p class="news-content">
                                     ${requestScope.news.content}
                                 </p>

@@ -11,6 +11,26 @@ package model;
 public class News {
     private String id, title, content, source, category, image;
     private Staff staff;
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public News(String id, String title, String content, String source, String category, String image, Staff staff, String date) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.source = source;
+        this.category = category;
+        this.image = image;
+        this.staff = staff;
+        this.date = date;
+    }
 
     public News(String id, String title, String content, String source, String category, String image, Staff staff) {
         this.id = id;

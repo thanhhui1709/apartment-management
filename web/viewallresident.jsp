@@ -68,12 +68,12 @@
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->
-           <%@include file="sidebar.jsp" %>
+                <%@include file="sidebar.jsp" %>
                 <!-- end sidebar -->
                 <!-- right content -->
                 <div id="content">
                     <!-- topbar -->
-                     <%@include file="topbar.jsp" %>
+                    <%@include file="topbar.jsp" %>
                     <!-- end topbar -->
                     <div class="midde_cont">
                         <div class="container-fluid">
@@ -126,6 +126,7 @@
                                                             <th>Phone</th>
                                                             <th>Email</th>                                               
                                                             <th>Address</th>
+                                                            <th>Gender</th>
                                                             <th>Status</th> 
                                                             <th>View Detail</th>
                                                             <th>Option</th>
@@ -140,7 +141,8 @@
                                                                 <td>${resident.phone}</td>
                                                                 <td>${resident.email}</td>                                               
                                                                 <td>${resident.address}</td>
-                                                                <td>${resident.status}</td>
+                                                                <td>${resident.gender}</td>
+                                                                <td style="color: ${resident.status == '1'?'green':'red'}">${resident.status == '1'?'Active': 'Inactive'}</td>
                                                                 <td><a href="#" class="btn btn-primary">View Detail</a></td> 
                                                                 <td><a href="delete-resident?pId=${resident.pId}"><i class="material-icons" title="Delete">&#xE872;</i></a></td>
                                                             </tr>
@@ -184,10 +186,10 @@
                 <!-- end dashboard inner -->
             </div>
         </div>
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
-</body>
+        <!-- jQuery -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/custom.js"></script>
+    </body>
 </html>

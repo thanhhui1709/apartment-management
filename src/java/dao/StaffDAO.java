@@ -63,7 +63,7 @@ public class StaffDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Staff> getStaffbyRole(String role) {
         CompanyDAO sd = new CompanyDAO();
         RoleDAO rd = new RoleDAO();
@@ -99,7 +99,7 @@ public class StaffDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Staff> getStaffByRequestName(String nametype) {
         CompanyDAO sd = new CompanyDAO();
         RoleDAO rd = new RoleDAO();
@@ -127,22 +127,26 @@ public class StaffDAO extends DBContext {
                 Company cp = sd.getById(rs.getString("cid"));
                 String startDate = rs.getString("startdate");
                 String enddate = rs.getString("enddate");
-                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate);
+                String gender = rs.getString("gender");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender);
                 list.add(s);
             }
         } catch (Exception e) {
         }
         return list;
     }
-    
-    public Staff getByRequestType(RequestType rt){
-        List<Staff> list  =this.getAll();
+
+    public Staff getByRequestType(RequestType rt) {
+        List<Staff> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
-            if(list.get(i).getRole().getId().equalsIgnoreCase(rt.getDestination().getId())
-                    && list.get(i).getStatus()==1) return list.get(i);
+            if (list.get(i).getRole().getId().equalsIgnoreCase(rt.getDestination().getId())
+                    && list.get(i).getStatus() == 1) {
+                return list.get(i);
+            }
         }
         return null;
     }
+
     public Staff getById(String id) {
         List<Staff> list = this.getAll();
         for (int i = 0; i < list.size(); i++) {
@@ -321,11 +325,9 @@ public class StaffDAO extends DBContext {
 //        // Now you can use this staff object to insert it into the database
         StaffDAO staffDAO = new StaffDAO();
 //        boolean isInserted = staffDAO.insertStaff(staff);
-        List<Staff> list =  staffDAO.getStaffByRequestName("Clean apartment");
-        
-        for (Staff staff : list) {
-            System.out.println(""+staff.getName());
-        }
+        List<Staff> list = staffDAO.getStaffByRequestName("Clean apartment");
+
+        System.out.println(staffDAO.getAll().get(0).getGender());
 
     }
 

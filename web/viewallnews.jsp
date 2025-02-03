@@ -61,7 +61,7 @@
                                     <div class="news_section">
                                         <ul class="news-list">
                                             <c:forEach items="${sessionScope.listNews}" var="n">
-                                                <li><a href="news-detail?id=${n.id}">-1/2/2025: ${n.title}</a></li>
+                                                <li>-${n.date}<a href="news-detail?id=${n.id}">: ${n.title}</a></li>
                                             </c:forEach>
                                         </ul>
                                     </div>

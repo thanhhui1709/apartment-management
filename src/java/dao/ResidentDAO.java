@@ -126,7 +126,7 @@ public class ResidentDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Account a = new Account(rs.getString("username"), rs.getString("password"), 
+                Account a = new Account(rs.getString("username"), rs.getString("password"),
                         rs.getString("email"), rs.getString("id"), rs.getInt("roleid"));
                 list.add(a);
             }
@@ -289,7 +289,7 @@ public class ResidentDAO extends DBContext {
             sql += "and name like '%" + name + "%' ";
         }
         if (status.trim() != "") {
-            sql += "and status = " + status + " ";
+            sql += "and active = " + status + " ";
         }
         try {
             List<Resident> list = new ArrayList<>();
@@ -303,7 +303,8 @@ public class ResidentDAO extends DBContext {
                         rs.getString("email"),
                         rs.getString("bod"),
                         rs.getString("address"),
-                        rs.getString("phone")));
+                        rs.getString("status"), 
+                        rs.getString("gender")));
             }
             return list;
         } catch (SQLException ex) {
@@ -314,6 +315,6 @@ public class ResidentDAO extends DBContext {
 
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        System.out.println(dao.getAll().get(0).getGender());
+        System.out.println(dao.pagingResident(0).get(0).getStatus());
     }
 }
