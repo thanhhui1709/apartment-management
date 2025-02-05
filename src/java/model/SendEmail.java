@@ -41,11 +41,7 @@ public class SendEmail {
     }
 
     public boolean sendEmail(String to, String subject, String content) {
-        // Kiểm tra xem địa chỉ email có tồn tại không trước khi gửi
-        if (!checkEmailExists(to)) {
-            System.out.println("Địa chỉ email không tồn tại: " + to);
-            return false;
-        }
+        // Kiểm tra xem địa chỉ email có tồn tại không trước khi gửi\
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -83,39 +79,7 @@ public class SendEmail {
     /**
      * Kiểm tra xem địa chỉ email có tồn tại hay không.
      */
-    public boolean checkEmailExists(String email) {
-        String domain = email.substring(email.indexOf("@") + 1);
-        try (Socket socket = new Socket("smtp." + domain, 25); PrintWriter out = new PrintWriter(socket.getOutputStream(), true); BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
-            // Đọc phản hồi từ máy chủ
-            readServerResponse(in);
-
-            // Gửi lệnh HELO
-            out.println("HELO localhost");
-            readServerResponse(in);
-
-            // Gửi lệnh MAIL FROM
-            out.println("MAIL FROM:<test@" + domain + ">");
-            readServerResponse(in);
-
-            // Gửi lệnh RCPT TO
-            out.println("RCPT TO:<" + email + ">");
-            String response = readServerResponse(in);
-
-            // Kiểm tra phản hồi
-            return response.startsWith("250"); // Nếu phản hồi bắt đầu bằng "250", email tồn tại
-
-        } catch (IOException e) {
-            System.out.println("Lỗi khi kiểm tra email: " + e.getMessage());
-            return false; 
-        }
-    }
-
-    private String readServerResponse(BufferedReader in) throws IOException {
-        String response = in.readLine();
-        System.out.println("Server: " + response);
-        return response;
-    }
+    
 
     public static void main(String[] args) {
         SendEmail emailSender = new SendEmail();
