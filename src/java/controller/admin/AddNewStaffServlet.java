@@ -101,7 +101,7 @@ public class AddNewStaffServlet extends HttpServlet {
         String company = request.getParameter("company");
         String startDate = request.getParameter("startDate");
         String roleId = request.getParameter("role");
-
+        String gender = request.getParameter("gender");
         RoleDAO daoR = new RoleDAO();
         CompanyDAO daoCp = new CompanyDAO();
         StaffDAO stDao = new StaffDAO();
@@ -122,10 +122,8 @@ public class AddNewStaffServlet extends HttpServlet {
                 request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                 return;
             }
-
             s = new Staff(name, dob, email, phone, address, cccd, salary, education, bank, username, password, role,
-                    daoCp.getById(company), startDate);
-
+                    daoCp.getById(company), startDate, gender);
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             ZoneId zone = ZoneId.systemDefault();
 

@@ -125,7 +125,6 @@
                                     <form action="add-new-staff" method="post">
                                         <div class="form-group">
                                             <input type="text" id="staffID" name="staffID" value="" hidden=""/>
-                                            <div class="two-cols">
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="name">Name</label>
                                                     <input
@@ -135,6 +134,17 @@
                                                         placeholder="Enter full name"
                                                         value=""
                                                         />
+                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" id="staffID" name="staffID" value="" hidden=""/>
+                                            <div class="two-cols">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="gender">Gender</label>
+                                                    <select id="gender" name="gender">
+                                                       <option value="M">Male</option>
+                                                       <option value="F">Female</option>
+                                                    </select>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="dob">Date of Birth</label>
