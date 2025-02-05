@@ -219,27 +219,8 @@ public class StaffDAO extends DBContext {
     }
 
     public boolean insertStaff(Staff s) {
-        String sql = "INSERT INTO [dbo].[Staff]\n"
-                + "           ([Id]\n"
-                + "           ,[Name]\n"
-                + "           ,[Bod]\n"
-                + "           ,[Email]\n"
-                + "           ,[Phone]\n"
-                + "           ,[Address]\n"
-                + "           ,[CCCD]\n"
-                + "           ,[Salary]\n"
-                + "           ,[Education]\n"
-                + "           ,[Bank]\n"
-                + "           ,[status]\n"
-                + "           ,[username]\n"
-                + "           ,[password]\n"
-                + "           ,[startdate]\n"
-                + "           ,[enddate]\n"
-                + "           ,[cID]\n"
-                + "           ,[roleId]\n"
-                + "           ,[gender])\n"
-                + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,status,username,password,roleId, cid,startdate,gender) \n"
+                + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Util u = new Util();
         List<Staff> list = this.getAll();
         String newId = "";
@@ -267,14 +248,13 @@ public class StaffDAO extends DBContext {
             ps.setInt(8, s.getSalary());
             ps.setString(9, s.getEducation());
             ps.setString(10, s.getBank());
-            ps.setInt(11, s.getStatus());
+            ps.setInt(11, 1);
             ps.setString(12, s.getUsername());
             ps.setString(13, s.getPassword());
-            ps.setString(14, s.getStartDate());
-            ps.setString(15, s.getEndDate());
-            ps.setString(16, s.getCompany().getId());
-            ps.setString(17, s.getRole().getId());
-            ps.setString(18, s.getGender());
+            ps.setString(14, s.getRole().getId());
+            ps.setString(15, s.getCompany().getId());
+            ps.setString(16, s.getStartDate());
+            ps.setString(17, s.getGender());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException ex) {

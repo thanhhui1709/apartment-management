@@ -57,6 +57,24 @@ public class Staff {
         this.endDate = endDate;
         this.gender = gender;
     }
+    public Staff(String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, String username, String password, Role role, Company company, String startDate, String gender) {
+        this.name = name;
+        this.bod = bod;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.salary = salary;
+        this.education = education;
+        this.bank = bank;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.company = company;
+        this.startDate = startDate;
+        this.gender = gender;
+    }
+
 
     @Override
     public String toString() {
