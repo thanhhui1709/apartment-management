@@ -119,6 +119,8 @@ public class UpdateStaffInfor extends HttpServlet {
                 );
 
                 daoSt.updateStaffInfor(staff);
+                HttpSession session = request.getSession();
+                session.setAttribute("staffs", daoSt.getAll());
                 response.sendRedirect("view-all-staff");
 
             } else {

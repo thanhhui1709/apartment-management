@@ -69,10 +69,10 @@
                     <li>
                         <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Elements</span></a>
                         <ul class="collapse list-unstyled" id="element">
-                            <li><a href="general_elements.html">> <span>General Elements</span></a></li>
-                            <li><a href="media_gallery.html">> <span>Media Gallery</span></a></li>
-                            <li><a href="icons.html">> <span>Icons</span></a></li>
-                            <li><a href="invoice.html">> <span>Invoice</span></a></li>
+                            <li><a href="general_elements.html"> <span>General Elements</span></a></li>
+                            <li><a href="media_gallery.html"> <span>Media Gallery</span></a></li>
+                            <li><a href="icons.html"> <span>Icons</span></a></li>
+                            <li><a href="invoice.html"> <span>Invoice</span></a></li>
                         </ul>
                     </li>
                     <li><a href="view-resident"><i class="fa-solid fa-person"></i> <span>Resident Information</span></a></li>
@@ -84,7 +84,7 @@
                     <li><a href="view-all-feedback"><i class="fa-solid fa-comment"></i> <span>Feedback Admin</span></a></li>
                     <li><a href="${ut.getSiteToViewRule(sessionScope.account.roleId)}"><i class="fa-solid fa-scale-balanced"></i><span>Rule of apartment</span></a></li>
 
-                    <li>
+<!--                    <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
                         <ul class="collapse list-unstyled" id="apps">
                             <li><a href="email.html"> <span>Email</span></a></li>
@@ -116,7 +116,7 @@
                     </li>
                     <li><a href="map.html"><i class="fa fa-map purple_color2"></i> <span>Map</span></a></li>
                     <li><a href="charts.html"><i class="fa fa-bar-chart-o green_color"></i> <span>Charts</span></a></li>
-                    <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li>
+                    <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li>-->
                 </ul>
             </div>
         </nav>
