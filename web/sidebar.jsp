@@ -34,7 +34,7 @@
         <![endif]-->
     </head>
     <body>
-        <%--<jsp:useBean id="ut" class="util.Util" scope="page"/>--%>
+        <jsp:useBean id="ut" class="util.Util" scope="page"/>
         <nav id="sidebar">
             <div class="sidebar_blog_1">
                 <div class="sidebar-header">

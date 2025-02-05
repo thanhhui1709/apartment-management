@@ -158,14 +158,11 @@
                                                                         Edit profile <i class="fa fa-pencil-alt"></i>
                                                                     </a>
                                                                 </h6>
-                                                                        <h6>
+                                                                <h6>
                                                                     <a href="changepassword.jsp" class="button">
                                                                         Change password <i class="fa fa-pencil-alt"></i>
                                                                     </a>
                                                                 </h6>
-
-
-                                                                
                                                             </div>
                                                         </div>
                                                     </div>
