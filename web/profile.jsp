@@ -95,8 +95,8 @@
                 background-color: #007bff;
                 color: white;
                 border: none;
-                padding: 10px 15px;
-                font-size: 14px;
+                padding: 7px 8px;
+                font-size: 10px;
                 cursor: pointer;
                 border-radius: 5px;
                 transition: background-color 0.3s ease;
