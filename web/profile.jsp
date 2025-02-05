@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
-        <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
+        <title>Profile</title>
         <meta name="keywords" content="">
         <meta name="description" content="">
         <meta name="author" content="">
@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="css/custom.css" />
         <!-- calendar file css -->
         <link rel="stylesheet" href="js/semantic.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -94,8 +95,8 @@
                 background-color: #007bff;
                 color: white;
                 border: none;
-                padding: 10px 15px;
-                font-size: 14px;
+                padding: 7px 8px;
+                font-size: 10px;
                 cursor: pointer;
                 border-radius: 5px;
                 transition: background-color 0.3s ease;
@@ -110,7 +111,6 @@
 
     </head>
     <body class="inner_page profile_page">
-        <jsp:useBean id="ut" class="util.Util" scope="page"/>
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->
@@ -133,7 +133,6 @@
                                     <div class="white_shd full margin_bottom_30">
                                         <div class="full graph_head">
                                             <div class="heading1 margin_0">
-                                                <h2>${sessionScope.person.name}</h2>
                                             </div>
                                         </div>
                                         <div class="full price_table padding_infor_info">
@@ -146,7 +145,6 @@
                                                         <div class="profile_contant">
                                                             <div class="contact_inner">
                                                                 <h3>${sessionScope.person.name}</h3>
-                                                                <p><strong>About: </strong>Resident</p>
                                                                 <ul class="list-unstyled">
                                                                     <li><i class="fa-regular fa-envelope"></i> ${sessionScope.person.email}</li>
                                                                     <li><i class="fa fa-phone"></i> ${sessionScope.person.phone}</li>
@@ -155,24 +153,16 @@
                                                                     <li><i class="fa-solid fa-calendar-days"></i> ${sessionScope.person.bod}</li>
 
                                                                 </ul>
-                                                                    <h6><a href="${ut.getTableNameByRoleIdEdit(sessionScope.account.roleId)}" class="button">Edit profile</a></h6>
-                                                                
-
-                                                                <button class="action-button" onclick="toggleVisibility('hiddenChangePassword')">Change Password</button>
-
-                                                                
-                                                                <div id="hiddenChangePassword" class="form-container" style="display: none;">
-                                                                    <form action="update-password-resident" method="post">
-                                                                        <label for="oldPassword">Old Password:</label>
-                                                                        <input type="password" id="oldPassword" name="oldPassword" required>
-                                                                        <label for="newPassword">New Password:</label>
-                                                                        <input type="password" id="newPassword" name="newPassword" required>
-                                                                         <label for="cfnewPassword">Confirm Password:</label>
-                                                                        <input type="password" id="cfnewPassword" name="cfnewPassword" required>
-                                                                        <button type="submit">Save</button>
-                                                                        <p>${requestScope.msg}</p>
-                                                                    </form>
-                                                                </div>
+                                                                <h6>
+                                                                    <a href="${ut.getTableNameByRoleIdEdit(sessionScope.account.roleId)}" class="button">
+                                                                        Edit profile <i class="fa fa-pencil-alt"></i>
+                                                                    </a>
+                                                                </h6>
+                                                                <h6>
+                                                                    <a href="changepassword.jsp" class="button">
+                                                                        Change password <i class="fa fa-pencil-alt"></i>
+                                                                    </a>
+                                                                </h6>
                                                             </div>
                                                         </div>
                                                     </div>

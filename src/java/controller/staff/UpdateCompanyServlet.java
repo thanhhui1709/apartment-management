@@ -12,6 +12,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.Company;
 import validation.CompanyValidation;
 
@@ -80,35 +82,71 @@ public class UpdateCompanyServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name").trim();
-        String phone = request.getParameter("phone").trim();
-        String contactphone = request.getParameter("contactPhone".trim());
-        String fax = request.getParameter("fax").trim();
-        String email = request.getParameter("email");
-        String contactEmail = request.getParameter("contactemail").trim();
-        String website = request.getParameter("website").trim();
-        String taxCode = request.getParameter("taxCode").trim();
-        String bank = request.getParameter("bank").trim();
-        String address = request.getParameter("address").trim();
-        String description = request.getParameter("description").trim();
-        String id = request.getParameter("id").trim();
-        Company company = new Company(id, name, phone, contactphone, fax, email, contactEmail, website, taxCode, bank, description, address);
-        CompanyDAO cd = new CompanyDAO();
-        CompanyValidation cv = new CompanyValidation(company);
-        if (!cv.isValidCompany(company)) {
-            request.setAttribute("error", cv.findErrorMsgCompany(company));
-            request.setAttribute("company", cd.getById(id));
+
+        String id = request.getParameter("id");
+        String name = getSafeParameter(request, "name");
+        String phone = getSafeParameter(request, "phone");
+        String contactPhone = getSafeParameter(request, "contactPhone");
+        String fax = getSafeParameter(request, "fax");
+        String email = getSafeParameter(request, "email");
+        String contactEmail = getSafeParameter(request, "contactemail");
+        String website = getSafeParameter(request, "website");
+        String taxCode = getSafeParameter(request, "taxCode");
+        String bank = getSafeParameter(request, "bank");
+        String address = getSafeParameter(request, "address");
+        String description = getSafeParameter(request, "description");
+
+        boolean hasError = false;
+
+        // Validation errors
+        if (name.isEmpty()) {
+            request.setAttribute("nameError", "Name cannot be blank.");
+            hasError = true;
+        }
+        if (!phone.matches("^\\d{11}$")) {
+            request.setAttribute("phoneError", "Phone number must be exactly 11 digits.");
+            hasError = true;
+        }
+        if (!contactPhone.matches("^\\d{11}$")) {
+            request.setAttribute("contactPhoneError", "Contact phone must be exactly 11 digits.");
+            hasError = true;
+        }
+        if (!fax.matches("^\\d{10}$")) {
+            request.setAttribute("faxError", "Fax must be exactly 10 digits.");
+            hasError = true;
+        }
+        if (!taxCode.matches("^\\d{10}$")) {
+            request.setAttribute("taxCodeError", "Tax code must be exactly 10 digits.");
+            hasError = true;
+        }
+        if (hasError) {
+            request.setAttribute("company", new Company(id, name, phone, contactPhone, fax, email, contactEmail, website, taxCode, bank, description, address));
             request.setAttribute("pageName", "Update");
-            request.setAttribute("url", "update-company");
+            request.setAttribute("url", "update-company?id=" + id);
             request.getRequestDispatcher("addnewcompany.jsp").forward(request, response);
             return;
         }
+
+        Company company = new Company(id, name, phone, contactPhone, fax, email, contactEmail, website, taxCode, bank, description, address);
+        CompanyDAO cd = new CompanyDAO();
         cd.updateCompany(company);
-        request.setAttribute("message", "Success");
-        request.setAttribute("company", cd.getById(id));
-        request.setAttribute("pageName", "Update");
-        request.setAttribute("url", "update-company");
-        request.getRequestDispatcher("addnewcompany.jsp").forward(request, response);
+        List<Company> list = cd.getAll();
+        HttpSession session=request.getSession();
+        session.setAttribute("companies", list);
+        response.sendRedirect("view-all-company");
+    }
+
+    /**
+     * Utility method to safely get request parameters and avoid
+     * NullPointerException
+     */
+    /**
+     * Utility method to safely get request parameters and avoid
+     * NullPointerException
+     */
+    private String getSafeParameter(HttpServletRequest request, String paramName) {
+        String value = request.getParameter(paramName);
+        return (value != null) ? value.trim() : "";
     }
 
     /**

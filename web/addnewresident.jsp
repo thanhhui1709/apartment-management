@@ -111,7 +111,7 @@
             <div class="full_container">
                 <div class="inner_container">
                     <!-- Sidebar  -->
-                   <%@include file="sidebar.jsp" %>
+                    <%@include file="sidebar.jsp" %>
                     <!-- end sidebar -->
                     <!-- right content -->
                     <div id="content">
@@ -158,7 +158,7 @@
                                                 <div class="col">
                                                     <label for="phone">Phone</label>
                                                     <input
-                                                        type="tel"
+                                                        type="number"
                                                         id="phone"
                                                         name="phone"
                                                         placeholder="Enter phone number"
@@ -184,7 +184,7 @@
                                                 <div class="col">
                                                     <label for="id">ID</label>
                                                     <input
-                                                        type="text"
+                                                        type="number"
                                                         id="id"
                                                         name="id"
                                                         placeholder="Enter ID"
@@ -338,6 +338,38 @@
                         });
                     });
                 </script>
+                <script>
+                    document.querySelector("form").addEventListener("submit", function (event) {
+                        let phone = document.getElementById("phone").value;
+                        let id = document.getElementById("id").value;
+                        let phoneError = document.getElementById("phone-error");
+                        let idError = document.getElementById("id-error");
+
+                        let phonePattern = /^\d{11}$/;
+                        let idPattern = /^\d{12}$/;
+
+                        let valid = true;
+
+                        if (!phonePattern.test(phone)) {
+                            phoneError.textContent = "Phone number must be exactly 11 digits.";
+                            valid = false;
+                        } else {
+                            phoneError.textContent = "";
+                        }
+
+                        if (!idPattern.test(id)) {
+                            idError.textContent = "ID must be exactly 12 digits.";
+                            valid = false;
+                        } else {
+                            idError.textContent = "";
+                        }
+
+                        if (!valid) {
+                            event.preventDefault();
+                        }
+                    });
+                </script>
+
 
         </body>
     </html>

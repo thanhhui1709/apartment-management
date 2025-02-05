@@ -108,7 +108,13 @@
             }
             .form-button button:hover {
                 background-color: #357ab8;
-            }</style>
+            }
+            .error-message {
+                color: red;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+        </style>
 
 
     </head>
@@ -130,62 +136,75 @@
                                     <h1>${requestScope.pageName==null?'Add': requestScope.pageName} New Company</h1>
                                     <form action="${requestScope.url==null?'add-new-company':requestScope.url}" method="post">
                                         <div class="form-group">
-                                            <div class="two-cols">
-                                                <div class="col" style="padding: 0; margin-left: 5px">
-                                                    <label for="name">Name</label>
-                                                    <input type="text" id="name" name="name" value="${requestScope.company.name}" placeholder="Enter full name" required />
-                                                </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="phone">Phone</label>
-                                                    <input type="tel" id="phone" name="phone" value="${requestScope.company.phone}" placeholder="Enter phone number" required />
-                                                </div>
-                                            </div>
+                                            <label for="name">Name</label>
+                                            <input type="text" id="name" name="name" value="${requestScope.company.name}" placeholder="Enter full name" required />
+                                            <p class="error-message">${requestScope.nameError}</p>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label for="phone">Phone</label>
+                                            <input type="tel" id="phone" name="phone" value="${requestScope.company.phone}" placeholder="Enter phone number" required />
+                                            <p class="error-message">${requestScope.phoneError}</p>
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="contactPhone">Contact Phone</label>
                                             <input type="tel" id="contactPhone" name="contactPhone" value="${requestScope.company.contactPhone}" placeholder="Enter contact phone number" required />
+                                            <p class="error-message">${requestScope.contactPhoneError}</p>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="fax">Fax</label>
                                             <input type="text" id="fax" name="fax" value="${requestScope.company.fax}" placeholder="Enter fax number" required />
+                                            <p class="error-message">${requestScope.faxError}</p>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" id="email" name="email" value="${requestScope.company.email}" placeholder="Enter email" required />
+                                            <p class="error-message">${requestScope.emailError}</p>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="contactemail">Contact Email</label>
                                             <input type="email" id="contactemail" name="contactemail" value="${requestScope.company.contactemail}" placeholder="Enter contact email" required />
+                                            <p class="error-message">${requestScope.contactEmailError}</p>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="website">Website</label>
-                                            <input type="text" id="website" name="website" value="${requestScope.company.website}" placeholder="Enter website URL" />
-                                        </div>
+
                                         <div class="form-group">
                                             <label for="taxCode">Tax Code</label>
                                             <input type="text" id="taxCode" name="taxCode" value="${requestScope.company.taxCode}" placeholder="Enter tax code" required />
+                                            <p class="error-message">${requestScope.taxCodeError}</p>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="bank">Bank</label>
                                             <input type="text" id="bank" name="bank" value="${requestScope.company.bank}" placeholder="Enter bank name" required />
+                                            <p class="error-message">${requestScope.bankError}</p>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="address">Address</label>
                                             <input type="text" id="address" name="address" value="${requestScope.company.address}" placeholder="Enter address" required />
+                                            <p class="error-message">${requestScope.addressError}</p>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="description">Description</label>
-                                            <input type="text" id="description" name="description" value="${requestScope.company.description}"  placeholder="Enter description" />
+                                            <input type="text" id="description" name="description" value="${requestScope.company.description}"  placeholder="Enter description" required="" />
                                         </div>
-                                            <c:if test="${requestScope.company!=null}">
+
+                                        <c:if test="${requestScope.company!=null}">
                                             <input type="text" hidden name="id" value="${requestScope.company.id}"/>
                                         </c:if>
+
                                         <div class="form-button">
                                             <button type="submit">Save Company</button>
                                             <h5 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h5>
                                             <h5 style="color:red;text-align:center">${requestScope.error}</h5>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>

@@ -34,6 +34,10 @@ public class Company {
         this.contactemail = contactemail;
     }
 
+    public Company(String id) {
+        this.id = id;
+    }
+
     public Company(String id, String name, String phone, String contactPhone, String fax, String email, String contactemail, String website, String taxCode, String bank, String description, String address) {
         this.id = id;
         this.name = name;

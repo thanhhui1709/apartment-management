@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.resident;
 
 import dao.ResidentDAO;
@@ -21,36 +20,39 @@ import model.Resident;
  *
  * @author pc
  */
-@WebServlet(name="EditprofileREServlet", urlPatterns={"/editprofileREServlet"})
+@WebServlet(name = "EditprofileREServlet", urlPatterns = {"/editprofileREServlet"})
 public class EditprofileREServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditprofileREServlet</title>");  
+            out.println("<title>Servlet EditprofileREServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditprofileREServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet EditprofileREServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -58,12 +60,13 @@ public class EditprofileREServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -96,19 +99,19 @@ public class EditprofileREServlet extends HttpServlet {
 
         if (!eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             request.setAttribute("msg", "Invalid email format.");
-            request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
             return;
         }
 
-        if (!ephone.matches("0[0-9]{9}+")) {
+        if (!ephone.matches("[0-9]+")) {
             request.setAttribute("msg", "Phone number should contain only digits.");
-            request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
             return;
         }
 
         if (eaddress.trim().isEmpty()) {
             request.setAttribute("msg", "Address cannot be empty.");
-            request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
             return;
         }
 
@@ -119,11 +122,12 @@ public class EditprofileREServlet extends HttpServlet {
         session.setAttribute("person", re);
 
         response.sendRedirect("profile.jsp");
-}
 
+    }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

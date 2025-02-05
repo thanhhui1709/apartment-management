@@ -109,7 +109,7 @@ public class ViewAllStaff extends HttpServlet {
         RoleDAO daoR = new RoleDAO();
         CompanyDAO daoCp = new CompanyDAO();
         List<Company> listCompany = daoCp.getAll();
-        List<Role> listRole = daoR.getAll();
+        List<Role> listRole = daoR.getAllExcludeResident();
         session.setAttribute("listCompany", listCompany);
         session.setAttribute("listRole", listRole);
         request.setAttribute("totalPage", totalPage);

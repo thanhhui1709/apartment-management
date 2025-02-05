@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="util.Util"%> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,6 +34,7 @@
         <![endif]-->
     </head>
     <body>
+        <jsp:useBean id="ut" class="util.Util" scope="page"/>
         <nav id="sidebar">
             <div class="sidebar_blog_1">
                 <div class="sidebar-header">
@@ -68,22 +71,20 @@
                     <li>
                         <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Elements</span></a>
                         <ul class="collapse list-unstyled" id="element">
-                            <li><a href="general_elements.html">> <span>General Elements</span></a></li>
-                            <li><a href="media_gallery.html">> <span>Media Gallery</span></a></li>
-                            <li><a href="icons.html">> <span>Icons</span></a></li>
-                            <li><a href="invoice.html">> <span>Invoice</span></a></li>
+                            <li><a href="general_elements.html"> <span>General Elements</span></a></li>
+                            <li><a href="media_gallery.html"> <span>Media Gallery</span></a></li>
+                            <li><a href="icons.html"> <span>Icons</span></a></li>
+                            <li><a href="invoice.html"> <span>Invoice</span></a></li>
                         </ul>
                     </li>
                     <li><a href="view-resident"><i class="fa-solid fa-person"></i> <span>Resident Information</span></a></li>
                     <li><a href="view-all-staff"><i class="fa-solid fa-users-line"></i> <span>Staff Information</span></a></li>
                     <li><a href="view-all-company"><i class="fa-solid fa-building"></i> <span>Company Information</span></a></li>
-                    <li><a href="view-all-request"><i class="fa-solid fa-repeat"></i> <span>Request Information</span></a></li>
-                    <li><a href="viewrequest_history"><i class="fa-solid fa-hand"></i> <span>View Request History</span></a></li>
-                    <li><a href="view-feed-back-user"><i class="fa-solid fa-comment"></i><span>Feedback User</span></a></li>
-                    <li><a href="view-all-feedback"><i class="fa-solid fa-comment"></i> <span>Feedback Admin</span></a></li>
+                    <li><a href="${ut.getSiteToViewRequest(sessionScope.account.roleId)}"><i class="fa-solid fa-repeat"></i> <span>Request Information</span></a></li>
+                    <li><a href="${ut.getSiteToViewFeedBack(sessionScope.account.roleId)}"><i class="fa-solid fa-comment"></i><span>Feedback Information</span></a></li>
                     <li><a href="${ut.getSiteToViewRule(sessionScope.account.roleId)}"><i class="fa-solid fa-scale-balanced"></i><span>Rule of apartment</span></a></li>
 
-                    <li>
+<!--                    <li>
                         <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
                         <ul class="collapse list-unstyled" id="apps">
                             <li><a href="email.html"> <span>Email</span></a></li>
@@ -115,7 +116,7 @@
                     </li>
                     <li><a href="map.html"><i class="fa fa-map purple_color2"></i> <span>Map</span></a></li>
                     <li><a href="charts.html"><i class="fa fa-bar-chart-o green_color"></i> <span>Charts</span></a></li>
-                    <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li>
+                    <li><a href="settings.html"><i class="fa fa-cog yellow_color"></i> <span>Settings</span></a></li>-->
                 </ul>
             </div>
         </nav>

@@ -20,14 +20,8 @@ public class Util {
     public String getTableNameByRoleId(int role) {
         String destination = "";
         switch (role) {
-            case 3:
-                destination = "employee";
-                break;
             case 1:
                 destination = "resident";
-                break;
-            case 4:
-                destination = "render";
                 break;
             default:
                 destination = "staff";
@@ -43,6 +37,17 @@ public class Util {
         if(role==1) return "view-rule-resident";
         return "view-rule-admin";
     }
+    
+    public String getSiteToViewRequest(int role){
+        if(role==1) return "viewrequest_history";
+        return "view-all-request";
+    }
+    
+    public String getSiteToViewFeedBack(int role){
+        if(role==1) return "view-feed-back-user";
+        return "view-all-feedback";
+    }
+    
     public int getNumberFromText(String str) {
         return Integer.parseInt(str.substring(1));
     }

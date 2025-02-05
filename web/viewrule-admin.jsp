@@ -98,9 +98,10 @@
                                                                 <td>${rule.effectiveDate}</td>                                               
                                                                 <td>${rule.status}</td>                                               
                                                                 <td>${rule.staff.name}</td>  
-                                                                <td><a href="update-rule?id=${rule.id}">Update</a>
-                                                                <a href="delete-rule?id=${rule.id}" onclick="return confirm('Are you sure to delete this rule?')""><i class="material-icons" title="Delete">&#xE872;</i></a>
-                                                                </td>
+                                                                
+                                                                <td><a href="update-rule?id=${rule.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                                                <td><a href="delete-rule?id=${rule.id}" onclick="return confirm('Are you sure to delete this rule?')""><i class="material-icons" title="Delete">&#xE872;</i></a></td>
+                                                                
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>

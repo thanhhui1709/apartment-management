@@ -9,6 +9,7 @@ import jdbc.DBContext;
 import model.Role;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -44,12 +45,38 @@ public class RoleDAO extends DBContext {
         }
         return null;
     }
-    
+    public Role getByIdIncludeResident(String id) {
+        List<Role> list = this.getAllExcludeResident();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getId().equals(id)) {
+                return list.get(i);
+            }
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
-        
-        RoleDAO dao= new RoleDAO();
+
+        RoleDAO dao = new RoleDAO();
         System.out.println(dao.getById("3"));
     }
 
-  
+    public List<Role> getAllExcludeResident() {
+        String sql = "select * from role where not id='1'";
+        List<Role> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                Role r = new Role(id, name, description);
+                list.add(r);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
 }
