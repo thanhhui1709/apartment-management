@@ -20,14 +20,8 @@ public class Util {
     public String getTableNameByRoleId(int role) {
         String destination = "";
         switch (role) {
-            case 3:
-                destination = "employee";
-                break;
             case 1:
                 destination = "resident";
-                break;
-            case 4:
-                destination = "render";
                 break;
             default:
                 destination = "staff";

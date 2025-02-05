@@ -5,6 +5,8 @@
 package authentication;
 
 import dao.AccountDAO;
+import dao.ResidentDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +16,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
+import model.Resident;
+import model.Staff;
 
 /**
  *
@@ -91,10 +95,10 @@ public class LoginServlet extends HttpServlet {
                 // Create and configure cookies for username and password
                 Cookie cookieUser = new Cookie("rememberedUser", user);
                 Cookie cookiePass = new Cookie("rememberedPass", pass);
-                Cookie cookieRemember=new Cookie("remembered", "remember");
-                cookieUser.setMaxAge(60 * 60*60);
-                cookiePass.setMaxAge(60 * 60*60);
-                cookieRemember.setMaxAge(60*60*60);
+                Cookie cookieRemember = new Cookie("remembered", "remember");
+                cookieUser.setMaxAge(60 * 60 * 60);
+                cookiePass.setMaxAge(60 * 60 * 60);
+                cookieRemember.setMaxAge(60 * 60 * 60);
                 response.addCookie(cookieUser);
                 response.addCookie(cookiePass);
                 response.addCookie(cookieRemember);
@@ -102,7 +106,7 @@ public class LoginServlet extends HttpServlet {
                 // Clear both cookies by setting max age to 0
                 Cookie cookieUser = new Cookie("rememberedUser", user);
                 Cookie cookiePass = new Cookie("rememberedPass", pass);
-                Cookie cookieRemember=new Cookie("remembered", "remember");
+                Cookie cookieRemember = new Cookie("remembered", "remember");
                 cookieUser.setMaxAge(0);
                 cookiePass.setMaxAge(0);
                 cookieRemember.setMaxAge(0);
@@ -116,6 +120,17 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("error", "Username or Password is incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
+        //Lấy thông tin hiển thị ở index
+        if (role == 1) {
+            ResidentDAO rd = new ResidentDAO();
+            Resident re = rd.getById(ac.getpId());
+            session.setAttribute("person", re);
+        } else {
+            StaffDAO sd = new StaffDAO();
+            Staff staff = sd.getById(ac.getpId());
+            session.setAttribute("person", staff);
+        }
+        //////////
     }
 
     /**

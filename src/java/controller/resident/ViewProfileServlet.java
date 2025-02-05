@@ -60,8 +60,6 @@ public class ViewProfileServlet extends HttpServlet {
         ResidentDAO rd = new ResidentDAO();
         HttpSession session =request.getSession();
         Account account =(Account) session.getAttribute("account");
-        Resident re = rd.getById(account.getpId());
-        session.setAttribute("person", re);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     } 
 
