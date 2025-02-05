@@ -40,7 +40,6 @@
         <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     </head>
     <body class="inner_page tables_page">
-        <jsp:useBean id="ut" class="util.Util" scope="page"/>
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->

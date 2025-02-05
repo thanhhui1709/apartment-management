@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="util.Util"%> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,6 +34,7 @@
         <![endif]-->
     </head>
     <body>
+        <jsp:useBean id="ut" class="util.Util" scope="page"/>
         <nav id="sidebar">
             <div class="sidebar_blog_1">
                 <div class="sidebar-header">

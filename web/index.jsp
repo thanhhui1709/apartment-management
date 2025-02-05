@@ -37,7 +37,6 @@
       <![endif]-->
    </head>
    <body class="dashboard dashboard_1">
-        <jsp:useBean id="ut" class="util.Util" scope="page"/>
       <div class="full_container">
          <div class="inner_container">
             <!-- Sidebar  -->
