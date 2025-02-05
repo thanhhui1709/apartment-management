@@ -72,11 +72,22 @@ public class PasswordUpdateServlet extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session=request.getSession();
         Account account=(Account)session.getAttribute("account");
-        String oldpw = request.getParameter("oldPassword");
-        String newpw = request.getParameter("newPassword");
+        String oldpw = request.getParameter("oldPassword").trim();
+        String newpw = request.getParameter("newPassword").trim();
+        String cfnewpw = request.getParameter("cfnewPassword").trim();
         ResidentDAO rd = new ResidentDAO();
         if(!oldpw.equals(account.getPassword())){
             request.setAttribute("msg", "Password is not correct");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
+        if(newpw.isBlank() || newpw.isEmpty()){
+            request.setAttribute("msg", "Password must be not a blank");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
+        if(!newpw.equals(cfnewpw)){
+            request.setAttribute("msg", "New password is not match");
             request.getRequestDispatcher("profile.jsp").forward(request, response);
             return;
         }

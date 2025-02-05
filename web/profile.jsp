@@ -167,6 +167,8 @@
                                                                         <input type="password" id="oldPassword" name="oldPassword" required>
                                                                         <label for="newPassword">New Password:</label>
                                                                         <input type="password" id="newPassword" name="newPassword" required>
+                                                                         <label for="cfnewPassword">Confirm Password:</label>
+                                                                        <input type="password" id="cfnewPassword" name="cfnewPassword" required>
                                                                         <button type="submit">Save</button>
                                                                         <p>${requestScope.msg}</p>
                                                                     </form>
