@@ -71,50 +71,54 @@ public class EditprofileREServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-    
-    HttpSession session = request.getSession();
-    Account account = (Account) session.getAttribute("account");
+            throws ServletException, IOException {
 
-    if (account == null) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
 
-    ResidentDAO rd = new ResidentDAO();
-    Resident re = rd.getById(account.getpId());
+        if (account == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
 
-    if (re == null) {
-        request.setAttribute("msg", "User not found.");
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
-        return;
-    }
+        ResidentDAO rd = new ResidentDAO();
+        Resident re = rd.getById(account.getpId());
 
-    String eemail = request.getParameter("editProfileEmail");
-    String ephone = request.getParameter("editProfilePhone");
-    String eaddress = request.getParameter("editProfileAddress");
+        if (re == null) {
+            request.setAttribute("msg", "User not found.");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
 
-    if (!eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-        request.setAttribute("msg", "Invalid email format.");
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
-        return;
-    }
+        String eemail = request.getParameter("editProfileEmail");
+        String ephone = request.getParameter("editProfilePhone");
+        String eaddress = request.getParameter("editProfileAddress");
 
-    if (!ephone.matches("[0-9]+")) {
-        request.setAttribute("msg", "Phone number should contain only digits.");
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
-        return;
-    }
+        if (!eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            request.setAttribute("msg", "Invalid email format.");
+            request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
+            return;
+        }
 
-    if (eaddress.trim().isEmpty()) {
-        request.setAttribute("msg", "Address cannot be empty.");
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
-        return;
-    }
+        if (!ephone.matches("0[0-9]{9}+")) {
+            request.setAttribute("msg", "Phone number should contain only digits.");
+            request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
+            return;
+        }
 
-    rd.EditProfileRe(re.getpId(), ephone, eemail, eaddress);
+        if (eaddress.trim().isEmpty()) {
+            request.setAttribute("msg", "Address cannot be empty.");
+            request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
+            return;
+        }
 
-    response.sendRedirect("profile.jsp");
+        rd.EditProfileRe(re.getpId(), ephone, eemail, eaddress);
+
+        re = rd.getById(account.getpId());
+
+        session.setAttribute("person", re);
+
+        response.sendRedirect("profile.jsp");
 }
 
 
