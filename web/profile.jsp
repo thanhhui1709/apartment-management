@@ -111,7 +111,6 @@
 
     </head>
     <body class="inner_page profile_page">
-        <jsp:useBean id="ut" class="util.Util" scope="page"/>
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->
@@ -134,7 +133,6 @@
                                     <div class="white_shd full margin_bottom_30">
                                         <div class="full graph_head">
                                             <div class="heading1 margin_0">
-                                                <h2>${sessionScope.person.name}</h2>
                                             </div>
                                         </div>
                                         <div class="full price_table padding_infor_info">
@@ -147,7 +145,6 @@
                                                         <div class="profile_contant">
                                                             <div class="contact_inner">
                                                                 <h3>${sessionScope.person.name}</h3>
-                                                                <p><strong>About: </strong>Resident</p>
                                                                 <ul class="list-unstyled">
                                                                     <li><i class="fa-regular fa-envelope"></i> ${sessionScope.person.email}</li>
                                                                     <li><i class="fa fa-phone"></i> ${sessionScope.person.phone}</li>
@@ -161,23 +158,11 @@
                                                                         Edit profile <i class="fa fa-pencil-alt"></i>
                                                                     </a>
                                                                 </h6>
-
-
-                                                                <button class="action-button" onclick="toggleVisibility('hiddenChangePassword')">Change Password</button>
-
-
-                                                                <div id="hiddenChangePassword" class="form-container" style="display: none;">
-                                                                    <form action="update-password-resident" method="post">
-                                                                        <label for="oldPassword">Old Password:</label>
-                                                                        <input type="password" id="oldPassword" name="oldPassword" required>
-                                                                        <label for="newPassword">New Password:</label>
-                                                                        <input type="password" id="newPassword" name="newPassword" required>
-                                                                         <label for="cfnewPassword">Confirm Password:</label>
-                                                                        <input type="password" id="cfnewPassword" name="cfnewPassword" required>
-                                                                        <button type="submit">Save</button>
-                                                                        <p>${requestScope.msg}</p>
-                                                                    </form>
-                                                                </div>
+                                                                <h6>
+                                                                    <a href="changepassword.jsp" class="button">
+                                                                        Change password <i class="fa fa-pencil-alt"></i>
+                                                                    </a>
+                                                                </h6>
                                                             </div>
                                                         </div>
                                                     </div>

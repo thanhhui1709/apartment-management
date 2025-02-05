@@ -1,5 +1,4 @@
 
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +36,6 @@
         <![endif]-->
     </head>
     <body class="dashboard dashboard_1">
-
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->

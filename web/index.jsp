@@ -44,7 +44,6 @@
             <!-- end sidebar -->
             <!-- right content -->
             <div id="content">
-                
                <!-- topbar -->
                  <%@include file="topbar.jsp" %>
                <!-- end topbar -->

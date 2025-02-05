@@ -118,7 +118,7 @@
                                                                     </a>
                                                                 </td>
 
-                                                                <td><a href="updateStaffInfor?id=${staff.id}"><i class="fa-solid fa-pen-nib"></i></a></td>
+                                                                <td><a href="updateStaffInfor?id=${staff.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                                             </tr>
                                                         <div id="staffDetail${staff.id}" class="modal fade">
                                                             <div class="modal-dialog" style="max-width: 60%">

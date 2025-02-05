@@ -80,10 +80,8 @@
                     <li><a href="view-resident"><i class="fa-solid fa-person"></i> <span>Resident Information</span></a></li>
                     <li><a href="view-all-staff"><i class="fa-solid fa-users-line"></i> <span>Staff Information</span></a></li>
                     <li><a href="view-all-company"><i class="fa-solid fa-building"></i> <span>Company Information</span></a></li>
-                    <li><a href="view-all-request"><i class="fa-solid fa-repeat"></i> <span>Request Information</span></a></li>
-                    <li><a href="viewrequest_history"><i class="fa-solid fa-hand"></i> <span>View Request History</span></a></li>
-                    <li><a href="view-feed-back-user"><i class="fa-solid fa-comment"></i><span>Feedback User</span></a></li>
-                    <li><a href="view-all-feedback"><i class="fa-solid fa-comment"></i> <span>Feedback Admin</span></a></li>
+                    <li><a href="${ut.getSiteToViewRequest(sessionScope.account.roleId)}"><i class="fa-solid fa-repeat"></i> <span>Request Information</span></a></li>
+                    <li><a href="${ut.getSiteToViewFeedBack(sessionScope.account.roleId)}"><i class="fa-solid fa-comment"></i><span>Feedback Information</span></a></li>
                     <li><a href="${ut.getSiteToViewRule(sessionScope.account.roleId)}"><i class="fa-solid fa-scale-balanced"></i><span>Rule of apartment</span></a></li>
 
 <!--                    <li>
