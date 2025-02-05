@@ -50,7 +50,9 @@ public class ResidentDAO extends DBContext {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 Role role = new Role("1", "resident", "--");
-                list.add(new Resident(id, name, cccd, phone, email, bod, address, username, password, email, name, role));
+                String status = String.valueOf(rs.getInt("active"));
+                String gender = rs.getString("gender");
+                list.add(new Resident(id, name, cccd, phone, email, bod, address, status, gender));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,14 +79,19 @@ public class ResidentDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 //(String pId, String name, String cccd, String phone, String email, String bod, String address, String status
-                list.add(new Resident(rs.getString("id"),
-                        rs.getString("name"),
-                        rs.getString("cccd"),
-                        rs.getString("phone"),
-                        rs.getString("email"),
-                        rs.getString("bod"),
-                        rs.getString("address"),
-                        rs.getString("phone")));
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String bod = rs.getDate("bod").toString();
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String cccd = rs.getString("cccd");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                Role role = new Role("1", "resident", "--");
+                String status = String.valueOf(rs.getInt("active"));
+                String gender = rs.getString("gender");
+                list.add(new Resident(id, name, cccd, phone, email, bod, address, status, gender));
             }
             return list;
         } catch (SQLException ex) {
@@ -119,7 +126,8 @@ public class ResidentDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Account a = new Account(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
+                Account a = new Account(rs.getString("username"), rs.getString("password"),
+                        rs.getString("email"), rs.getString("id"), rs.getInt("roleid"));
                 list.add(a);
             }
             return list;
@@ -167,7 +175,7 @@ public class ResidentDAO extends DBContext {
             while (rs.next()) {
                 list.add(new Resident(rs.getString("id"), rs.getString("Name"),
                         rs.getString("cccd"), rs.getString("phone"),
-                        rs.getString("email"), rs.getString("email"), rs.getString("address"), rs.getString("status")));
+                        rs.getString("email"), rs.getString("email"), rs.getString("address"), rs.getString("active")));
             }
             return list;
         } catch (SQLException ex) {
@@ -273,7 +281,7 @@ public class ResidentDAO extends DBContext {
         return listResident;
     }
 
-    public List<Resident> filterListResident( String name, String status) {
+    public List<Resident> filterListResident(String name, String status) {
         String sql = "select * from Resident where 1=1 ";
         int count = 0;
 
@@ -281,7 +289,7 @@ public class ResidentDAO extends DBContext {
             sql += "and name like '%" + name + "%' ";
         }
         if (status.trim() != "") {
-            sql += "and status = " + status + " ";
+            sql += "and active = " + status + " ";
         }
         try {
             List<Resident> list = new ArrayList<>();
@@ -295,7 +303,8 @@ public class ResidentDAO extends DBContext {
                         rs.getString("email"),
                         rs.getString("bod"),
                         rs.getString("address"),
-                        rs.getString("phone")));
+                        rs.getString("active"), 
+                        rs.getString("gender")));
             }
             return list;
         } catch (SQLException ex) {
@@ -306,6 +315,6 @@ public class ResidentDAO extends DBContext {
 
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        System.out.println(dao.filterListResident("quang", "1"));
+        System.out.println(dao.filterListResident("", "1").size());
     }
 }

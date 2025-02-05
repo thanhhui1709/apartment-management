@@ -103,6 +103,7 @@ public class ViewAllStaff extends HttpServlet {
         if(list.size()%numberPerPape==0){
             totalPage=list.size()/numberPerPape;
         }
+        
         else totalPage= list.size()/numberPerPape+1;
         list = sd.getPageByNumber(list, Integer.parseInt(page),numberPerPape );
         RoleDAO daoR = new RoleDAO();

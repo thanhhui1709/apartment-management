@@ -45,7 +45,9 @@ public class NewDAO extends DBContext {
                         rs.getString("source"),
                         rs.getString("category"),
                         rs.getString("image"),
-                        daoSt.getById(rs.getString("sid"))));
+                        daoSt.getById(rs.getString("sid")),
+                        rs.getString("date")));
+
             }
             return list;
         } catch (SQLException ex) {
@@ -68,7 +70,8 @@ public class NewDAO extends DBContext {
                         rs.getString("source"),
                         rs.getString("category"),
                         rs.getString("image"),
-                        daoSt.getById(rs.getString("sid")));
+                        daoSt.getById(rs.getString("sid")),
+                        rs.getString("date"));
                 return n;
             }
 
@@ -93,7 +96,8 @@ public class NewDAO extends DBContext {
                         rs.getString("source"),
                         rs.getString("category"),
                         rs.getString("image"),
-                        daoSt.getById(rs.getString("sid"))));
+                        daoSt.getById(rs.getString("sid")),
+                        rs.getString("date")));
             }
             return list;
         } catch (SQLException ex) {
@@ -104,6 +108,6 @@ public class NewDAO extends DBContext {
 
     public static void main(String[] args) {
         NewDAO daoN = new NewDAO();
-        System.out.println(daoN.getNewById("1"));
+        System.out.println(daoN.getNewById("1").getDate());
     }
 }

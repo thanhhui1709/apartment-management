@@ -55,7 +55,8 @@ public class StaffDAO extends DBContext {
                 Company cp = sd.getById(rs.getString("cid"));
                 String startDate = rs.getString("startdate");
                 String enddate = rs.getString("enddate");
-                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate);
+                String gender = rs.getString("gender");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender);
                 list.add(s);
             }
         } catch (Exception e) {
@@ -90,7 +91,8 @@ public class StaffDAO extends DBContext {
                 Company cp = sd.getById(rs.getString("cid"));
                 String startDate = rs.getString("startdate");
                 String enddate = rs.getString("enddate");
-                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate);
+                String gender = rs.getString("gender");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender);
                 list.add(s);
             }
         } catch (Exception e) {
@@ -125,7 +127,8 @@ public class StaffDAO extends DBContext {
                 Company cp = sd.getById(rs.getString("cid"));
                 String startDate = rs.getString("startdate");
                 String enddate = rs.getString("enddate");
-                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate);
+                String gender = rs.getString("gender");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender);
                 list.add(s);
             }
         } catch (Exception e) {
