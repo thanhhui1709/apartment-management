@@ -77,18 +77,18 @@ public class PasswordUpdateServlet extends HttpServlet {
         String cfnewpw = request.getParameter("cfnewPassword").trim();
         ResidentDAO rd = new ResidentDAO();
         if(!oldpw.equals(account.getPassword())){
-            request.setAttribute("msg", "Password is not correct");
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            request.setAttribute("msg", "Old password is not correct");
+            request.getRequestDispatcher("changepassword.jsp").forward(request, response);
             return;
         }
         if(newpw.isBlank() || newpw.isEmpty()){
             request.setAttribute("msg", "Password must be not a blank");
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            request.getRequestDispatcher("changepassword.jsp").forward(request, response);
             return;
         }
         if(!newpw.equals(cfnewpw)){
             request.setAttribute("msg", "New password is not match");
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            request.getRequestDispatcher("changepassword.jsp").forward(request, response);
             return;
         }
         AccountDAO ad = new AccountDAO();

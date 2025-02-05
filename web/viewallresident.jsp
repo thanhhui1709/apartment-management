@@ -143,7 +143,11 @@
                                                                 <td>${resident.address}</td>
                                                                 <td>${resident.gender}</td>
                                                                 <td style="color: ${resident.status == '1'?'green':'red'}">${resident.status == '1'?'Active': 'Inactive'}</td>
-                                                                <td><a href="#" class="btn btn-primary">View Detail</a></td> 
+                                                                <td style="text-align: center">
+                                                                    <a href="#" data-toggle="modal" data-target="#">
+                                                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </td> 
                                                                 <td><a href="delete-resident?pId=${resident.pId}"><i class="material-icons" title="Delete">&#xE872;</i></a></td>
                                                             </tr>
                                                         </c:forEach>
