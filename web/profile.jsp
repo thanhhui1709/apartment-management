@@ -31,6 +31,7 @@
         <link rel="stylesheet" href="css/custom.css" />
         <!-- calendar file css -->
         <link rel="stylesheet" href="js/semantic.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -155,12 +156,16 @@
                                                                     <li><i class="fa-solid fa-calendar-days"></i> ${sessionScope.person.bod}</li>
 
                                                                 </ul>
-                                                                    <h6><a href="${ut.getTableNameByRoleIdEdit(sessionScope.account.roleId)}" class="button">Edit profile</a></h6>
-                                                                
+                                                                <h6>
+                                                                    <a href="${ut.getTableNameByRoleIdEdit(sessionScope.account.roleId)}" class="button">
+                                                                        Edit profile <i class="fa fa-pencil-alt"></i>
+                                                                    </a>
+                                                                </h6>
+
 
                                                                 <button class="action-button" onclick="toggleVisibility('hiddenChangePassword')">Change Password</button>
 
-                                                                
+
                                                                 <div id="hiddenChangePassword" class="form-container" style="display: none;">
                                                                     <form action="update-password-resident" method="post">
                                                                         <label for="oldPassword">Old Password:</label>
