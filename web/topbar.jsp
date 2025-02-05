@@ -57,8 +57,8 @@
                                     <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/logo/person.jpg"alt="#" /><span class="name_user">${sessionScope.person.name}</span></a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="${util.getTableNameByRoleId(sessionScope.account.roleId)}">My Profile</a>
-                                        <a class="dropdown-item" href="settings.html">Settings</a>
-                                        <a class="dropdown-item" href="help.html">Help</a>
+                                        <a class="dropdown-item" href="#">Settings</a>
+                                        <a class="dropdown-item" href="#">Help</a>
                                         <a class="dropdown-item" href="logout"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
                                     </div>
                                 </li>

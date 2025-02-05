@@ -62,8 +62,6 @@ public class ViewProfileStaff extends HttpServlet {
         StaffDAO sd = new StaffDAO();
         HttpSession session =request.getSession();
         Account account =(Account) session.getAttribute("account");
-        Staff staff = sd.getById(account.getpId());
-        session.setAttribute("person", staff);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     } 
 
