@@ -115,8 +115,10 @@ public class UpdateStaffInfor extends HttpServlet {
                     startDate, (endDate == null || endDate.isEmpty()) ? null : endDate
             );
 
-            daoSt.updateStaffInfor(staff);
-            response.sendRedirect("view-all-staff");
+                daoSt.updateStaffInfor(staff);
+                HttpSession session = request.getSession();
+                session.setAttribute("staffs", daoSt.getAll());
+                response.sendRedirect("view-all-staff");
 
         } catch (NumberFormatException e) {
             request.setAttribute("status", "false");

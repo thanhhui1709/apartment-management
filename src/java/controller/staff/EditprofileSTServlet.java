@@ -122,7 +122,11 @@ public class EditprofileSTServlet extends HttpServlet {
 
     st.EditProfileSt(s.getId(), ephone, eemail,ebank, eaddress);
 
-    response.sendRedirect("profile.jsp");
+    s = st.getById(account.getpId());
+
+        session.setAttribute("person", s);
+
+        response.sendRedirect("profile.jsp");
 }
 
     /** 
