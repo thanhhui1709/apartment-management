@@ -111,7 +111,6 @@
 
     </head>
     <body class="inner_page profile_page">
-        <jsp:useBean id="ut" class="util.Util" scope="page"/>
         <div class="full_container">
             <div class="inner_container">
                 <!-- Sidebar  -->
@@ -134,7 +133,6 @@
                                     <div class="white_shd full margin_bottom_30">
                                         <div class="full graph_head">
                                             <div class="heading1 margin_0">
-                                                <h2>${sessionScope.person.name}</h2>
                                             </div>
                                         </div>
                                         <div class="full price_table padding_infor_info">
@@ -147,7 +145,6 @@
                                                         <div class="profile_contant">
                                                             <div class="contact_inner">
                                                                 <h3>${sessionScope.person.name}</h3>
-                                                                <p><strong>About: </strong>Resident</p>
                                                                 <ul class="list-unstyled">
                                                                     <li><i class="fa-regular fa-envelope"></i> ${sessionScope.person.email}</li>
                                                                     <li><i class="fa fa-phone"></i> ${sessionScope.person.phone}</li>
