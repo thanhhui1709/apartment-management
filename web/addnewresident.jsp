@@ -158,7 +158,7 @@
                                                 <div class="col">
                                                     <label for="phone">Phone</label>
                                                     <input
-                                                        type="tel"
+                                                        type="number"
                                                         id="phone"
                                                         name="phone"
                                                         placeholder="Enter phone number"
@@ -184,7 +184,7 @@
                                                 <div class="col">
                                                     <label for="id">ID</label>
                                                     <input
-                                                        type="text"
+                                                        type="number"
                                                         id="id"
                                                         name="id"
                                                         placeholder="Enter ID"

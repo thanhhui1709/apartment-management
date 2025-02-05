@@ -167,7 +167,7 @@
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="phone">Phone</label>
                                                     <input
-                                                        type="tel"
+                                                        type="number"
                                                         id="phone"
                                                         name="phone"
                                                         placeholder="Enter phone number"
@@ -214,7 +214,7 @@
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="salary">Salary</label>
                                                     <input
-                                                        type="text"
+                                                        type="number"
                                                         id="salary"
                                                         name="salary"
                                                         placeholder="Enter education"

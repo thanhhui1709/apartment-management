@@ -219,8 +219,27 @@ public class StaffDAO extends DBContext {
     }
 
     public boolean insertStaff(Staff s) {
-        String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,status,username,password,roleId, cid,startdate) \n"
-                + "values(?,?,?,?,?,?,?,?,?,?,1,?,?,?,?,?)";
+        String sql = "INSERT INTO [dbo].[Staff]\n"
+                + "           ([Id]\n"
+                + "           ,[Name]\n"
+                + "           ,[Bod]\n"
+                + "           ,[Email]\n"
+                + "           ,[Phone]\n"
+                + "           ,[Address]\n"
+                + "           ,[CCCD]\n"
+                + "           ,[Salary]\n"
+                + "           ,[Education]\n"
+                + "           ,[Bank]\n"
+                + "           ,[status]\n"
+                + "           ,[username]\n"
+                + "           ,[password]\n"
+                + "           ,[startdate]\n"
+                + "           ,[enddate]\n"
+                + "           ,[cID]\n"
+                + "           ,[roleId]\n"
+                + "           ,[gender])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Util u = new Util();
         List<Staff> list = this.getAll();
         String newId = "";
@@ -248,11 +267,14 @@ public class StaffDAO extends DBContext {
             ps.setInt(8, s.getSalary());
             ps.setString(9, s.getEducation());
             ps.setString(10, s.getBank());
-            ps.setString(11, s.getUsername());
-            ps.setString(12, s.getPassword());
-            ps.setString(13, s.getRole().getId());
-            ps.setString(14, s.getCompany().getId());
-            ps.setString(15, s.getStartDate());
+            ps.setInt(11, s.getStatus());
+            ps.setString(12, s.getUsername());
+            ps.setString(13, s.getPassword());
+            ps.setString(14, s.getStartDate());
+            ps.setString(15, s.getEndDate());
+            ps.setString(16, s.getCompany().getId());
+            ps.setString(17, s.getRole().getId());
+            ps.setString(18, s.getGender());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException ex) {
@@ -330,15 +352,22 @@ public class StaffDAO extends DBContext {
         return false;
 
     }
-    
+
+    public boolean checkDuplicateUserName(String username) {
+        List<Staff> list = getAll();
+        for (Staff staff : list) {
+            if (staff.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
 
     public static void main(String[] args) {
 
         StaffDAO staffDAO = new StaffDAO();
-        Staff s = staffDAO.getById("S1002");
-        s.setName("hello");
-        System.out.println(s.getCompany().getName());
-        System.out.println(staffDAO.updateStaffInfor(s));
+        System.out.println(staffDAO.checkDuplicateUserName("userB"));
 
     }
 

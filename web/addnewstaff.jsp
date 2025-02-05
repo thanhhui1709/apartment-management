@@ -124,7 +124,7 @@
                                     <h1>Add Staff Information</h1>
                                     <form action="add-new-staff" method="post">
                                         <div class="form-group">
-                                            <input type="text" id="staffID" name="staffID" value="" hidden=""/>
+                                            <input type="text" id="staffID" name="staffID" value="${staff.id}" hidden=""/>
                                             <div class="two-cols">
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="name">Name</label>
@@ -133,12 +133,13 @@
                                                         id="name"
                                                         name="name"
                                                         placeholder="Enter full name"
-                                                        value=""
+
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="dob">Date of Birth</label>
-                                                    <input type="date" id="dob" name="dob" value=""/>
+                                                    <input type="date" id="dob" name="dob" value="${staff.bod}"/>
+                                                    <span id="dob-error" style="color: red"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,7 +151,7 @@
                                                     id="address"
                                                     name="address"
                                                     placeholder="Enter address"
-                                                    value=""
+
                                                     />
                                             </div>
                                         </div>
@@ -159,11 +160,11 @@
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="phone">Phone</label>
                                                     <input
-                                                        type="tel"
+                                                        type="number"
                                                         id="phone"
                                                         name="phone"
                                                         placeholder="Enter phone number"
-                                                        value=""
+
                                                         />
                                                     <span id="phone-error" style="color: red"></span>
                                                 </div>
@@ -174,13 +175,13 @@
                                                         id="email"
                                                         name="email"
                                                         placeholder="Enter email"
-                                                        value=""
+
                                                         />
                                                     <span id="email-error" style="color: red"></span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" >
                                             <div class="three-cols">
                                                 <div class="col" style="padding: 0; margin-right: 5px ">
                                                     <label for="cccd">CCCD</label>
@@ -189,9 +190,9 @@
                                                         id="cccd"
                                                         name="cccd"
                                                         placeholder="Enter CCCD"
-                                                        value=""
+
                                                         />
-                                                    <span id="CCCD-error" style="color: red"></span>
+                                                    <span id="cccd-error" style="color: red"></span>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="education">Education</label>
@@ -200,18 +201,19 @@
                                                         id="education"
                                                         name="education"
                                                         placeholder="Enter education"
-                                                        value=""
+
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="salary">Salary</label>
                                                     <input
-                                                        type="text"
+                                                        type="number"
                                                         id="salary"
                                                         name="salary"
-                                                        placeholder="Enter salary"
-                                                        value=""
+                                                        placeholder="Enter education"
+
                                                         />
+                                                    <span id="salary-error" style="color: red"></span>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="bank">Bank Account</label>
@@ -220,31 +222,7 @@
                                                         id="bank"
                                                         name="bank"
                                                         placeholder="Enter bank account"
-                                                        value=""
-                                                        />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="two-cols">
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="username">Username</label>
-                                                    <input
-                                                        type="text"
-                                                        id="username"
-                                                        name="username"
-                                                        placeholder="Enter username"
-                                                        value=""
-                                                        />
-                                                </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="password">Password</label>
-                                                    <input
-                                                        type="password"
-                                                        id="password"
-                                                        name="password"
-                                                        placeholder="Enter password"
-                                                        value=""
+
                                                         />
                                                 </div>
                                             </div>
@@ -254,29 +232,69 @@
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="company">Company</label>
                                                     <select id="company" name="company">
+
                                                         <c:forEach items="${sessionScope.listCompany}" var="cp">
-                                                            <option value="${cp.id}">${cp.name}</option>
+                                                            <option value="${cp.id}" ${staff.company.id == cp.id?'selected':''}>${cp.name}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="startDate">Start Date</label>
-                                                    <input type="date" id="startDate" name="startDate" value=""/>
+                                                    <input type="date" id="startDate" name="startDate" value="${staff.startDate}"/>
+                                                </div>
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="endDate">End Date</label>
+                                                    <input type="date" id="endDate" name="endDate" value="${staff.endDate != null ? staff.endDate : ''}"}"/>
+                                                    <span id="endDate-error" style="color: red"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="two-cols">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="username">Username</label>
+                                                    <input type="text" name="user" id="user" required="">
+                                                    <span id="user-error" style="color: red"></span>
+                                                </div>
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="password">Password</label>
+                                                    <input type="text" name="password" required="">
+
+                                                </div>
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="gender">Gender</label>
+                                                    <select id="gender" name="gender">
+                                                        <option value="M" selected="">Male</option>
+                                                        <option value="F">Female</option>
+                                                       
+                                                    </select>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="two-cols">
+                                                <div class="col" style="padding: 0; margin-right: 5px">
+                                                    <label for="status">Status</label>
+                                                    <select id="status" name="status">
+                                                        <option value="1" ${staff.status == '1' ? 'selected' : ''}>Active</option>
+                                                        <option value="0" ${staff.status == '0' ? 'selected' : ''}>Inactive</option>
+                                                    </select>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="role">Role</label>
                                                     <select id="role" name="role">
                                                         <c:forEach items="${sessionScope.listRole}" var="role">
-                                                            <option value="${role.id}">${role.name}</option>
+                                                            <option value="${role.id}" ${role.id == staff.role.id?'selected':''}>${role.name}</option>
                                                         </c:forEach>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-button">
-                                            <button type="submit">Add Staff</button>
+                                            <button type="submit">Add</button>
                                             <h5 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h5>
-                                            <h5 style="color:red;text-align:center">${requestScope.error}</h5>
                                         </div>
                                     </form>
                                 </div>
@@ -292,5 +310,192 @@
             <script src="js/bootstrap.min.js"></script>
             <!-- custom js -->
             <script src="js/custom.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    const submitButton = $('button[type="submit"]');
+
+                    // Function to update the submit button's disabled state
+                    function updateSubmitButtonState() {
+                        if (
+                                $("#email-error").text() ||
+                                $("#phone-error").text() ||
+                                $("#id-error").text() ||
+                                $("#username-error").text()
+                                ) {
+                            submitButton.prop("disabled", true);
+                        } else {
+                            submitButton.prop("disabled", false);
+                        }
+                    }
+
+                    $("#email").on("input", function () {
+                        var email = $(this).val();
+                        if (email) {
+                            $.ajax({
+                                url: "checkDuplicateStaffInfor",
+                                type: "GET",
+                                data: {type: "email", value: email},
+                                success: function (response) {
+                                    if (response.exists) {
+                                        $("#email-error").text("Email already exists.");
+                                    } else {
+                                        $("#email-error").text("");
+                                    }
+                                    updateSubmitButtonState();
+                                }
+                            });
+                        } else {
+                            $("#email-error").text("");
+                            updateSubmitButtonState();
+                        }
+                    });
+
+                    $("#phone").on("input", function () {
+                        var phone = $(this).val();
+                        if (phone) {
+                            $.ajax({
+                                url: "checkDuplicateStaffInfor",
+                                type: "GET",
+                                data: {type: "phone", value: phone},
+                                success: function (response) {
+                                    if (response.exists) {
+                                        $("#phone-error").text("Phone number already exists.");
+                                    } else {
+                                        $("#phone-error").text("");
+                                    }
+                                    updateSubmitButtonState();
+                                }
+                            });
+                        } else {
+                            $("#phone-error").text("");
+                            updateSubmitButtonState();
+                        }
+                    });
+
+                    $("#cccd").on("input", function () {
+                        var cccd = $(this).val();
+                        if (cccd) {
+                            $.ajax({
+                                url: "checkDuplicateStaffInfor",
+                                type: "GET",
+                                data: {type: "cccd", value: cccd},
+                                success: function (response) {
+                                    if (response.exists) {
+                                        $("#cccd-error").text("CCCD already exists.");
+                                    } else {
+                                        $("#cccd-error").text("");
+                                    }
+                                    updateSubmitButtonState();
+                                }
+                            });
+                        } else {
+                            $("#CCCD-error").text("");
+                            updateSubmitButtonState();
+                        }
+                    });
+                    $("#user").on("input", function () {
+                        var email = $(this).val();
+                        if (email) {
+                            $.ajax({
+                                url: "checkDuplicateStaffInfor",
+                                type: "GET",
+                                data: {type: "user", value: email},
+                                success: function (response) {
+                                    if (response.exists) {
+                                        $("#user-error").text("UserName already exists.");
+                                    } else {
+                                        $("#user-error").text("");
+                                    }
+                                    updateSubmitButtonState();
+                                }
+                            });
+                        } else {
+                            $("#user-error").text("");
+                            updateSubmitButtonState();
+                        }
+                    });
+                });
+            </script>
+            <script>
+                $(document).ready(function () {
+                    const submitButton = $('button[type="submit"]');
+
+                    function calculateAge(dob) {
+                        const birthDate = new Date(dob);
+                        const today = new Date();
+                        let age = today.getFullYear() - birthDate.getFullYear();
+                        const monthDiff = today.getMonth() - birthDate.getMonth();
+                        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                            age--;
+                        }
+                        return age;
+                    }
+
+                    function validateForm() {
+                        let isValid = true;
+
+                        let phone = $("#phone").val();
+                        let cccd = $("#cccd").val();
+                        let dob = $("#dob").val();
+                        let salary = $("#salary").val();
+                        let startDate = $("#startDate").val();
+                        let endDate = $("#endDate").val();
+
+                        // Validate Phone (11 digits)
+                        if (!/^\d{11}$/.test(phone)) {
+                            $("#phone-error").text("Phone number must be exactly 11 digits.");
+                            isValid = false;
+                        } else {
+                            $("#phone-error").text("");
+                        }
+
+                        // Validate CCCD (12 digits)
+                        if (!/^\d{12}$/.test(cccd)) {
+                            $("#cccd-error").text("CCCD must be exactly 12 digits.");
+                            isValid = false;
+                        } else {
+                            $("#cccd-error").text("");
+                        }
+
+                        // Validate Age (Must be 18 or older)
+                        if (dob) {
+                            let age = calculateAge(dob);
+                            if (age < 18) {
+                                $("#dob-error").text("Staff must be at least 18 years old.");
+                                isValid = false;
+                            } else {
+                                $("#dob-error").text("");
+                            }
+                        }
+
+                        // Validate Salary (Must be > 0)
+                        if (salary && salary <= 0) {
+                            $("#salary-error").text("Salary must be greater than 0.");
+                            isValid = false;
+                        } else {
+                            $("#salary-error").text("");
+                        }
+
+                        // Validate End Date (Must be after Start Date)
+                        if (startDate && endDate) {
+                            if (new Date(endDate) <= new Date(startDate)) {
+                                $("#endDate-error").text("End date must be after start date.");
+                                isValid = false;
+                            } else {
+                                $("#endDate-error").text("");
+                            }
+                        }
+
+                        return isValid;
+                    }
+
+                    $("form").on("submit", function (event) {
+                        if (!validateForm()) {
+                            event.preventDefault();
+                        }
+                    });
+                });
+            </script>
     </body>
 </html>
