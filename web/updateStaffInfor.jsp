@@ -273,7 +273,7 @@
                                         </div>
                                         <div class="form-button">
                                             <button type="submit">Update</button>
-                                            <h5 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.errorMess}</h5>
+                                            <h5 style="color:${status=="true"?"green":"red"};text-align:center ">${requestScope.message}</h5>
                                         </div>
                                     </form>
                                 </div>

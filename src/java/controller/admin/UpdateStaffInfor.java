@@ -108,30 +108,19 @@ public class UpdateStaffInfor extends HttpServlet {
         try {
             int status = Integer.parseInt(status_raw);
             int salary = Integer.parseInt(salary_raw);
-            if (!name.isEmpty() && !dob.isEmpty() && !email.isEmpty() && !address.isEmpty() && !phone.isEmpty() && !cccd.isEmpty()
-                    && !education.isEmpty() && !bank.isEmpty() && !salary_raw.isEmpty()
-                    && !companyId.isEmpty() && !status_raw.isEmpty() && !role.isEmpty() && !startDate.isEmpty()) {
 
-                Staff staff = new Staff(
-                        id, name, dob, email, phone, address, cccd, salary,
-                        education, bank, status, daoR.getById(role), daoCp.getById(companyId),
-                        startDate, (endDate == null || endDate.isEmpty()) ? null : endDate
-                );
+            Staff staff = new Staff(
+                    id, name, dob, email, phone, address, cccd, salary,
+                    education, bank, status, daoR.getById(role), daoCp.getById(companyId),
+                    startDate, (endDate == null || endDate.isEmpty()) ? null : endDate
+            );
 
-                daoSt.updateStaffInfor(staff);
-                response.sendRedirect("view-all-staff");
+            daoSt.updateStaffInfor(staff);
+            response.sendRedirect("view-all-staff");
 
-            } else {
-                Staff staff = daoSt.getById(id);
-                request.setAttribute("staff", staff);
-                request.setAttribute("errorMess", "Input fields couldn't be empty");
-                request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
-            }
         } catch (NumberFormatException e) {
-            Staff staff = daoSt.getById(id);
-            request.setAttribute("staff", staff);
             request.setAttribute("status", "false");
-            request.setAttribute("errorMess", "Invalid salary format.");
+            request.setAttribute("message", "Invalid salary format.");
             request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
         }
     }
