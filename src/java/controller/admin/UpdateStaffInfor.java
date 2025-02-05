@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import model.Company;
 import model.Role;
@@ -81,6 +83,7 @@ public class UpdateStaffInfor extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -109,16 +112,62 @@ public class UpdateStaffInfor extends HttpServlet {
             int status = Integer.parseInt(status_raw);
             int salary = Integer.parseInt(salary_raw);
 
+            // Validate Phone (11 digits)
+            if (!phone.matches("\\d{11}")) {
+                request.setAttribute("status", "false");
+                request.setAttribute("message", "Phone number must be exactly 11 digits.");
+                request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
+                return;
+            }
+
+            // Validate CCCD (12 digits)
+            if (!cccd.matches("\\d{12}")) {
+                request.setAttribute("status", "false");
+                request.setAttribute("message", "CCCD must be exactly 12 digits.");
+                request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
+                return;
+            }
+
+            // Validate Age (Must be 18 or older)
+            LocalDate birthDate = LocalDate.parse(dob);
+            LocalDate today = LocalDate.now();
+            if (Period.between(birthDate, today).getYears() < 18) {
+                request.setAttribute("status", "false");
+                request.setAttribute("message", "Staff must be at least 18 years old.");
+                request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
+                return;
+            }
+
+            // Validate Salary (Must be > 0)
+            if (salary <= 0) {
+                request.setAttribute("status", "false");
+                request.setAttribute("message", "Salary must be greater than 0.");
+                request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
+                return;
+            }
+
+            // Validate End Date (Must be after Start Date)
+            if (endDate != null && !endDate.isEmpty()) {
+                LocalDate start = LocalDate.parse(startDate);
+                LocalDate end = LocalDate.parse(endDate);
+                if (!end.isAfter(start)) {
+                    request.setAttribute("status", "false");
+                    request.setAttribute("message", "End date must be after start date.");
+                    request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
+                    return;
+                }
+            }
+
             Staff staff = new Staff(
                     id, name, dob, email, phone, address, cccd, salary,
                     education, bank, status, daoR.getById(role), daoCp.getById(companyId),
                     startDate, (endDate == null || endDate.isEmpty()) ? null : endDate
             );
 
-                daoSt.updateStaffInfor(staff);
-                HttpSession session = request.getSession();
-                session.setAttribute("staffs", daoSt.getAll());
-                response.sendRedirect("view-all-staff");
+            daoSt.updateStaffInfor(staff);
+            HttpSession session = request.getSession();
+            session.setAttribute("staffs", daoSt.getAll());
+            response.sendRedirect("view-all-staff");
 
         } catch (NumberFormatException e) {
             request.setAttribute("status", "false");

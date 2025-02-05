@@ -1,5 +1,5 @@
 <!DOCTYPE html>
- <%@taglib
+<%@taglib
     prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <html lang="en">
         <head>
@@ -110,6 +110,7 @@
                 .form-button button:hover {
                     background-color: #357ab8;
                 }
+                
 
             </style>
         </head>
@@ -117,12 +118,12 @@
             <div class="full_container">
                 <div class="inner_container">
                     <!-- Sidebar  -->
-                 <%@include file="sidebar.jsp" %>
+                    <%@include file="sidebar.jsp" %>
                     <!-- end sidebar -->
                     <!-- right content -->
                     <div id="content">
                         <!-- topbar -->
-                       <%@include file="topbar.jsp" %>
+                        <%@include file="topbar.jsp" %>
                         <!-- end topbar -->
                         <div class="midde_cont">
                             <div class="container-fluid">
@@ -145,6 +146,7 @@
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="dob">Date of Birth</label>
                                                     <input type="date" id="dob" name="dob" value="${staff.bod}"/>
+                                                    <span id="dob-error" style="color: red"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -218,6 +220,7 @@
                                                         placeholder="Enter education"
                                                         value="${staff.salary}"
                                                         />
+                                                    <span id="salary-error" style="color: red"></span>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="bank">Bank Account</label>
@@ -249,6 +252,7 @@
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="endDate">End Date</label>
                                                     <input type="date" id="endDate" name="endDate" value="${staff.endDate != null ? staff.endDate : ''}"}"/>
+                                                    <span id="endDate-error" style="color: red"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -373,6 +377,87 @@
                         });
                     });
                 </script>
+                <script>
+                    $(document).ready(function () {
+                        const submitButton = $('button[type="submit"]');
+
+                        function calculateAge(dob) {
+                            const birthDate = new Date(dob);
+                            const today = new Date();
+                            let age = today.getFullYear() - birthDate.getFullYear();
+                            const monthDiff = today.getMonth() - birthDate.getMonth();
+                            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                                age--;
+                            }
+                            return age;
+                        }
+
+                        function validateForm() {
+                            let isValid = true;
+
+                            let phone = $("#phone").val();
+                            let cccd = $("#cccd").val();
+                            let dob = $("#dob").val();
+                            let salary = $("#salary").val();
+                            let startDate = $("#startDate").val();
+                            let endDate = $("#endDate").val();
+
+                            // Validate Phone (11 digits)
+                            if (!/^\d{11}$/.test(phone)) {
+                                $("#phone-error").text("Phone number must be exactly 11 digits.");
+                                isValid = false;
+                            } else {
+                                $("#phone-error").text("");
+                            }
+
+                            // Validate CCCD (12 digits)
+                            if (!/^\d{12}$/.test(cccd)) {
+                                $("#cccd-error").text("CCCD must be exactly 12 digits.");
+                                isValid = false;
+                            } else {
+                                $("#cccd-error").text("");
+                            }
+
+                            // Validate Age (Must be 18 or older)
+                            if (dob) {
+                                let age = calculateAge(dob);
+                                if (age < 18) {
+                                    $("#dob-error").text("Staff must be at least 18 years old.");
+                                    isValid = false;
+                                } else {
+                                    $("#dob-error").text("");
+                                }
+                            }
+
+                            // Validate Salary (Must be > 0)
+                            if (salary && salary <= 0) {
+                                $("#salary-error").text("Salary must be greater than 0.");
+                                isValid = false;
+                            } else {
+                                $("#salary-error").text("");
+                            }
+
+                            // Validate End Date (Must be after Start Date)
+                            if (startDate && endDate) {
+                                if (new Date(endDate) <= new Date(startDate)) {
+                                    $("#endDate-error").text("End date must be after start date.");
+                                    isValid = false;
+                                } else {
+                                    $("#endDate-error").text("");
+                                }
+                            }
+
+                            return isValid;
+                        }
+
+                        $("form").on("submit", function (event) {
+                            if (!validateForm()) {
+                                event.preventDefault();
+                            }
+                        });
+                    });
+                </script>
+
 
         </body>
     </html>
