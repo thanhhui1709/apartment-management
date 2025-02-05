@@ -158,23 +158,14 @@
                                                                         Edit profile <i class="fa fa-pencil-alt"></i>
                                                                     </a>
                                                                 </h6>
+                                                                        <h6>
+                                                                    <a href="changepassword.jsp" class="button">
+                                                                        Change password <i class="fa fa-pencil-alt"></i>
+                                                                    </a>
+                                                                </h6>
 
 
-                                                                <button class="action-button" onclick="toggleVisibility('hiddenChangePassword')">Change Password</button>
-
-
-                                                                <div id="hiddenChangePassword" class="form-container" style="display: none;">
-                                                                    <form action="update-password-resident" method="post">
-                                                                        <label for="oldPassword">Old Password:</label>
-                                                                        <input type="password" id="oldPassword" name="oldPassword" required>
-                                                                        <label for="newPassword">New Password:</label>
-                                                                        <input type="password" id="newPassword" name="newPassword" required>
-                                                                         <label for="cfnewPassword">Confirm Password:</label>
-                                                                        <input type="password" id="cfnewPassword" name="cfnewPassword" required>
-                                                                        <button type="submit">Save</button>
-                                                                        <p>${requestScope.msg}</p>
-                                                                    </form>
-                                                                </div>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>
