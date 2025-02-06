@@ -27,7 +27,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <meta name="viewport" content="initial-scale=1, maximum-scale=1">
             <!-- site metas -->
-            <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
+            <title>Apartment management</title>
             <meta name="keywords" content="">
             <meta name="description" content="">
             <meta name="author" content="">
@@ -67,7 +67,7 @@
                         <div class="login_section">
                             <div class="logo_login">
                                 <div class="center">
-                                    <img width="210" src="images/logo/logo.png" alt="#" />
+                                    <img width="500" src="images/logo/building.jpg" alt="#" />
                                 </div>
                             </div>
 

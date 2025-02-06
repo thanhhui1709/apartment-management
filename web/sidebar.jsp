@@ -39,7 +39,7 @@
             <div class="sidebar_blog_1">
                 <div class="sidebar-header">
                     <div class="logo_section">
-                        <a href="index.jsp"><img class="logo_icon img-responsive" src="images/logo/logo_icon.png" alt="#" /></a>
+                        <a href="index.jsp"><img class="logo_icon img-responsive" src="images/logo/building.jpg" alt="#" /></a>
                     </div>
                 </div>
                 <div class="sidebar_user_info">
@@ -66,9 +66,9 @@
                                 <a href="dashboard_2.html">> <span>Dashboard style 2</span></a>
                             </li>
                         </ul>
-                    </li>
-                    <li><a href="widgets.html"><i class="fa fa-clock-o orange_color"></i> <span>Widgets</span></a></li>
-                    <li>
+                    </li>-->
+<!--                    <li><a href="widgets.html"><i class="fa fa-clock-o orange_color"></i> <span>Widgets</span></a></li>-->
+<!--                    <li>
                         <a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-diamond purple_color"></i> <span>Elements</span></a>
                         <ul class="collapse list-unstyled" id="element">
                             <li><a href="general_elements.html"> <span>General Elements</span></a></li>
