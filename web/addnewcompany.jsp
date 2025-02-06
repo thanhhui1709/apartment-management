@@ -152,7 +152,11 @@
                                             <input type="tel" id="contactPhone" name="contactPhone" value="${requestScope.company.contactPhone}" placeholder="Enter contact phone number" required />
                                             <p class="error-message">${requestScope.contactPhoneError}</p>
                                         </div>
-
+                                        <div class="form-group">
+                                            <label for="website">Web site</label>
+                                            <input type="text" id="website" name="website" value="${requestScope.company.website}" placeholder="Enter website" required />
+                                            <p class="error-message">${requestScope.websiteError}</p>
+                                        </div>
                                         <div class="form-group">
                                             <label for="fax">Fax</label>
                                             <input type="text" id="fax" name="fax" value="${requestScope.company.fax}" placeholder="Enter fax number" required />
