@@ -56,7 +56,7 @@
             <div class="sidebar_blog_2">
                 <h4>General</h4>
                 <ul class="list-unstyled components">
-                    <li class="active">
+<!--                    <li class="active">
                         <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-dashboard yellow_color"></i> <span>Dashboard</span></a>
                         <ul class="collapse list-unstyled" id="dashboard">
                             <li>
@@ -76,7 +76,7 @@
                             <li><a href="icons.html"> <span>Icons</span></a></li>
                             <li><a href="invoice.html"> <span>Invoice</span></a></li>
                         </ul>
-                    </li>
+                    </li>-->
                     <li><a href="view-resident"><i class="fa-solid fa-person"></i> <span>Resident Information</span></a></li>
                     <li><a href="view-all-staff"><i class="fa-solid fa-users-line"></i> <span>Staff Information</span></a></li>
                     <li><a href="view-all-company"><i class="fa-solid fa-building"></i> <span>Company Information</span></a></li>

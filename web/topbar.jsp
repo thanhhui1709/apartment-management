@@ -41,17 +41,17 @@
 
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="full">
-                    <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
+<!--                    <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
                     <div class="logo_section">
                         <a href="index.jsp"><img class="img-responsive" src="images/logo/logo.png" alt="#" /></a>
-                    </div>
+                    </div>-->
                     <div class="right_topbar">
                         <div class="icon_info">
-                            <ul>
+<!--                            <ul>
                                 <li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a></li>
                                 <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
                                 <li><a href="#"><i class="fa fa-envelope-o"></i><span class="badge">3</span></a></li>
-                            </ul>
+                            </ul>-->
                             <ul class="user_profile_dd">
                                 <li>
                                     <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/logo/person.jpg"alt="#" /><span class="name_user">${sessionScope.person.name}</span></a>
