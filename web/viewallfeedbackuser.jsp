@@ -8,8 +8,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!-- mobile metas -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
-<title>Apartment management</title>        <link rel="icon" href="images/fevicon.png" type="image/png" />
+        <title>Apartment management</title>        
+        <link rel="icon" href="images/fevicon.png" type="image/png" />
         <!-- bootstrap css -->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <!-- site css -->
@@ -28,6 +30,8 @@
         <link rel="stylesheet" href="js/semantic.min.css" />
         <!-- fancy box js -->
         <link rel="stylesheet" href="css/jquery.fancybox.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
         <style>
             /* CSS để làm cho đường kẻ của bảng xám mờ, căn giữa tên cột và màu nền của tiêu đề cột */
             .table th, .table td {
@@ -87,6 +91,7 @@
                                                             <th style="width: 45%;">Detail</th>
                                                             <th style="width: 15%;">Ngày tạo đơn</th>
                                                             <th style="width: 20%;">Tên dịch vụ</th>
+                                                            <th style="width: 5%;"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -97,6 +102,8 @@
                                                                 <td>${feedback.detail}</td>
                                                                 <td>${feedback.date}</td>
                                                                 <td>${feedback.requestType.name}</td>
+                                                                <td><a href="deletefeedback?id=${feedback.id}" onclick="return confirm('Are you sure to delete this rule?')""><i class="material-icons" title="Delete">&#xE872;</i></a></td>
+
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
@@ -110,7 +117,7 @@
                         </div>
                     </div>
                     <!-- footer -->
-                  
+
                 </div>
                 <!-- end dashboard inner -->
             </div>

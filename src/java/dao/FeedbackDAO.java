@@ -274,6 +274,17 @@ public class FeedbackDAO extends DBContext {
         }
         return listpage;
     }
+    public void deleteFB(String id){
+        try {
+            String sql="delete from [Feedback] where id=?";
+        PreparedStatement pre=connection.prepareStatement(sql);
+        pre.setString(1, id);
+        pre.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(); 
+        }
+        
+    }
 
     public static void main(String[] args) {
         FeedbackDAO dao = new FeedbackDAO();
