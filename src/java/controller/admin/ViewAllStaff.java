@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.admin;
 
 import dao.AdminDAO;
@@ -21,41 +20,45 @@ import java.util.List;
 import model.Company;
 import model.Role;
 import model.Staff;
+import util.Util;
 
 /**
  *
  * @author thanh
  */
-@WebServlet(name="ViewAllStaff", urlPatterns={"/view-all-staff"})
+@WebServlet(name = "ViewAllStaff", urlPatterns = {"/view-all-staff"})
 public class ViewAllStaff extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewAllStaff</title>");  
+            out.println("<title>Servlet ViewAllStaff</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewAllStaff at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewAllStaff at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -63,10 +66,11 @@ public class ViewAllStaff extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         AdminDAO ad = new AdminDAO();
         List<Staff> list = ad.getAllStaffExceptAdmin();
-        HttpSession session =request.getSession();
+        HttpSession session = request.getSession();
+        Util u = new Util();
 //        if(session.getAttribute("staffs")==null){
 //            list = ad.getAllStaffExceptAdmin();
 //            session.setAttribute("staffs", list);
@@ -74,38 +78,34 @@ public class ViewAllStaff extends HttpServlet {
 //        else{
 //            list = (List<Staff>) session.getAttribute("staffs");
 //        }
-        StaffDAO sd= new StaffDAO();
+        StaffDAO sd = new StaffDAO();
         String filterStatus_raw = request.getParameter("filterStatus");
-        if(filterStatus_raw!=null){
-            int filterStatus=Integer.parseInt(filterStatus_raw);
-            list= sd.getByStatus(filterStatus);
-            if(list.size()==0){
+        if (filterStatus_raw != null) {
+            int filterStatus = Integer.parseInt(filterStatus_raw);
+            list = sd.getByStatus(filterStatus);
+            if (list.size() == 0) {
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
             request.setAttribute("staffs", list);
         }
         String searchName = request.getParameter("searchName");
-        if(searchName!=null){
+        if (searchName != null) {
+            searchName = u.stringNomalize(searchName);
             list = sd.searchByName(list, searchName);
-            if(list.size()==0){
+            if (list.size() == 0) {
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
             request.setAttribute("staffs", list);
         }
         String page = request.getParameter("page");
-        if(page==null){
-            page ="1";
+        if (page == null) {
+            page = "1";
         }
-        int numberPerPape=3;
-        int totalPage;
-        if(list.size()%numberPerPape==0){
-            totalPage=list.size()/numberPerPape;
-        }
-        
-        else totalPage= list.size()/numberPerPape+1;
-        list = sd.getPageByNumber(list, Integer.parseInt(page),numberPerPape );
+
+        int totalPage = u.getTotalPage(list, 3);
+        list = u.getListPerPage(list, 3, page);
         RoleDAO daoR = new RoleDAO();
         CompanyDAO daoCp = new CompanyDAO();
         List<Company> listCompany = daoCp.getAll();
@@ -116,10 +116,11 @@ public class ViewAllStaff extends HttpServlet {
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("staffs", list);
         request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -127,12 +128,13 @@ public class ViewAllStaff extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import model.Resident;
+import util.Util;
 
 /**
  *
@@ -62,30 +63,23 @@ public class ViewAllResident extends HttpServlet {
         String name = request.getParameter("searchName");
         String status = request.getParameter("filterStatus");
         ResidentDAO daoR = new ResidentDAO();
-
-        if (name == null || name.trim().isEmpty()) {
-            name = "";
-        }
+        Util u = new Util();
 
         if (status == null || status.trim().isEmpty()) {
             status = "";
         }
+
+        name = u.stringNomalize(name);
 
         List<Resident> listResident = daoR.filterListResident(name, status);
         String page = request.getParameter("page");
         if (page == null) {
             page = "1";
         }
-        int numberPerPape = 3;
-        int totalPage;
-        if (listResident.size() % numberPerPape == 0) {
-            totalPage = listResident.size() / numberPerPape;
-        } else {
-            totalPage = listResident.size() / numberPerPape + 1;
-        }
+        int totalPage = u.getTotalPage(listResident, 3);
 
         if (listResident.size() != 0) {
-            listResident = daoR.getPageByNumber(listResident, Integer.parseInt(page), numberPerPape);
+            listResident = u.getListPerPage(listResident, 3, page);
             request.setAttribute("listResident", listResident);
             request.setAttribute("totalPage", totalPage);
             request.setAttribute("currentPage", Integer.parseInt(page));
@@ -96,7 +90,6 @@ public class ViewAllResident extends HttpServlet {
             request.setAttribute("message", "No result");
             request.getRequestDispatcher("viewallresident.jsp").forward(request, response);
         }
-
 
     }
 
