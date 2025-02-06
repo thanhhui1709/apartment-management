@@ -9,8 +9,7 @@
         <!-- mobile metas -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- site metas -->
-        <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
-        <link rel="icon" href="images/fevicon.png" type="image/png" />
+<title>Apartment management</title>        <link rel="icon" href="images/fevicon.png" type="image/png" />
         <!-- bootstrap css -->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <!-- site css -->

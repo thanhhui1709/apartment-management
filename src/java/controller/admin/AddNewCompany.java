@@ -143,7 +143,10 @@ public class AddNewCompany extends HttpServlet {
                     request.setAttribute("taxCodeError", "Tax code already exists.");
                     hasError = true;
                 }
-
+                if (company.getWebsite().equals(newC.getWebsite())) {
+                    request.setAttribute("websiteError", "Website already exists.");
+                    hasError = true;
+                }
                 if (hasError) {
                     request.getRequestDispatcher("addnewcompany.jsp").forward(request, response);
                     return;

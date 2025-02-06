@@ -10,8 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
-        <title>Pluto - Responsive Bootstrap Admin Panel Templates</title>
-        <link rel="icon" href="images/fevicon.png" type="image/png" />
+<title>Apartment management</title>        <link rel="icon" href="images/fevicon.png" type="image/png" />
         <!-- bootstrap css -->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <!-- site css -->
@@ -128,7 +127,7 @@
                                                             <th>Email</th>                                               
                                                             <th>Status</th> 
                                                             <th>View Detail</th>
-                                                            <th>Option</th>
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -144,8 +143,8 @@
                                                                     <a href="#" data-toggle="modal" data-target="#residentDetail${resident.pId}">
                                                                         <i class="fa fa-user" aria-hidden="true"></i>
                                                                     </a>
-                                                                </td>
-                                                                <td><a href="delete-resident?pId=${resident.pId}"><i class="material-icons" title="Delete">&#xE872;</i></a></td>
+                                                                </td> 
+                                                                
                                                             </tr>
                                                             <!-- Modal for resident details -->
                                                         <div id="residentDetail${resident.pId}" class="modal fade">
@@ -198,7 +197,7 @@
                         <!-- footer -->
                         <div class="container-fluid">
                             <div class="footer">
-                                <p>Copyright © 2018 Designed by html.design. All rights reserved.</p>
+                                <p>Copyright ï¿½ 2018 Designed by html.design. All rights reserved.</p>
                             </div>
                         </div>
                     </div>

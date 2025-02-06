@@ -10,8 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
-        <title>Pluto</title>
-        <meta name="keywords" content="">
+<title>Apartment management</title>        <meta name="keywords" content="">
         <meta name="description" content="">
         <meta name="author" content="">
         <!-- site icon -->
@@ -47,11 +46,11 @@
                     </div>
                     <div class="right_topbar">
                         <div class="icon_info">
-                            <ul>
+<!--                            <ul>
                                 <li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a></li>
                                 <li><a href="#"><i class="fa fa-question-circle"></i></a></li>
                                 <li><a href="#"><i class="fa fa-envelope-o"></i><span class="badge">3</span></a></li>
-                            </ul>
+                            </ul>-->
                             <ul class="user_profile_dd">
                                 <li>
                                     <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/logo/person.jpg"alt="#" /><span class="name_user">${sessionScope.person.name}</span></a>
