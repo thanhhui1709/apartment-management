@@ -245,11 +245,16 @@ public class ResidentDAO extends DBContext {
     }
 
     public boolean checkDuplicateEmail(String email) {
-        List<Resident> list = getAll();
-        for (Resident resident : list) {
-            if (email.equals(resident.getEmail())) {
+        String sql = "select * from Resident where Email=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
                 return true;
             }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
         return false;
     }
@@ -274,7 +279,6 @@ public class ResidentDAO extends DBContext {
         return false;
     }
 
-    
     public List<Resident> getPageByNumber(List<Resident> list, int page, int number) {
         List<Resident> listpage = new ArrayList<>();
         int start = number * (page - 1);
@@ -323,6 +327,6 @@ public class ResidentDAO extends DBContext {
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
 
-        System.out.println(dao.checkDuplicateUser("alice"));
+        System.out.println(dao.checkDuplicateEmail("luans1mple20045@gmail.com"));;
     }
 }
