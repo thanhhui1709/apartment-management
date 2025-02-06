@@ -4,7 +4,6 @@
  */
 package controller.admin;
 
-
 import dao.ResidentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,28 +59,44 @@ public class ViewAllResident extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String numPage = request.getParameter("numPage");
-        int index = 0;
-        if (numPage == null) {
-            index = 1;
-            
-        } else {
-            index = Integer.parseInt(numPage);
+        String name = request.getParameter("searchName");
+        String status = request.getParameter("filterStatus");
+        ResidentDAO daoR = new ResidentDAO();
+
+        if (name == null || name.trim().isEmpty()) {
+            name = "";
         }
 
-        ResidentDAO daoR = new ResidentDAO();
-        int itemPerPage = 10;
-        int numOfPage = 0;
-        if (daoR.getAll().size() % 10 == 0) {
-            numOfPage = daoR.getAll().size() / 10;
-        } else {
-            numOfPage = (daoR.getAll().size() / 10) + 1;
+        if (status == null || status.trim().isEmpty()) {
+            status = "";
         }
-        List<Resident> listResident = daoR.pagingResident(index - 1);
-        request.setAttribute("listResident", listResident);
-        request.setAttribute("numOfPage", numOfPage);
-        request.setAttribute("index", index);
-        request.getRequestDispatcher("viewallresident.jsp").forward(request, response);
+
+        List<Resident> listResident = daoR.filterListResident(name, status);
+        String page = request.getParameter("page");
+        if (page == null) {
+            page = "1";
+        }
+        int numberPerPape = 3;
+        int totalPage;
+        if (listResident.size() % numberPerPape == 0) {
+            totalPage = listResident.size() / numberPerPape;
+        } else {
+            totalPage = listResident.size() / numberPerPape + 1;
+        }
+
+        if (listResident.size() != 0) {
+            listResident = daoR.getPageByNumber(listResident, Integer.parseInt(page), numberPerPape);
+            request.setAttribute("listResident", listResident);
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("currentPage", Integer.parseInt(page));
+            request.setAttribute("isFilter", "true");
+            request.getRequestDispatcher("viewallresident.jsp").forward(request, response);
+            return;
+        } else {
+            request.setAttribute("message", "No result");
+            request.getRequestDispatcher("viewallresident.jsp").forward(request, response);
+        }
+
 
     }
 

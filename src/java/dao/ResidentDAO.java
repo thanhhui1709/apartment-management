@@ -26,19 +26,19 @@ import model.Role;
  * @author thanh
  */
 public class ResidentDAO extends DBContext {
-    
+
     public boolean checkConnection() {
         return connection == null;
     }
-    
+
     public List<Resident> getAll() {
         String sql = "select  * from resident";
-        
+
         List<Resident> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            
+
             while (rs.next()) {
                 String id = rs.getString("id");
                 String name = rs.getString("name");
@@ -52,7 +52,7 @@ public class ResidentDAO extends DBContext {
                 Role role = new Role("1", "resident", "--");
                 String status = String.valueOf(rs.getInt("active"));
                 String gender = rs.getString("gender");
-                Resident resident=new Resident(id, name, cccd, phone, email, bod, address, username, password, status, name, role);
+                Resident resident = new Resident(id, name, cccd, phone, email, bod, address, username, password, status, name, role);
                 list.add(resident);
             }
         } catch (SQLException ex) {
@@ -60,7 +60,7 @@ public class ResidentDAO extends DBContext {
         }
         return list;
     }
-    
+
     public Resident getById(String pid) {
         List<Resident> all = this.getAll();
         for (int i = 0; i < all.size(); i++) {
@@ -70,9 +70,9 @@ public class ResidentDAO extends DBContext {
         }
         return null;
     }
-    
+
     public List<Resident> pagingResident(int n) {
-        String sql = "select * from Resident order by Id offset ? rows fetch next 10 rows only";
+        String sql = "select * from Resident order by Id offset ? rows fetch next 3 rows only";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, (n * 10));
@@ -98,10 +98,10 @@ public class ResidentDAO extends DBContext {
         } catch (SQLException ex) {
             Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return null;
     }
-    
+
     public String getEmailByUserName(String username) {
         String sql = "select email from Resident where username = ?";
         try {
@@ -110,16 +110,16 @@ public class ResidentDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 return rs.getString(1);
-                
+
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ResidentDAO.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
+
     public List<Account> getAllResidentAccount() {
         List<Account> list = new ArrayList<>();
         String sql = "select username, password, email, id, roleId from Resident";
@@ -132,14 +132,14 @@ public class ResidentDAO extends DBContext {
                 list.add(a);
             }
             return list;
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ResidentDAO.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
+
     public void changPasswordById(String id, String newpw) {
         String sql = "update resident set password = ? where id =?";
         try {
@@ -151,7 +151,7 @@ public class ResidentDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
+
     public void EditProfileRe(String id, String phone, String email, String address) {
         String sql = "update Resident set Email=?, Phone=?, [Address]=? where id=?";
         try {
@@ -184,7 +184,7 @@ public class ResidentDAO extends DBContext {
         }
         return null;
     }
-    
+
     public void deleteResident(String pId) {
         String sql = "delete Resident where id=?";
         try {
@@ -195,7 +195,7 @@ public class ResidentDAO extends DBContext {
             Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public int insertNewResident(String name, String address, String email, String phone, String bod, String id, String username, String password) {
         String sql = "INSERT INTO [dbo].[Resident]\n"
                 + "           ([Id]\n"
@@ -227,13 +227,13 @@ public class ResidentDAO extends DBContext {
             st.setInt(10, 1);
             st.executeUpdate();
             return 0;
-            
+
         } catch (SQLException e) {
             System.out.println(e);
         }
         return -1;
     }
-    
+
     public boolean checkDuplicatePhone(String phone) {
         List<Resident> list = getAll();
         for (Resident resident : list) {
@@ -243,7 +243,7 @@ public class ResidentDAO extends DBContext {
         }
         return false;
     }
-    
+
     public boolean checkDuplicateEmail(String email) {
         List<Resident> list = getAll();
         for (Resident resident : list) {
@@ -253,7 +253,7 @@ public class ResidentDAO extends DBContext {
         }
         return false;
     }
-    
+
     public boolean checkDuplicateID(String id) {
         List<Resident> list = getAll();
         for (Resident resident : list) {
@@ -263,7 +263,7 @@ public class ResidentDAO extends DBContext {
         }
         return false;
     }
-    
+
     public boolean checkDuplicateUser(String user) {
         List<Resident> list = getAll();
         for (Resident resident : list) {
@@ -273,23 +273,29 @@ public class ResidentDAO extends DBContext {
         }
         return false;
     }
+
     
-    public List<Resident> pagingResident2(List<Resident> list, int start, int end) {
-        List<Resident> listResident = new ArrayList<>();
-        for (int i = start; i < end; i++) {
-            listResident.add(list.get(i));
+    public List<Resident> getPageByNumber(List<Resident> list, int page, int number) {
+        List<Resident> listpage = new ArrayList<>();
+        int start = number * (page - 1);
+        int end = number * page - 1;
+        for (int i = start; i <= end; i++) {
+            listpage.add(list.get(i));
+            if (i == list.size() - 1) {
+                break;
+            }
         }
-        return listResident;
+        return listpage;
     }
-    
+
     public List<Resident> filterListResident(String name, String status) {
         String sql = "select * from Resident where 1=1 ";
         int count = 0;
-        
-        if (name.trim() != "") {
+
+        if (name != "") {
             sql += "and name like '%" + name + "%' ";
         }
-        if (status.trim() != "") {
+        if (status != "") {
             sql += "and active = " + status + " ";
         }
         try {
@@ -313,10 +319,10 @@ public class ResidentDAO extends DBContext {
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        
+
         System.out.println(dao.checkDuplicateUser("alice"));
     }
 }

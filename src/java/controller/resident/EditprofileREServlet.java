@@ -98,20 +98,23 @@ public class EditprofileREServlet extends HttpServlet {
         String eaddress = request.getParameter("editProfileAddress");
 
         if (!eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            request.setAttribute("status", "false");
             request.setAttribute("msg", "Invalid email format.");
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
             return;
         }
 
-        if (!ephone.matches("[0-9]+")) {
-            request.setAttribute("msg", "Phone number should contain only digits.");
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
+        if (!ephone.matches("0[0-9]{9}")) {
+            request.setAttribute("status", "false");
+            request.setAttribute("msg", "Please enter a valid phone number: 10 digits starting with 0.");
+            request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
             return;
         }
 
         if (eaddress.trim().isEmpty()) {
+            request.setAttribute("status", "false");
             request.setAttribute("msg", "Address cannot be empty.");
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
             return;
         }
 
@@ -120,8 +123,8 @@ public class EditprofileREServlet extends HttpServlet {
         re = rd.getById(account.getpId());
 
         session.setAttribute("person", re);
-
-        response.sendRedirect("profile.jsp");
+        request.setAttribute("msg", "Update successfully");
+        request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
 
     }
 

@@ -111,7 +111,8 @@
                                         </div>
                                         <div class="form-button">
                                             <button type="submit">Save</button>
-                                            <h5>${requestScope.msg}</h5>
+                                            <h5 style="color: ${requestScope.status == 'false'?'red': 'green'}">${requestScope.msg}</h5>
+                                            <span  style="text-decoration: underline; display: inline-block"><a><a href="profile.jsp">Back</a></span>
                                         </div>
                                     </form>
                                 </div>

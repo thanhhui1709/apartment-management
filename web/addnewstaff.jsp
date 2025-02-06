@@ -132,7 +132,7 @@
                                                         id="name"
                                                         name="name"
                                                         placeholder="Enter full name"
-                                                        value=""
+                                                        ${param.name}
                                                         />
                                                 </div>
                                         </div>
@@ -148,7 +148,7 @@
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="dob">Date of Birth</label>
-                                                    <input type="date" id="dob" name="dob" value=""/>
+                                                    <input type="date" id="dob" name="dob" value="${param.dob}"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -160,7 +160,7 @@
                                                     id="address"
                                                     name="address"
                                                     placeholder="Enter address"
-                                                    value=""
+                                                    value="${param.address}"
                                                     />
                                             </div>
                                         </div>
@@ -173,7 +173,7 @@
                                                         id="phone"
                                                         name="phone"
                                                         placeholder="Enter phone number"
-                                                        value=""
+                                                        value="${param.phone}"
                                                         />
                                                     <span id="phone-error" style="color: red"></span>
                                                 </div>
@@ -184,7 +184,7 @@
                                                         id="email"
                                                         name="email"
                                                         placeholder="Enter email"
-                                                        value=""
+                                                        value="${param.email}"
                                                         />
                                                     <span id="email-error" style="color: red"></span>
                                                 </div>
@@ -199,7 +199,7 @@
                                                         id="cccd"
                                                         name="cccd"
                                                         placeholder="Enter CCCD"
-                                                        value=""
+                                                        value="${param.cccd}"
                                                         />
                                                     <span id="CCCD-error" style="color: red"></span>
                                                 </div>
@@ -210,7 +210,7 @@
                                                         id="education"
                                                         name="education"
                                                         placeholder="Enter education"
-                                                        value=""
+                                                        value="${param.education}"
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
@@ -220,7 +220,7 @@
                                                         id="salary"
                                                         name="salary"
                                                         placeholder="Enter salary"
-                                                        value=""
+                                                        value="${param.salary}"
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
@@ -230,7 +230,7 @@
                                                         id="bank"
                                                         name="bank"
                                                         placeholder="Enter bank account"
-                                                        value=""
+                                                        value="${param.bank}"
                                                         />
                                                 </div>
                                             </div>
@@ -244,7 +244,7 @@
                                                         id="username"
                                                         name="username"
                                                         placeholder="Enter username"
-                                                        value=""
+                                                        value="${param.username}"
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
@@ -271,7 +271,7 @@
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="startDate">Start Date</label>
-                                                    <input type="date" id="startDate" name="startDate" value=""/>
+                                                    <input type="date" id="startDate" name="startDate" value="${param.startDate}"/>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="role">Role</label>

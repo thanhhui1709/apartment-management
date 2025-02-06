@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Company;
 import model.Employee;
 import model.Role;
 import model.Staff;
@@ -86,7 +88,14 @@ public class AddNewStaffServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
+        RoleDAO daoR = new RoleDAO();
+        CompanyDAO daoCp = new CompanyDAO();
+        List<Company> listCompany = daoCp.getAll();
+        List<Role> listRole = daoR.getAllExcludeResident();
+        session.setAttribute("listCompany", listCompany);
+        session.setAttribute("listRole", listRole);
+        
         String name = request.getParameter("name");
         String dob = request.getParameter("dob");
         String address = request.getParameter("address");
@@ -102,8 +111,6 @@ public class AddNewStaffServlet extends HttpServlet {
         String startDate = request.getParameter("startDate");
         String roleId = request.getParameter("role");
         String gender = request.getParameter("gender");
-        RoleDAO daoR = new RoleDAO();
-        CompanyDAO daoCp = new CompanyDAO();
         StaffDAO stDao = new StaffDAO();
         List<Staff> listStaff = stDao.getAll();
 
@@ -170,6 +177,16 @@ public class AddNewStaffServlet extends HttpServlet {
                     request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                     return;
                 }
+            }
+            if (!s.getPhone().matches("0[0-9]{9}")) {
+                request.setAttribute("error", "Please enter a valid phone number: 10 digits starting with 0!");
+                request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                return;
+            }
+            if (!s.getCccd().matches("[0-9]{12}")) {
+                request.setAttribute("error", "Please enter a valid CCCD number: 12 digits!");
+                request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                return;
             }
         } catch (NumberFormatException e) {
             request.setAttribute("error", "Invalid salary format.");

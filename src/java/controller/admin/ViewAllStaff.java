@@ -65,15 +65,15 @@ public class ViewAllStaff extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         AdminDAO ad = new AdminDAO();
-        List<Staff> list;
+        List<Staff> list = ad.getAllStaffExceptAdmin();
         HttpSession session =request.getSession();
-        if(session.getAttribute("staffs")==null){
-            list = ad.getAllStaffExceptAdmin();
-            session.setAttribute("staffs", list);
-        }
-        else{
-            list = (List<Staff>) session.getAttribute("staffs");
-        }
+//        if(session.getAttribute("staffs")==null){
+//            list = ad.getAllStaffExceptAdmin();
+//            session.setAttribute("staffs", list);
+//        }
+//        else{
+//            list = (List<Staff>) session.getAttribute("staffs");
+//        }
         StaffDAO sd= new StaffDAO();
         String filterStatus_raw = request.getParameter("filterStatus");
         if(filterStatus_raw!=null){
@@ -83,7 +83,7 @@ public class ViewAllStaff extends HttpServlet {
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
-            session.setAttribute("staffs", list);
+            request.setAttribute("staffs", list);
         }
         String searchName = request.getParameter("searchName");
         if(searchName!=null){
@@ -92,7 +92,7 @@ public class ViewAllStaff extends HttpServlet {
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
-            session.setAttribute("staffs", list);
+            request.setAttribute("staffs", list);
         }
         String page = request.getParameter("page");
         if(page==null){

@@ -72,13 +72,13 @@
                                             <form action="view-all-staff" method="GET">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-2">
-                                                        <input type="text" class="form-control" name="searchName" placeholder="Search by Name">
+                                                        <input value="${param.searchName}" type="text" class="form-control" name="searchName" placeholder="Search by Name">
                                                     </div>
                                                     <div class="col-md-2">
                                                         <select class="form-control" name="filterStatus">
                                                             <option value="-1">Filter by Status</option>
-                                                            <option value="1">Active</option>
-                                                            <option value="0">Inactive</option>
+                                                             <option value="1" ${param.filterStatus == '1' ? 'selected' : ''}>Active</option>
+                                                            <option value="0" ${param.filterStatus == '0' ? 'selected' : ''}>Inactive</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-4 d-flex">

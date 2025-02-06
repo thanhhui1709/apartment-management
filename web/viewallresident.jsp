@@ -30,6 +30,7 @@
         <link rel="stylesheet" href="js/semantic.min.css" />
         <!-- fancy box js -->
         <link rel="stylesheet" href="css/jquery.fancybox.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -42,8 +43,8 @@
                 text-align: right;
             }
             .pagination a {
-                display: inline-block;      /* Hi?n th? nh? kh?i inline */
-                width: 30px;                /* ??t ?? r?ng b?ng nhau cho các ô */
+                display: inline-block;
+                width: 30px;
                 margin: 0 1px;
                 padding: 5px 10px;
                 border: 1px solid #007bff;
@@ -56,11 +57,13 @@
                 background-color: #007bff;
                 color: white;
             }
-
             .pagination a.active {
-                font-weight: bold;          /* In ??m ch? cho trang hi?n t?i */
-                background-color: #007bff; /* Thay ??i màu n?n cho trang hi?n t?i */
-                color: white;               /* Thay ??i màu ch? cho trang hi?n t?i */
+                font-weight: bold;
+                background-color: #007bff;
+                color: white;
+            }
+            #table-infor th, #table-infor td {
+                text-align: center;
             }
         </style>
     </head>
@@ -94,9 +97,8 @@
                                             </div>
                                         </div>
                                         <div style="margin-left: 40px;">
-                                            <form action="filter-resident" method="GET">
+                                            <form action="view-resident" method="GET">
                                                 <div class="row align-items-center">
-
                                                     <div class="col-md-2">
                                                         <input type="text" value="${param.searchName}" class="form-control" name="searchName" placeholder="Search by Name">
                                                     </div>
@@ -109,7 +111,7 @@
                                                     </div>
                                                     <div class="col-md-4 d-flex">
                                                         <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
-                                                        <a href="addnewresident.jsp"  class="btn btn-primary">Add new Resident</a>
+                                                        <a href="addnewresident.jsp" class="btn btn-primary">Add new Resident</a>
                                                     </div>
                                                 </div>
                                             </form>
@@ -117,83 +119,96 @@
 
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
-                                                <table class="table w-100">
+                                                <table class="table w-100" id="table-infor">
                                                     <thead>
                                                         <tr>
                                                             <th>ID</th>
-                                                            <th>Name</th>
-                                                            <th>BOD</th>
+                                                            <th>Name</th>                                                       
                                                             <th>Phone</th>
                                                             <th>Email</th>                                               
-                                                            <th>Address</th>
-                                                            <th>Gender</th>
                                                             <th>Status</th> 
                                                             <th>View Detail</th>
                                                             <th>Option</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <h3>${requestScope.message}</h3>
                                                         <c:forEach items="${requestScope.listResident}" var="resident">
                                                             <tr>
                                                                 <td>${resident.pId}</td>
                                                                 <td>${resident.name}</td>
-                                                                <td>${resident.bod}</td>
                                                                 <td>${resident.phone}</td>
                                                                 <td>${resident.email}</td>                                               
-                                                                <td>${resident.address}</td>
-                                                                <td>${resident.gender}</td>
                                                                 <td style="color: ${resident.status == '1'?'green':'red'}">${resident.status == '1'?'Active': 'Inactive'}</td>
-                                                                <td style="text-align: center">
-                                                                    <a href="#" data-toggle="modal" data-target="#">
+                                                                <td style="text-align: center;">
+                                                                    <a href="#" data-toggle="modal" data-target="#residentDetail${resident.pId}">
                                                                         <i class="fa fa-user" aria-hidden="true"></i>
                                                                     </a>
-                                                                </td> 
+                                                                </td>
                                                                 <td><a href="delete-resident?pId=${resident.pId}"><i class="material-icons" title="Delete">&#xE872;</i></a></td>
                                                             </tr>
-                                                        </c:forEach>
+                                                            <!-- Modal for resident details -->
+                                                        <div id="residentDetail${resident.pId}" class="modal fade">
+                                                            <div class="modal-dialog" style="max-width: 60%">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h3>Resident Information</h3>
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                    </div>
+                                                                    <div class="modal-body" style="display: flex;">
+                                                                        <div style="width: 50%; text-align: center;">
+                                                                            <img style="width: 70%; border-radius: 50%; margin-top: 15%" src="images/logo/person.jpg" alt="Resident Image"/>
+                                                                        </div>
+                                                                        <div style="width: 50%">
+                                                                            <p><strong>ID:</strong> ${resident.pId}</p>
+                                                                            <p><strong>Name:</strong> ${resident.name}</p>
+                                                                            <p><strong>Bod:</strong> ${resident.bod}</p>
+                                                                            <p><strong>Email:</strong> ${resident.email}</p>
+                                                                            <p><strong>Phone:</strong> ${resident.phone}</p>
+                                                                            <p><strong>Address:</strong> ${resident.address}</p>
+                                                                            <p><strong>CCCD:</strong> ${resident.cccd}</p>
+                                                                            <p><strong>Gender:</strong> ${resident.gender}</p>
+                                                                            <p><strong>Status:</strong> ${resident.status == 1 ? 'Active' : 'Inactive'}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </c:forEach>
                                                     </tbody>
-
                                                 </table>
-
-                                            </div>
-                                            <div class="pagination">
-
-                                                <c:choose>
-                                                    <c:when test="${requestScope.isFilter == 'true'}">
-                                                        <c:forEach begin="1" end="${numOfPage}" var="i">
-                                                            <a href="filter-resident?numPage=${i}&searchName=${param.searchName}&filterStatus=${param.filterStatus}" 
-                                                               class="${i == index ? 'active' : ''}">${i}</a>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:forEach begin="1" end="${numOfPage}" var="i">
-                                                            <a href="view-resident?numPage=${i}" 
-                                                               class="${i == index ? 'active' : ''}">${i}</a>
-                                                        </c:forEach>
-                                                    </c:otherwise>
-                                                </c:choose>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- More tables can be added here -->
+                            </div>
+                        </div>
+                        <form method="get" action="view-resident" style="display: flex; align-items: center; gap: 10px;">
+                            <label for="page" style="font-size: 14px; font-weight: bold;">Page:</label>
+                            <select id="page" name="page" onchange="this.form.submit()" 
+                                    style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
+                                <c:forEach begin="1" end="${requestScope.totalPage}" var="page">
+                                    <option value="${page}" <c:if test="${page == requestScope.currentPage}">selected</c:if>>
+                                        ${page}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </form>
+
+                        <!-- footer -->
+                        <div class="container-fluid">
+                            <div class="footer">
+                                <p>Copyright © 2018 Designed by html.design. All rights reserved.</p>
                             </div>
                         </div>
                     </div>
-                    <!-- footer -->
-                    <div class="container-fluid">
-                        <div class="footer">
-                            <p>Copyright © 2018 Designed by html.design. All rights reserved.</p>
-                        </div>
-                    </div>
+                    <!-- end dashboard inner -->
                 </div>
-                <!-- end dashboard inner -->
             </div>
-        </div>
-        <!-- jQuery -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/custom.js"></script>
+            <!-- jQuery -->
+            <script src="js/jquery.min.js"></script>
+            <script src="js/popper.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script src="js/custom.js"></script>
     </body>
 </html>
