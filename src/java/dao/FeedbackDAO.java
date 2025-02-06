@@ -259,7 +259,6 @@ public class FeedbackDAO extends DBContext {
             Logger.getLogger(FeedbackDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-
     }
 
     public List<Feedback> getPageByNumber(List<Feedback> list, int page, int number) {

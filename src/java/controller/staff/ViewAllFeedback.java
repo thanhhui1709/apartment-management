@@ -19,6 +19,7 @@ import java.util.List;
 import model.Account;
 import model.Feedback;
 import model.RequestType;
+import util.Util;
 
 /**
  *
@@ -75,11 +76,9 @@ public class ViewAllFeedback extends HttpServlet {
         String serviceType = request.getParameter("serviceType");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
-        // Lấy tham số từ request
+        Util u = new Util();
 
-        if (searchName == null || searchName.trim().isEmpty()) {
-            searchName = "";
-        }
+        searchName = u.stringNomalize(searchName);
 
         if (serviceType == null || serviceType.trim().isEmpty()) {
             serviceType = "";
@@ -99,15 +98,9 @@ public class ViewAllFeedback extends HttpServlet {
             page = "1";
         }
         List<RequestType> listRequestType = daoRT.getAll();
-        int numberPerPape = 3;
-        int totalPage;
-        if (listFeedback.size() % numberPerPape == 0) {
-            totalPage = listFeedback.size() / numberPerPape;
-        } else {
-            totalPage = listFeedback.size() / numberPerPape + 1;
-        }
+        int totalPage = u.getTotalPage(listFeedback, 3);
         if (listFeedback.size() != 0) {
-            listFeedback = daoF.getPageByNumber(listFeedback, Integer.parseInt(page), numberPerPape);
+            listFeedback = u.getListPerPage(listFeedback, 3, page);
             session.setAttribute("listRequestType", listRequestType);
             session.setAttribute("listFeedback", listFeedback);
             request.setAttribute("totalPage", totalPage);
