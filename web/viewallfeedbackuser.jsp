@@ -102,7 +102,7 @@
                                                                 <td>${feedback.detail}</td>
                                                                 <td>${feedback.date}</td>
                                                                 <td>${feedback.requestType.name}</td>
-                                                                <td><a href="deletefeedback?id=${feedback.id}" onclick="return confirm('Are you sure to delete this rule?')""><i class="material-icons" title="Delete">&#xE872;</i></a></td>
+                                                                <td><a href="deletefeedback?id=${feedback.id}" onclick="return confirm('Are you sure to delete this feedback?')""><i class="material-icons" title="Delete">&#xE872;</i></a></td>
 
                                                             </tr>
                                                         </c:forEach>
