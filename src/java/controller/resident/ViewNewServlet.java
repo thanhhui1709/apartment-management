@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.News;
+import util.Util;
 
 /**
  *
@@ -62,8 +63,36 @@ public class ViewNewServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        String title = request.getParameter("title");
+        Util u = new Util();
+
+        title = u.stringNomalize(title);
+
+        if (startDate == null || startDate.trim().isEmpty()) {
+            startDate = "";
+        }
+        if (endDate == null || endDate.trim().isEmpty()) {
+            endDate = "";
+        }
         NewDAO dao = new NewDAO();
-        List<News> listNews = dao.getAllNews();
+        String page = request.getParameter("page");
+        if (page == null) {
+            page = "1";
+        }
+        List<News> listNews = dao.filterNews(title, startDate, endDate);
+        int totalPage = u.getTotalPage(listNews, 3);
+        if (listNews.size() != 0) {
+            listNews = u.getListPerPage(listNews, 3, page);
+            session.setAttribute("listNews", listNews);
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("currentPage", Integer.parseInt(page));
+            request.getRequestDispatcher("viewallnews.jsp").forward(request, response);
+        } else {
+            request.setAttribute("message", "No result");
+            request.getRequestDispatcher("viewallnews.jsp").forward(request, response);
+        }
 
         session.setAttribute("listNews", listNews);
         request.getRequestDispatcher("viewallnews.jsp").forward(request, response);

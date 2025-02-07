@@ -22,8 +22,8 @@ import javax.mail.internet.MimeMessage;
 public class SendEmail {
 
     private final int LIMIT_MINUS = 10;
-    private final String from = "playunknowquangoc@gmail.com";
-    private final String password = "ooah bdsl oxjb cxat";
+    private final String from = "baviapartment88@gmail.com";
+    private final String password = "nuli lkzr uxcs elbr";
 
     /**
      * Tạo mã xác nhận ngẫu nhiên.

@@ -4,7 +4,6 @@
  */
 package util;
 
-
 import dao.ResidentDAO;
 import dao.StaffDAO;
 import java.util.ArrayList;
@@ -29,44 +28,54 @@ public class Util {
         }
         return "view-profile-" + destination;
     }
-    public  String getTableNameByRoleIdEdit(int role){
-        if(role==1) return "editprofileRE.jsp";
+
+    public String getTableNameByRoleIdEdit(int role) {
+        if (role == 1) {
+            return "editprofileRE.jsp";
+        }
         return "editprofileST.jsp";
     }
-    public String getSiteToViewRule(int role){
-        if(role==1) return "view-rule-resident";
+
+    public String getSiteToViewRule(int role) {
+        if (role == 1) {
+            return "view-rule-resident";
+        }
         return "view-rule-admin";
     }
-    
-    public String getSiteToViewRequest(int role){
-        if(role==1) return "viewrequest_history";
+
+    public String getSiteToViewRequest(int role) {
+        if (role == 1) {
+            return "viewrequest_history";
+        }
         return "view-all-request";
     }
-    
-    public String getSiteToViewFeedBack(int role){
-        if(role==1) return "view-feed-back-user";
+
+    public String getSiteToViewFeedBack(int role) {
+        if (role == 1) {
+            return "view-feed-back-user";
+        }
         return "view-all-feedback";
     }
-    
+
     public int getNumberFromText(String str) {
         return Integer.parseInt(str.substring(1));
     }
-    
-     public int getNumberFromTextOnlyNumber(String str) {
+
+    public int getNumberFromTextOnlyNumber(String str) {
         return Integer.parseInt(str);
     }
+
     public int getNumberFromTextPlusOne(String str) {
-        return Integer.parseInt(str.substring(1))+1;
+        return Integer.parseInt(str.substring(1)) + 1;
     }
-    public static void main(String[] args) {
-        Util u=new  Util();
+
+    public Date convertStringToDate(String str) {
+        String[] number = str.split("-");
+        Date date = new Date(Integer.parseInt(number[0]), Integer.parseInt(number[1]), Integer.parseInt(number[2]));
+        return date;
     }
-    public Date convertStringToDate(String str){
-       String[] number=str.split("-");
-          Date date = new Date(Integer.parseInt(number[0]), Integer.parseInt(number[1]), Integer.parseInt(number[2]));
-       return date;
-    }
-    public List<String> getAllEmail(){
+
+    public List<String> getAllEmail() {
         StaffDAO sd = new StaffDAO();
         ResidentDAO rd = new ResidentDAO();
         List<String> rs = new ArrayList<>();
@@ -78,4 +87,52 @@ public class Util {
         }
         return rs;
     }
+
+    public String stringNomalize(String str) {
+
+        if (str == null || str.trim().isEmpty()) {
+            return "";
+        }
+        String strNormalize = str.trim();
+        while (strNormalize.contains("  ")) {
+            strNormalize = strNormalize.replace("  ", " ");
+        }
+        return strNormalize;
+    }
+
+    public <T> int getTotalPage(List<T> list, int numberPerPape) {
+        int totalPage;
+        if (list.size() % numberPerPape == 0) {
+            totalPage = list.size() / numberPerPape;
+        } else {
+            totalPage = list.size() / numberPerPape + 1;
+        }
+        return totalPage;
+    }
+
+    public <T> List<T> getListPerPage(List<T> list, int numberPerPape, String page) {
+        if (page == null || page =="") {
+            page = "1";
+        }
+        int index = Integer.parseInt(page);
+        int start = numberPerPape * (index - 1);
+        int end = numberPerPape * index - 1;
+        List<T> listPage = new ArrayList<>();
+        for (int i = start; i <= end; i++) {
+            listPage.add(list.get(i));
+            if (i == list.size() - 1) {
+                break;
+            }
+        }
+        return listPage;
+    }
+
+    public static void main(String[] args) {
+        Util u = new Util();
+        String str = " Phung      Nhat        Quang    ";
+        System.out.println(u.stringNomalize(str));
+        ResidentDAO daoR = new ResidentDAO();
+        System.out.println(u.getListPerPage(daoR.getAll(), 3, "").size());
+    }
+
 }

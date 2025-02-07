@@ -184,6 +184,8 @@
                         </div>
                         <form method="get" action="view-resident" style="display: flex; align-items: center; gap: 10px;">
                             <label for="page" style="font-size: 14px; font-weight: bold;">Page:</label>
+                            <input type="text" name="filterStatus" value="${param.filterStatus}" hidden=""><!-- comment -->
+                             <input type="text" name="searchName" hidden="${param.searchName}"><!-- comment -->
                             <select id="page" name="page" onchange="this.form.submit()" 
                                     style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
                                 <c:forEach begin="1" end="${requestScope.totalPage}" var="page">
