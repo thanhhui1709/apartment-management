@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
+import util.Util;
 
 /**
  *
@@ -79,7 +80,7 @@ public class PasswordUpdateServlet extends HttpServlet {
         String newpw = request.getParameter("newPassword").trim();
         String cfnewpw = request.getParameter("cfnewPassword").trim();
         ResidentDAO rd = new ResidentDAO();
-        if (!oldpw.equals(account.getPassword())) {
+        if (!Util.isCorrectPassword(oldpw, account.getPassword())) {
             request.setAttribute("msg", "Old password is not correct");
             request.getRequestDispatcher("changepassword.jsp").forward(request, response);
             return;
@@ -91,6 +92,12 @@ public class PasswordUpdateServlet extends HttpServlet {
         }
         if (!newpw.equals(cfnewpw)) {
             request.setAttribute("msg", "New password is not match");
+            request.getRequestDispatcher("changepassword.jsp").forward(request, response);
+            return;
+        }
+        if(!Util.isCorrectFormatPassword(newpw)){
+             request.setAttribute("msg", "The password must have at least 6 characters, including at least 1 uppercase letter,"
+                     + " 1 special character, and both letters and numbers.");
             request.getRequestDispatcher("changepassword.jsp").forward(request, response);
             return;
         }
