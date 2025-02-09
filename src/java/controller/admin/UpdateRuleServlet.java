@@ -13,6 +13,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import model.Rule;
 import util.Util;
 
@@ -98,23 +101,39 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
     String id = request.getParameter("id");
     String title = request.getParameter("title");
     String description = request.getParameter("description");
-    String date = request.getParameter("date");
-    String effectiveDate = request.getParameter("effectiveDate");
+    String dateStr = request.getParameter("date");
+    String effectiveDateStr = request.getParameter("effectiveDate");
 
-    RuleDAO daoR = new RuleDAO();
-    Rule rule = new Rule(id, title, description, date, effectiveDate);
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-    boolean isUpdated = daoR.updateRule(rule); 
+    Rule rule = new Rule(id, title, description, dateStr, effectiveDateStr);
+    request.setAttribute("rule", rule);
 
-    if (isUpdated) {
-        request.setAttribute("message", "Update rule successfully");
-        request.setAttribute("status", "true");
-    } else {
-        request.setAttribute("message", "Update rule failed");
+    try {
+        Date startDate = sdf.parse(dateStr);
+        Date effectiveDate = sdf.parse(effectiveDateStr);
+
+        if (!effectiveDate.after(startDate)) {
+            request.setAttribute("message", "Effective date must be after start date!");
+            request.setAttribute("status", "false");
+            request.getRequestDispatcher("updateRule.jsp").forward(request, response);
+            return; // Dừng xử lý nếu ngày không hợp lệ
+        }
+        
+        RuleDAO daoR = new RuleDAO();
+        boolean isUpdated = daoR.updateRule(rule);
+    
+        if (isUpdated) {
+            request.setAttribute("message", "Update rule successfully");
+            request.setAttribute("status", "true");
+        } else {
+            request.setAttribute("message", "Update rule failed");
+            request.setAttribute("status", "false");
+        }
+    } catch (ParseException e) {
+        request.setAttribute("message", "Invalid date format!");
         request.setAttribute("status", "false");
     }
-
-    request.setAttribute("rule", rule);
 
     request.getRequestDispatcher("updateRule.jsp").forward(request, response);
 }
