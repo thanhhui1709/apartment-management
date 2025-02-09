@@ -110,6 +110,7 @@ public class AdminFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
+        
 
         Account a = (Account) session.getAttribute("account");
         String uri = req.getServletPath();
@@ -122,7 +123,7 @@ public class AdminFilter implements Filter {
                 res.sendRedirect("404_error.jsp");
                 return;
             }
-        }
+        } 
 
         Throwable problem = null;
         try {

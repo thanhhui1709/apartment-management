@@ -5,6 +5,10 @@
         <filter-class>filter.AuthorizedFilter</filter-class>
     </filter>
     <filter>
+        <filter-name>StaffFilter</filter-name>
+        <filter-class>filter.StaffFilter</filter-class>
+    </filter>
+    <filter>
         <filter-name>ResidentFilter</filter-name>
         <filter-class>filter.ResidentFilter</filter-class>
     </filter>
@@ -21,6 +25,16 @@
         <filter-name>AuthorizedFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>StaffFilter</filter-name>
+        <url-pattern>/view-profile-staff</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>StaffFilter</filter-name>
+        <url-pattern>/editprofileSTServlet</url-pattern>
+    </filter-mapping>
 
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
@@ -30,10 +44,7 @@
         <filter-name>ResidentFilter</filter-name>
         <url-pattern>/editprofileREServlet</url-pattern>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>ResidentFilter</filter-name>
-        <url-pattern>/update-password-resident</url-pattern>
-    </filter-mapping>
+
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
         <url-pattern>/viewrequest_history</url-pattern>
@@ -59,14 +70,7 @@
         <url-pattern>/view-rule-resident</url-pattern>
     </filter-mapping>
 
-    <filter-mapping>
-        <filter-name>AdministrativeFilter</filter-name>
-        <url-pattern>/view-profile-staff</url-pattern>
-    </filter-mapping>
-    <filter-mapping>
-        <filter-name>AdministrativeFilter</filter-name>
-        <url-pattern>/editprofileSTServlet</url-pattern>
-    </filter-mapping>
+
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-all-request</url-pattern>
@@ -78,6 +82,10 @@
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-rule-admin</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdministrativeFilter</filter-name>
+        <url-pattern>/add-new-rule</url-pattern>
     </filter-mapping>
 
     <filter-mapping>

@@ -121,7 +121,7 @@ public class AuthorizedFilter implements Filter {
                 && !uri.contains("404_error.jsp")) {
             res.sendRedirect("401_error.jsp");
             return;
-        }
+        } 
 
         Throwable problem = null;
         try {
