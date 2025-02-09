@@ -39,10 +39,7 @@
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/editprofileSTServlet</url-pattern>
     </filter-mapping>
-    <filter-mapping>
-        <filter-name>AdministrativeFilter</filter-name>
-        <url-pattern>/update-password-resident</url-pattern>
-    </filter-mapping>
+
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-all-request</url-pattern>
