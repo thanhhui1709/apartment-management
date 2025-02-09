@@ -12,6 +12,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.SendEmail;
+import util.Util;
+import static util.Util.encryptPassword;
 
 /**
  *
@@ -65,7 +68,6 @@ public class AddNewResident extends HttpServlet {
         String email = request.getParameter("email");
         String id = request.getParameter("id");
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
 
         // Validate phone number (11 digits) and ID (12 digits)
         if (!phone.matches("\\d{11}")) {
@@ -79,8 +81,14 @@ public class AddNewResident extends HttpServlet {
             request.getRequestDispatcher("addResidentForm.jsp").forward(request, response);
             return;
         }
-
+        Util u = new Util();
+        //generate random password then send to new user
+        String password = u.generatePassword();
+        SendEmail e = new SendEmail();
+        e.sendEmail(email, name, username, password);
+        //insert to database with encryted password
         ResidentDAO rd = new ResidentDAO();
+        password = encryptPassword(password);
         rd.insertNewResident(name, address, email, phone, dob, id, username, password);
 
         response.sendRedirect("view-resident");

@@ -71,6 +71,12 @@ public class UpdateStaffInfor extends HttpServlet {
         String id = request.getParameter("id");
         StaffDAO sd = new StaffDAO();
         Staff staff = sd.getById(id);
+        RoleDAO daoR = new RoleDAO();
+        CompanyDAO daoCp = new CompanyDAO();
+        List<Company> listCompany = daoCp.getAll();
+        List<Role> listRole = daoR.getAllExcludeResident();
+        session.setAttribute("listCompany", listCompany);
+        session.setAttribute("listRole", listRole);
         request.setAttribute("staff", staff);
         request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
     }

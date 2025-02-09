@@ -82,7 +82,7 @@
                                                     </div>
                                                     <div class="col-md-4 d-flex">
                                                         <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
-                                                        <a href="addnewstaff.jsp"  class="btn btn-primary">Add new Staff</a>
+                                                        <a href="add-new-staff"  class="btn btn-primary">Add new Staff</a>
                                                     </div>
                                                 </div>
                                             </form>
@@ -128,7 +128,7 @@
                                                                     </div>
                                                                     <div class="modal-body" style="display: flex ">
                                                                         <div style="width: 50%;text-align: center;">
-                                                                            <img style="width: 70%; border-radius: 50%;margin-top: 15%" src="images/logo/person.jpg" alt="alt"/>
+                                                                            <img style="width: 70%; border-radius: 50%;margin-top: 15%" src="${staff.image}" alt="alt"/>
                                                                         </div>
                                                                         <div style="width: 50%">
                                                                             <p><strong>ID:</strong> ${staff.id}</p>
