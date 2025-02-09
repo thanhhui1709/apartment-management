@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.UUID;
 import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -23,7 +24,7 @@ public class SendEmail {
 
     private final int LIMIT_MINUS = 10;
     private final String from = "baviapartment88@gmail.com";
-    private final String password = "nuli lkzr uxcs elbr";
+    private final String password = "nong aqji krlu xvue";
 
     /**
      * Tạo mã xác nhận ngẫu nhiên.
@@ -76,11 +77,48 @@ public class SendEmail {
         return false;
     }
 
+    public void sendEmail(String to, String residentName, String username, String residentPassword) {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587"); // Use 587 for TLS
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true"); // Enable TLS
+
+        Authenticator auth = new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        };
+
+        Session session = Session.getInstance(props, auth);
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+            message.setSubject("Your New Resident Account Details", "UTF-8");
+
+            String emailContent = "<p>Dear " + residentName + ",</p>"
+                    + "<p>Your account has been created successfully.</p>"
+                    + "<p>Username: " + username + "<br></p>"
+                    + "<p>Password: " + residentPassword + "</p>"
+                    + "<p>Please keep this information safe.</p>"
+                    + "<p>Best Regards,<br>Your Community</p>";
+
+            message.setContent(emailContent, "text/html; charset=UTF-8");
+
+            Transport.send(message);
+            System.out.println("Email sent successfully to " + to);
+        } catch (MessagingException e) {
+            System.out.println("Failed to send email to: " + to);
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Kiểm tra xem địa chỉ email có tồn tại hay không.
      */
-    
-
     public static void main(String[] args) {
         SendEmail emailSender = new SendEmail();
         String emailToSend = "example@gmail.com"; // Địa chỉ email cần gửi
@@ -88,8 +126,10 @@ public class SendEmail {
         String content = "<h1>Cảm ơn bạn đã đặt hàng!</h1>"; // Nội dung email
 
         // Gửi email
-        if(emailSender.sendEmail(emailToSend, subject, content)){
+        if (emailSender.sendEmail(emailToSend, subject, content)) {
             System.out.println("Yes");
-        } else System.out.println("NO");
+        } else {
+            System.out.println("NO");
+        }
     }
 }

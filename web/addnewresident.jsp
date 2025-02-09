@@ -202,16 +202,7 @@
                                                         />
                                                     <span id="username-error" style="color: red"></span>
                                                 </div>
-                                                <div class="col">
-                                                    <label for="password">Password</label>
-                                                    <input
-                                                        type="password"
-                                                        id="password"
-                                                        name="password"
-                                                        placeholder="Enter password"
-                                                        required
-                                                        />
-                                                </div>
+                                              
                                             </div>
                                         </div>
                                         <div class="form-button">
