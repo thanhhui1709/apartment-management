@@ -9,6 +9,8 @@ import dao.StaffDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
+import java.util.Random;
+import model.SendEmail;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
@@ -112,7 +114,7 @@ public class Util {
     }
 
     public <T> List<T> getListPerPage(List<T> list, int numberPerPape, String page) {
-        if (page == null || page =="") {
+        if (page == null || page == "") {
             page = "1";
         }
         int index = Integer.parseInt(page);
@@ -128,26 +130,59 @@ public class Util {
         return listPage;
     }
 
-    public static void main(String[] args) {
-        Util u = new Util();
-        String str = " Phung      Nhat        Quang    ";
-        System.out.println(u.stringNomalize(str));
-        ResidentDAO daoR = new ResidentDAO();
-        System.out.println(u.getListPerPage(daoR.getAll(), 3, "").size());
-    }
-    public static String encryptPassword(String password){
+    public static String encryptPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
-    public static boolean isCorrectFormatPassword(String password){
-        if(password.length() <6) return false;
-        if(!password.matches(".*\\d.*")) return false;
-        if(!password.matches(".*[^a-zA-Z0-9].*")) return false;
-        if(!password.matches(".*[A-Z].*")) return false;
-        if(!password.matches(".*[a-zA-Z].*")) return false;
+
+    public static boolean isCorrectFormatPassword(String password) {
+        if (password.length() < 6) {
+            return false;
+        }
+        if (!password.matches(".*\\d.*")) {
+            return false;
+        }
+        if (!password.matches(".*[^a-zA-Z0-9].*")) {
+            return false;
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            return false;
+        }
+        if (!password.matches(".*[a-zA-Z].*")) {
+            return false;
+        }
         return true;
     }
-    public static boolean isCorrectPassword(String input,String password){
+
+    public  String generatePassword() {
+        Random random=new Random();
+        String password="";
+        String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerCase = "abcdefghijklmnopqrstuvwxyz";
+        String digits = "0123456789";
+        String specialCharacter = "!@#$%^&*()-_=+<>?";
+        String allCharacter=upperCase+lowerCase+digits+specialCharacter;
+       
+        password+=upperCase.charAt(random.nextInt(0, upperCase.length()));
+        password+=lowerCase.charAt(random.nextInt(0, lowerCase.length()));
+        password+=digits.charAt(random.nextInt(0, digits.length()));
+        password+=specialCharacter.charAt(random.nextInt(0, specialCharacter.length()));
+        for (int i = 0; i < 2; i++) {
+            password+=allCharacter.charAt(random.nextInt(0,allCharacter.length()));
+        }
+        return password;
+    }
+
+    public static boolean isCorrectPassword(String input, String password) {
         return BCrypt.checkpw(input, password);
+    }
+
+    public static void main(String[] args) {
+        Util u = new Util();
+        String pass=u.generatePassword();
+        System.out.println(pass);
+        System.out.println(encryptPassword(pass));
+ 
+// 
     }
 
 }
