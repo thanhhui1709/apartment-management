@@ -74,7 +74,15 @@ public class AddNewStaffServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        RoleDAO daoR = new RoleDAO();
+        CompanyDAO daoCp = new CompanyDAO();
+        List<Company> listCompany = daoCp.getAll();
+        List<Role> listRole = daoR.getAllExcludeResident();
+        session.setAttribute("listCompany", listCompany);
+        session.setAttribute("listRole", listRole);
+        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+        
     }
 
     /**
@@ -88,13 +96,8 @@ public class AddNewStaffServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
         RoleDAO daoR = new RoleDAO();
         CompanyDAO daoCp = new CompanyDAO();
-        List<Company> listCompany = daoCp.getAll();
-        List<Role> listRole = daoR.getAllExcludeResident();
-        session.setAttribute("listCompany", listCompany);
-        session.setAttribute("listRole", listRole);
         
         String name = request.getParameter("name");
         String dob = request.getParameter("dob");
