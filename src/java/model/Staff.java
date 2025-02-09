@@ -29,6 +29,14 @@ public class Staff {
     private String endDate; // End date as String
     private String gender;
 
+    public Staff(String id, String email, String phone, String bank, String address) {
+        this.id= id;
+        this.email=email;
+        this.phone=phone;
+        this.bank=bank;
+        this.address=address;
+    }
+
     public String getGender() {
         return gender;
     }

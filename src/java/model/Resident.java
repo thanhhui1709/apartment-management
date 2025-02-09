@@ -63,6 +63,14 @@ public class Resident {
         this.gender = gender;
     }
 
+    public Resident(String pId, String email, String phone, String address) {
+        this.pId=pId;
+        this.email=email;
+        this.phone=phone;
+        this.address=address;
+        
+    }
+
     public String getGender() {
         return gender;
     }

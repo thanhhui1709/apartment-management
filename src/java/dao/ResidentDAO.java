@@ -152,14 +152,14 @@ public class ResidentDAO extends DBContext {
         }
     }
 
-    public void EditProfileRe(String id, String phone, String email, String address) {
+    public void EditProfileRe(Resident r) {
         String sql = "update Resident set Email=?, Phone=?, [Address]=? where id=?";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, email);
-            pre.setString(2, phone);
-            pre.setString(3, address);
-            pre.setString(4, id);
+            pre.setString(1, r.getEmail());
+            pre.setString(2, r.getPhone());
+            pre.setString(3, r.getAddress());
+            pre.setString(4, r.getpId());
             pre.executeUpdate();
         } catch (Exception e) {
         }

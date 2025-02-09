@@ -82,47 +82,39 @@ public class EditprofileREServlet extends HttpServlet {
         if (account == null) {
             response.sendRedirect("login.jsp");
             return;
-        }
-
-        ResidentDAO rd = new ResidentDAO();
-        Resident re = rd.getById(account.getpId());
-
-        if (re == null) {
-            request.setAttribute("msg", "User not found.");
-            request.getRequestDispatcher("profile.jsp").forward(request, response);
-            return;
-        }
+        }         
 
         String eemail = request.getParameter("editProfileEmail");
         String ephone = request.getParameter("editProfilePhone");
         String eaddress = request.getParameter("editProfileAddress");
 
-        if (!eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            request.setAttribute("status", "false");
-            request.setAttribute("msg", "Invalid email format.");
-            request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
-            return;
-        }
+        if (eemail == null || !eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+        request.setAttribute("status", "false");
+        request.setAttribute("msg", "Invalid email format.");
+        request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
+        return;
+    }
 
-        if (!ephone.matches("0[0-9]{9}")) {
-            request.setAttribute("status", "false");
-            request.setAttribute("msg", "Please enter a valid phone number: 10 digits starting with 0.");
-            request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
-            return;
-        }
+    if (ephone == null || !ephone.matches("^0[0-9]{9}$")) {
+        request.setAttribute("status", "false");
+        request.setAttribute("msg", "Please enter a valid phone number: 10 digits starting with 0.");
+        request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
+        return;
+    }
 
-        if (eaddress.trim().isEmpty()) {
-            request.setAttribute("status", "false");
-            request.setAttribute("msg", "Address cannot be empty.");
-            request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
-            return;
-        }
+    if (eaddress == null || eaddress.trim().isEmpty()) {
+        request.setAttribute("status", "false");
+        request.setAttribute("msg", "Address cannot be empty.");
+        request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
+        return;
+    }
 
-        rd.EditProfileRe(re.getpId(), ephone, eemail, eaddress);
-
-        re = rd.getById(account.getpId());
-
-        session.setAttribute("person", re);
+        Resident resident= new Resident(account.getpId(),eemail,ephone,eaddress);
+        ResidentDAO re=new ResidentDAO();
+        re.EditProfileRe(resident);
+        resident=re.getById(account.getpId());
+        
+        session.setAttribute("person", resident);
         request.setAttribute("msg", "Update successfully");
         request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
 

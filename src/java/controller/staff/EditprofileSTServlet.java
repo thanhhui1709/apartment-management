@@ -83,55 +83,51 @@ public class EditprofileSTServlet extends HttpServlet {
         return;
     }
 
-        StaffDAO st= new StaffDAO();
-        Staff s= st.getById(account.getpId());
-
-    if (s == null) {
-        request.setAttribute("msg", "User not found.");
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
-        return;
-    }
-
     String eemail = request.getParameter("editProfileEmail");
     String ephone = request.getParameter("editProfilePhone");
     String eaddress = request.getParameter("editProfileAddress");
-    String ebank= request.getParameter("editProfileBank");
+    String ebank = request.getParameter("editProfileBank");
 
-    if (!eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+    if (eemail == null || !eemail.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
         request.setAttribute("status", "false");
         request.setAttribute("msg", "Invalid email format.");
-        request.getRequestDispatcher("profile.jsp").forward(request, response);
+        request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
         return;
     }
 
-    if (!ephone.matches("0[0-9]{9}")) {
+    if (ephone == null || !ephone.matches("^0[0-9]{9}$")) {
         request.setAttribute("status", "false");
         request.setAttribute("msg", "Please enter a valid phone number: 10 digits starting with 0.");
         request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
         return;
     }
 
-    if (eaddress.trim().isEmpty()) {
+    if (eaddress == null || eaddress.trim().isEmpty()) {
         request.setAttribute("status", "false");
         request.setAttribute("msg", "Address cannot be empty.");
         request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
         return;
     }
-    if (ebank.trim().isEmpty()) {
+
+    if (ebank == null || ebank.trim().isEmpty()) {
         request.setAttribute("status", "false");
         request.setAttribute("msg", "Bank cannot be empty.");
         request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
         return;
     }
 
-    st.EditProfileSt(s.getId(), ephone, eemail,ebank, eaddress);
+    Staff staff = new Staff(account.getpId(), eemail, ephone, ebank, eaddress);
 
-    s = st.getById(account.getpId());
+    StaffDAO st = new StaffDAO();
+    st.EditProfileSt(staff);
+    staff=st.getById(account.getpId());
 
-        session.setAttribute("person", s);
-        request.setAttribute("msg", "Update successfully");
-        request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
+    session.setAttribute("person", staff);
+
+    request.setAttribute("msg", "Update successfully");
+    request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
 }
+
 
     /** 
      * Returns a short description of the servlet.
