@@ -56,7 +56,8 @@ public class StaffDAO extends DBContext {
                 String startDate = rs.getString("startdate");
                 String enddate = rs.getString("enddate");
                 String gender = rs.getString("gender");
-                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender);
+                String image = rs.getString("image");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender,image);
                 list.add(s);
             }
         } catch (Exception e) {
@@ -157,15 +158,15 @@ public class StaffDAO extends DBContext {
         return null;
     }
 
-    public void EditProfileSt(String id, String phone, String email, String bank, String address) {
+    public void EditProfileSt(Staff s) {
         String sql = "update Staff set Email=?, Phone=?,Bank=?, [Address]=? where id=?";
         try {
             PreparedStatement pre = connection.prepareStatement(sql);
-            pre.setString(1, email);
-            pre.setString(2, phone);
-            pre.setString(3, bank);
-            pre.setString(4, address);
-            pre.setString(5, id);
+            pre.setString(1, s.getEmail());
+            pre.setString(2, s.getPhone());
+            pre.setString(3, s.getBank());
+            pre.setString(4, s.getAddress());
+            pre.setString(5, s.getId());
             pre.executeUpdate();
         } catch (Exception e) {
         }
@@ -262,7 +263,7 @@ public class StaffDAO extends DBContext {
         }
         return false;
     }
-    
+
     public List<Staff> searchByName(List<Staff> list, String name) {
         List<Staff> rs = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
@@ -271,6 +272,52 @@ public class StaffDAO extends DBContext {
             }
         }
         return rs;
+    }
+
+    public List<Staff> getBySearchNameAndStatus(int status, String name) {
+        List<Staff> list  =new ArrayList<>();
+        Util util = new Util();
+        CompanyDAO sd = new CompanyDAO();
+        RoleDAO rd = new RoleDAO();
+        name = util.stringNomalize(name.trim());
+        String sql = "select * from staff where 1=1";
+        int count = 0;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            if (!name.isBlank()) {
+                sql += " and name like '%"+name+"%'";
+            }
+            if (status != -1) {
+                sql += " and status = "+status;
+            }
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                String id = rs.getString("id");
+                String n = rs.getString("Name");
+                String bod = rs.getDate("bod").toString();
+                String Email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String cccd = rs.getString("cccd");
+                int salary = rs.getInt("salary");
+                String education = rs.getString("education");
+                String bank = rs.getString("bank");
+                int s = rs.getInt("status");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                Role r = rd.getById(rs.getString("roleid"));
+                Company cp = sd.getById(rs.getString("cid"));
+                String startDate = rs.getString("startdate");
+                String enddate = rs.getString("enddate");
+                String gender = rs.getString("gender");
+                Staff sf = new Staff(id, n, bod, Email, phone, address, cccd, salary, education, bank, s, username, password, r, cp, startDate, enddate, gender);
+                list.add(sf);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        System.out.println(sql);
+        return list;
     }
 
     public List<Staff> getPageByNumber(List<Staff> list, int page, int number) {
@@ -290,12 +337,43 @@ public class StaffDAO extends DBContext {
         if (status == -1) {
             return this.getAll();
         }
-        List<Staff> list = this.getAll();
+        //List<Staff> list = this.getAll();
         List<Staff> rs = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getStatus() == status) {
-                rs.add(list.get(i));
+//        for (int i = 0; i < list.size(); i++) {
+//            if (list.get(i).getStatus() == status) {
+//                rs.add(list.get(i));
+//            }
+//        }
+        RoleDAO rd = new RoleDAO();
+        CompanyDAO sd = new CompanyDAO();
+        String sql = "select * from staff where status=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, status);
+            ResultSet resultSet = st.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("id");
+                String name = resultSet.getString("Name");
+                String bod = resultSet.getDate("bod").toString();
+                String Email = resultSet.getString("email");
+                String phone = resultSet.getString("phone");
+                String address = resultSet.getString("address");
+                String cccd = resultSet.getString("cccd");
+                int salary = resultSet.getInt("salary");
+                String education = resultSet.getString("education");
+                String bank = resultSet.getString("bank");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                Role r = rd.getById(resultSet.getString("roleid"));
+                Company cp = sd.getById(resultSet.getString("cid"));
+                String startDate = resultSet.getString("startdate");
+                String enddate = resultSet.getString("enddate");
+                String gender = resultSet.getString("gender");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender);
+                rs.add(s);
             }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
         return rs;
     }
@@ -347,10 +425,9 @@ public class StaffDAO extends DBContext {
     public static void main(String[] args) {
 
         StaffDAO staffDAO = new StaffDAO();
-        Staff s1 = new Staff("S1013","Guard Company","2000-05-05","na3m@gmail.com","0226013325","Ha Noi","11232231",500,"VO Hoc","1234564898723",1,"sa1das","4578",new Role("4", "name", ""),new Company("C001"),"2025-02-01","F");
-        Staff s = new Staff("S1013","2000-05-05","na3m@gmail.com","0226013325","Ha Noi","11232231",500,"VO Hoc","1234564898723", "sa1das","4578",new Role("4", "name", ""),new Company("C001"),"2025-02-01","F");
+        Staff s1 = new Staff("S1013", "Guard Company", "2000-05-05", "na3m@gmail.com", "0226013325", "Ha Noi", "11232231", 500, "VO Hoc", "1234564898723", 1, "sa1das", "4578", new Role("4", "name", ""), new Company("C001"), "2025-02-01", "F");
+        Staff s = new Staff("S1013", "2000-05-05", "na3m@gmail.com", "0226013325", "Ha Noi", "11232231", 500, "VO Hoc", "1234564898723", "sa1das", "4578", new Role("4", "name", ""), new Company("C001"), "2025-02-01", "F");
         System.out.println(staffDAO.insertStaff(s));
-
 
     }
 

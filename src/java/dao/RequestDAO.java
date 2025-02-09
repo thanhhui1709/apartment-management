@@ -25,7 +25,7 @@ import util.Util;
 public class RequestDAO extends DBContext {
 
     public List<Request> getAll() {
-        String sql = "select * from Request";
+        String sql = "select * from Request order by date";
         List<Request> list = new ArrayList<>();
         ResidentDAO rd = new ResidentDAO();
         StaffDAO sd = new StaffDAO();

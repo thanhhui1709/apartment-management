@@ -140,7 +140,7 @@
                                                 <div class="col-lg-12">
                                                     <div class="full dis_flex center_text">
                                                         <div class="profile_img">
-                                                            <img width="180" class="rounded-circle" src="images/logo/person.jpg" alt="User Image">
+                                                            <img width="180" class="rounded-circle" src="${sessionScope.person.image}" alt="User Image">
                                                         </div>
                                                         <div class="profile_contant">
                                                             <div class="contact_inner">
