@@ -83,7 +83,8 @@ public class ViewAllStaff extends HttpServlet {
         if (filterStatus_raw != null) {
             int filterStatus = Integer.parseInt(filterStatus_raw);
             list = sd.getByStatus(filterStatus);
-            if (list.size() == 0) {
+            if (list.size()==0) {
+                request.setAttribute("staffs", null);
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
@@ -93,7 +94,8 @@ public class ViewAllStaff extends HttpServlet {
         if (searchName != null) {
             searchName = u.stringNomalize(searchName);
             list = sd.searchByName(list, searchName);
-            if (list.size() == 0) {
+            if (list.size()==0) {
+                request.setAttribute("staffs", null);
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
@@ -106,12 +108,6 @@ public class ViewAllStaff extends HttpServlet {
 
         int totalPage = u.getTotalPage(list, 3);
         list = u.getListPerPage(list, 3, page);
-        RoleDAO daoR = new RoleDAO();
-        CompanyDAO daoCp = new CompanyDAO();
-        List<Company> listCompany = daoCp.getAll();
-        List<Role> listRole = daoR.getAllExcludeResident();
-        session.setAttribute("listCompany", listCompany);
-        session.setAttribute("listRole", listRole);
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("staffs", list);

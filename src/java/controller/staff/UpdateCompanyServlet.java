@@ -97,7 +97,9 @@ public class UpdateCompanyServlet extends HttpServlet {
         String description = getSafeParameter(request, "description");
 
         boolean hasError = false;
+                Company company = new Company(id, name, phone, contactPhone, fax, email, contactEmail, website, taxCode, bank, description, address);
 
+        CompanyValidation companyValidation = new CompanyValidation(company);
         // Validation errors
         if (name.isEmpty()) {
             request.setAttribute("nameError", "Name cannot be blank.");
@@ -119,6 +121,46 @@ public class UpdateCompanyServlet extends HttpServlet {
             request.setAttribute("taxCodeError", "Tax code must be exactly 10 digits.");
             hasError = true;
         }
+        if (companyValidation.isExistEmail(email)) {
+            request.setAttribute("emailError", "Email is existed");
+            hasError = true;
+        }
+        if (companyValidation.isExistAddress(address)) {
+            request.setAttribute("addressError", "address is existed");
+            hasError = true;
+        }
+        if (companyValidation.isExistBank(bank)) {
+            request.setAttribute("bankError", "Bank is existed");
+            hasError = true;
+        }
+        if (companyValidation.isExistContactEmail(contactEmail)) {
+            request.setAttribute("contactEmailError", "ContactEmail is existed");
+            hasError = true;
+        }
+        if (companyValidation.isExistContactPhone(contactPhone)) {
+            request.setAttribute("contactPhoneError", "ContactPhone is existed");
+            hasError = true;
+        }
+        if (companyValidation.isExistFax(fax)) {
+            request.setAttribute("faxError", "Fax is existed");
+            hasError = true;
+        }
+        if (companyValidation.isExistName(name)) {
+            request.setAttribute("nameError", "Name is existed");
+            hasError = true;
+        }
+        if (companyValidation.isExistPhone(phone)) {
+            request.setAttribute("phoneError", "Phone is existed");
+            hasError = true;
+        }
+        if (companyValidation.isExistTaxCode(taxCode)) {
+            request.setAttribute("taxCodeError", "TaxCode is existed");
+            hasError = true;
+        }
+        if (companyValidation.isExistWebsite(website)) {
+            request.setAttribute("webError", "Web Site is existed");
+            hasError = true;
+        }
         if (hasError) {
             request.setAttribute("company", new Company(id, name, phone, contactPhone, fax, email, contactEmail, website, taxCode, bank, description, address));
             request.setAttribute("pageName", "Update");
@@ -127,11 +169,10 @@ public class UpdateCompanyServlet extends HttpServlet {
             return;
         }
 
-        Company company = new Company(id, name, phone, contactPhone, fax, email, contactEmail, website, taxCode, bank, description, address);
         CompanyDAO cd = new CompanyDAO();
         cd.updateCompany(company);
         List<Company> list = cd.getAll();
-        HttpSession session=request.getSession();
+        HttpSession session = request.getSession();
         session.setAttribute("companies", list);
         response.sendRedirect("view-all-company");
     }
