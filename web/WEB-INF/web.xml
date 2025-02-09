@@ -4,6 +4,10 @@
         <filter-name>AuthorizedFilter</filter-name>
         <filter-class>filter.AuthorizedFilter</filter-class>
     </filter>
+     <filter>
+        <filter-name>StaffFilter</filter-name>
+        <filter-class>filter.StaffFilter</filter-class>
+    </filter>
     <filter>
         <filter-name>ResidentFilter</filter-name>
         <filter-class>filter.ResidentFilter</filter-class>
@@ -20,6 +24,15 @@
     <filter-mapping>
         <filter-name>AuthorizedFilter</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <filter-mapping>
+        <filter-name>StaffFilter</filter-name>
+        <url-pattern>/view-profile-staff</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>StaffFilter</filter-name>
+        <url-pattern>/editprofileSTServlet</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
