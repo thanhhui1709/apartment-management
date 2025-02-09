@@ -27,7 +27,7 @@ public class Staff {
     private Company company; // Foreign key reference
     private String startDate; // Start date as String
     private String endDate; // End date as String
-    private String gender;
+    private String gender,image;
 
     public String getGender() {
         return gender;
@@ -56,6 +56,27 @@ public class Staff {
         this.startDate = startDate;
         this.endDate = endDate;
         this.gender = gender;
+    }
+    public Staff(String id, String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, int status, String username, String password, Role role, Company company, String startDate, String endDate, String gender,String image) {
+        this.id = id;
+        this.name = name;
+        this.bod = bod;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.cccd = cccd;
+        this.salary = salary;
+        this.education = education;
+        this.bank = bank;
+        this.status = status;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.company = company;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.gender = gender;
+        this.image = image;
     }
     public Staff(String name, String bod, String email, String phone, String address, String cccd, int salary, String education, String bank, String username, String password, Role role, Company company, String startDate, String gender) {
         this.name = name;
@@ -310,4 +331,13 @@ public class Staff {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
 }
