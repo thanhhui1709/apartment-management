@@ -52,7 +52,8 @@ public class ResidentDAO extends DBContext {
                 Role role = new Role("1", "resident", "--");
                 String status = String.valueOf(rs.getInt("active"));
                 String gender = rs.getString("gender");
-                Resident resident = new Resident(id, name, cccd, phone, email, bod, address, username, password, status, name, role);
+                String image = rs.getString("image");
+                Resident resident = new Resident(id, name, cccd, phone, email, bod, address, username, password, status, name, role,image);
                 list.add(resident);
             }
         } catch (SQLException ex) {
