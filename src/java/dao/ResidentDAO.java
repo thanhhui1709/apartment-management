@@ -308,15 +308,21 @@ public class ResidentDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new Resident(rs.getString("id"),
-                        rs.getString("name"),
-                        rs.getString("cccd"),
-                        rs.getString("phone"),
-                        rs.getString("email"),
-                        rs.getString("bod"),
-                        rs.getString("address"),
-                        rs.getString("active"),
-                        rs.getString("gender")));
+                String id = rs.getString("id");
+                String na = rs.getString("name");
+                String bod = rs.getDate("bod").toString();
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String cccd = rs.getString("cccd");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                Role role = new Role("1", "resident", "--");
+                String st = String.valueOf(rs.getInt("active"));
+                String gender = rs.getString("gender");
+                String image = rs.getString("image");
+                Resident resident = new Resident(id, na, cccd, phone, email, bod, address, username, password, st, name, role,image);
+                list.add(resident);
             }
             return list;
         } catch (SQLException ex) {
@@ -327,7 +333,10 @@ public class ResidentDAO extends DBContext {
 
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
+        List<Resident> list= dao.getAll();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).getImage());
+        }
 
-        System.out.println(dao.checkDuplicateEmail("luans1mple20045@gmail.com"));;
     }
 }

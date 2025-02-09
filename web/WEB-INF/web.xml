@@ -5,8 +5,8 @@
         <filter-class>filter.AuthorizedFilter</filter-class>
     </filter>
     <filter>
-        <filter-name>StaffFilter</filter-name>
-        <filter-class>filter.StaffFilter</filter-class>
+        <filter-name>ResidentFilter</filter-name>
+        <filter-class>filter.ResidentFilter</filter-class>
     </filter>
     <filter>
         <filter-name>AdministrativeFilter</filter-name>
@@ -23,12 +23,40 @@
     </filter-mapping>
 
     <filter-mapping>
-        <filter-name>StaffFilter</filter-name>
-        <url-pattern>/view-profile-staff</url-pattern>
+        <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/view-profile-resident</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>StaffFilter</filter-name>
-        <url-pattern>/editprofileSTServlet</url-pattern>
+        <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/editprofileREServlet</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/update-password-resident</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/viewrequest_history</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/view-feed-back-user</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/sendfeedback</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/filterequest</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/resident-add-request</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/view-rule-resident</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
@@ -39,7 +67,6 @@
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/editprofileSTServlet</url-pattern>
     </filter-mapping>
-
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-all-request</url-pattern>
@@ -52,8 +79,6 @@
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-rule-admin</url-pattern>
     </filter-mapping>
-    
-
 
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>

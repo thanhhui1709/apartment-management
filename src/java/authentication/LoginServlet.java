@@ -88,7 +88,7 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
-        if (user.equals(ac.getUsername()) && Util.isCorrectPassword(pass,ac.getPassword())) {
+        if (user.equals(ac.getUsername()) && Util.isCorrectPassword(pass, ac.getPassword())) {
             ac.setpId(dao.getIdByUsernameAndRole(user, checkrole));
             session.setAttribute("account", ac);
             String remember = request.getParameter("remember");
@@ -97,23 +97,29 @@ public class LoginServlet extends HttpServlet {
                 Cookie cookieUser = new Cookie("rememberedUser", user);
                 Cookie cookiePass = new Cookie("rememberedPass", pass);
                 Cookie cookieRemember = new Cookie("remembered", "remember");
+                Cookie cookieRole = new Cookie("rememberedRole", checkrole);
                 cookieUser.setMaxAge(60 * 60 * 60);
                 cookiePass.setMaxAge(60 * 60 * 60);
                 cookieRemember.setMaxAge(60 * 60 * 60);
+                cookieRole.setMaxAge(60 * 60 * 60);
                 response.addCookie(cookieUser);
                 response.addCookie(cookiePass);
                 response.addCookie(cookieRemember);
+                response.addCookie(cookieRole);
             } else {
                 // Clear both cookies by setting max age to 0
                 Cookie cookieUser = new Cookie("rememberedUser", user);
                 Cookie cookiePass = new Cookie("rememberedPass", pass);
                 Cookie cookieRemember = new Cookie("remembered", "remember");
+                Cookie cookieRole = new Cookie("rememberedRole", checkrole);
                 cookieUser.setMaxAge(0);
                 cookiePass.setMaxAge(0);
                 cookieRemember.setMaxAge(0);
+                cookieRole.setMaxAge(0);
                 response.addCookie(cookieUser);
                 response.addCookie(cookiePass);
                 response.addCookie(cookieRemember);
+                response.addCookie(cookieRole);
             }
 
             response.sendRedirect("index.jsp");

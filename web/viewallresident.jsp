@@ -156,12 +156,12 @@
                                                                     </div>
                                                                     <div class="modal-body" style="display: flex;">
                                                                         <div style="width: 50%; text-align: center;">
-                                                                            <img style="width: 70%; border-radius: 50%; margin-top: 15%" src="images/logo/person.jpg" alt="Resident Image"/>
+                                                                            <img style="width: 70%; border-radius: 50%; margin-top: 15%" src="${resident.image}" alt="Image"/>
                                                                         </div>
                                                                         <div style="width: 50%">
                                                                             <p><strong>ID:</strong> ${resident.pId}</p>
                                                                             <p><strong>Name:</strong> ${resident.name}</p>
-                                                                            <p><strong>Bod:</strong> ${resident.bod}</p>
+                                                                            <p><strong>Bod:</strong> ${resident.bod}</p>    
                                                                             <p><strong>Email:</strong> ${resident.email}</p>
                                                                             <p><strong>Phone:</strong> ${resident.phone}</p>
                                                                             <p><strong>Address:</strong> ${resident.address}</p>
