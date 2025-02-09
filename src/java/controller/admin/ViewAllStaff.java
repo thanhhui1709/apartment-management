@@ -71,35 +71,50 @@ public class ViewAllStaff extends HttpServlet {
         List<Staff> list = ad.getAllStaffExceptAdmin();
         HttpSession session = request.getSession();
         Util u = new Util();
-//        if(session.getAttribute("staffs")==null){
-//            list = ad.getAllStaffExceptAdmin();
-//            session.setAttribute("staffs", list);
-//        }
-//        else{
-//            list = (List<Staff>) session.getAttribute("staffs");
-//        }
+        if(session.getAttribute("staffs")==null){
+            list = ad.getAllStaffExceptAdmin();
+            session.setAttribute("staffs", list);
+        }
+        else{
+            list = (List<Staff>) session.getAttribute("staffs");
+        }
         StaffDAO sd = new StaffDAO();
         String filterStatus_raw = request.getParameter("filterStatus");
+        String searchName = request.getParameter("searchName");
+//        if(!(filterStatus_raw==null && searchName==null)){
+//            int filterStatus;
+//            try {
+//                filterStatus = Integer.parseInt(filterStatus_raw);
+//            } catch (NumberFormatException e) {
+//                filterStatus  = -1;
+//            }
+//            list = sd.getBySearchNameAndStatus(filterStatus, searchName);
+//             if (list.size()==0) {
+//                session.setAttribute("staffs", null);
+//                request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
+//                return;
+//            }
+//            session.setAttribute("staffs", list);
+//        }
         if (filterStatus_raw != null) {
             int filterStatus = Integer.parseInt(filterStatus_raw);
             list = sd.getByStatus(filterStatus);
             if (list.size()==0) {
-                request.setAttribute("staffs", null);
+                session.setAttribute("staffs", null);
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
-            request.setAttribute("staffs", list);
+            session.setAttribute("staffs", list);
         }
-        String searchName = request.getParameter("searchName");
         if (searchName != null) {
             searchName = u.stringNomalize(searchName);
             list = sd.searchByName(list, searchName);
             if (list.size()==0) {
-                request.setAttribute("staffs", null);
+                session.setAttribute("staffs", null);
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
-            request.setAttribute("staffs", list);
+            session.setAttribute("staffs", list);
         }
         String page = request.getParameter("page");
         if (page == null) {
