@@ -81,6 +81,9 @@ public class ViewAllResident extends HttpServlet {
         if (listResident.size() != 0) {
             listResident = u.getListPerPage(listResident, 3, page);
             request.setAttribute("listResident", listResident);
+            for (int i = 0; i < listResident.size(); i++) {
+                System.out.println(listResident.get(i).getImage());
+            }
             request.setAttribute("totalPage", totalPage);
             request.setAttribute("currentPage", Integer.parseInt(page));
             request.setAttribute("isFilter", "true");

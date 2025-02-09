@@ -50,7 +50,7 @@
                 <div class="sidebar_user_info">
                     <div class="icon_setting"></div>
                     <div class="user_profle_side">
-                        <div class="user_img"><img class="img-responsive" src="images/logo/person.jpg" alt="#" /></div>
+                        <div class="user_img"><img class="img-responsive" src="${sessionScope.person.image}" alt="#" /></div>
                         <div class="user_info">
                             <h6>${sessionScope.person.name}</h6>
                             <p><span class="online_animation"></span> Online</p>
