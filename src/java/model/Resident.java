@@ -20,7 +20,7 @@ public class Resident {
     private String name, cccd;
     private String phone, email, bod, address, username, password, status, note;
     private Role role;
-    private String gender;
+    private String gender,image;
 
     public Resident() {
     }
@@ -38,6 +38,21 @@ public class Resident {
         this.status = status;
         this.note = note;
         this.role = role;
+    }
+    public Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String username, String password, String status, String note, Role role,String image) {
+        this.pId = pId;
+        this.name = name;
+        this.cccd = cccd;
+        this.phone = phone;
+        this.email = email;
+        this.bod = bod;
+        this.address = address;
+        this.username = username;
+        this.password = password;
+        this.status = status;
+        this.note = note;
+        this.role = role;
+        this.image = image;
     }
 
     public Resident(String pId, String name, String cccd, String phone, String email, String bod, String address, String status) {
@@ -178,6 +193,14 @@ public class Resident {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }

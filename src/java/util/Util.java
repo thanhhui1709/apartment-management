@@ -9,6 +9,7 @@ import dao.StaffDAO;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -133,6 +134,20 @@ public class Util {
         System.out.println(u.stringNomalize(str));
         ResidentDAO daoR = new ResidentDAO();
         System.out.println(u.getListPerPage(daoR.getAll(), 3, "").size());
+    }
+    public static String encryptPassword(String password){
+        return BCrypt.hashpw(password, BCrypt.gensalt(12));
+    }
+    public static boolean isCorrectFormatPassword(String password){
+        if(password.length() <6) return false;
+        if(!password.matches(".*\\d.*")) return false;
+        if(!password.matches(".*[^a-zA-Z0-9].*")) return false;
+        if(!password.matches(".*[A-Z].*")) return false;
+        if(!password.matches(".*[a-zA-Z].*")) return false;
+        return true;
+    }
+    public static boolean isCorrectPassword(String input,String password){
+        return BCrypt.checkpw(input, password);
     }
 
 }
