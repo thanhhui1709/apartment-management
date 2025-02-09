@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.Resident;
 import model.Staff;
+import util.Util;
 
 /**
  *
@@ -87,7 +88,7 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
         }
-        if (user.equals(ac.getUsername()) && pass.equals(ac.getPassword())) {
+        if (user.equals(ac.getUsername()) && Util.isCorrectPassword(pass,ac.getPassword())) {
             ac.setpId(dao.getIdByUsernameAndRole(user, checkrole));
             session.setAttribute("account", ac);
             String remember = request.getParameter("remember");
