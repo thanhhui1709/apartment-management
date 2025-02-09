@@ -128,7 +128,7 @@
                                                                     </div>
                                                                     <div class="modal-body" style="display: flex ">
                                                                         <div style="width: 50%;text-align: center;">
-                                                                            <img style="width: 70%; border-radius: 50%;margin-top: 15%" src="images/logo/person.jpg" alt="alt"/>
+                                                                            <img style="width: 70%; border-radius: 50%;margin-top: 15%" src="${staff.image}" alt="alt"/>
                                                                         </div>
                                                                         <div style="width: 50%">
                                                                             <p><strong>ID:</strong> ${staff.id}</p>
