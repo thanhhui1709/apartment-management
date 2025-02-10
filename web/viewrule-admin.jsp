@@ -68,7 +68,7 @@
                                             <form action="view-rule-admin" method="GET">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-4 d-flex">
-                                                        <a href="addnewrule.jsp"  class="btn btn-primary">Add new Rule</a>
+                                                        <a href="add-new-rule"  class="btn btn-primary">Add new Rule</a>
                                                     </div>
                                                 </div>
                                             </form>
