@@ -184,7 +184,7 @@ public class AddNewStaffServlet extends HttpServlet {
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                         return;
                     }
-                     if (e.getBank().equals(s.getBank())) {
+                     if (st.getBank().equals(s.getBank())) {
                         request.setAttribute("error", "Bank already exists.");
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                         return;
