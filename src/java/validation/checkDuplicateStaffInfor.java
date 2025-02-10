@@ -74,6 +74,9 @@ public class checkDuplicateStaffInfor extends HttpServlet {
             case "user":
                 exists=sd.checkDuplicateUserName(value);
                 break;
+            case "bank":
+                exists=sd.checkDuplicateBank(value);
+                break;
            
         }
         response.setContentType("application/json");
