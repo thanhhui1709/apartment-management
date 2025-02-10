@@ -140,12 +140,14 @@
                                                         name="name"
                                                         placeholder="Enter full name"
                                                         value="${staff.name}"
+                                                        required=""
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="dob">Date of Birth</label>
-                                                    <input type="date" id="dob" name="dob" value="${staff.bod}"/>
+                                                    <input type="date" id="dob" name="dob" value="${staff.bod}" required=""/>
                                                     <span id="dob-error" style="color: red"></span>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -158,6 +160,7 @@
                                                     name="address"
                                                     placeholder="Enter address"
                                                     value="${staff.address}"
+                                                    required=""
                                                     />
                                             </div>
                                         </div>
@@ -171,6 +174,7 @@
                                                         name="phone"
                                                         placeholder="Enter phone number"
                                                         value="${staff.phone}"
+                                                        required=""
                                                         />
                                                     <span id="phone-error" style="color: red"></span>
                                                 </div>
@@ -182,6 +186,7 @@
                                                         name="email"
                                                         placeholder="Enter email"
                                                         value="${staff.email}"
+                                                        required=""
                                                         />
                                                     <span id="email-error" style="color: red"></span>
                                                 </div>
@@ -197,6 +202,7 @@
                                                         name="cccd"
                                                         placeholder="Enter CCCD"
                                                         value="${staff.cccd}"
+                                                        required=""
                                                         />
                                                     <span id="cccd-error" style="color: red"></span>
                                                 </div>
@@ -208,6 +214,7 @@
                                                         name="education"
                                                         placeholder="Enter education"
                                                         value="${staff.education}"
+                                                        required=""
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
@@ -218,6 +225,7 @@
                                                         name="salary"
                                                         placeholder="Enter education"
                                                         value="${staff.salary}"
+                                                        required=""
                                                         />
                                                     <span id="salary-error" style="color: red"></span>
                                                 </div>
@@ -229,6 +237,7 @@
                                                         name="bank"
                                                         placeholder="Enter bank account"
                                                         value="${staff.bank}"
+                                                        required=""
                                                         />
                                                 </div>
                                             </div>
