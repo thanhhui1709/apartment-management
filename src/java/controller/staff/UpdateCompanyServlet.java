@@ -105,12 +105,12 @@ public class UpdateCompanyServlet extends HttpServlet {
             request.setAttribute("nameError", "Name cannot be blank.");
             hasError = true;
         }
-        if (!phone.matches("^\\d{11}$")) {
-            request.setAttribute("phoneError", "Phone number must be exactly 11 digits.");
+        if (!phone.matches("^\\d{10}$")) {
+            request.setAttribute("phoneError", "Phone number must be exactly 10 digits.");
             hasError = true;
         }
-        if (!contactPhone.matches("^\\d{11}$")) {
-            request.setAttribute("contactPhoneError", "Contact phone must be exactly 11 digits.");
+        if (!contactPhone.matches("^\\d{10}$")) {
+            request.setAttribute("contactPhoneError", "Contact phone must be exactly 10 digits.");
             hasError = true;
         }
         if (!fax.matches("^\\d{10}$")) {
