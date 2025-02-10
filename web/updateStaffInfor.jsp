@@ -10,7 +10,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
             <!-- site metas -->
-<title>Apartment management</title>            <link rel="icon" href="images/fevicon.png" type="image/png" />
+            <title>Apartment management</title>            <link rel="icon" href="images/fevicon.png" type="image/png" />
             <!-- bootstrap css -->
             <link rel="stylesheet" href="css/bootstrap.min.css" />
             <!-- site css -->
@@ -109,7 +109,7 @@
                 .form-button button:hover {
                     background-color: #357ab8;
                 }
-                
+
 
             </style>
         </head>
@@ -147,7 +147,7 @@
                                                     <label for="dob">Date of Birth</label>
                                                     <input type="date" id="dob" name="dob" value="${staff.bod}" required=""/>
                                                     <span id="dob-error" style="color: red"></span>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -220,13 +220,13 @@
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="salary">Salary</label>
                                                     <input
-                                                        type="number"
-                                                        id="salary"
-                                                        name="salary"
-                                                        placeholder="Enter education"
-                                                        value="${staff.salary}"
-                                                        required=""
-                                                        />
+                                                        type="text" 
+                                                    id="salary"
+                                                    name="salary"
+                                                    placeholder="Enter salary"
+                                                    required
+                                                    oninput="formatSalary(this)"
+                                                    />
                                                     <span id="salary-error" style="color: red"></span>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
@@ -464,6 +464,18 @@
                             }
                         });
                     });
+                </script>
+                <script>
+                    function formatSalary(input) {
+                        // Remove any non-numeric characters (except dots and digits)
+                        let value = input.value.replace(/\D/g, "");
+
+                        // Convert to a number and format with dot separators
+                        value = Number(value).toLocaleString("en").replace(/,/g, ".");
+
+                        // Update input field with formatted value
+                        input.value = value;
+                    }
                 </script>
 
 
