@@ -82,6 +82,40 @@
                                             <button class="btn btn-primary" onclick="location.href = 'sendfeedback'">Send New Feedback</button>
                                         </div>
                                         <div class="table_section padding_infor_info">
+                                            <div style="margin-left: 40px; margin-bottom: 30px;">
+                                                <form action="filterfeedback" method="get">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-2">
+                                                            <input type="date" class="form-control" name="from" placeholder="From" value="${sessionScope.from}">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input type="date" class="form-control" name="to" placeholder="To" value="${sessionScope.to}">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <select class="form-control" name="typeRequest">
+                                                                <c:choose>
+                                                                    <c:when test="${sessionScope.selectedType == null}">
+                                                                        <option value="" disabled selected> --Select Type-- </option>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <option value="${sessionScope.selectedType.id}" selected>${sessionScope.selectedType.name}</option>
+                                                                        <option value="" > --Select Type-- </option>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                                <c:forEach items="${requestScope.listTypeRquest}" var="t">
+                                                                    <option value="${t.id}">${t.name}</option>
+                                                                </c:forEach>
+                                                                <!-- Add more options as needed -->
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4 d-flex">
+                                                            <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Search</button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+
+                                            </div>
                                             <div class="table-responsive-sm">
                                                 <table class="table w-100">
                                                     <thead>
