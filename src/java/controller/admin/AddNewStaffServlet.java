@@ -27,7 +27,10 @@ import java.util.logging.Logger;
 import model.Company;
 import model.Employee;
 import model.Role;
+import model.SendEmail;
 import model.Staff;
+import util.Util;
+import static util.Util.encryptPassword;
 
 /**
  *
@@ -109,7 +112,7 @@ public class AddNewStaffServlet extends HttpServlet {
         String salary_raw = request.getParameter("salary");
         String bank = request.getParameter("bank");
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
+//        String password = request.getParameter("password");
         String company = request.getParameter("company");
         String startDate = request.getParameter("startDate");
         String roleId = request.getParameter("role");
@@ -120,7 +123,13 @@ public class AddNewStaffServlet extends HttpServlet {
         if (listStaff == null) {
             listStaff = new ArrayList<>();
         }
-
+        Util u = new Util();
+        //generate random password then send to new user
+        String password = u.generatePassword();
+        String password2 = password;
+     
+        //insert to database with encryted password
+        password = encryptPassword(password);
         Staff s = null;
 
         try {
@@ -137,9 +146,9 @@ public class AddNewStaffServlet extends HttpServlet {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             ZoneId zone = ZoneId.systemDefault();
 
-            for (Staff e : listStaff) {
+            for (Staff st : listStaff) {
                 try {
-                    if (e.getCccd().equals(s.getCccd())) {
+                    if (st.getCccd().equals(s.getCccd())) {
                         request.setAttribute("error", "CCCD already exists.");
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                         return;
@@ -160,17 +169,17 @@ public class AddNewStaffServlet extends HttpServlet {
                         return;
                     }
 
-                    if (e.getPhone().equals(s.getPhone())) {
+                    if (st.getPhone().equals(s.getPhone())) {
                         request.setAttribute("error", "Phone number already exists.");
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                         return;
                     }
-                    if (e.getEmail().equals(s.getEmail())) {
+                    if (st.getEmail().equals(s.getEmail())) {
                         request.setAttribute("error", "Email already exists.");
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                         return;
                     }
-                    if (e.getUsername().equals(s.getUsername())) {
+                    if (st.getUsername().equals(s.getUsername())) {
                         request.setAttribute("error", "Username already exists.");
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                         return;
@@ -191,7 +200,9 @@ public class AddNewStaffServlet extends HttpServlet {
                 request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                 return;
             }
-        } catch (NumberFormatException e) {
+               SendEmail e = new SendEmail();
+        e.sendEmailStaff(email, name, username, password2);
+        } catch (NumberFormatException st) {
             request.setAttribute("error", "Invalid salary format.");
             request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
             return;

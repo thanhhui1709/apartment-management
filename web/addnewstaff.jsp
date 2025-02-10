@@ -246,16 +246,7 @@
                                                         value="${param.username}"
                                                         />
                                                 </div>
-                                                <div class="col" style="padding: 0; margin-right: 5px">
-                                                    <label for="password">Password</label>
-                                                    <input
-                                                        type="password"
-                                                        id="password"
-                                                        name="password"
-                                                        placeholder="Enter password"
-                                                        value=""
-                                                        />
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                         <div class="form-group">
