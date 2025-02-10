@@ -111,7 +111,7 @@ public class NewDAO extends DBContext {
         String sql = "select * from News where 1 = 1 ";
         FeedbackDAO dao = new FeedbackDAO();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        if (title != null) {
+        if (title != "") {
             sql += " and title like '%" + title + "%'";
         }
         if (startDate != "") {
