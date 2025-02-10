@@ -53,7 +53,7 @@ public class ResidentDAO extends DBContext {
                 String status = String.valueOf(rs.getInt("active"));
                 String gender = rs.getString("gender");
                 String image = rs.getString("image");
-                Resident resident = new Resident(id, name, cccd, phone, email, bod, address, username, password, status, name, role,image);
+                Resident resident = new Resident(id, name, cccd, phone, email, bod, address, username, password, status, name, role, image);
                 list.add(resident);
             }
         } catch (SQLException ex) {
@@ -208,9 +208,10 @@ public class ResidentDAO extends DBContext {
                 + "           ,[CCCD]\n"
                 + "           ,[username]\n"
                 + "           ,[password]\n"
-                + "           ,[roleId])\n"
+                + "           ,[roleId]\n"
+                + "           ,[image])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?,?)";
         Util u = new Util();
         List<Resident> listResident = getAll();
         int lastID = u.getNumberFromText(listResident.get(listResident.size() - 1).getpId());
@@ -226,6 +227,7 @@ public class ResidentDAO extends DBContext {
             st.setString(8, username);
             st.setString(9, password);
             st.setInt(10, 1);
+            st.setString(11, "images/avatar/person.jpg");
             st.executeUpdate();
             return 0;
 
@@ -321,7 +323,7 @@ public class ResidentDAO extends DBContext {
                 String st = String.valueOf(rs.getInt("active"));
                 String gender = rs.getString("gender");
                 String image = rs.getString("image");
-                Resident resident = new Resident(id, na, cccd, phone, email, bod, address, username, password, st, name, role,image);
+                Resident resident = new Resident(id, na, cccd, phone, email, bod, address, username, password, st, name, role, image);
                 list.add(resident);
             }
             return list;
@@ -333,7 +335,7 @@ public class ResidentDAO extends DBContext {
 
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        List<Resident> list= dao.getAll();
+        List<Resident> list = dao.getAll();
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i).getImage());
         }

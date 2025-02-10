@@ -61,37 +61,7 @@ public class AddNewResident extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
-        String dob = request.getParameter("dob");
-        String address = request.getParameter("address");
-        String phone = request.getParameter("phone");
-        String email = request.getParameter("email");
-        String id = request.getParameter("id");
-        String username = request.getParameter("username");
-
-        // Validate phone number (11 digits) and ID (12 digits)
-        if (!phone.matches("\\d{11}")) {
-            request.setAttribute("error", "Phone number must be exactly 11 digits.");
-            request.getRequestDispatcher("addResidentForm.jsp").forward(request, response);
-            return;
-        }
-
-        if (!id.matches("\\d{12}")) {
-            request.setAttribute("error", "ID must be exactly 12 digits.");
-            request.getRequestDispatcher("addResidentForm.jsp").forward(request, response);
-            return;
-        }
-        Util u = new Util();
-        //generate random password then send to new user
-        String password = u.generatePassword();
-        SendEmail e = new SendEmail();
-        e.sendEmail(email, name, username, password);
-        //insert to database with encryted password
-        ResidentDAO rd = new ResidentDAO();
-        password = encryptPassword(password);
-        rd.insertNewResident(name, address, email, phone, dob, id, username, password);
-
-        response.sendRedirect("view-resident");
+       request.getRequestDispatcher("addnewresident.jsp").forward(request, response);
     }
 
     /**
@@ -105,7 +75,37 @@ public class AddNewResident extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         String name = request.getParameter("name");
+        String dob = request.getParameter("dob");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String id = request.getParameter("id");
+        String username = request.getParameter("username");
+
+        // Validate phone number (11 digits) and ID (12 digits)
+        if (!phone.matches("\\d{11}")) {
+            request.setAttribute("error", "Phone number must be exactly 11 digits.");
+            request.getRequestDispatcher("addnewresident.jsp").forward(request, response);
+            return;
+        }
+
+        if (!id.matches("\\d{12}")) {
+            request.setAttribute("error", "ID must be exactly 12 digits.");
+            request.getRequestDispatcher("addnewresident.jsp").forward(request, response);
+            return;
+        }
+        Util u = new Util();
+        //generate random password then send to new user
+        String password = u.generatePassword();
+        SendEmail e = new SendEmail();
+        e.sendEmail(email, name, username, password);
+        //insert to database with encryted password
+        ResidentDAO rd = new ResidentDAO();
+        password = encryptPassword(password);
+        rd.insertNewResident(name, address, email, phone, dob, id, username, password);
+
+        response.sendRedirect("view-resident");
     }
 
     /**

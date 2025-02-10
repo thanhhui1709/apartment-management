@@ -127,7 +127,7 @@
                             <div class="col-md-12">
                                 <div class="form-container">
                                     <h1>Add New Rule</h1>
-                                    <form action="add-new-rule" method="get">
+                                    <form action="add-new-rule" method="post">
                                         <div class="form-group">
                                             <label for="title">Title</label>
                                             <input type="text" id="title" name="title" placeholder="Enter rule title" required />

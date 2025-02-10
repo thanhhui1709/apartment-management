@@ -131,7 +131,7 @@
                                                         id="name"
                                                         name="name"
                                                         placeholder="Enter full name"
-                                                        ${param.name}
+                                                        value="${param.name}" required=""
                                                         />
                                                 </div>
                                         </div>
@@ -160,6 +160,7 @@
                                                     name="address"
                                                     placeholder="Enter address"
                                                     value="${param.address}"
+                                                    required=""
                                                     />
                                             </div>
                                         </div>
@@ -173,6 +174,7 @@
                                                         name="phone"
                                                         placeholder="Enter phone number"
                                                         value="${param.phone}"
+                                                        required=""
                                                         />
                                                     <span id="phone-error" style="color: red"></span>
                                                 </div>
@@ -183,7 +185,7 @@
                                                         id="email"
                                                         name="email"
                                                         placeholder="Enter email"
-                                                        value="${param.email}"
+                                                        value="${param.email}" required=""
                                                         />
                                                     <span id="email-error" style="color: red"></span>
                                                 </div>
@@ -198,7 +200,7 @@
                                                         id="cccd"
                                                         name="cccd"
                                                         placeholder="Enter CCCD"
-                                                        value="${param.cccd}"
+                                                        value="${param.cccd}" required=""
                                                         />
                                                     <span id="CCCD-error" style="color: red"></span>
                                                 </div>
@@ -209,7 +211,7 @@
                                                         id="education"
                                                         name="education"
                                                         placeholder="Enter education"
-                                                        value="${param.education}"
+                                                        value="${param.education}" required=""
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
@@ -219,7 +221,7 @@
                                                         id="salary"
                                                         name="salary"
                                                         placeholder="Enter salary"
-                                                        value="${param.salary}"
+                                                        value="${param.salary}" required=""
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
@@ -229,7 +231,7 @@
                                                         id="bank"
                                                         name="bank"
                                                         placeholder="Enter bank account"
-                                                        value="${param.bank}"
+                                                        value="${param.bank}" required=""
                                                         />
                                                 </div>
                                             </div>
@@ -243,7 +245,7 @@
                                                         id="username"
                                                         name="username"
                                                         placeholder="Enter username"
-                                                        value="${param.username}"
+                                                        value="${param.username}" required=""
                                                         />
                                                 </div>
                                                 

@@ -60,7 +60,22 @@ public class AddNewRuleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String title = request.getParameter("title");
+      request.getRequestDispatcher("addnewrule.jsp").forward(request, response);
+
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+          String title = request.getParameter("title");
         String description = request.getParameter("description");
         String date = request.getParameter("date");
         String effectiveDate = request.getParameter("effectiveDate");
@@ -81,21 +96,6 @@ public class AddNewRuleServlet extends HttpServlet {
             request.setAttribute("status", "false");
             request.getRequestDispatcher("addnewrule.jsp").forward(request, response);
         }
-
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
