@@ -125,7 +125,7 @@ public class AddNewStaffServlet extends HttpServlet {
             listStaff = new ArrayList<>();
         }
         Util u = new Util();
-        //generate random password then send to new user
+
         String password = u.generatePassword();
         String password2 = password;
 
@@ -135,6 +135,11 @@ public class AddNewStaffServlet extends HttpServlet {
 
         try {
             int salary = Integer.parseInt(salary_raw);
+            if (salary <= 0) {
+        request.setAttribute("error", "Salary must be greater than 0.");
+        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+        return;
+    }
             Role role = daoR.getById(roleId);
 
             if (role == null) {
@@ -199,6 +204,8 @@ public class AddNewStaffServlet extends HttpServlet {
             if (!s.getPhone().matches("0[0-9]{9}")) {
                 request.setAttribute("error", "Please enter a valid phone number: 10 digits starting with 0!");
                 request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                
+                
                 return;
             }
             if (!s.getCccd().matches("[0-9]{12}")) {

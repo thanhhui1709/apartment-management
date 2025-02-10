@@ -74,7 +74,7 @@ public class AccountDAO extends DBContext {
         }
         return s;
     }
-
+    
     public void changePassword(String username, String password, int roleId) {
         String sql = "Update ";
         if (roleId == 1) {
@@ -154,9 +154,28 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
+    public void changeImageByAccount(Account acc,String image){
+        String sql = "update ";
+        if(acc.getRoleId() == 1){
+            sql +="resident ";
+        }else{
+            sql +="staff ";
+        }
+        sql += "set image=? where username=? and roleid=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1,image);
+            ps.setString(2,acc.getUsername());
+            ps.setInt(3,acc.getRoleId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
-        System.out.println(dao.getAccountByUsername("quang"));
+        dao.changeImageByAccount(new Account("bob","e", "e", "P001", 1), "images/avatar/anh.jpg");
     }
 
 }

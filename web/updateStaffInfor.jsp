@@ -402,8 +402,8 @@
                             let endDate = $("#endDate").val();
 
                             // Validate Phone (11 digits)
-                            if (!/^\d{11}$/.test(phone)) {
-                                $("#phone-error").text("Phone number must be exactly 11 digits.");
+                            if (!/^\d{10}$/.test(phone)) {
+                                $("#phone-error").text("Phone number must be exactly 10 digits.");
                                 isValid = false;
                             } else {
                                 $("#phone-error").text("");
