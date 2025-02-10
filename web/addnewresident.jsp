@@ -121,7 +121,7 @@
                             <div class="container-fluid">
                                 <div class="form-container">
                                     <h1>Add New Resident</h1>
-                                    <form action="addNewResident">
+                                    <form action="addNewResident" method="post">
                                         <div class="form-group">
                                             <div class="two-cols">
                                                 <div class="col">

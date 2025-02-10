@@ -25,7 +25,7 @@ public class RuleDAO extends DBContext {
     public List<Rule> getAllRule() {
         List<Rule> listRule = new ArrayList<>();
         StaffDAO daoS = new StaffDAO();
-        String sql = "select * from [Rule]";
+        String sql = "select * from [Rule] order by date";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

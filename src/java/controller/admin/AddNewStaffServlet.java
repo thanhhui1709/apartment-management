@@ -85,7 +85,7 @@ public class AddNewStaffServlet extends HttpServlet {
         session.setAttribute("listCompany", listCompany);
         session.setAttribute("listRole", listRole);
         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
-        
+
     }
 
     /**
@@ -101,7 +101,7 @@ public class AddNewStaffServlet extends HttpServlet {
             throws ServletException, IOException {
         RoleDAO daoR = new RoleDAO();
         CompanyDAO daoCp = new CompanyDAO();
-        
+
         String name = request.getParameter("name");
         String dob = request.getParameter("dob");
         String address = request.getParameter("address");
@@ -119,21 +119,27 @@ public class AddNewStaffServlet extends HttpServlet {
         String gender = request.getParameter("gender");
         StaffDAO stDao = new StaffDAO();
         List<Staff> listStaff = stDao.getAll();
+        HttpSession session = request.getSession();
 
         if (listStaff == null) {
             listStaff = new ArrayList<>();
         }
         Util u = new Util();
-        //generate random password then send to new user
+
         String password = u.generatePassword();
         String password2 = password;
-     
+
         //insert to database with encryted password
         password = encryptPassword(password);
         Staff s = null;
 
         try {
             int salary = Integer.parseInt(salary_raw);
+            if (salary <= 0) {
+        request.setAttribute("error", "Salary must be greater than 0.");
+        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+        return;
+    }
             Role role = daoR.getById(roleId);
 
             if (role == null) {
@@ -184,7 +190,7 @@ public class AddNewStaffServlet extends HttpServlet {
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                         return;
                     }
-                     if (st.getBank().equals(s.getBank())) {
+                    if (st.getBank().equals(s.getBank())) {
                         request.setAttribute("error", "Bank already exists.");
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                         return;
@@ -205,15 +211,16 @@ public class AddNewStaffServlet extends HttpServlet {
                 request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                 return;
             }
-               SendEmail e = new SendEmail();
-        e.sendEmailStaff(email, name, username, password2);
+            SendEmail e = new SendEmail();
+            e.sendEmailStaff(email, name, username, password2);
         } catch (NumberFormatException st) {
             request.setAttribute("error", "Invalid salary format.");
             request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
             return;
         }
-
+        
         if (stDao.insertStaff(s)) {
+            session.setAttribute("staffs", stDao.getAll());
             request.setAttribute("status", "true");
             request.setAttribute("message", "Staff added successfully!");
         } else {
