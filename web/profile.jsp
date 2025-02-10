@@ -140,7 +140,14 @@
                                                 <div class="col-lg-12">
                                                     <div class="full dis_flex center_text">
                                                         <div class="profile_img">
-                                                            <img width="180" class="rounded-circle" src="${sessionScope.person.image}" alt="User Image">
+                                                            <img width="180" class="img-responsive rounded-circle" src="${sessionScope.person.image}" alt="User Image">
+                                                            <form action="update-image" method="post" enctype="multipart/form-data">
+                                                                <div>
+                                                                    <input style="margin-bottom: 5px;margin-top: 5px;" type="file" name="file" id="file" accept="images/avatar/*">
+                                                                    <button type="submit">Upload</button>
+                                                                    <h6 style="color: red ">${requestScope.message}</h6>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                         <div class="profile_contant">
                                                             <div class="contact_inner">
