@@ -7,7 +7,6 @@ package controller.resident;
 
 import dao.FeedbackDAO;
 import dao.RequestTypeDAO;
-import dao.ResidentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,18 +15,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import model.Account;
 import model.Feedback;
+import model.Request;
 import model.RequestType;
-import model.Resident;
+import util.Util;
 
 /**
  *
- * @author pc
+ * @author thanh
  */
-@WebServlet(name="ViewFeedbackUserServlet", urlPatterns={"/view-feed-back-user"})
-public class ViewFeedbackUserServlet extends HttpServlet {
+@WebServlet(name="FilterFeedback", urlPatterns={"/filterfeedback"})
+public class FilterFeedback extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -44,10 +47,10 @@ public class ViewFeedbackUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewFeedbackUserServlet</title>");  
+            out.println("<title>Servlet FilterFeedback</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewFeedbackUserServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet FilterFeedback at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,27 +67,48 @@ public class ViewFeedbackUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account acc = (Account) session.getAttribute("account");
+        Util u = new Util();
+        String from = request.getParameter("from");
+        String to = request.getParameter("to");
+        String typeRequest = request.getParameter("typeRequest");
+        RequestTypeDAO rtd = new RequestTypeDAO();
+        List<RequestType> listTypeRequest = rtd.getAll();
+        FeedbackDAO fbd  = new FeedbackDAO();
+        List<Feedback> list = new ArrayList<>();
 
-    HttpSession session = request.getSession();
-    Account account = (Account) session.getAttribute("account");
-     
-    RequestTypeDAO rtd = new RequestTypeDAO();
-        List<RequestType> listTypeRquest = rtd.getAll();
-        request.setAttribute("listTypeRquest", listTypeRquest);
+        if (from != null && !from.isEmpty() && to != null && !to.isEmpty()) {
+            Date fromDate = u.convertStringToDate(from);
+            Date toDate = u.convertStringToDate(to);
+            int compareDate = fromDate.compareTo(toDate);
 
+            if (compareDate >= 0) {
+                list = fbd.getByResidentIDAndDateAndTypeRequest(acc.getpId(), to, from, typeRequest);
+            } else {
+               list = fbd.getByResidentIDAndDateAndTypeRequest(acc.getpId(), from, to, typeRequest);
+            }
+        } else if (typeRequest != null && !typeRequest.isEmpty()) {
+            list = fbd.getByResidentIDAndDateAndTypeRequest(acc.getpId(), null, null, typeRequest);
+            Iterator<RequestType> iterator = listTypeRequest.iterator();
+            while (iterator.hasNext()) {
+                RequestType type = iterator.next();
+                if (type.getId().equals(typeRequest)) {
+                    session.setAttribute("selectedType", type);
+                    iterator.remove(); // Safely remove the element
+                }
+            }
+        } else {
+            list = fbd.getByResidentIDAndDateAndTypeRequest(acc.getpId(), null, null, null);
+            session.removeAttribute("selectedType");
+        }
 
-    ResidentDAO rd = new ResidentDAO();    
-    Resident resident = rd.getById(account.getpId());
-
-
-    FeedbackDAO daoF = new FeedbackDAO();
-    List<Feedback> listFeedbackU = daoF.getAllFeedbackUser(resident.getpId());
-
-    session.setAttribute("listFeedbackU", listFeedbackU);
-
-    request.getRequestDispatcher("viewallfeedbackuser.jsp").forward(request, response);
-}
-
+        session.setAttribute("from", from);
+        session.setAttribute("to", to);
+        session.setAttribute("listFeedbackU", list);
+        request.setAttribute("listTypeRquest", listTypeRequest);
+        request.getRequestDispatcher("viewallfeedbackuser.jsp").forward(request, response);
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
