@@ -178,9 +178,7 @@ public class Util {
 
     public static void main(String[] args) {
         Util u = new Util();
-        String pass=u.generatePassword();
-        System.out.println(pass);
-        System.out.println(encryptPassword(pass));
+       
  
 // 
     }

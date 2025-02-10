@@ -10,7 +10,7 @@
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <meta name="viewport" content="initial-scale=1, maximum-scale=1" />
             <!-- site metas -->
-<title>Apartment management</title>            <link rel="icon" href="images/fevicon.png" type="image/png" />
+            <title>Apartment management</title>            <link rel="icon" href="images/fevicon.png" type="image/png" />
             <!-- bootstrap css -->
             <link rel="stylesheet" href="css/bootstrap.min.css" />
             <!-- site css -->
@@ -109,7 +109,7 @@
                 .form-button button:hover {
                     background-color: #357ab8;
                 }
-                
+
 
             </style>
         </head>
@@ -140,12 +140,14 @@
                                                         name="name"
                                                         placeholder="Enter full name"
                                                         value="${staff.name}"
+                                                        required=""
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="dob">Date of Birth</label>
-                                                    <input type="date" id="dob" name="dob" value="${staff.bod}"/>
+                                                    <input type="date" id="dob" name="dob" value="${staff.bod}" required=""/>
                                                     <span id="dob-error" style="color: red"></span>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -158,6 +160,7 @@
                                                     name="address"
                                                     placeholder="Enter address"
                                                     value="${staff.address}"
+                                                    required=""
                                                     />
                                             </div>
                                         </div>
@@ -171,6 +174,7 @@
                                                         name="phone"
                                                         placeholder="Enter phone number"
                                                         value="${staff.phone}"
+                                                        required=""
                                                         />
                                                     <span id="phone-error" style="color: red"></span>
                                                 </div>
@@ -182,6 +186,7 @@
                                                         name="email"
                                                         placeholder="Enter email"
                                                         value="${staff.email}"
+                                                        required=""
                                                         />
                                                     <span id="email-error" style="color: red"></span>
                                                 </div>
@@ -197,6 +202,7 @@
                                                         name="cccd"
                                                         placeholder="Enter CCCD"
                                                         value="${staff.cccd}"
+                                                        required=""
                                                         />
                                                     <span id="cccd-error" style="color: red"></span>
                                                 </div>
@@ -208,17 +214,19 @@
                                                         name="education"
                                                         placeholder="Enter education"
                                                         value="${staff.education}"
+                                                        required=""
                                                         />
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
                                                     <label for="salary">Salary</label>
                                                     <input
-                                                        type="number"
-                                                        id="salary"
-                                                        name="salary"
-                                                        placeholder="Enter education"
-                                                        value="${staff.salary}"
-                                                        />
+                                                        type="text" 
+                                                    id="salary"
+                                                    name="salary"
+                                                    placeholder="Enter salary"
+                                                    required
+                                                    oninput="formatSalary(this)"
+                                                    />
                                                     <span id="salary-error" style="color: red"></span>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
@@ -229,7 +237,9 @@
                                                         name="bank"
                                                         placeholder="Enter bank account"
                                                         value="${staff.bank}"
+                                                        required=""
                                                         />
+                                                    <span id="bank-error" style="color: red"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -374,6 +384,27 @@
                                 updateSubmitButtonState();
                             }
                         });
+                        $("#bank").on("input", function () {
+                            var bank = $(this).val();
+                            if (bank) {
+                                $.ajax({
+                                    url: "checkDuplicateStaffInfor",
+                                    type: "GET",
+                                    data: {type: "bank", value: bank},
+                                    success: function (response) {
+                                        if (response.exists) {
+                                            $("#bank-error").text("Bank already exists.");
+                                        } else {
+                                            $("#bank-error").text("");
+                                        }
+                                        updateSubmitButtonState();
+                                    }
+                                });
+                            } else {
+                                $("#bank-error").text("");
+                                updateSubmitButtonState();
+                            }
+                        });
                     });
                 </script>
                 <script>
@@ -402,8 +433,8 @@
                             let endDate = $("#endDate").val();
 
                             // Validate Phone (11 digits)
-                            if (!/^\d{11}$/.test(phone)) {
-                                $("#phone-error").text("Phone number must be exactly 11 digits.");
+                            if (!/^\d{10}$/.test(phone)) {
+                                $("#phone-error").text("Phone number must be exactly 10 digits.");
                                 isValid = false;
                             } else {
                                 $("#phone-error").text("");
@@ -455,6 +486,18 @@
                             }
                         });
                     });
+                </script>
+                <script>
+                    function formatSalary(input) {
+                        // Remove any non-numeric characters (except dots and digits)
+                        let value = input.value.replace(/\D/g, "");
+
+                        // Convert to a number and format with dot separators
+                        value = Number(value).toLocaleString("en").replace(/,/g, ".");
+
+                        // Update input field with formatted value
+                        input.value = value;
+                    }
                 </script>
 
 

@@ -89,7 +89,6 @@ public class UpdateStaffInfor extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -118,10 +117,16 @@ public class UpdateStaffInfor extends HttpServlet {
             int status = Integer.parseInt(status_raw);
             int salary = Integer.parseInt(salary_raw);
 
-            // Validate Phone (11 digits)
-            if (!phone.matches("\\d{11}")) {
+            if (name.isBlank()) {
                 request.setAttribute("status", "false");
-                request.setAttribute("message", "Phone number must be exactly 11 digits.");
+                request.setAttribute("message", "Name is not blank");
+                request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                return;
+            }
+            // Validate Phone (11 digits)
+            if (!phone.matches("\\d{10}")) {
+                request.setAttribute("status", "false");
+                request.setAttribute("message", "Phone number must be exactly 10 digits.");
                 request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
                 return;
             }

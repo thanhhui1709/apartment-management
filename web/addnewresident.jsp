@@ -335,13 +335,13 @@
                         let phoneError = document.getElementById("phone-error");
                         let idError = document.getElementById("id-error");
 
-                        let phonePattern = /^\d{11}$/;
+                        let phonePattern = /^\d{10}$/;
                         let idPattern = /^\d{12}$/;
 
                         let valid = true;
 
                         if (!phonePattern.test(phone)) {
-                            phoneError.textContent = "Phone number must be exactly 11 digits.";
+                            phoneError.textContent = "Phone number must be exactly 10 digits.";
                             valid = false;
                         } else {
                             phoneError.textContent = "";

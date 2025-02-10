@@ -370,7 +370,8 @@ public class StaffDAO extends DBContext {
                 String startDate = resultSet.getString("startdate");
                 String enddate = resultSet.getString("enddate");
                 String gender = resultSet.getString("gender");
-                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender);
+                String image  = resultSet.getString("image");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender,image);
                 rs.add(s);
             }
         } catch (SQLException e) {
@@ -412,6 +413,7 @@ public class StaffDAO extends DBContext {
         return false;
 
     }
+    
 
     public boolean checkDuplicateID(String id) {
         List<Staff> list = getAll();
@@ -428,6 +430,16 @@ public class StaffDAO extends DBContext {
         List<Staff> list = getAll();
         for (Staff staff : list) {
             if (staff.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+     public boolean checkDuplicateBank(String bank) {
+        List<Staff> list = getAll();
+        for (Staff staff : list) {
+            if (staff.getBank().equals(bank)) {
                 return true;
             }
         }

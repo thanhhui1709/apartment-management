@@ -168,7 +168,11 @@ public class AddNewStaffServlet extends HttpServlet {
                     if (currentDate.getDayOfYear() < birthDate.getDayOfYear()) {
                         age--;
                     }
-
+                    if (name.isBlank()) {
+                        request.setAttribute("error", "Name is not blank");
+                        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                        return;
+                    }
                     if (age <= 18) {
                         request.setAttribute("error", "Staff must be older than 18.");
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
@@ -204,6 +208,8 @@ public class AddNewStaffServlet extends HttpServlet {
             if (!s.getPhone().matches("0[0-9]{9}")) {
                 request.setAttribute("error", "Please enter a valid phone number: 10 digits starting with 0!");
                 request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                
+                
                 return;
             }
             if (!s.getCccd().matches("[0-9]{12}")) {
