@@ -4,7 +4,7 @@
         <filter-name>AuthorizedFilter</filter-name>
         <filter-class>filter.AuthorizedFilter</filter-class>
     </filter>
-     <filter>
+    <filter>
         <filter-name>StaffFilter</filter-name>
         <filter-class>filter.StaffFilter</filter-class>
     </filter>
@@ -64,6 +64,10 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
+        <url-pattern>/filterfeedback</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ResidentFilter</filter-name>
         <url-pattern>/resident-add-request</url-pattern>
     </filter-mapping>
     <filter-mapping>
@@ -75,6 +79,10 @@
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-all-request</url-pattern>
+    </filter-mapping>
+     <filter-mapping>
+        <filter-name>AdministrativeFilter</filter-name>
+        <url-pattern>/assign-request</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
