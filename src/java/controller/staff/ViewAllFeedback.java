@@ -107,6 +107,8 @@ public class ViewAllFeedback extends HttpServlet {
             request.setAttribute("currentPage", Integer.parseInt(page));
             request.getRequestDispatcher("viewallfeedback.jsp").forward(request, response);
         } else {
+            request.setAttribute("totalPage", 1);
+            request.setAttribute("currentPage", 1);
             session.setAttribute("listRequestType", listRequestType);
             session.setAttribute("listFeedback", listFeedback);
             request.setAttribute("message", "No result");

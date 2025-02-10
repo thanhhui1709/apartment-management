@@ -90,6 +90,8 @@ public class ViewAllResident extends HttpServlet {
             request.getRequestDispatcher("viewallresident.jsp").forward(request, response);
             return;
         } else {
+            request.setAttribute("totalPage", 1);
+            request.setAttribute("currentPage", 1);
             request.setAttribute("message", "No result");
             request.getRequestDispatcher("viewallresident.jsp").forward(request, response);
         }

@@ -90,6 +90,8 @@ public class ViewNewServlet extends HttpServlet {
             request.setAttribute("currentPage", Integer.parseInt(page));
             request.getRequestDispatcher("viewallnews.jsp").forward(request, response);
         } else {
+            request.setAttribute("totalPage", 1);
+            request.setAttribute("currentPage", 1);
             request.setAttribute("message", "No result");
             request.getRequestDispatcher("viewallnews.jsp").forward(request, response);
         }
