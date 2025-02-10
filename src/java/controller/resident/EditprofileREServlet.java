@@ -116,7 +116,10 @@ public class EditprofileREServlet extends HttpServlet {
             request.getRequestDispatcher("editprofileRE.jsp").forward(request, response);
             return;
         }
-        Resident resident = new Resident(account.getpId(), eemail, ephone, eaddress);
+        Resident resident = re.getById(account.getpId());
+        resident.setEmail(eemail);
+        resident.setPhone(ephone);
+        resident.setAddress(eaddress);
 
         re.EditProfileRe(resident);
         resident = re.getById(account.getpId());

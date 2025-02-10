@@ -116,7 +116,7 @@ public class EditprofileSTServlet extends HttpServlet {
         return;
     }
     StaffDAO st = new StaffDAO();
-    if (st.checkDuplicateEmail(eemail) && !eemail.equals(account.getEmail())) {
+    if (st.checkDupEmail(eemail) && !eemail.equals(account.getEmail())) {
             request.setAttribute("status", "false");
             request.setAttribute("msg", "Email already exists. Please use a different email.");
             request.getRequestDispatcher("editprofileST.jsp").forward(request, response);

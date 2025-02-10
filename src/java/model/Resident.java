@@ -86,6 +86,10 @@ public class Resident {
         
     }
 
+    public Resident(String pId) {
+        this.pId=pId;
+    }
+
     public String getGender() {
         return gender;
     }
