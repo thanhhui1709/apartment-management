@@ -102,12 +102,12 @@ public class AddNewCompany extends HttpServlet {
         }
 
         // Validate phone and contact phone (must be exactly 11 digits)
-        if (!phone.matches("\\d{11}")) {
-            request.setAttribute("phoneError", "Phone number must have exactly 11 digits.");
+        if (!phone.matches("\\d{10}")) {
+            request.setAttribute("phoneError", "Phone number must have exactly 10 digits.");
             hasError = true;
         }
-        if (!contactPhone.matches("\\d{11}")) {
-            request.setAttribute("contactPhoneError", "Contact phone must have exactly 11 digits.");
+        if (!contactPhone.matches("\\d{10}")) {
+            request.setAttribute("contactPhoneError", "Contact phone must have exactly 10 digits.");
             hasError = true;
         }
 
