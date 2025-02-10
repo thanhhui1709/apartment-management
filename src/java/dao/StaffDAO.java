@@ -220,8 +220,8 @@ public class StaffDAO extends DBContext {
     }
 
     public boolean insertStaff(Staff s) {
-        String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,status,username,password,roleId, cid,startdate,gender) \n"
-                + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into Staff(id,Name, bod, email, phone, Address, cccd,Salary,Education,Bank,status,username,password,roleId, cid,startdate,gender,image) \n"
+                + "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Util u = new Util();
         List<Staff> list = this.getAll();
         String newId = "";
@@ -256,6 +256,7 @@ public class StaffDAO extends DBContext {
             ps.setString(15, s.getCompany().getId());
             ps.setString(16, s.getStartDate());
             ps.setString(17, s.getGender());
+            ps.setString(18,"images/avatar/person.jpg");
             return ps.executeUpdate() > 0;
 
         } catch (SQLException ex) {

@@ -184,6 +184,11 @@ public class AddNewStaffServlet extends HttpServlet {
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
                         return;
                     }
+                     if (e.getBank().equals(s.getBank())) {
+                        request.setAttribute("error", "Bank already exists.");
+                        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                        return;
+                    }
                 } catch (ParseException ex) {
                     request.setAttribute("error", "Invalid date format.");
                     request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
@@ -215,7 +220,8 @@ public class AddNewStaffServlet extends HttpServlet {
             request.setAttribute("status", "false");
             request.setAttribute("message", "Failed to add staff.");
         }
-        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+        response.sendRedirect("view-all-staff");
+//        request.getRequestDispatcher("view-all-staff").forward(request, response);
     }
 
     /**

@@ -68,17 +68,17 @@ public class ViewAllStaff extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AdminDAO ad = new AdminDAO();
-        List<Staff> list = ad.getAllStaffExceptAdmin();
+        StaffDAO sd = new StaffDAO();
+        List<Staff> list = sd.getAll();
         HttpSession session = request.getSession();
         Util u = new Util();
         if(session.getAttribute("staffs")==null){
-            list = ad.getAllStaffExceptAdmin();
+            list = sd.getAll();
             session.setAttribute("staffs", list);
         }
         else{
             list = (List<Staff>) session.getAttribute("staffs");
         }
-        StaffDAO sd = new StaffDAO();
         String filterStatus_raw = request.getParameter("filterStatus");
         String searchName = request.getParameter("searchName");
 //        if(!(filterStatus_raw==null && searchName==null)){
@@ -140,7 +140,7 @@ public class ViewAllStaff extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response);
     }
 
     /**
