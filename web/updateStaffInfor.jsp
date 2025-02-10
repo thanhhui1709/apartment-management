@@ -230,6 +230,7 @@
                                                         placeholder="Enter bank account"
                                                         value="${staff.bank}"
                                                         />
+                                                    <span id="bank-error" style="color: red"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -371,6 +372,27 @@
                                 });
                             } else {
                                 $("#CCCD-error").text("");
+                                updateSubmitButtonState();
+                            }
+                        });
+                        $("#bank").on("input", function () {
+                            var bank = $(this).val();
+                            if (bank) {
+                                $.ajax({
+                                    url: "checkDuplicateStaffInfor",
+                                    type: "GET",
+                                    data: {type: "bank", value: bank},
+                                    success: function (response) {
+                                        if (response.exists) {
+                                            $("#bank-error").text("Bank already exists.");
+                                        } else {
+                                            $("#bank-error").text("");
+                                        }
+                                        updateSubmitButtonState();
+                                    }
+                                });
+                            } else {
+                                $("#bank-error").text("");
                                 updateSubmitButtonState();
                             }
                         });

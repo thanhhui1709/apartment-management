@@ -168,7 +168,11 @@ public class AddNewStaffServlet extends HttpServlet {
                     if (currentDate.getDayOfYear() < birthDate.getDayOfYear()) {
                         age--;
                     }
-
+                    if (name.isBlank()) {
+                        request.setAttribute("error", "Name is not blank");
+                        request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
+                        return;
+                    }
                     if (age <= 18) {
                         request.setAttribute("error", "Staff must be older than 18.");
                         request.getRequestDispatcher("addnewstaff.jsp").forward(request, response);
