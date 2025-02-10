@@ -22,7 +22,9 @@ import model.Employee;
 import model.Role;
 import model.Company;
 import model.Feedback;
+import model.Request;
 import model.RequestType;
+import model.Staff;
 import util.Util;
 
 /**
@@ -284,7 +286,49 @@ public class FeedbackDAO extends DBContext {
         }
         
     }
+    public List<Feedback> getByResidentIDAndDateAndTypeRequest(String id, String from, String to, String requestType) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM feedback WHERE rId = ?");
+        List<Feedback> list = new ArrayList<>();
+        ResidentDAO rd = new ResidentDAO();
+        RequestTypeDAO rtd = new RequestTypeDAO();
 
+        // Handle optional parameters
+        if (from != null && to != null) {
+            sql.append(" AND (date BETWEEN ? AND ?)");
+        }
+        if (requestType != null && !requestType.isEmpty()) {
+            sql.append(" AND tId = ?");
+        }
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql.toString());
+            st.setString(1, id);
+
+            int paramIndex = 2;
+            if (from != null && to != null) {
+                st.setString(paramIndex++, from);
+                st.setString(paramIndex++, to);
+            }
+            if (requestType != null && !requestType.isEmpty()) {
+                st.setString(paramIndex++, requestType);
+            }
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Resident r = rd.getById(id);
+                String idFeedback = rs.getString("id");
+                String detail = rs.getString("detail");
+                String date = rs.getDate("date").toString();
+                RequestType rt  = rtd.getById(rs.getString("tid"));
+                Feedback fb = new Feedback(idFeedback, detail, date, r, rt);
+                list.add(fb);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Consider using a logger for real applications
+        }
+        System.out.println(list.size());
+        return list;
+    }
     public static void main(String[] args) {
         FeedbackDAO dao = new FeedbackDAO();
         System.out.println(dao.filterFeedback("quang", "", "", "", "2").size());
