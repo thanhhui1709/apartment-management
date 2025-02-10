@@ -388,7 +388,19 @@ public class StaffDAO extends DBContext {
         return false;
 
     }
-
+    public boolean checkDupEmail(String email){
+        String sql="select * from staff where Email=?";
+        try {
+            PreparedStatement pre= connection.prepareStatement(sql);
+            pre.setString(1, email);
+            ResultSet rs = pre.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
     public boolean checkDuplicateEmail(String email) {
         List<Staff> list = getAll();
         for (Staff staff : list) {

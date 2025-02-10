@@ -115,10 +115,16 @@ public class EditprofileSTServlet extends HttpServlet {
         request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
         return;
     }
-
+    StaffDAO st = new StaffDAO();
+    if (st.checkDuplicateEmail(eemail) && !eemail.equals(account.getEmail())) {
+            request.setAttribute("status", "false");
+            request.setAttribute("msg", "Email already exists. Please use a different email.");
+            request.getRequestDispatcher("editprofileST.jsp").forward(request, response);
+            return;
+        }
     Staff staff = new Staff(account.getpId(), eemail, ephone, ebank, eaddress);
 
-    StaffDAO st = new StaffDAO();
+    
     st.EditProfileSt(staff);
     staff=st.getById(account.getpId());
 
