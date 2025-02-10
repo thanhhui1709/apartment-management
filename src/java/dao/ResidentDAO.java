@@ -300,7 +300,7 @@ public class ResidentDAO extends DBContext {
         int count = 0;
 
         if (name != "") {
-            sql += "and name like '%" + name + "%' ";
+            sql += "and name like N'%" + name + "%' ";
         }
         if (status != "") {
             sql += "and active = " + status + " ";
