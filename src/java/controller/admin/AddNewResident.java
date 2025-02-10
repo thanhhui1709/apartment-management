@@ -84,8 +84,8 @@ public class AddNewResident extends HttpServlet {
         String username = request.getParameter("username");
 
         // Validate phone number (11 digits) and ID (12 digits)
-        if (!phone.matches("\\d{11}")) {
-            request.setAttribute("error", "Phone number must be exactly 11 digits.");
+        if (!phone.matches("\\d{10}")) {
+            request.setAttribute("error", "Phone number must be exactly 10 digits.");
             request.getRequestDispatcher("addnewresident.jsp").forward(request, response);
             return;
         }

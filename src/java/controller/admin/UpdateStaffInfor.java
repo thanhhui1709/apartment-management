@@ -119,9 +119,9 @@ public class UpdateStaffInfor extends HttpServlet {
             int salary = Integer.parseInt(salary_raw);
 
             // Validate Phone (11 digits)
-            if (!phone.matches("\\d{11}")) {
+            if (!phone.matches("\\d{10}")) {
                 request.setAttribute("status", "false");
-                request.setAttribute("message", "Phone number must be exactly 11 digits.");
+                request.setAttribute("message", "Phone number must be exactly 10 digits.");
                 request.getRequestDispatcher("updateStaffInfor.jsp").forward(request, response);
                 return;
             }
