@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +77,7 @@ public class AddNewCompany extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String name = request.getParameter("name");
         String phone = request.getParameter("phone");
         String contactPhone = request.getParameter("contactPhone");
@@ -160,6 +162,7 @@ public class AddNewCompany extends HttpServlet {
         if (cd.insertNewCompany(newC)) {
             request.setAttribute("status", "true");
             request.setAttribute("message", "New company added successfully!");
+            session.removeAttribute("companies");
         } else {
             request.setAttribute("status", "false");
             request.setAttribute("message", "Failed to add new company!");
