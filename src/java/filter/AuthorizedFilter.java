@@ -113,15 +113,15 @@ public class AuthorizedFilter implements Filter {
 
         String uri = req.getServletPath();
         Account a = (Account) session.getAttribute("account");
-        if (!uri.contains("login.jsp") && !uri.contains("requestpassword.jsp") && a == null && !uri.contains("request-password") 
-                && !uri.contains("login-google") 
+        if (!uri.contains("login.jsp") && !uri.contains("requestpassword.jsp") && !uri.contains("reset-password") && a == null && !uri.contains("request-password")
+                && !uri.contains("login-google")
                 && !uri.contains("login")
                 && !uri.contains("logout")
                 && !uri.contains("401_error.jsp")
                 && !uri.contains("404_error.jsp")) {
             res.sendRedirect("401_error.jsp");
             return;
-        } 
+        }
 
         Throwable problem = null;
         try {
