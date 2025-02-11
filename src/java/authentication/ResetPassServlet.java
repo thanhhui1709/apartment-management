@@ -132,7 +132,8 @@ public class ResetPassServlet extends HttpServlet {
         }
 
         if (!Util.isCorrectFormatPassword(password)) {
-            request.setAttribute("msg", "The password must have at least 6 characters, including at least 1 uppercase letter,"
+            request.setAttribute("status", "false");
+            request.setAttribute("message", "The password must have at least 6 characters, including at least 1 uppercase letter,"
                     + " 1 special character, and both letters and numbers.");
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
             return;
