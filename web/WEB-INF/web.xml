@@ -30,33 +30,40 @@
     <filter-mapping>
         <filter-name>StaffFilter</filter-name>
         <url-pattern>/view-profile-staff</url-pattern>
+        <url-pattern>/profile.jsp</url-pattern>
     </filter-mapping>
     
     <filter-mapping>
         <filter-name>StaffFilter</filter-name>
         <url-pattern>/editprofileSTServlet</url-pattern>
+        <url-pattern>/editprofileST.jsp</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
         <url-pattern>/view-profile-resident</url-pattern>
+        <url-pattern>/profile.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
         <url-pattern>/editprofileREServlet</url-pattern>
+        <url-pattern>/editprofileRE.jsp</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
         <url-pattern>/viewrequest_history</url-pattern>
+        <url-pattern>/view_request_history.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
         <url-pattern>/view-feed-back-user</url-pattern>
+        <url-pattern>/viewallfeedbackuser.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
         <url-pattern>/sendfeedback</url-pattern>
+        <url-pattern>/sendfeedback.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
@@ -69,16 +76,19 @@
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
         <url-pattern>/resident-add-request</url-pattern>
+        <url-pattern>/addrequest.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>ResidentFilter</filter-name>
         <url-pattern>/view-rule-resident</url-pattern>
+        <url-pattern>/viewrule-resident.jsp</url-pattern>
     </filter-mapping>
 
 
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-all-request</url-pattern>
+        <url-pattern>/viewallrequest.jsp</url-pattern>
     </filter-mapping>
      <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
@@ -87,47 +97,59 @@
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-all-feedback</url-pattern>
+        <url-pattern>/viewallfeedback.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-rule-admin</url-pattern>
+        <url-pattern>/viewrule-admin.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/add-new-rule</url-pattern>
+        <url-pattern>/addnewrule.jsp</url-pattern>
     </filter-mapping>
 
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/view-resident</url-pattern>
+        <url-pattern>/viewallresident.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/view-all-staff</url-pattern>
+        <url-pattern>/viewallstaff.jsp</url-pattern>
+
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/view-all-company</url-pattern>
+        <url-pattern>/viewallcompany.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/addNewResident</url-pattern>
+        <url-pattern>/addnewresident.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/add-new-staff</url-pattern>
+        <url-pattern>/addnewstaff.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/add-new-company</url-pattern>
+        <url-pattern>/addnewcompany.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/view-rule-admin</url-pattern>
+        <url-pattern>/viewrule-admin.jsp</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/add-new-rule</url-pattern>
+        <url-pattern>/addnewrule.jsp</url-pattern>
     </filter-mapping>
 
     <servlet>

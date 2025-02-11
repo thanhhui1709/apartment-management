@@ -90,14 +90,15 @@ public class FilterFeedback extends HttpServlet {
             }
         } else if (typeRequest != null && !typeRequest.isEmpty()) {
             list = fbd.getByResidentIDAndDateAndTypeRequest(acc.getpId(), null, null, typeRequest);
-            Iterator<RequestType> iterator = listTypeRequest.iterator();
-            while (iterator.hasNext()) {
-                RequestType type = iterator.next();
-                if (type.getId().equals(typeRequest)) {
-                    session.setAttribute("selectedType", type);
-                    iterator.remove(); // Safely remove the element
-                }
-            }
+            session.setAttribute("selectedType",rtd.getById(typeRequest) );
+//            Iterator<RequestType> iterator = listTypeRequest.iterator();
+//            while (iterator.hasNext()) {
+//                RequestType type = iterator.next();
+//                if (type.getId().equals(typeRequest)) {
+//                    session.setAttribute("selectedType", type);
+//                    iterator.remove(); // Safely remove the element
+//                }
+//            }
         } else {
             list = fbd.getByResidentIDAndDateAndTypeRequest(acc.getpId(), null, null, null);
             session.removeAttribute("selectedType");
