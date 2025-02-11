@@ -85,8 +85,7 @@ public class ViewAllCompany extends HttpServlet {
             page = "1";
         }
         int totalPage = u.getTotalPage(list, 3);
-        list = u.getListPerPage(list, 3, page);
-        
+        list = u.getListPerPage(list, 3, page);        
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("companies", list);
