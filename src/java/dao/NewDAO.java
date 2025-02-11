@@ -147,6 +147,23 @@ public class NewDAO extends DBContext {
         return null;
     }
 
+    public void updateNews(News news) {
+        String sql = "update news set title = ? , Content = ?, source = ?, category = ? , image = ?, date = ? where id = ?";
+        try {
+            PreparedStatement ps = connection.prepareCall(sql);
+            ps.setString(1, news.getTitle());
+            ps.setString(2, news.getContent());
+            ps.setString(3, news.getSource());
+            ps.setString(4, news.getCategory());
+            ps.setString(5, news.getImage());
+            ps.setString(6, news.getDate());
+            ps.setString(7, news.getId());
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(NewDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public static void main(String[] args) {
         NewDAO daoN = new NewDAO();
         System.out.println(daoN.getNewById("1").getDate());
