@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.SendEmail;
 import model.TokenForgetPassword;
+import util.Util;
 
 /**
  *
@@ -128,8 +129,14 @@ public class ResetPassServlet extends HttpServlet {
             request.setAttribute("message", "Password does not match");
             request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
             return;
-        } else {
+        }
 
+        if (!Util.isCorrectFormatPassword(password)) {
+            request.setAttribute("msg", "The password must have at least 6 characters, including at least 1 uppercase letter,"
+                    + " 1 special character, and both letters and numbers.");
+            request.getRequestDispatcher("resetpassword.jsp").forward(request, response);
+            return;
+        } else {
             daoA.changePassword(username, password, daoA.getAccountByUsername(username).getRoleId());
             daoT.updateStatusToken(token);
             request.setAttribute("status", "true");
@@ -137,7 +144,6 @@ public class ResetPassServlet extends HttpServlet {
             request.setAttribute("message", "Password is changed");
             request.getRequestDispatcher("login.jsp").forward(request, response);
             return;
-
         }
     }
 
