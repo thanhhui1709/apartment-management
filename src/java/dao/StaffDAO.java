@@ -100,6 +100,41 @@ public class StaffDAO extends DBContext {
         }
         return list;
     }
+    
+    public List<Staff> getAdminAndAdministrative() {
+        CompanyDAO sd = new CompanyDAO();
+        RoleDAO rd = new RoleDAO();
+        String sql = "select * from Staff where roleid in (0,2)";
+        List<Staff> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("Name");
+                String bod = rs.getDate("bod").toString();
+                String Email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String cccd = rs.getString("cccd");
+                int salary = rs.getInt("salary");
+                String education = rs.getString("education");
+                String bank = rs.getString("bank");
+                int status = rs.getInt("status");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                Role r = rd.getById(rs.getString("roleid"));
+                Company cp = sd.getById(rs.getString("cid"));
+                String startDate = rs.getString("startdate");
+                String enddate = rs.getString("enddate");
+                String gender = rs.getString("gender");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender);
+                list.add(s);
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
 
     public List<Staff> getStaffByRequestName(String nametype) {
         CompanyDAO sd = new CompanyDAO();
@@ -148,12 +183,38 @@ public class StaffDAO extends DBContext {
         return null;
     }
 
-    public Staff getById(String id) {
-        List<Staff> list = this.getAll();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId().equals(id)) {
-                return list.get(i);
+    public Staff getById(String ids) {
+        String sql = "select * from Staff where id=?";
+        CompanyDAO sd = new CompanyDAO();
+        RoleDAO rd = new RoleDAO();
+        List<Staff> list = new ArrayList<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, ids);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("Name");
+                String bod = rs.getDate("bod").toString();
+                String Email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String address = rs.getString("address");
+                String cccd = rs.getString("cccd");
+                int salary = rs.getInt("salary");
+                String education = rs.getString("education");
+                String bank = rs.getString("bank");
+                int status = rs.getInt("status");
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                Role r = rd.getById(rs.getString("roleid"));
+                Company cp = sd.getById(rs.getString("cid"));
+                String startDate = rs.getString("startdate");
+                String enddate = rs.getString("enddate");
+                String gender = rs.getString("gender");
+                Staff s = new Staff(id, name, bod, Email, phone, address, cccd, salary, education, bank, status, username, password, r, cp, startDate, enddate, gender);
+                return s;
             }
+        } catch (Exception e) {
         }
         return null;
     }

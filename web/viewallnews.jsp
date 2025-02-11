@@ -61,17 +61,24 @@
                                             <div >
                                                 <form action="view-news" method="get">
                                                     <div class="row align-items-center">
-                                                        <div class="col-md-2">
-                                                            <input type="text" class="form-control" name="title" placeholder="Enter title" value="${param.title}">
+                                                        <div class="col-md-8">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-md-2">
+                                                                    <input type="text" class="form-control" name="title" placeholder="Enter title" value="${param.title}">
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <input type="date" class="form-control" name="startDate" placeholder="From" value="${param.startDate}">
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <input type="date" class="form-control" name="endDate" placeholder="To" value="${param.endDate}">
+                                                                </div>
+                                                                <div class="col-md-4 d-flex">
+                                                                    <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-md-2">
-                                                            <input type="date" class="form-control" name="startDate" placeholder="From" value="${param.startDate}">
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <input type="date" class="form-control" name="endDate" placeholder="To" value="${param.endDate}">
-                                                        </div>
-                                                        <div class="col-md-4 d-flex">
-                                                            <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
+                                                        <div class="col-md-4">
+                                                            <a href="add-news"  class="btn btn-primary">Add News</a>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -92,8 +99,8 @@
                         <form method="get" action="view-news" style="display: flex; align-items: center; gap: 10px;">
                             <label for="page" style="font-size: 14px; font-weight: bold;">Page:</label>
                             <input type="text" name="title" value="${param.title}" hidden=""><!-- comment -->
-                             <input type="date" name="startDate" value="${param.startDate}" hidden=""><!-- comment -->
-                              <input type="date" name="endDate" value="${param.endDate}" hidden=""><!-- comment -->
+                            <input type="date" name="startDate" value="${param.startDate}" hidden=""><!-- comment -->
+                            <input type="date" name="endDate" value="${param.endDate}" hidden=""><!-- comment -->
                             <select id="page" name="page" onchange="this.form.submit()" 
                                     style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
                                 <c:forEach begin="1" end="${requestScope.totalPage}" var="page">

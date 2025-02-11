@@ -107,6 +107,23 @@ public class NewDAO extends DBContext {
         return null;
     }
 
+    public List<String> getAllCategory() {
+        String sql = "select distinct category from news";
+        StaffDAO daoSt = new StaffDAO();
+        List<String> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getString("category"));
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(NewDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public List<News> filterNews(String title, String startDate, String endDate) {
         String sql = "select * from News where 1 = 1 ";
         FeedbackDAO dao = new FeedbackDAO();
@@ -147,8 +164,49 @@ public class NewDAO extends DBContext {
         return null;
     }
 
+    public int getNewId(){
+        String sql = "select id from news";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            List<Integer>  li= new ArrayList<>();
+            int max = 1;
+            while (rs.next()) {
+                li.add(Integer.parseInt(rs.getString("id")));
+                for (Integer in : li) {
+                    if(in > max){ max = in;}
+                }   
+            }
+            return max + 1;
+        } catch (SQLException ex) {
+            
+        }
+        return 1;
+    }
+    
+    public boolean insertNews(News anew){
+        String sql = "insert into News(Id,title,Content,[source],category,image,sId,date) "
+                + "values(?,?,?,?,?,?,?,?)";
+        int id = this.getNewId();
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setString(2, anew.getTitle());
+            ps.setString(3, anew.getContent());
+            ps.setString(4, anew.getSource());
+            ps.setString(5, anew.getCategory());
+            ps.setString(6, anew.getImage());
+            ps.setString(7, anew.getStaff().getId());
+            ps.setString(8, anew.getDate());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println(""+ex.getMessage());
+        }
+        return false;
+    }
+    
     public static void main(String[] args) {
         NewDAO daoN = new NewDAO();
-        System.out.println(daoN.getNewById("1").getDate());
+        System.out.println(daoN.getNewId());
     }
 }

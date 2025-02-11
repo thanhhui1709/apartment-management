@@ -2,58 +2,63 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.resident;
+
+package controller.admin;
 
 import dao.NewDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import java.util.List;
 import model.News;
-import util.Util;
+import model.Staff;
 
 /**
  *
- * @author quang
+ * @author PC
  */
-@WebServlet(name = "ViewNewServlet", urlPatterns = {"/view-news"})
-public class ViewNewServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="AddNewsServlet", urlPatterns={"/add-news"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50 // 50MB
+)
+public class AddNewsServlet extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewNewServlet</title>");
+            out.println("<title>Servlet AddNewsServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewNewServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddNewsServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -61,50 +66,18 @@ public class ViewNewServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-        String title = request.getParameter("title");
-        Util u = new Util();
+    throws ServletException, IOException {
+        NewDAO ndao = new NewDAO();
+        StaffDAO sdao = new StaffDAO();
+        List<String> categories = ndao.getAllCategory();
+        List<Staff> staffs = sdao.getAdminAndAdministrative();
+        request.setAttribute("categories", categories);
+        request.setAttribute("staffs", staffs);
+        request.getRequestDispatcher("addnews.jsp").forward(request, response);
+    } 
 
-        title = u.stringNomalize(title);
-
-        if (startDate == null || startDate.trim().isEmpty()) {
-            startDate = "";
-        }
-        if (endDate == null || endDate.trim().isEmpty()) {
-            endDate = "";
-        }
-        NewDAO dao = new NewDAO();
-        String page = request.getParameter("page");
-        if (page == null) {
-            page = "1";
-        }
-        List<News> listNews = dao.filterNews(title, startDate, endDate);
-        int totalPage = u.getTotalPage(listNews, 3);
-        if (listNews.size() != 0) {
-            listNews = u.getListPerPage(listNews, 3, page);
-            session.setAttribute("listNews", listNews);
-            request.setAttribute("totalPage", totalPage);
-            request.setAttribute("currentPage", Integer.parseInt(page));
-            request.getRequestDispatcher("viewallnews.jsp").forward(request, response);
-        } else {
-            session.setAttribute("listNews", listNews);
-            request.setAttribute("totalPage", 1);
-            request.setAttribute("currentPage", 1);
-            request.setAttribute("message", "No result");
-            request.getRequestDispatcher("viewallnews.jsp").forward(request, response);
-        }
-
-        session.setAttribute("listNews", listNews);
-        request.getRequestDispatcher("viewallnews.jsp").forward(request, response);
-
-    }
-
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -112,13 +85,33 @@ public class ViewNewServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        String source = request.getParameter("source");    
+        String image = "";
+        if(null != request.getPart("file")){
+            Part fileImage = request.getPart("file");
+            image = "images/news/" + fileImage.getSubmittedFileName();
+        }
+        String auther = request.getParameter("auther");
+        String date = request.getParameter("date");
+        String category = request.getParameter("category");
+        NewDAO ndao = new NewDAO();
+        StaffDAO sdao = new StaffDAO();
+        News anew = new News(title, content, source, category, image, sdao.getById(auther), date);
+        if (ndao.insertNews(anew)) {
+            request.setAttribute("status", "true");
+            request.setAttribute("message", "News added successfully!");
+        } else {
+            request.setAttribute("status", "false");
+            request.setAttribute("message", "Failed to add news.");
+        }
         doGet(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
