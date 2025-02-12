@@ -74,19 +74,18 @@
                                                                 </div>
                                                                 <div class="col-md-4 d-flex">
                                                                     <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
+                                                                    <c:if test="${sessionScope.account.roleId == 2}"> <a href="add-news"  class="btn btn-primary">Add News</a></c:if>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <a href="add-news"  class="btn btn-primary">Add News</a>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
 
-                                        <div class="news_section">
-                                            <ul class="news-list">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <div class="news_section">
+                                                <ul class="news-list">
                                                 <c:forEach items="${sessionScope.listNews}" var="n">
                                                     <li>-${n.date}<a href="news-detail?id=${n.id}">: ${n.title}</a></li>
                                                     </c:forEach>

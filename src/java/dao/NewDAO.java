@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.DBContext;
@@ -24,6 +25,7 @@ import model.Company;
 import model.Feedback;
 import model.News;
 import model.RequestType;
+import model.Staff;
 import util.Util;
 
 /**
@@ -33,7 +35,7 @@ import util.Util;
 public class NewDAO extends DBContext {
 
     public List<News> getAllNews() {
-        String sql = "select * from news";
+        String sql = "select * from News order by date desc";
         StaffDAO daoSt = new StaffDAO();
         List<News> list = new ArrayList<>();
         try {
@@ -123,9 +125,9 @@ public class NewDAO extends DBContext {
         }
         return null;
     }
-    
+
     public List<News> filterNews(String title, String startDate, String endDate) {
-        String sql = "select * from News where 1 = 1 ";
+        String sql = "select * from News where GETDATE() > date and 1 =1 order by date desc ";
         FeedbackDAO dao = new FeedbackDAO();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         if (title != "") {
@@ -164,44 +166,47 @@ public class NewDAO extends DBContext {
         return null;
     }
 
-    public void updateNews(News news) {
-        String sql = "update news set title = ? , Content = ?, source = ?, category = ? , image = ?, date = ? where id = ?";
+    public boolean updateNews(News news) {
+        String sql = "update news set title = ?, date = ?, image = ?, source = ?, content = ?, category = ?  where id = ?";
         try {
             PreparedStatement ps = connection.prepareCall(sql);
             ps.setString(1, news.getTitle());
-            ps.setString(2, news.getContent());
-            ps.setString(3, news.getSource());
-            ps.setString(4, news.getCategory());
-            ps.setString(5, news.getImage());
-            ps.setString(6, news.getDate());
+            ps.setString(2, news.getDate());
+            ps.setString(3, news.getImage());
+            ps.setString(4, news.getSource());
+            ps.setString(5, news.getContent());
+            ps.setString(6, news.getCategory());
             ps.setString(7, news.getId());
-            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(NewDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
     }
 
-    public int getNewId(){
+    public int getNewId() {
         String sql = "select id from news";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            List<Integer>  li= new ArrayList<>();
+            List<Integer> li = new ArrayList<>();
             int max = 1;
             while (rs.next()) {
                 li.add(Integer.parseInt(rs.getString("id")));
                 for (Integer in : li) {
-                    if(in > max){ max = in;}
-                }   
+                    if (in > max) {
+                        max = in;
+                    }
+                }
             }
             return max + 1;
         } catch (SQLException ex) {
-            
+
         }
         return 1;
     }
-    
-    public boolean insertNews(News anew){
+
+    public boolean insertNews(News anew) {
         String sql = "insert into News(Id,title,Content,[source],category,image,sId,date) "
                 + "values(?,?,?,?,?,?,?,?)";
         int id = this.getNewId();
@@ -217,13 +222,23 @@ public class NewDAO extends DBContext {
             ps.setString(8, anew.getDate());
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
-            System.out.println(""+ex.getMessage());
+            System.out.println("" + ex.getMessage());
         }
         return false;
     }
-    
+
     public static void main(String[] args) {
         NewDAO daoN = new NewDAO();
-        System.out.println(daoN.getNewId());
+        StaffDAO stdao = new StaffDAO();
+        String id = "10";
+        String title = "Khởi động chương trình tình nguyện mùa hè 2026";
+        String content = "Nội dung cho bản ghi Phung Nhat QUang 171";
+        String source = "Nguồn 5";
+        String category = "Hoat Dong";
+        String image = "cc";
+        Staff s = stdao.getById("S1002");
+        String date = "02/12/2025";
+        News news = new News(id, title, content, source, category, image, s, date);
+        System.out.println(daoN.updateNews(news));
     }
 }

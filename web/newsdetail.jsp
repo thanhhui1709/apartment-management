@@ -70,9 +70,18 @@
             }
             .related-links li {
                 margin-bottom: 10px;
+                font-weight: bold;
             }
             .back-button {
                 margin-bottom: 20px;
+            }
+            #btn {
+                transition: background-color 0.3s ease; /* Smooth transition */
+            }
+
+            #btn:hover {
+                background-color: #FF1C42; /* Change to a different shade or color */
+                color: white; /* Optional: Change text color on hover */
             }
         </style>
     </head>
@@ -86,9 +95,15 @@
                 <!-- end topbar -->
                 <!-- News Detail -->
                 <div class="container-fluid mt-5"> 
+
                     <div class="row">
                         <div class="col-12"> 
+
                             <div class="news-container">
+                                <c:if test="${sessionScope.account.roleId == 2}">
+                                    <btn id="btn" class="btn btn-success" onclick="window.location = 'update-news?id=${param.id}';">
+                                        Update News
+                                    </btn></c:if>
                                 <h2 class="news-title" style="color: #004175;">${requestScope.news.title}</h2>
                                 <p class="news-date">Date: ${requestScope.news.date}, Post by: Phùng Nhật Quang</p>
                                 <p class="news-content">
@@ -100,9 +115,9 @@
                                             <c:forEach items="${requestScope.listOtherNews}" var="n">
                                             <li>- <a href="news-detail?id=${n.id}">${n.title}</a></li>
                                             </c:forEach>
-                                        <li><a href="view-news" class="btn-link yellow_color">Back to News List</a></li>
+                                        <li><btn id="btn" onclick="window.location = 'view-news';" class="btn btn-success">Back to News List</btn></li>
                                     </ul>
-                                    
+
                                 </div>
                             </div>
                         </div>
