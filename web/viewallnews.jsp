@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="style.css" />
         <link rel="stylesheet" href="css/responsive.css" />
         <link rel="stylesheet" href="css/custom.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <style>
             body {
 
@@ -88,6 +89,7 @@
                                                 <ul class="news-list">
                                                 <c:forEach items="${sessionScope.listNews}" var="n">
                                                     <li>-${n.date}<a href="news-detail?id=${n.id}">: ${n.title}</a></li>
+                                                    <a href="delete-news?id=${n.id}" onclick="return confirm('Are you sure to delete this news?')""><i class="material-icons" title="Delete">&#xE872;</i></a>
                                                     </c:forEach>
                                             </ul>
                                         </div>

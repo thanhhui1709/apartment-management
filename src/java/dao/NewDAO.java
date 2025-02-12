@@ -125,7 +125,17 @@ public class NewDAO extends DBContext {
         }
         return null;
     }
-
+    public void DeleteNews(String id){
+        try {
+            String sql="delete form news where id=?";
+            PreparedStatement pre=connection.prepareStatement(sql);
+            pre.setString(1, id);
+            pre.executeUpdate();
+            
+        } catch (Exception e) {
+            e.printStackTrace(); 
+        }
+    }
     public List<News> filterNews(String title, String startDate, String endDate) {
         String sql = "select * from News where 1 = 1 and Getdate() > date";
         FeedbackDAO dao = new FeedbackDAO();
