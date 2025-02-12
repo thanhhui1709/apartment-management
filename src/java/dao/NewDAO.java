@@ -127,7 +127,7 @@ public class NewDAO extends DBContext {
     }
 
     public List<News> filterNews(String title, String startDate, String endDate) {
-        String sql = "select * from News where GETDATE() > date and 1 =1 order by date desc ";
+        String sql = "select * from News where 1 = 1 and Getdate() > date";
         FeedbackDAO dao = new FeedbackDAO();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         if (title != "") {
@@ -143,6 +143,8 @@ public class NewDAO extends DBContext {
             String formatDate = format.format(date);
             sql += " and date <= '" + formatDate + "'";
         }
+        
+        sql += " order by date desc";
         List<News> list = new ArrayList<>();
         StaffDAO daoSt = new StaffDAO();
         try {
@@ -239,6 +241,6 @@ public class NewDAO extends DBContext {
         Staff s = stdao.getById("S1002");
         String date = "02/12/2025";
         News news = new News(id, title, content, source, category, image, s, date);
-        System.out.println(daoN.updateNews(news));
+        System.out.println(daoN.filterNews("a","","").size());
     }
 }

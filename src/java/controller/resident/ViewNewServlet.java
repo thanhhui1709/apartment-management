@@ -97,8 +97,6 @@ public class ViewNewServlet extends HttpServlet {
             request.getRequestDispatcher("viewallnews.jsp").forward(request, response);
         }
 
-        session.setAttribute("listNews", listNews);
-        request.getRequestDispatcher("viewallnews.jsp").forward(request, response);
 
     }
 
