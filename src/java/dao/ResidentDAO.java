@@ -333,12 +333,27 @@ public class ResidentDAO extends DBContext {
         return null;
     }
 
+    public boolean editResidentStatus(String id, String status) {
+        String sql = "UPDATE [dbo].[Resident]\n"
+                + "   SET active=? \n"
+                + " WHERE id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, status);
+            st.setString(2, id);
+            st.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+
+    }
+
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        List<Resident> list = dao.getAll();
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getImage());
-        }
+       
+        System.out.println(dao.editResidentStatus("P100", "0"));
 
     }
 }
