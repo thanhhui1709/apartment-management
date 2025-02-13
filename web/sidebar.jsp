@@ -92,6 +92,7 @@
                     <li><a href="view-categoryservice-staff"><i class="fas fa-cube"></i><span>Types of service</span></a></li>
                     <li class="${sessionScope.account.roleId != 0? 'display-none':''}"><a href="add-new-room-type"><i class="fa-solid fa-house-flag"></i><span>Room Types</span></a></li>
 
+                    <li><a href="view-floor-staff"><i class="fa-solid fa-building"></i><span>Floor Information</span></a></li>
 
                     <!--                    <li>
                                             <a href="#apps" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-object-group blue2_color"></i> <span>Apps</span></a>
