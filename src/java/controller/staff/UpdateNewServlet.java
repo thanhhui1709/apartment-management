@@ -16,6 +16,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import model.News;
 import model.Staff;
@@ -108,12 +112,30 @@ public class UpdateNewServlet extends HttpServlet {
         }
 
         NewDAO ndao = new NewDAO();
+        News news = ndao.getNewById(id);
+        PrintWriter out = response.getWriter();
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            ZoneId zone = ZoneId.systemDefault();
+            Date dateAdd = format.parse(date);
+            LocalDate inputDate = dateAdd.toInstant().atZone(zone).toLocalDate();
+            LocalDate currentDate = format.parse(news.getDate()).toInstant().atZone(zone).toLocalDate();
+
+            if (inputDate.isBefore(currentDate)) {
+                request.setAttribute("status", "false");
+                request.setAttribute("message", "The time must be after the date of the update check.");
+                request.setAttribute("news", news);
+                request.getRequestDispatcher("updatenews.jsp").forward(request, response);
+                return;
+            }
+        } catch (Exception e) {
+            ;
+        }
         StaffDAO sdao = new StaffDAO();
         News anew = new News(id, title, content, source, category, image, sdao.getById(auther), date);
         if (title.trim().isEmpty() || title.trim() == "") {
             request.setAttribute("status", "false");
             request.setAttribute("message", "Title can not be empty.");
-            News news = ndao.getNewById(request.getParameter("id"));
             request.setAttribute("news", news);
             request.getRequestDispatcher("updatenews.jsp").forward(request, response);
             return;
@@ -122,7 +144,6 @@ public class UpdateNewServlet extends HttpServlet {
         if (content.trim().isEmpty() || content.trim() == "") {
             request.setAttribute("status", "false");
             request.setAttribute("message", "Content can not be empty.");
-            News news = ndao.getNewById(request.getParameter("id"));
             request.setAttribute("news", news);
             request.getRequestDispatcher("updatenews.jsp").forward(request, response);
             return;
@@ -135,7 +156,7 @@ public class UpdateNewServlet extends HttpServlet {
                 request.setAttribute("message", "Failed to update news.");
             }
         }
-        News news = ndao.getNewById(request.getParameter("id"));
+        news = ndao.getNewById(request.getParameter("id"));
         request.setAttribute("news", news);
         request.getRequestDispatcher("updatenews.jsp").forward(request, response);
     }
