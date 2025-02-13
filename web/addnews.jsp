@@ -134,11 +134,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="content">Content</label>
-                                            <input type="text" id="content" name="content" placeholder="Enter content" required />
+                                            <textarea value="" style="width: 100%" id="detail" name="content" placeholder="Enter content" rows="5" cols="50" required></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="date">Date</label>
                                             <input type="date" id="date" name="date" required />
+                                            <span id="date-error" style="color: red">${requestScope.error}</span>
                                         </div>
                                         <div class="form-group">
                                             <label for="source">Source</label>
@@ -160,12 +161,9 @@
                                             <input style="margin-bottom: 5px;margin-top: 5px;" type="file" name="file" id="file" accept="images/logo/*">
                                         </div>
                                         <div class="form-group">
-                                            <label for="auther">Auther</label>
-                                            <select id="auther" name="auther" required>
-                                                <c:forEach items="${requestScope.staffs}" var="staff">
-                                                <option value="${staff.id}">${staff.name}</option>    
-                                                </c:forEach>
-                                            </select>   
+                                            <label for="author">Author</label>
+                                            <input type="text" id="author" name="author" value="${sessionScope.person.name}"  readonly />
+                                            <input type="text" id="authorid" name="authorid" value="${sessionScope.person.id}"  hidden />
                                         </div>
                                         <div class="form-button">
                                             <button type="submit">Add News</button>
