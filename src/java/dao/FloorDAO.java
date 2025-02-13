@@ -34,7 +34,7 @@ public class FloorDAO extends DBContext{
                 int numberPerson  = this.GetNumberLivingPersonFloor(floor);
                 int numberUsingRoom  =this.GetNumberUsingRoomByFloor(floor);
                 int numberNotUsingRoom  =this.GetNumberNoUsingRoomByFloor(floor);
-                FloorResponseDTO floorResponseDTO = new FloorResponseDTO(square, square, usagetype, note, numberPerson, numberUsingRoom, numberNotUsingRoom);
+                FloorResponseDTO floorResponseDTO = new FloorResponseDTO(floor, square, usagetype, note, numberPerson, numberUsingRoom, numberNotUsingRoom);
                 list.add(floorResponseDTO);
             }
         } catch (SQLException e) {
@@ -81,8 +81,67 @@ public class FloorDAO extends DBContext{
         }
         return 0;
     }
+    public List<String> getAllUsageType(){
+        String sql="select distinct(usagetype) from Floor";
+        List<String> list = new ArrayList<>();
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            ResultSet rs= st.executeQuery();
+            while(rs.next()){
+                String type = rs.getString("usageType");
+                list.add(type);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+    public List<FloorResponseDTO> getByNumberFloor(int floor){
+        String sql  ="select  * from floor where floor=?";
+        List<FloorResponseDTO> list = new ArrayList<>();
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setInt(1, floor);
+            ResultSet rs= st.executeQuery();
+            while(rs.next()){
+                int square = rs.getInt("Square");
+                String usagetype = rs.getString("usagetype");
+                String note =rs.getString("note");
+                int numberPerson  = this.GetNumberLivingPersonFloor(floor);
+                int numberUsingRoom  =this.GetNumberUsingRoomByFloor(floor);
+                int numberNotUsingRoom  =this.GetNumberNoUsingRoomByFloor(floor);
+                FloorResponseDTO floorResponseDTO = new FloorResponseDTO(floor, square, usagetype, note, numberPerson, numberUsingRoom, numberNotUsingRoom);
+                list.add(floorResponseDTO);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+      public List<FloorResponseDTO> getByUsageType(String type){
+        String sql  ="select  * from floor where usagetype=?";
+        List<FloorResponseDTO> list = new ArrayList<>();
+        try{
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setString(1, type);
+            ResultSet rs= st.executeQuery();
+            while(rs.next()){
+                int floor = rs.getInt("floor");
+                int square = rs.getInt("Square");
+                String note =rs.getString("note");
+                int numberPerson  = this.GetNumberLivingPersonFloor(floor);
+                int numberUsingRoom  =this.GetNumberUsingRoomByFloor(floor);
+                int numberNotUsingRoom  =this.GetNumberNoUsingRoomByFloor(floor);
+                FloorResponseDTO floorResponseDTO = new FloorResponseDTO(floor, square, type, note, numberPerson, numberUsingRoom, numberNotUsingRoom);
+                list.add(floorResponseDTO);
+            }
+        }
+        catch(SQLException e){
+        }
+        return list;
+    }
     public static void main(String[] args) {
         FloorDAO fd = new FloorDAO();
         System.out.println(fd.getAll().size());
+        System.out.println(fd.getAllUsageType().size());
+        System.out.println(fd.getByNumberFloor(1).size());
     }
 }

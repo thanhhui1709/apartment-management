@@ -97,6 +97,32 @@
                                         </div>
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
+                                                <div style="margin-bottom: 20px">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-2">
+                                                            <form action="view-floor-staff" method="Post">
+                                                                <select class="form-control" name="numFloor" onchange="this.form.submit()">
+                                                                    <option value="all">All</option>
+                                                                    <c:forEach begin="1" end="${requestScope.nofloor}" var="num">
+                                                                        <option value="${num}">${num}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </form>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <form action="view-floor-staff" method="Post">
+                                                                <select class="form-control" name="type"  onchange="this.form.submit()">
+                                                                    <option value="all">All</option>
+                                                                    <c:forEach items="${requestScope.types}" var="type">
+                                                                        <option value="${type}">${type}</option>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <table class="table w-100" id="table-infor">
                                                     <thead>
                                                         <tr>
