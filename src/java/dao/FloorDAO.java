@@ -1,0 +1,88 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dao;
+
+import dto.response.FloorResponseDTO;
+import jdbc.DBContext;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import util.Util;
+/**
+ *
+ * @author thanh
+ */
+public class FloorDAO extends DBContext{
+    //Hiển thị cần cả : số người ở, số phòng đang sử dụng, số phòng trống
+    public List<FloorResponseDTO> getAll(){
+        String sql =" select * from floor";
+        List<FloorResponseDTO> list = new ArrayList<>();
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            ResultSet rs= st.executeQuery();
+            while(rs.next()){
+                int floor  =rs.getInt("floor");
+                int square = rs.getInt("Square");
+                String usagetype = rs.getString("usagetype");
+                String note =rs.getString("note");
+                int numberPerson  = this.GetNumberLivingPersonFloor(floor);
+                int numberUsingRoom  =this.GetNumberUsingRoomByFloor(floor);
+                int numberNotUsingRoom  =this.GetNumberNoUsingRoomByFloor(floor);
+                FloorResponseDTO floorResponseDTO = new FloorResponseDTO(square, square, usagetype, note, numberPerson, numberUsingRoom, numberNotUsingRoom);
+                list.add(floorResponseDTO);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+    public int GetNumberUsingRoomByFloor(int floor){
+        String sql =" select count(*) as numberofroom from floor f join apartment a on f.floor=a.floor where f.floor=?";
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setInt(1, floor);
+            ResultSet rs =st.executeQuery();
+            while(rs.next()){
+                return rs.getInt("numberofroom");
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+    public int GetNumberNoUsingRoomByFloor(int floor){
+        String sql =" select count(*) as numberofroom from floor f join apartment a on f.floor=a.floor where f.floor=? and a.status=0";
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setInt(1, floor);
+            ResultSet rs =st.executeQuery();
+            while(rs.next()){
+                return rs.getInt("numberofroom");
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+    public int GetNumberLivingPersonFloor(int floor){
+        String sql ="select f.floor,COALESCE(SUM(a.NoPerson), 0) as numberofperson "
+                + "from floor f left join apartment a on f.floor=a.floor group by f.floor having f.floor=? ";
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setInt(1, floor);
+            ResultSet rs =st.executeQuery();
+            while(rs.next()){
+                return rs.getInt("numberofperson");
+            }
+        } catch (SQLException e) {
+        }
+        return 0;
+    }
+    public static void main(String[] args) {
+        FloorDAO fd = new FloorDAO();
+        System.out.println(fd.getAll().size());
+    }
+}
