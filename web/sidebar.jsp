@@ -36,6 +36,23 @@
             .display-none{
                 display: none;
             }
+            .user_img {
+    width: 60px;  /* Kích thước khung chứa ảnh */
+    height: 60px;
+    overflow: hidden;
+    border-radius: 50%;  /* Bo tròn khung chứa */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Đảm bảo ảnh không bị méo */
+    border-radius: 50%;  /* Bo tròn ảnh bên trong */
+}
+
         </style>
     </head>
     <body>

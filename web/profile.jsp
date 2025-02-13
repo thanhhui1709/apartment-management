@@ -106,6 +106,25 @@
             .action-button:hover {
                 background-color: #0056b3;
             }
+            .profile_img {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+
+            .profile_img img {
+                width: 180px;
+                height: 180px;
+                object-fit: cover;
+                border-radius: 50%;
+                display: block;
+                margin-bottom: 10px;
+            }
+
+
+
         </style>
 
 
@@ -143,12 +162,13 @@
                                                             <img width="180" class="img-responsive rounded-circle" src="${sessionScope.person.image}" alt="User Image">
                                                             <form action="update-image" method="post" enctype="multipart/form-data">
                                                                 <div>
-                                                                    <input style="margin-bottom: 5px;margin-top: 5px;" type="file" name="file" id="file" accept="images/avatar/*">
+                                                                    <input style="margin-bottom: 5px; margin-top: 5px;" type="file" name="file" id="file" accept="images/avatar/*">
                                                                     <button type="submit">Upload</button>
-                                                                    <h6 style="color: red ">${requestScope.message}</h6>
+                                                                    <h6 style="color: red;">${requestScope.message}</h6>
                                                                 </div>
                                                             </form>
                                                         </div>
+
                                                         <div class="profile_contant">
                                                             <div class="contact_inner">
                                                                 <h3>${sessionScope.person.name}</h3>
