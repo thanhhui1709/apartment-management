@@ -61,7 +61,7 @@ public class RoomTypeDAO extends DBContext {
                         rs.getInt("livingroom"),
                         rs.getInt("bathroom"),
                         rs.getInt("balcony"),
-                        rs.getInt("balcony")));
+                        rs.getFloat("square")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(RoomTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
