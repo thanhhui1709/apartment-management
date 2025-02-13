@@ -16,9 +16,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.text.ParseException;
 import java.util.List;
 import model.News;
 import model.Staff;
+import validation.CommonValidation;
 
 /**
  *
@@ -94,12 +96,21 @@ public class AddNewsServlet extends HttpServlet {
             Part fileImage = request.getPart("file");
             image = "images/news/" + fileImage.getSubmittedFileName();
         }
-        String auther = request.getParameter("auther");
+        String auther = request.getParameter("authorid");
         String date = request.getParameter("date");
         String category = request.getParameter("category");
         NewDAO ndao = new NewDAO();
         StaffDAO sdao = new StaffDAO();
         News anew = new News(title, content, source, category, image, sdao.getById(auther), date);
+        try{
+            if(!CommonValidation.isValidNewsDate(date)){
+                request.setAttribute("error", "Date need to later current date");
+                doGet(request, response);
+                return;
+            }
+        }catch(ParseException e){
+            System.out.println(""+e);
+        }
         if (ndao.insertNews(anew)) {
             request.setAttribute("status", "true");
             request.setAttribute("message", "News added successfully!");
@@ -108,6 +119,7 @@ public class AddNewsServlet extends HttpServlet {
             request.setAttribute("message", "Failed to add news.");
         }
         doGet(request, response);
+        request.removeAttribute("error");
     }
 
     /** 

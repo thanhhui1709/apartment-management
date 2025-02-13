@@ -39,6 +39,13 @@ public class CommonValidation {
         
         return !date.after(currentDate);
     }
+    public static boolean isValidNewsDate(String dateStr) throws ParseException {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");      
+        Date date = df.parse(dateStr);        
+        LocalDate cDate = LocalDate.now();
+        Date currentDate = df.parse(cDate.toString());        
+        return date.after(currentDate);
+    }
     public  boolean isValidEmail(String email) {
         String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         return email.matches(regex);
