@@ -151,6 +151,7 @@
                                                     value="${roomtype.name}"
                                                     required=""
                                                     />
+                                                <p class="error-message">${requestScope.nameError}</p>
                                             </div>
                                         </div>                                       
                                         <div class="form-group">
@@ -161,6 +162,7 @@
                                                         type="number"
                                                         id="max-person"
                                                         name="max-person"
+                                                        min="0"
                                                         placeholder="Enter max person"
                                                         value="${roomtype.limitPerson}"
                                                         required=""
@@ -172,7 +174,9 @@
                                                     <input
                                                         type="text"
                                                         id="square"
-                                                        name="square"
+                                                        name="square"\
+                                                        min="0"
+                                                        step="any"
                                                         placeholder="Enter square"
                                                         value="${roomtype.square}"
                                                         required=""
@@ -189,6 +193,7 @@
                                                         type="number"
                                                         id="bedroom"
                                                         name="bedroom"
+                                                        min="0"
                                                         placeholder="Enter number of bedroom"
                                                         value="${roomtype.bedroom}"
                                                         required=""
@@ -201,6 +206,7 @@
                                                         type="number"
                                                         id="living-room"
                                                         name="living-room"
+                                                        min="0"
                                                         placeholder="Enter number of living room"
                                                         value="${roomtype.livingRoom}"
                                                         required=""
@@ -217,6 +223,7 @@
                                                         type="number"
                                                         id="bath-room"
                                                         name="bath-room"
+                                                        min="0"
                                                         placeholder="Enter number of bath room"
                                                         value="${roomtype.bathRoom}"
                                                         required=""
@@ -229,6 +236,7 @@
                                                         type="number"
                                                         id="balcony"
                                                         name="balcony"
+                                                        min="0"
                                                         placeholder="Enter number of balcony"
                                                         value="${roomtype.balcony}"
                                                         required=""

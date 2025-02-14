@@ -91,6 +91,22 @@ public class RoomTypeDAO extends DBContext {
         return null;
     }
     
+    public boolean checkExistNameRoomTypeExceptSeft(String name, String id) {
+        String sql = "select * from RoomType where name = ? and id <> ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public boolean checkExistNameRoomType(String name) {
         String sql = "select * from RoomType where name = ?";
         try {

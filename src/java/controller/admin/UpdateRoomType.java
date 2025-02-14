@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.RoomType;
+import util.Util;
 
 /**
  *
@@ -74,6 +75,7 @@ public class UpdateRoomType extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        RoomTypeDAO rdao = new RoomTypeDAO();
         String id = request.getParameter("id");
         String name = request.getParameter("name");
         String maxperson = request.getParameter("max-person");
@@ -82,6 +84,18 @@ public class UpdateRoomType extends HttpServlet {
         String livingroom = request.getParameter("living-room");        
         String bathroom = request.getParameter("bath-room");
         String balcony = request.getParameter("balcony");
+        if (name.trim() == "" || name.trim().isEmpty()) {
+            request.setAttribute("nameError", "Name can not be empty");
+            doGet(request, response);
+            return;
+        }
+        Util u = new Util();
+        name = u.stringNomalize(name);
+        if (rdao.checkExistNameRoomTypeExceptSeft(name, id)) {
+            request.setAttribute("nameError", "Name room type is already exist");
+            doGet(request, response);
+            return;
+        }
         if(null == maxperson  || !maxperson.matches("[0-9]+") || maxperson.isBlank()){
             request.setAttribute("maxpersonError", "Max person is only degit");
             doGet(request, response);
@@ -112,7 +126,7 @@ public class UpdateRoomType extends HttpServlet {
             doGet(request, response);
             return;
         }
-        RoomTypeDAO rdao = new RoomTypeDAO();
+        
         RoomType roomtype = new RoomType(id, name, Integer.parseInt(maxperson), Integer.parseInt(bedroom), Integer.parseInt(livingroom), Integer.parseInt(bathroom), Integer.parseInt(balcony), Float.parseFloat(square));
         if(rdao.updateRoomType(roomtype)){
             response.sendRedirect("view-roomtype");
