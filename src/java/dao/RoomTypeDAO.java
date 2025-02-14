@@ -90,7 +90,7 @@ public class RoomTypeDAO extends DBContext {
         }
         return null;
     }
-    
+
     public boolean checkExistNameRoomType(String name) {
         String sql = "select * from RoomType where name = ?";
         try {
@@ -106,10 +106,10 @@ public class RoomTypeDAO extends DBContext {
         return false;
     }
 
-    public boolean updateRoomType(RoomType r){
-        String sql ="update RoomType set Name = ? , maxperson = ? , Square = ? , bedroom = ? , livingroom = ? , bathroom = ? , balcony = ? "
+    public boolean updateRoomType(RoomType r) {
+        String sql = "update RoomType set Name = ? , maxperson = ? , Square = ? , bedroom = ? , livingroom = ? , bathroom = ? , balcony = ? "
                 + "where id = ?";
-        try{
+        try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, r.getName());
             ps.setInt(2, r.getLimitPerson());
@@ -125,7 +125,7 @@ public class RoomTypeDAO extends DBContext {
         }
         return false;
     }
-    
+
     public boolean insertRoomType(RoomType r) {
         String sql = "insert into RoomType (id, name,maxperson, square, bedroom, livingroom, bathroom, balcony)\n"
                 + "values(?,?,?,?,?,?,?,?)";
@@ -147,9 +147,25 @@ public class RoomTypeDAO extends DBContext {
         return false;
     }
 
+    public boolean deleteRoomType(int id) {
+        String sql = "DELETE FROM [dbo].[RoomType]\n"
+                + "      WHERE Id=?";
+        
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         RoomTypeDAO dao = new RoomTypeDAO();
         RoomType r = new RoomType("1", "Deluxe Suite", 4, 2, 1, 2, 1, 500.0f);
         System.out.println(dao.checkExistNameRoomType("Deluxe Suite"));
+        System.out.println(dao.deleteRoomType(3));
     }
 }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="dao.ApartmentDAO" %>
 <html lang="en">
     <head>
         <!-- basic -->
@@ -28,6 +29,7 @@
         <link rel="stylesheet" href="js/semantic.min.css" />
         <!-- fancy box js -->
         <link rel="stylesheet" href="css/jquery.fancybox.css" />
+        <link rel="stylesheet" href="<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />"/>
         <style>
             .table th, .table td {
                 border: 1px solid rgba(0, 0, 0, 0.2);
@@ -46,6 +48,7 @@
         </style>
     </head>
     <body class="inner_page tables_page">
+         <jsp:useBean id="aptDAO" class="dao.ApartmentDAO" scope="page"/>
         <div class="full_container">
             <div class="inner_container">
                 <%@include file="sidebar.jsp" %>
@@ -106,11 +109,12 @@
                                                             <th style="width: 12%;">Số phòng khách</th>
                                                             <th style="width: 12%;">Số phòng tắm</th>
                                                             <th style="width: 12%;">Số ban công</th>
-                                                            <<th style="width: 6%;">Option</th>
+                                                            <th style="width: 6%;">Option</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     <h3>${requestScope.message}</h3>
+                                                    <h3 style="color: red">${requestScope.error}</h3>
                                                     <c:forEach items="${requestScope.roomtype}" var="room">
                                                         <tr>
                                                             <td>${room.name}</td>
@@ -120,7 +124,12 @@
                                                             <td>${room.livingRoom}</td>
                                                             <td>${room.bathRoom}</td>
                                                             <td>${room.balcony}</td>
-                                                            <td><a href="update-room-type?id=${room.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                                                            <td>
+                                                                <a href="update-room-type?id=${room.id}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                                <c:if test="${!aptDAO.getApartmentByRoomType(room.id)}">
+                                                                <a href="delete-room-type?id=${room.id}"><i class="fa-solid fa-trash"></i></a>
+                                                                </c:if>
+                                                            </td>
                                                         </tr>
                                                     </c:forEach>
                                                     </tbody>

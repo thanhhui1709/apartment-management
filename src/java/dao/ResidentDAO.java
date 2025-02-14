@@ -355,7 +355,7 @@ public class ResidentDAO extends DBContext {
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
 
-        System.out.println(dao.insertNewResident("P115", "lmao", "", phone, bod, id, username, password));
+       
 
     }
 }

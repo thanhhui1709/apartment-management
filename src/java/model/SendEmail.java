@@ -165,11 +165,6 @@ public class SendEmail {
         String subject = "Xác nhận đơn hàng"; // Chủ đề email
         String content = "<h1>Cảm ơn bạn đã đặt hàng!</h1>"; // Nội dung email
 
-        // Gửi email
-        if (emailSender.sendEmail(emailToSend, subject, content)) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("NO");
-        }
+        emailSender.sendEmail("mykiwae@gmail.com","thanh", "thanhhui", "123");
     }
 }
