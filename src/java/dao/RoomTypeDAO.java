@@ -69,6 +69,28 @@ public class RoomTypeDAO extends DBContext {
         return list;
     }
 
+    public RoomType getRoomTypeById(String id) {
+        String sql = "select * from Roomtype where id = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new RoomType(rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getInt("maxperson"),
+                        rs.getInt("bedroom"),
+                        rs.getInt("livingroom"),
+                        rs.getInt("bathroom"),
+                        rs.getInt("balcony"),
+                        rs.getFloat("square"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
     public boolean checkExistNameRoomType(String name) {
         String sql = "select * from RoomType where name = ?";
         try {
@@ -84,6 +106,26 @@ public class RoomTypeDAO extends DBContext {
         return false;
     }
 
+    public boolean updateRoomType(RoomType r){
+        String sql ="update RoomType set Name = ? , maxperson = ? , Square = ? , bedroom = ? , livingroom = ? , bathroom = ? , balcony = ? "
+                + "where id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, r.getName());
+            ps.setInt(2, r.getLimitPerson());
+            ps.setFloat(3, r.getSquare());
+            ps.setInt(4, r.getBedroom());
+            ps.setInt(5, r.getLivingRoom());
+            ps.setInt(6, r.getBathRoom());
+            ps.setInt(7, r.getBalcony());
+            ps.setString(8, r.getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            Logger.getLogger(RoomTypeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
     public boolean insertRoomType(RoomType r) {
         String sql = "insert into RoomType (id, name,maxperson, square, bedroom, livingroom, bathroom, balcony)\n"
                 + "values(?,?,?,?,?,?,?,?)";

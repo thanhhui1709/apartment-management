@@ -100,12 +100,13 @@
                                                     <thead>
                                                         <tr>
                                                             <th style="width: 20%;">Name</th>
-                                                            <th style="width: 13%;">Số người tối đa</th>
-                                                            <th style="width: 13%;">Diện tích</th>
-                                                            <th style="width: 13%;">Số phòng ngủ</th>
-                                                            <th style="width: 13%;">Số phòng khách</th>
-                                                            <th style="width: 13%;">Số phòng tắm</th>
-                                                            <th style="width: 13%;">Số ban công</th>
+                                                            <th style="width: 12%;">Số người tối đa</th>
+                                                            <th style="width: 12%;">Diện tích</th>
+                                                            <th style="width: 12%;">Số phòng ngủ</th>
+                                                            <th style="width: 12%;">Số phòng khách</th>
+                                                            <th style="width: 12%;">Số phòng tắm</th>
+                                                            <th style="width: 12%;">Số ban công</th>
+                                                            <<th style="width: 6%;">Option</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -119,6 +120,7 @@
                                                             <td>${room.livingRoom}</td>
                                                             <td>${room.bathRoom}</td>
                                                             <td>${room.balcony}</td>
+                                                            <td><a href="update-room-type?id=${room.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                                         </tr>
                                                     </c:forEach>
                                                     </tbody>
