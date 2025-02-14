@@ -92,10 +92,17 @@ public class UpdateImage extends HttpServlet {
 HttpSession session = request.getSession();
         Account ac = (Account) session.getAttribute("account");
         Part fileImage = request.getPart("file");
-        String source = "images/avatar/" + fileImage.getSubmittedFileName();
-        AccountDAO dao = new AccountDAO();
-        dao.changeImageByAccount(ac, source);
-        request.setAttribute("message", "Upload success: " + source);
+        String fileName = fileImage.getSubmittedFileName();
+        if(!fileName.endsWith(".jpg")){
+            request.setAttribute("status", false);
+            request.setAttribute("message", "Only upload file .jpg");            
+        }else{
+            String source = "images/avatar/" + fileName;
+            AccountDAO dao = new AccountDAO();
+            dao.changeImageByAccount(ac, source);
+            request.setAttribute("status", true);
+            request.setAttribute("message", "Upload success: " + source);
+        }
         Util util = new Util();
         request.getRequestDispatcher(util.getTableNameByRoleId(ac.getRoleId())).forward(request, response);
     }

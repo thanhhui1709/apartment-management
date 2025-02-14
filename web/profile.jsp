@@ -164,7 +164,7 @@
                                                                 <div>
                                                                     <input style="margin-bottom: 5px; margin-top: 5px;" type="file" name="file" id="file" accept="images/avatar/*">
                                                                     <button type="submit">Upload</button>
-                                                                    <h6 style="color: red;">${requestScope.message}</h6>
+                                                                    <h6 style="color:${status=="true"?"green":"red"};">${requestScope.message}</h6>
                                                                 </div>
                                                             </form>
                                                         </div>
