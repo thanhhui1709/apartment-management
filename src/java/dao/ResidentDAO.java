@@ -209,9 +209,10 @@ public class ResidentDAO extends DBContext {
                 + "           ,[username]\n"
                 + "           ,[password]\n"
                 + "           ,[roleId]\n"
+                + "           ,[active]\n"
                 + "           ,[image])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?,?,?)";
         Util u = new Util();
         List<Resident> listResident = getAll();
         int lastID = u.getNumberFromText(listResident.get(listResident.size() - 1).getpId());
@@ -227,7 +228,8 @@ public class ResidentDAO extends DBContext {
             st.setString(8, username);
             st.setString(9, password);
             st.setInt(10, 1);
-            st.setString(11, "images/avatar/person.jpg");
+            st.setInt(11, 2);
+            st.setString(12, "images/avatar/person.jpg");
             st.executeUpdate();
             return 0;
 
@@ -352,8 +354,8 @@ public class ResidentDAO extends DBContext {
 
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-       
-        System.out.println(dao.editResidentStatus("P100", "0"));
+
+        System.out.println(dao.insertNewResident("P115", "lmao", "", phone, bod, id, username, password));
 
     }
 }
