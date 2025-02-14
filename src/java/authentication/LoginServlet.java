@@ -122,7 +122,12 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(cookieRole);
             }
 
-            response.sendRedirect("index.jsp");
+            if (ac.getActive() == 2) {
+                response.sendRedirect("changepassword.jsp");
+
+            } else {
+                response.sendRedirect("index.jsp");
+            }
         } else {
             request.setAttribute("error", "Username or Password is incorrect");
             request.getRequestDispatcher("login.jsp").forward(request, response);
