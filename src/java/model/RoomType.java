@@ -35,6 +35,9 @@ public class RoomType {
         this.square = square;
     }
 
+    public RoomType() {
+    }
+
    
 
     public String getId() {

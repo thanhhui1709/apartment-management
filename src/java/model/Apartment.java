@@ -16,6 +16,18 @@ public class Apartment {
     private RoomType roomtype;
     private int status;
 
+    public Apartment(int numberOfPerson ,Floor floor , String infor) {
+        this.numberOfPerson=numberOfPerson;
+        this.floor=floor;
+        this.infor=infor;
+    }
+
+    public Apartment(int numberOfPerson, int floor, String string) {
+        this.numberOfPerson=numberOfPerson;
+        this.floor=this.floor;
+        this.infor=infor;
+    }
+
     public String getId() {
         return id;
     }

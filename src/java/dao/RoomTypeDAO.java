@@ -141,6 +141,35 @@ public class RoomTypeDAO extends DBContext {
         }
         return false;
     }
+    public RoomType getRoomTypeByApartmentId(String apartmentId) {
+    String sql = "SELECT rt.* "
+               + "FROM RoomType rt "
+               + "JOIN Apartment ap ON ap.rtId = rt.Id "
+               + "WHERE ap.Id = ?";
+
+    try {
+        PreparedStatement pre = connection.prepareStatement(sql);
+        pre.setString(1, apartmentId);
+        ResultSet rs = pre.executeQuery();
+
+        if (rs.next()) {
+            RoomType roomtype = new RoomType();
+            roomtype.setId(rs.getString("Id"));
+            roomtype.setName(rs.getString("Name"));
+            roomtype.setBedroom(rs.getInt("NumBedroom"));
+            roomtype.setLivingRoom(rs.getInt("NumLivingRoom"));
+            roomtype.setBathRoom(rs.getInt("NumBathroom"));
+            roomtype.setBalcony(rs.getInt("NumBalcony"));
+            return roomtype;
+        }
+
+        rs.close();
+        pre.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
 
     public boolean insertRoomType(RoomType r) {
         String sql = "insert into RoomType (id, name,maxperson, square, bedroom, livingroom, bathroom, balcony)\n"
