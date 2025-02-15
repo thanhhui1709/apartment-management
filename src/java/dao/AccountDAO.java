@@ -68,7 +68,11 @@ public class AccountDAO extends DBContext {
             ResultSet rs = pre.executeQuery();
             if (rs.next()) {
                 s = new Account(rs.getString("username"), rs.getString("password"), rs.getString("Email"), rs.getString("Id"), rs.getInt("roleId"));
-                s.setActive(rs.getInt("active"));
+                if (table.equals("Resident")) {
+                    s.setActive(rs.getInt("active"));
+                }else{
+                    s.setActive(rs.getInt("status"));
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(ResidentDAO.class.getName()).log(Level.SEVERE, null, ex);
