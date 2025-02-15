@@ -96,7 +96,7 @@
                                             </div>
                                         </div>
                                         <div style="display: flex; width: 100%; gap: 20px; align-items: center;">
-                                            <div style="flex: 1; max-width: 50%;">
+                                            <div style="flex: 1; max-width: 50%;text-align: center">
                                                 <img style="width: 100%; height: auto; object-fit: cover;" src="images/logo/house.jpg" alt="img"/>
                                             </div>
                                             <div style="flex: 1; max-width: 50%; margin-left: 15%">
@@ -111,9 +111,9 @@
 
                                         <div style="display: flex; gap: 20px; width: 100%;">
                                             <div class="table_section padding_infor_info" style="flex: 1; max-width: 50%;">
-                                                <div class="table-responsive-sm">
+                                                <div class="table-responsive-sm" style="max-height: 300px; overflow: auto;">
                                                     <h4>Living Information</h4>
-                                                    <table class="table w-100" id="table-infor">
+                                                    <table class="table w-100" id="table-living">
                                                         <thead>
                                                             <tr>
                                                                 <th style="background-color: #6B90DA;color: black">Person</th>
@@ -125,10 +125,10 @@
                                                         <tbody>
                                                             <c:forEach items="${requestScope.historyOfLiving}" var="item">
                                                                 <tr>
-                                                                    <td style="text-align: center;">${item.rid.name}</td>
-                                                                    <td style="text-align: center;">${item.startDate}</td>
-                                                                    <td style="text-align: center;">${item.endDate}</td>
-                                                                    <td style="text-align: center;">${item.status}</td>
+                                                                    <td>${item.rid.name}</td>
+                                                                    <td >${item.startDate}</td>
+                                                                    <td >${item.endDate}</td>
+                                                                    <td >${item.status}</td>
                                                                 </tr>
                                                             </c:forEach>
                                                         </tbody>
@@ -137,9 +137,9 @@
                                             </div>
 
                                             <div class="table_section padding_infor_info" style="flex: 1; max-width: 50%;">
-                                                <div class="table-responsive-sm">
+                                                <div class="table-responsive-sm" style="max-height: 300px; overflow: auto;">
                                                     <h4>Owner Information</h4>
-                                                    <table class="table w-100" id="table-infor">
+                                                    <table class="table w-100" id="table-owner">
                                                         <thead>
                                                             <tr>
                                                                 <th style="background-color: #6B90DA;color: black">Person</th>
@@ -149,12 +149,12 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <c:forEach items="${requestScope.historyOfOwner}" var="floor">
+                                                            <c:forEach items="${requestScope.historyOfOwner}" var="item">
                                                                 <tr>
-                                                                     <td style="text-align: center;">${item.rid.name}</td>
-                                                                    <td style="text-align: center;">${item.startDate}</td>
-                                                                    <td style="text-align: center;">${item.endDate}</td>
-                                                                    <td style="text-align: center;">${item.status}</td>
+                                                                    <td>${item.rid.name}</td>
+                                                                    <td >${item.startDate}</td>
+                                                                    <td >${item.endDate}</td>
+                                                                    <td >${item.status}</td>
                                                                 </tr>
                                                             </c:forEach>
                                                         </tbody>
@@ -162,6 +162,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
 
                                     </div>
                                 </div>
