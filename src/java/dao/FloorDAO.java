@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Floor;
 import util.Util;
 /**
  *
@@ -103,7 +104,7 @@ public class FloorDAO extends DBContext{
             st.setInt(1, floor);
             ResultSet rs= st.executeQuery();
             while(rs.next()){
-                int square = rs.getInt("Square");
+                float square = rs.getFloat("Square");
                 String usagetype = rs.getString("usagetype");
                 String note =rs.getString("note");
                 int numberPerson  = this.GetNumberLivingPersonFloor(floor);
@@ -125,7 +126,7 @@ public class FloorDAO extends DBContext{
             ResultSet rs= st.executeQuery();
             while(rs.next()){
                 int floor = rs.getInt("floor");
-                int square = rs.getInt("Square");
+                float square = rs.getFloat("Square");
                 String note =rs.getString("note");
                 int numberPerson  = this.GetNumberLivingPersonFloor(floor);
                 int numberUsingRoom  =this.GetNumberUsingRoomByFloor(floor);
@@ -138,6 +139,23 @@ public class FloorDAO extends DBContext{
         }
         return list;
     }
+      public Floor getByNumber(int number){
+          String sql="select * from floor where number =?";
+          try {
+              PreparedStatement st= connection.prepareStatement(sql);
+              st.setInt(1, number);
+              ResultSet rs= st.executeQuery();
+              while(rs.next()){
+                  float square = rs.getFloat("square");
+                  String usage = rs.getString("usagetype");
+                  String note= rs.getString("note");
+                  Floor f = new Floor(number, square, usage, note);
+                  return f;
+              }
+          } catch (SQLException e) {
+          }
+          return null;
+      }
     public static void main(String[] args) {
         FloorDAO fd = new FloorDAO();
         System.out.println(fd.getAll().size());
