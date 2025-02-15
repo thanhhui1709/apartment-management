@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
-<title>Apartment management</title>        <link rel="icon" href="images/fevicon.png" type="image/png" />
+        <title>Apartment management</title>        <link rel="icon" href="images/fevicon.png" type="image/png" />
         <!-- bootstrap css -->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <!-- site css -->
@@ -64,6 +64,26 @@
             #table-infor th, #table-infor td {
                 text-align: center;
             }
+            .status-select {
+                padding: 2px 4px;
+                border-radius: 12px;
+                border: 1px solid #ccc;
+                background-color: #f8f9fa;
+                font-size: 12px;
+                cursor: pointer;
+            }
+            .status-select:focus {
+                outline: none;
+                border-color: #007bff;
+                box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+            }
+            .status-active {
+                color: green;
+            }
+            .status-inactive {
+                color: red;
+            }
+
         </style>
     </head>
     <body class="inner_page tables_page">
@@ -122,32 +142,39 @@
                                                     <thead>
                                                         <tr>
                                                             <th>ID</th>
-                                                            <th>Name</th>                                                       
+                                                            <th>Name</th>
                                                             <th>Phone</th>
-                                                            <th>Email</th>                                               
-                                                            <th>Status</th> 
+                                                            <th>Email</th>
+                                                            <th>Status</th>
                                                             <th>View Detail</th>
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <h3>${requestScope.message}</h3>
-                                                        <c:forEach items="${requestScope.listResident}" var="resident">
-                                                            <tr>
-                                                                <td>${resident.pId}</td>
-                                                                <td>${resident.name}</td>
-                                                                <td>${resident.phone}</td>
-                                                                <td>${resident.email}</td>                                               
-                                                                <td style="color: ${resident.status == '1'?'green':'red'}">${resident.status == '1'?'Active': 'Inactive'}</td>
-                                                                <td style="text-align: center;">
-                                                                    <a href="#" data-toggle="modal" data-target="#residentDetail${resident.pId}">
-                                                                        <i class="fa fa-user" aria-hidden="true"></i>
-                                                                    </a>
-                                                                </td> 
-                                                                
-                                                            </tr>
-                                                            <!-- Modal for resident details -->
-                                                        <div id="residentDetail${resident.pId}" class="modal fade">
+                                                    <h3>${requestScope.message}</h3>
+                                                    <c:forEach items="${requestScope.listResident}" var="resident">
+                                                        <tr>
+                                                            <td>${resident.pId}</td>
+                                                            <td>${resident.name}</td>
+                                                            <td>${resident.phone}</td>
+                                                            <td>${resident.email}</td>
+                                                            <td>
+                                                                <form action="updateResidentStatus" method="POST" class="status-form">
+                                                                    <input type="hidden" name="id" value="${resident.pId}">
+                                                                    <select class="status-select" name="status" onchange="confirmStatusChange(this)">
+                                                                        <option value="1" style="color: green;" ${resident.status == '1' ? 'selected' : ''}>Active</option>
+                                                                        <option value="0" style="color: red;" ${resident.status == '0' ? 'selected' : ''}>Inactive</option>
+                                                                    </select>
+                                                                </form>
+                                                            </td>
+                                                            <td style="text-align: center;">
+                                                                <a href="#" data-toggle="modal" data-target="#residentDetail${resident.pId}">
+                                                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- Modal for resident details -->
+                                                        <div id="residentDetail${resident.pId}" class="modal fade"> 
                                                             <div class="modal-dialog" style="max-width: 60%">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -156,28 +183,36 @@
                                                                     </div>
                                                                     <div class="modal-body" style="display: flex;">
                                                                         <div style="width: 50%; text-align: center;">
-                                                                            <img style="margin-left: 1%;margin-right: 1%;" class="img-responsive  " src="${resident.image == null ?'images/logo/person.jpg':resident.image}" alt="Image"/>
+                                                                            <img style="margin-left: 1%;margin-right: 1%;" class="img-responsive" src="${resident.image == null ? 'images/logo/person.jpg' : resident.image}" alt="Image"/>
                                                                         </div>
                                                                         <div style="width: 50%;margin-left: 5%">
-                                                                            <p><strong>ID:</strong> ${resident.pId}</p>
                                                                             <p><strong>Name:</strong> ${resident.name}</p>
-                                                                            <p><strong>Bod:</strong> ${resident.bod}</p>    
+                                                                            <p><strong>Bod:</strong> ${resident.bod}</p>
                                                                             <p><strong>Email:</strong> ${resident.email}</p>
                                                                             <p><strong>Phone:</strong> ${resident.phone}</p>
                                                                             <p><strong>Address:</strong> ${resident.address}</p>
                                                                             <p><strong>CCCD:</strong> ${resident.cccd}</p>
                                                                             <p><strong>Gender:</strong> ${resident.gender}</p>
-                                                                            <p><strong>Status:</strong> ${resident.status == 1 ? 'Active' : 'Inactive'}</p>
+                                                                            <p><strong>Status:</strong>
+                                                                            <form action="updateResidentStatus" method="POST" class="status-form">
+                                                                                <input type="hidden" name="id" value="${resident.pId}">
+                                                                                <select class="status-select" name="status" onchange="confirmStatusChange(this)">
+                                                                                    <option value="1" style="color: green;" <c:if test="${resident.status == '1'}">selected</c:if>>Active</option>
+                                                                                    <option value="0" style="color: red;" <c:if test="${resident.status == '0'}">selected</c:if>>Inactive</option>
+                                                                                    </select>
+                                                                                </form>
+                                                                                </p>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -207,6 +242,22 @@
                 </div>
             </div>
             <!-- jQuery -->
+
+
+
+            <script>
+                function confirmStatusChange(select) {
+                    var form = select.closest(".status-form");
+                    var selectedValue = select.value;
+                    var confirmationMessage = selectedValue === "0" ? "Are you sure you want to change the status to Inactive?" : "Are you sure you want to change the status to Active?";
+
+                    if (confirm(confirmationMessage)) {
+                        form.submit();
+                    } else {
+                        select.value = selectedValue === "1" ? "0" : "1"; // Revert selection if canceled
+                    }
+                }
+            </script>
             <script src="js/jquery.min.js"></script>
             <script src="js/popper.min.js"></script>
             <script src="js/bootstrap.min.js"></script>

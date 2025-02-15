@@ -14,7 +14,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <!-- site icon -->
-        <link rel="icon" href="images/fevicon.png" type="image/png" />
+        <link rel="icon"img-responsive rounded href="images/fevicon.png" type="image/png" />
         <!-- bootstrap css -->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <!-- site css -->
@@ -33,6 +33,17 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <style>
+            .dropdown-toggle img {
+    width: 30px;      /* Kích thước ảnh (có thể chỉnh theo ý muốn) */
+    height: 30px;
+    object-fit: cover;  /* Giữ tỷ lệ gốc của ảnh, không bị méo */
+    border-radius: 50%; /* Bo tròn ảnh */
+    margin-right: 5px;  /* Tạo khoảng cách giữa ảnh và tên người dùng */
+    vertical-align: middle; /* Căn giữa ảnh với text */
+}
+
+        </style>
     </head>
     <body>
         <div class="topbar">

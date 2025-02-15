@@ -127,7 +127,7 @@ public class NewDAO extends DBContext {
     }
     public void DeleteNews(String id){
         try {
-            String sql="delete form news where id=?";
+            String sql="delete from news where id=?";
             PreparedStatement pre=connection.prepareStatement(sql);
             pre.setString(1, id);
             pre.executeUpdate();

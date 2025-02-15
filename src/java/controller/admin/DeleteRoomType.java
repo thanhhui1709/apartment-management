@@ -2,36 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.resident;
+package controller.admin;
 
-import dao.AccountDAO;
+import dao.ApartmentDAO;
+import dao.RoomTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.File;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Part;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import model.Account;
-import util.Util;
 
 /**
  *
- * @author PC
+ * @author Lenovo
  */
-@WebServlet(name = "UpdateImage", urlPatterns = {"/update-image"})
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB
-        maxRequestSize = 1024 * 1024 * 50 // 50MB
-)
-public class UpdateImage extends HttpServlet {
+@WebServlet(name = "DeleteRoomType", urlPatterns = {"/delete-room-type"})
+public class DeleteRoomType extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,14 +38,10 @@ public class UpdateImage extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateImage</title>");
+            out.println("<title>Servlet DeleteRoomType</title>");
             out.println("</head>");
             out.println("<body>");
-            String message = (String) request.getAttribute("message");
-            String fileName = request.getAttribute("message").toString().replace("Upload thành công: ", "");
-            String imagePath = "images/avatar/" + fileName;
-            out.println("<h3><%= message %></h3> <img src=\"" + imagePath + "\" alt=\"Ảnh đã upload\" style=\"max-width:300px;\">");
-            out.println("<h1>Servlet UpdateImage at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteRoomType at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -75,7 +59,14 @@ public class UpdateImage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        String id_raw = request.getParameter("id");
+        int id = Integer.parseInt(id_raw);
+        ApartmentDAO ad = new ApartmentDAO();
+        if (!ad.getApartmentByRoomType(id)) {
+            RoomTypeDAO rtd = new RoomTypeDAO();
+            rtd.deleteRoomType(id);
+            response.sendRedirect("view-roomtype");
+        } 
     }
 
     /**
@@ -89,22 +80,7 @@ public class UpdateImage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-HttpSession session = request.getSession();
-        Account ac = (Account) session.getAttribute("account");
-        Part fileImage = request.getPart("file");
-        String fileName = fileImage.getSubmittedFileName();
-        if(!fileName.endsWith(".jpg")){
-            request.setAttribute("status", false);
-            request.setAttribute("message", "Only upload file .jpg");            
-        }else{
-            String source = "images/avatar/" + fileName;
-            AccountDAO dao = new AccountDAO();
-            dao.changeImageByAccount(ac, source);
-            request.setAttribute("status", true);
-            request.setAttribute("message", "Upload success: " + source);
-        }
-        Util util = new Util();
-        request.getRequestDispatcher(util.getTableNameByRoleId(ac.getRoleId())).forward(request, response);
+        processRequest(request, response);
     }
 
     /**

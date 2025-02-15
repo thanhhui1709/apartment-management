@@ -209,9 +209,10 @@ public class ResidentDAO extends DBContext {
                 + "           ,[username]\n"
                 + "           ,[password]\n"
                 + "           ,[roleId]\n"
+                + "           ,[active]\n"
                 + "           ,[image])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?,?,?,?,?)";
         Util u = new Util();
         List<Resident> listResident = getAll();
         int lastID = u.getNumberFromText(listResident.get(listResident.size() - 1).getpId());
@@ -227,7 +228,8 @@ public class ResidentDAO extends DBContext {
             st.setString(8, username);
             st.setString(9, password);
             st.setInt(10, 1);
-            st.setString(11, "images/avatar/person.jpg");
+            st.setInt(11, 2);
+            st.setString(12, "images/avatar/person.jpg");
             st.executeUpdate();
             return 0;
 
@@ -333,12 +335,27 @@ public class ResidentDAO extends DBContext {
         return null;
     }
 
+    public boolean editResidentStatus(String id, String status) {
+        String sql = "UPDATE [dbo].[Resident]\n"
+                + "   SET active=? \n"
+                + " WHERE id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, status);
+            st.setString(2, id);
+            st.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+
+    }
+
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        List<Resident> list = dao.getAll();
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).getImage());
-        }
+
+       
 
     }
 }

@@ -17,6 +17,15 @@ public class Account {
     private String email;
     private String pId;
     private int roleId;
+    private int active;
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
 
     public int getRoleId() {
         return roleId;

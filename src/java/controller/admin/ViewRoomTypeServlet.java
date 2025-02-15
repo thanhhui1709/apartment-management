@@ -5,34 +5,23 @@
 
 package controller.admin;
 
-import dao.NewDAO;
-import dao.StaffDAO;
+import dao.RoomTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
-import java.text.ParseException;
-import java.util.List;
-import model.News;
-import model.Staff;
-import validation.CommonValidation;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
- * @author PC
+ * @author pc
  */
-@WebServlet(name="AddNewsServlet", urlPatterns={"/add-news"})
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB
-        maxRequestSize = 1024 * 1024 * 50 // 50MB
-)
-public class AddNewsServlet extends HttpServlet {
+@WebServlet(name="ViewRoomTypeServlet", urlPatterns={"/view-roomtype"})
+public class ViewRoomTypeServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -49,10 +38,10 @@ public class AddNewsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddNewsServlet</title>");  
+            out.println("<title>Servlet ViewRoomTypeServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddNewsServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewRoomTypeServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -69,13 +58,10 @@ public class AddNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        NewDAO ndao = new NewDAO();
-        StaffDAO sdao = new StaffDAO();
-        List<String> categories = ndao.getAllCategory();
-        List<Staff> staffs = sdao.getAdminAndAdministrative();
-        request.setAttribute("categories", categories);
-        request.setAttribute("staffs", staffs);
-        request.getRequestDispatcher("addnews.jsp").forward(request, response);
+        RoomTypeDAO RT = new RoomTypeDAO();
+        request.setAttribute("roomtype", RT.getAll());
+        request.getRequestDispatcher("viewroomtype.jsp").forward(request, response);
+        
     } 
 
     /** 
@@ -88,38 +74,7 @@ public class AddNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
-        String source = request.getParameter("source");    
-        String image = "";
-        if(null != request.getPart("file")){
-            Part fileImage = request.getPart("file");
-            image = "images/news/" + fileImage.getSubmittedFileName();
-        }
-        String auther = request.getParameter("authorid");
-        String date = request.getParameter("date");
-        String category = request.getParameter("category");
-        NewDAO ndao = new NewDAO();
-        StaffDAO sdao = new StaffDAO();
-        News anew = new News(title, content, source, category, image, sdao.getById(auther), date);
-        try{
-            if(!CommonValidation.isValidNewsDate(date)){
-                request.setAttribute("error", "Date need to later current date");
-                doGet(request, response);
-                return;
-            }
-        }catch(ParseException e){
-            System.out.println(""+e);
-        }
-        if (ndao.insertNews(anew)) {
-            request.setAttribute("status", "true");
-            request.setAttribute("message", "News added successfully!");
-        } else {
-            request.setAttribute("status", "false");
-            request.setAttribute("message", "Failed to add news.");
-        }
-        doGet(request, response);
-        request.removeAttribute("error");
+        
     }
 
     /** 

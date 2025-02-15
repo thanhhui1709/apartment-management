@@ -164,7 +164,7 @@
                                             <label for="auther">Author</label>
                                             <select id="auther" name="auther" required>
                                                 <c:forEach items="${sessionScope.staffs}" var="staff">
-                                                    <option ${requestScope.news.staff.id == staff.id?'selected':''} value="${staff.id}">${staff.name}</option>    
+                                                    <option disabled="" ${requestScope.news.staff.id == staff.id?'selected':''} value="${staff.id}">${staff.name}</option>    
                                                 </c:forEach>
                                             </select>   
                                         </div>

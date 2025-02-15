@@ -36,6 +36,23 @@
             .display-none{
                 display: none;
             }
+            .user_img {
+    width: 60px;  /* Kích thước khung chứa ảnh */
+    height: 60px;
+    overflow: hidden;
+    border-radius: 50%;  /* Bo tròn khung chứa */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Đảm bảo ảnh không bị méo */
+    border-radius: 50%;  /* Bo tròn ảnh bên trong */
+}
+
         </style>
     </head>
     <body>
@@ -90,6 +107,8 @@
                     <li class="${sessionScope.account.roleId == 0? 'display-none':''}"><a href="${ut.getSiteToViewFeedBack(sessionScope.account.roleId)}"><i class="fa-solid fa-comment"></i><span>Feedback Information</span></a></li>
                     <li><a href="${ut.getSiteToViewRule(sessionScope.account.roleId)}"><i class="fa-solid fa-scale-balanced"></i><span>Rule of apartment</span></a></li>
                     <li><a href="view-categoryservice-staff"><i class="fas fa-cube"></i><span>Types of service</span></a></li>
+                    <li class="${sessionScope.account.roleId != 0? 'display-none':''}"><a href="view-roomtype"><i class="fa-solid fa-house-flag"></i><span>Room Types</span></a></li>
+
                     <li><a href="view-floor-staff"><i class="fa-solid fa-building"></i><span>Floor Information</span></a></li>
 
                     <!--                    <li>
