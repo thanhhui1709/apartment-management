@@ -56,15 +56,15 @@ public class ApartmentDAO extends DBContext {
                 System.out.println("Floor: " + rs.getInt("floor"));
                 System.out.println("Information: " + rs.getString("information"));
 
-//                RoomType roomtype = rt.getRoomTypeById(rs.getString("rId"));
+                RoomType roomtype = rt.getRoomTypeByApartmentId(rs.getString("id"));
 
                 Floor floor = new Floor();
                 floor.setNumber(rs.getInt("floor"));
 
-                Apartment apartment = new Apartment(
+                Apartment apartment = new Apartment(rs.getString("Id"),
                         rs.getInt("NoPerson"),
                         floor,
-                        rs.getString("information")
+                        rs.getString("information"),roomtype
                 );
                 list.add(apartment);
             }

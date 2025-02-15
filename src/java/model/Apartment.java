@@ -16,10 +16,12 @@ public class Apartment {
     private RoomType roomtype;
     private int status;
 
-    public Apartment(int numberOfPerson ,Floor floor , String infor) {
+    public Apartment(String id,int numberOfPerson ,Floor floor , String infor, RoomType roomType) {
+        this.id=id;
         this.numberOfPerson=numberOfPerson;
         this.floor=floor;
         this.infor=infor;
+        this.roomtype=roomType;
     }
 
     public Apartment(int numberOfPerson, int floor, String string) {
