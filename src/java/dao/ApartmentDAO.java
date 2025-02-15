@@ -60,5 +60,6 @@ public class ApartmentDAO extends DBContext {
     public static void main(String[] args) {
         ApartmentDAO dao = new ApartmentDAO();
         System.out.println(dao.getApartmentByRoomType(4));
+        System.out.println(dao.getById("A01_01").getNumberOfPerson());
     }
 }

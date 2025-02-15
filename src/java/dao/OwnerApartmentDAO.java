@@ -20,8 +20,12 @@ import model.Resident;
  * @author thanh
  */
 public class OwnerApartmentDAO extends DBContext {
+    public static void main(String[] args) {
+        OwnerApartmentDAO od = new OwnerApartmentDAO();
+        System.out.println(od.getByApartmentID("A01_01").size());
+    }
     public List<OwnerApartment> getByApartmentID(String aid){
-        String sql = "select * from OwnerApartment where aId=?";
+        String sql = "select * from AparmentOwner where aId=?";
         ResidentDAO rd= new ResidentDAO();
         List<OwnerApartment> list= new ArrayList<>();
         ApartmentDAO ad = new ApartmentDAO();

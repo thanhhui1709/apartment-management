@@ -5,6 +5,9 @@
 
 package controller.admin;
 
+import dao.ApartmentDAO;
+import dao.LivingApartmentDAO;
+import dao.OwnerApartmentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -55,7 +58,14 @@ public class ViewDetailApartmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        String aid = request.getParameter("apartmentId");
+        ApartmentDAO ad= new ApartmentDAO();
+        LivingApartmentDAO ld = new LivingApartmentDAO();
+        OwnerApartmentDAO od = new OwnerApartmentDAO();
+        request.setAttribute("historyOfLiving", ld.getByApartmentID(aid));
+        request.setAttribute("historyOfOwner", od.getByApartmentID(aid));
+        request.setAttribute("apartmentDetail", ad.getById(aid));
+        request.getRequestDispatcher("apartmentdetail.jsp").forward(request, response);
     } 
 
     /** 
