@@ -28,6 +28,12 @@ public class Floor {
         this.not = not;
     }
 
+    public Floor(int number, float square, String usageType) {
+        this.number = number;
+        this.square = square;
+        this.usageType = usageType;
+    }
+
     
     public int getNumber() {
         return number;
