@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jdbc.DBContext;
 import model.Apartment;
 import model.Floor;
@@ -127,18 +129,29 @@ public class ApartmentDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+    public boolean updateApartment(Apartment a) {
+        String sql = "update Apartment set information = ?, status = ? where Id = ?";
+        try {
+            PreparedStatement ps = connection.prepareCall(sql);
+            ps.setString(1, a.getInfor());
+            ps.setInt(2, a.getStatus());
+            ps.setString(3, a.getId());
+           return ps.executeUpdate() > 0;
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(ApartmentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
 
     public static void main(String[] args) {
         ApartmentDAO dao = new ApartmentDAO();
-        RoomTypeDAO rtf = new RoomTypeDAO();
-        FloorDAO fd = new FloorDAO();
-        Floor floor = fd.getByNumber(1);
-        RoomType roomType = rtf.getRoomTypeById("1");
-        Apartment apt=new Apartment("A124", 2, floor, "hehe", roomType, 1);
-        System.out.println(dao.insertNewApartment(apt));
-
+        RoomTypeDAO daoRT = new RoomTypeDAO();
+        ResidentDAO daoR = new ResidentDAO();
+        RoomType rt = daoRT.getRoomTypeById("4");
+        Apartment a = dao.getById("A001");
+        a.setRoomtype(rt);
+        a.setInfor("Abc");
+        dao.updateApartment(a);
     }
 }
