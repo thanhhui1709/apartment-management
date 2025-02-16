@@ -13,7 +13,8 @@ public class Floor {
 //	[Square] [int] NOT NULL,
 //	[usagetype] [varchar](255) NULL,
 //	[note] [varchar](4000) NULL,
-    private int number,square;
+    private int number;
+    private float square;
     private String usageType;
     private String not;
 
@@ -36,7 +37,7 @@ public class Floor {
         this.number = number;
     }
 
-    public int getSquare() {
+    public float getSquare() {
         return square;
     }
 
