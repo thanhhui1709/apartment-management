@@ -145,12 +145,13 @@ public class ApartmentDAO extends DBContext {
     }
 
     public boolean updateApartment(Apartment a) {
-        String sql = "update Apartment set information = ?, status = ? where Id = ?";
+        String sql = "update Apartment set information = ?, status = ?, rtId = ?  where Id = ?";
         try {
             PreparedStatement ps = connection.prepareCall(sql);
             ps.setString(1, a.getInfor());
             ps.setInt(2, a.getStatus());
-            ps.setString(3, a.getId());
+            ps.setString(3, a.getRoomtype().getId());
+            ps.setString(4, a.getId());
             return ps.executeUpdate() > 0;
 
         } catch (SQLException ex) {
