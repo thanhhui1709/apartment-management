@@ -186,10 +186,25 @@ public class FloorDAO extends DBContext {
         return list;
     }
 
+      public Floor getByNumber(int number){
+          String sql="select * from floor where floor =?";
+          try {
+              PreparedStatement st= connection.prepareStatement(sql);
+              st.setInt(1, number);
+              ResultSet rs= st.executeQuery();
+              while(rs.next()){
+                  float square = rs.getFloat("square");
+                  String usage = rs.getString("usagetype");
+                  String note= rs.getString("note");
+                  Floor f = new Floor(number, square, usage, note);
+                  return f;
+              }
+          } catch (SQLException e) {
+          }
+          return null;
+      }
     public static void main(String[] args) {
         FloorDAO fd = new FloorDAO();
-        System.out.println(fd.getAll().size());
-        System.out.println(fd.getAllUsageType().size());
-        System.out.println(fd.getByNumberFloor(1).size());
+        System.out.println(fd.getByNumber(2));
     }
 }
