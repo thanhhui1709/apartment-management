@@ -129,6 +129,10 @@ public class ApartmentDAO extends DBContext {
             }
         } catch (SQLException e) {
             System.out.println(e);
+        }
+        return false;
+    }
+
     public boolean updateApartment(Apartment a) {
         String sql = "update Apartment set information = ?, status = ? where Id = ?";
         try {
@@ -136,8 +140,8 @@ public class ApartmentDAO extends DBContext {
             ps.setString(1, a.getInfor());
             ps.setInt(2, a.getStatus());
             ps.setString(3, a.getId());
-           return ps.executeUpdate() > 0;
-           
+            return ps.executeUpdate() > 0;
+
         } catch (SQLException ex) {
             Logger.getLogger(ApartmentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
