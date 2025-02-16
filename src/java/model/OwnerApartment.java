@@ -24,6 +24,11 @@ public class OwnerApartment {
     public OwnerApartment() {
     }
 
+    @Override
+    public String toString() {
+        return "OwnerApartment{" + "id=" + id + ", rid=" + rid + ", aid=" + aid + ", startDate=" + startDate + ", endDate=" + endDate + ", status=" + status + '}';
+    }
+
     public OwnerApartment(String id, Resident rid, Apartment aid, String startDate, String endDate, int status) {
         this.id = id;
         this.rid = rid;
