@@ -21,7 +21,7 @@ public class Floor {
     public Floor() {
     }
 
-    public Floor(int number, int square, String usageType, String not) {
+    public Floor(int number, float square, String usageType, String not) {
         this.number = number;
         this.square = square;
         this.usageType = usageType;
@@ -41,7 +41,7 @@ public class Floor {
         return square;
     }
 
-    public void setSquare(int square) {
+    public void setSquare(float square) {
         this.square = square;
     }
 
