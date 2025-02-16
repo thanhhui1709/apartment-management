@@ -120,11 +120,11 @@ public class UpdateApartmentServlet extends HttpServlet {
         RoomTypeDAO daoRT = new RoomTypeDAO();
         ResidentDAO daoR = new ResidentDAO();
 
-        OwnerApartment oa = daoAO.getOwnerByApartmentID(aid);
-        LivingApartment la = daoLA.getLivingResidentByApartmentID(aid);
+        OwnerApartment oa = daoAO.getOwnerByApartmentID(aid); // chủ cũ
+        LivingApartment la = daoLA.getLivingResidentByApartmentID(aid); // người ở cũ
 
-        Resident livingResident = daoR.getById(livingId);
-        Resident ownerResident = daoR.getById(ownerId);
+        Resident livingResident = daoR.getById(livingId); //người mới
+        Resident ownerResident = daoR.getById(ownerId); // chủ mới
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate now = LocalDate.now();
@@ -135,8 +135,9 @@ public class UpdateApartmentServlet extends HttpServlet {
         a.setRoomtype(rt);
         a.setInfor(infor);
         a.setStatus(Integer.parseInt(status));
-   
 
+//        PrintWriter out = response.getWriter();
+//        out.println(ownerId + " " + date + " " + livingId + " " + aid);
         if (infor.trim() == "" || infor.trim().isEmpty()) {
             request.setAttribute("status", "false");
             request.setAttribute("message", "Apartment information can not be null");
@@ -150,86 +151,53 @@ public class UpdateApartmentServlet extends HttpServlet {
             return;
         }
 
-        if (oa == null) {
-            oa = new OwnerApartment();
-            oa.setRid(ownerResident);
-            oa.setEndDate(date);
-            oa.setStatus(0);
-            if (oa == null || !daoAO.updateOwnerApartment(oa)) {
-                request.setAttribute("status", "false");
-                request.setAttribute("message", "Failed to update 1");
-                request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
-                return;
-            }
-            oa.setStatus(1);
-            oa.setEndDate(null);
-            oa.setStartDate(date);
-            if (oa == null || !daoAO.insertOwnerApartment(oa)) {
-                request.setAttribute("status", "false");
-                request.setAttribute("message", "Failed to update 2");
-                request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
-                return;
-            }
-        } else if (!oa.getRid().getpId().equals(ownerResident.getpId())) {
-            oa.setRid(ownerResident);
-            oa.setEndDate(date);
-            oa.setStatus(0);
-            if (oa == null || !daoAO.updateOwnerApartment(oa)) {
-                request.setAttribute("status", "false");
-                request.setAttribute("message", "Failed to update 1");
-                request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
-                return;
-            }
-            oa.setStatus(1);
-            oa.setEndDate(null);
-            oa.setStartDate(date);
-            if (oa == null || !daoAO.insertOwnerApartment(oa)) {
-                request.setAttribute("status", "false");
-                request.setAttribute("message", "Failed to update 2");
-                request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
-                return;
+        if (oa != null || ownerResident != null) {
+            if (oa == null && ownerResident != null) {
+                if (!daoAO.insertOwnerApartment(ownerId, aid, date)) {
+                    request.setAttribute("status", "false");
+                    request.setAttribute("message", "Failed to update 2");
+                    request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
+                    return;
+                }
+            } else if (!oa.getRid().getpId().equals(ownerResident.getpId())) {
+                if (!daoAO.updateEndOwnerApartment(aid, date)) {
+                    request.setAttribute("status", "false");
+                    request.setAttribute("message", "Failed to update 3");
+                    request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
+                    return;
+                }
+
+                if (!daoAO.insertOwnerApartment(ownerId, aid, date)) {
+                    request.setAttribute("status", "false");
+                    request.setAttribute("message", "Failed to update 4");
+                    request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
+                    return;
+                }
             }
         }
 
-        if (la == null) {
-            la = new LivingApartment();
-            la.setRid(livingResident);
-            la.setEndDate(date);
-            la.setStatus(0);
-            if (!daoLA.updateLivingApartment(la)) {
-                request.setAttribute("status", "false");
-                request.setAttribute("message", "Failed to update 3 ");
-                request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
-                return;
-            }
-            la.setStatus(1);
-            la.setEndDate(null);
-            la.setStartDate(date);
-            if (!daoLA.insertLivingApartment(la)) {
-                request.setAttribute("status", "false");
-                request.setAttribute("message", "Failed to update 4");
-                request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
-                return;
-            }
-            la = null;
-        } else if (la != null && !la.getRid().getpId().equals(livingResident.getpId())) {
-            la.setRid(livingResident);
-            la.setEndDate(date);
-            la.setStatus(0);
-            if (!daoLA.updateLivingApartment(la)) {
-                request.setAttribute("status", "false");
-                request.setAttribute("message", "Failed to update 5 ");
-                request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
-                return;
-            }
-            la.setStatus(1);
-            la.setEndDate(null);
-            la.setStartDate(date);
-            if (!daoLA.insertLivingApartment(la)) {
-                request.setAttribute("status", "false");
-                request.setAttribute("message", "Failed to update 6");
-                request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
-                return;
+        if (la != null || livingResident != null) {
+            if (la == null && livingResident != null) {
+                if (!daoLA.insertLivingApartment(livingId, aid, date)) {
+                    request.setAttribute("status", "false");
+                    request.setAttribute("message", "Failed to update 5");
+                    request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
+                    return;
+                }
+            } else if (!la.getRid().getpId().equals(livingResident.getpId())) {
+                if (!daoLA.updateEndLivingApartment(date, aid)) {
+                    request.setAttribute("status", "false");
+                    request.setAttribute("message", "Failed to update 6 ");
+//                out.println(ownerId + " " + date + " " + livingId + " " + aid);
+                    request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
+                    return;
+                }
+                if (!daoLA.insertLivingApartment(livingId, aid, date)) {
+                    request.setAttribute("status", "false");
+                    request.setAttribute("message", "Failed to update 7");
+                    request.getRequestDispatcher("updateapartment.jsp").forward(request, response);
+                    return;
+                }
             }
         }
         List<Resident> listResident = daoR.getAllResident();
