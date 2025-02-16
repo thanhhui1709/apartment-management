@@ -110,6 +110,7 @@ public class ApartmentDAO extends DBContext {
                         floor,
                         rs.getString("information")
                 );
+                apartment.setRoomtype(roomtype);
                 list.add(apartment);
             }
 
