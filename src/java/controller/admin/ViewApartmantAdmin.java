@@ -3,12 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.resident;
+package controller.admin;
 
 import dao.ApartmentDAO;
-import dao.FloorDAO;
-import dao.ResidentDAO;
-import dto.response.FloorResponseDTO;
+import dao.RoomTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,19 +14,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Account;
 import model.Apartment;
-import model.Floor;
-import model.Resident;
+import model.RoomType;
 
 /**
  *
- * @author pc
+ * @author PC
  */
-@WebServlet(name="ViewAllResidentApartmentServlet", urlPatterns={"/view-all-resident-apartment"})
-public class ViewAllResidentApartmentServlet extends HttpServlet {
+@WebServlet(name="ViewApartmantAdmin", urlPatterns={"/view-apartment-admin"})
+public class ViewApartmantAdmin extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -45,10 +40,10 @@ public class ViewAllResidentApartmentServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewAllApartmentServlet</title>");  
+            out.println("<title>Servlet ViewApartmantAdmin</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewAllApartmentServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ViewApartmantAdmin at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,31 +60,29 @@ public class ViewAllResidentApartmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-    
-    HttpSession session = request.getSession();
-    Account account = (Account) session.getAttribute("account");
-
-    // Lấy danh sách tầng
-    FloorDAO fld = new FloorDAO();
-    List<FloorResponseDTO> listFloor = fld.getAll();
-    request.setAttribute("floor", listFloor);
-
-    // Lấy Resident từ Account
-    ResidentDAO rd = new ResidentDAO();    
-    Resident resident = rd.getById(account.getpId());
-    
-    // Lấy danh sách Apartment
-    ApartmentDAO apd = new ApartmentDAO();
-    List<Apartment> listapartment = apd.GetREApartment(resident.getpId());
-    
-    // SỬA ĐỔI: Sử dụng request thay vì session
-    session.setAttribute("listapartment", listapartment);
-
-
-    // Chuyển tiếp đến JSP
-    request.getRequestDispatcher("viewresidentapartment.jsp").forward(request, response);
-}
-
+        String floor = request.getParameter("floor");
+        String filterType = request.getParameter("filterType");
+        String filterStatus = request.getParameter("filterStatus");
+        if (floor == null || floor.trim().isEmpty()) {
+            floor = "";
+        }
+        if (filterType == null || filterType.trim().isEmpty()) {
+            filterType = "";
+        }
+        if (filterStatus == null || filterStatus.trim().isEmpty()) {
+            filterStatus = "";
+        }
+        RoomTypeDAO rdao = new RoomTypeDAO();
+        List<RoomType> types = rdao.getAll();
+        ApartmentDAO dao = new ApartmentDAO();
+        List<Apartment> apartmentes = dao.getViewApartment(floor, filterType, filterStatus);
+        request.setAttribute("floor", floor);
+        request.setAttribute("filterType", filterType);
+        request.setAttribute("filterStatus", filterStatus);
+        request.setAttribute("types", types);
+        request.setAttribute("apartmentes", apartmentes);
+        request.getRequestDispatcher("viewapartmentadmin.jsp").forward(request, response);
+    } 
 
     /** 
      * Handles the HTTP <code>POST</code> method.
