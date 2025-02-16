@@ -45,14 +45,6 @@ public class Util {
         }
         return "view-rule-admin";
     }
-    
-    public String getSiteToViewApartment(int role) {
-        if (role == 1) {
-            return "view-apartment-resident";
-        }
-        return "view-apartment-admin";
-    }
-    
 
     public String getSiteToViewRequest(int role) {
         if (role == 1) {

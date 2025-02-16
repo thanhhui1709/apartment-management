@@ -13,15 +13,14 @@ public class Floor {
 //	[Square] [int] NOT NULL,
 //	[usagetype] [varchar](255) NULL,
 //	[note] [varchar](4000) NULL,
-    private int number;
-    private float square;
+    private int number,square;
     private String usageType;
     private String not;
 
     public Floor() {
     }
 
-    public Floor(int number, float square, String usageType, String not) {
+    public Floor(int number, int square, String usageType, String not) {
         this.number = number;
         this.square = square;
         this.usageType = usageType;
@@ -37,11 +36,11 @@ public class Floor {
         this.number = number;
     }
 
-    public float getSquare() {
+    public int getSquare() {
         return square;
     }
 
-    public void setSquare(float square) {
+    public void setSquare(int square) {
         this.square = square;
     }
 
