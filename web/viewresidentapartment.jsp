@@ -82,7 +82,6 @@
                                                 <table class="table w-100">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 10%;">Số Phòng</th>
                                                             <th style="width: 10%;">Số người ở</th>
                                                             <th style="width: 30%;">Tầng</th>
                                                             <th style="width: 30%;">Thông tin</th>
@@ -94,7 +93,6 @@
                                                     <h3 style="color: red">${requestScope.error}</h3>
                                                     <c:forEach items="${sessionScope.listapartment}" var="listapartment">
                                                         <tr>
-                                                            <td>${listapartment.id}</td>
                                                             <td>${listapartment.numberOfPerson}</td>
                                                             <td>${listapartment.floor.number}</td>
                                                             <td>${listapartment.infor}</td>
@@ -102,12 +100,10 @@
                                                                     <a href="#" data-toggle="modal" data-target="#apartmentDetail${listapartment.id}">
                                                                         <i class="fa fa-home" aria-hidden="true"></i>
                                                                     </a>
-                                                                   <a href="updatelimitpersonapartment?id=${listapartment.id}"><i class="fa-solid fa-pen-to-square"></i></a>   
                                                                 </td>
-                                                                
                                                         </tr>
                                                         <div id="apartmentDetail${listapartment.id}" class="modal fade">
-                                                            <div class="modal-dialog" style="max-width: 30%">
+                                                            <div class="modal-dialog" style="max-width: 40%">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h3>Apartment Information</h3>
@@ -116,22 +112,21 @@
                                                                     <div class="modal-body" style="display: flex ">
                                                                         
                                                                         <div style="width: 50%;margin-left: 5%;">
-                                                                            <p><strong>Loại phòng</strong> ${listapartment.roomtype.name}</p>
-                                                                            <p><strong>Số người tối đa</strong> ${listapartment.roomtype.limitPerson}</p>
-                                                                            <p><strong>Diện tích</strong> ${listapartment.roomtype.square}</p>
-                                                                            <p><strong>Số phòng ngủ</strong> ${listapartment.roomtype.bedroom}</p>
-                                                                            <p><strong>Số phòng khách</strong> ${listapartment.roomtype.livingRoom}</p>
-                                                                            <p><strong>Số phòng tắm</strong> ${listapartment.roomtype.bathRoom}</p>
-                                                                            <p><strong>Số ban công</strong> ${listapartment.roomtype.balcony}</p>
+                                                                            <p><strong>Loại phòng</strong> ${listapartment}</p>
+                                                                            <p><strong>Số người tối đa</strong> ${listapartment}</p>
+                                                                            <p><strong>Diện tích</strong> ${listapartment}</p>
+                                                                            <p><strong>Số phòng ngủ</strong> ${listapartment}</p>
+                                                                            <p><strong>Số phòng khách</strong> ${listapartment}</p>
+                                                                            <p><strong>Số phòng tắm</strong> ${listapartment}</p>
+                                                                            <p><strong>Số ban công</strong> ${listapartment}</p>
                                                                             
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                                            
                                                     </c:forEach>
-                                                        <h6>A là mã phòng, sau A là số tầng, sau _ là số phòng</h6>
+
 
                                                     <!--                                                    <td>
                                                                                                             <a href="update-room-type?id=${room.id}"><i class="fa-solid fa-pen-to-square"></i></a>

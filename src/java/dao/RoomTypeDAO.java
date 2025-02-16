@@ -152,17 +152,16 @@ public class RoomTypeDAO extends DBContext {
         pre.setString(1, apartmentId);
         ResultSet rs = pre.executeQuery();
 
-        while (rs.next()) {
-                return new RoomType(rs.getString("id"),
-                        rs.getString("name"),
-                        rs.getInt("maxperson"),
-                        rs.getInt("bedroom"),
-                        rs.getInt("livingroom"),
-                        rs.getInt("bathroom"),
-                        rs.getInt("balcony"),
-                        rs.getFloat("square"));
-                
-            }
+        if (rs.next()) {
+            RoomType roomtype = new RoomType();
+            roomtype.setId(rs.getString("Id"));
+            roomtype.setName(rs.getString("Name"));
+            roomtype.setBedroom(rs.getInt("NumBedroom"));
+            roomtype.setLivingRoom(rs.getInt("NumLivingRoom"));
+            roomtype.setBathRoom(rs.getInt("NumBathroom"));
+            roomtype.setBalcony(rs.getInt("NumBalcony"));
+            return roomtype;
+        }
 
         rs.close();
         pre.close();
@@ -211,8 +210,7 @@ public class RoomTypeDAO extends DBContext {
     public static void main(String[] args) {
         RoomTypeDAO dao = new RoomTypeDAO();
         RoomType r = new RoomType("1", "Deluxe Suite", 4, 2, 1, 2, 1, 500.0f);
-//        System.out.println(dao.checkExistNameRoomType("Deluxe Suite"));
-//        System.out.println(dao.deleteRoomType(3));
-        System.out.println(dao.getRoomTypeByApartmentId("A01_01"));
+        System.out.println(dao.checkExistNameRoomType("Deluxe Suite"));
+        System.out.println(dao.deleteRoomType(3));
     }
 }
