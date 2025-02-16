@@ -48,9 +48,20 @@ public class ApartmentDAO extends DBContext {
                         rdao.getRoomTypeById(rs.getString("rtid")), rs.getInt("status")));
             }
         } catch (SQLException e) {
-            System.out.println(e + "abcsda");
+            System.out.println(e + "need repair 1");
         }
         return list;
+    }
+    
+    public void deleteApartment(String id){
+        String sql = "update Apartment set status = 0 where id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, id);
+            ps.executeUpdate();
+        }catch (SQLException e) {
+            System.out.println(e + "need repair 1");
+        }
     }
 
     public boolean getApartmentByRoomType(int id) {
