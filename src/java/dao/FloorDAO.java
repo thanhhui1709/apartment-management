@@ -91,7 +91,7 @@ public class FloorDAO extends DBContext {
             // Tạo đối tượng Floor và gán các thuộc tính
             Floor floor = new Floor(
                 rs.getInt("floor"),       // floor number
-                rs.getInt("Square"),      // diện tích
+                rs.getFloat("Square"),      // diện tích
                 rs.getString("usagetype"),// loại sử dụng
                 rs.getString("note")      // ghi chú
             );

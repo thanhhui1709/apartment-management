@@ -152,16 +152,16 @@ public class RoomTypeDAO extends DBContext {
         pre.setString(1, apartmentId);
         ResultSet rs = pre.executeQuery();
 
-        if (rs.next()) {
-            RoomType roomtype = new RoomType();
-            roomtype.setId(rs.getString("Id"));
-            roomtype.setName(rs.getString("Name"));
-            roomtype.setBedroom(rs.getInt("NumBedroom"));
-            roomtype.setLivingRoom(rs.getInt("NumLivingRoom"));
-            roomtype.setBathRoom(rs.getInt("NumBathroom"));
-            roomtype.setBalcony(rs.getInt("NumBalcony"));
-            return roomtype;
-        }
+        while (rs.next()) {
+                return new RoomType(rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getInt("maxperson"),
+                        rs.getInt("bedroom"),
+                        rs.getInt("livingroom"),
+                        rs.getInt("bathroom"),
+                        rs.getInt("balcony"),
+                        rs.getFloat("square"));
+            }
 
         rs.close();
         pre.close();

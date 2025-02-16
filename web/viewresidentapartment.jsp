@@ -112,13 +112,13 @@
                                                                     <div class="modal-body" style="display: flex ">
                                                                         
                                                                         <div style="width: 50%;margin-left: 5%;">
-                                                                            <p><strong>Loại phòng</strong> ${listapartment}</p>
-                                                                            <p><strong>Số người tối đa</strong> ${listapartment}</p>
-                                                                            <p><strong>Diện tích</strong> ${listapartment}</p>
-                                                                            <p><strong>Số phòng ngủ</strong> ${listapartment}</p>
-                                                                            <p><strong>Số phòng khách</strong> ${listapartment}</p>
-                                                                            <p><strong>Số phòng tắm</strong> ${listapartment}</p>
-                                                                            <p><strong>Số ban công</strong> ${listapartment}</p>
+                                                                            <p><strong>Loại phòng</strong> ${listapartment.roomtype.name}</p>
+                                                                            <p><strong>Số người tối đa</strong> ${listapartment.roomtype.limitPerson}</p>
+                                                                            <p><strong>Diện tích</strong> ${listapartment.roomtype.square}</p>
+                                                                            <p><strong>Số phòng ngủ</strong> ${listapartment.roomtype.bedroom}</p>
+                                                                            <p><strong>Số phòng khách</strong> ${listapartment.roomtype.livingRoom}</p>
+                                                                            <p><strong>Số phòng tắm</strong> ${listapartment.roomtype.bathRoom}</p>
+                                                                            <p><strong>Số ban công</strong> ${listapartment.roomtype.balcony}</p>
                                                                             
                                                                         </div>
                                                                     </div>
@@ -126,7 +126,7 @@
                                                             </div>
                                                         </div>
                                                     </c:forEach>
-
+                                                        <h6>A là mã phòng, sau A là số tầng, sau _ là số phòng</h6>
 
                                                     <!--                                                    <td>
                                                                                                             <a href="update-room-type?id=${room.id}"><i class="fa-solid fa-pen-to-square"></i></a>

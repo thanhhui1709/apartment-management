@@ -79,7 +79,7 @@ public class ApartmentDAO extends DBContext {
                 System.out.println("Floor: " + rs.getInt("floor"));
                 System.out.println("Information: " + rs.getString("information"));
 
-//                RoomType roomtype = rt.getRoomTypeById(rs.getString("rId"));
+                RoomType roomtype = rt.getRoomTypeByApartmentId(rs.getString("Id"));
 
                 Floor floor = new Floor();
                 floor.setNumber(rs.getInt("floor"));
@@ -101,10 +101,7 @@ public class ApartmentDAO extends DBContext {
     }
 
     
-    public static void main(String[] args) {
-        ApartmentDAO dao = new ApartmentDAO();
-        System.out.println(dao.getApartmentByRoomType(4));
-        System.out.println(dao.GetREApartment("P101"));
+    
     public Apartment getById(String id){
         String sql  ="select * from Apartment where id=?";
         List<Apartment> list = new ArrayList<>();
@@ -129,7 +126,7 @@ public class ApartmentDAO extends DBContext {
     }
     public static void main(String[] args) {
         ApartmentDAO dao = new ApartmentDAO();
-        System.out.println(dao.getApartmentByRoomType(4));
-        System.out.println(dao.getById("A01_01").getNumberOfPerson());
+        System.out.println(dao.GetREApartment("P101"));
+        
     }
 }
