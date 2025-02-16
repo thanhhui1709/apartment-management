@@ -10,7 +10,8 @@ package dto.response;
  */
 public class FloorResponseDTO {
 
-    private int number, square;
+    private int number;
+    private float square;
     private String usageType;
     private String note;
     private int noPerson;
@@ -20,11 +21,11 @@ public class FloorResponseDTO {
     public FloorResponseDTO() {
     }
 
-    public FloorResponseDTO(int number, int square, String usageType, String not, int noPerson, int NoUsingRoom, int NoNotUsingRoom) {
+    public FloorResponseDTO(int number, float square, String usageType, String note, int noPerson, int NoUsingRoom, int NoNotUsingRoom) {
         this.number = number;
         this.square = square;
         this.usageType = usageType;
-        this.note = not;
+        this.note = note;
         this.noPerson = noPerson;
         this.noUsingRoom = NoUsingRoom;
         this.noNotUsingRoom = NoNotUsingRoom;
@@ -38,11 +39,11 @@ public class FloorResponseDTO {
         this.number = number;
     }
 
-    public int getSquare() {
+    public float getSquare() {
         return square;
     }
 
-    public void setSquare(int square) {
+    public void setSquare(float square) {
         this.square = square;
     }
 
