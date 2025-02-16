@@ -87,20 +87,6 @@ public class OwnerApartmentDAO extends DBContext {
         return null;
     }
 
-    public boolean updateOwnerApartment(OwnerApartment oa) {
-        String sql = "update AparmentOwner set Enddate = ?, status = ? where id = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, oa.getEndDate());
-            ps.setInt(2, oa.getStatus());
-            ps.setString(3, oa.getId());
-            return ps.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return false;
-    }
-
     public String generateID() {
         String sql = "select id from AparmentOwner";
         List<Integer> list = new ArrayList<>();
@@ -117,18 +103,31 @@ public class OwnerApartmentDAO extends DBContext {
         return null;
     }
 
-    public boolean insertOwnerApartment(OwnerApartment oa) {
+    public boolean insertOwnerApartment(String rid, String aid, String startDate) {
         String sql = "insert into AparmentOwner(id,rid,aid,Startdate, Enddate, status) values(?,?,?,?,?,1)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, this.generateID());
-            ps.setString(2, oa.getRid().getpId());
-            ps.setString(3, oa.getAid().getId());
-            ps.setString(4, oa.getStartDate());
-            ps.setString(5, oa.getEndDate());
+            ps.setString(2, rid);
+            ps.setString(3, aid);
+            ps.setString(4, startDate);
+            ps.setString(5, null);
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
 
+        }
+        return false;
+    }
+
+    public boolean updateEndOwnerApartment(String id, String endDate) {
+        String sql = "update AparmentOwner set Enddate = ?, status = 0 where aid = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, endDate);
+            ps.setString(2, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            System.out.println(ex);
         }
         return false;
     }
@@ -139,13 +138,12 @@ public class OwnerApartmentDAO extends DBContext {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate now = LocalDate.now();
         String date = now.format(formatter);
-        OwnerApartment oa = dao.getOwnerByApartmentID("A001");
-        Resident ownerResident = daoR.getById("P102");
-        oa.setRid(ownerResident);
-        oa.setEndDate(date);
-        oa.setStatus(0);
-
-        
-        System.out.println(dao.updateOwnerApartment(oa)+" "+ oa.getId());
+//        OwnerApartment oa = dao.getOwnerByApartmentID("A001");
+//        Resident ownerResident = daoR.getById("P102");
+//        oa.setRid(ownerResident);
+//        oa.setEndDate(date);
+//        oa.setStatus(0);
+    
+        System.out.println(dao.updateEndOwnerApartment("A14_04", "2025-02-16"));
     }
 }

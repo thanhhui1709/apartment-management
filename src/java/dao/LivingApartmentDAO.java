@@ -103,15 +103,15 @@ public class LivingApartmentDAO extends DBContext {
         return null;
     }
 
-    public boolean insertLivingApartment(LivingApartment la) {
+    public boolean insertLivingApartment(String rid, String aid, String startDate) {
         String sql = "insert into LivingAparment(id,rid,aid,Startdate, Enddate, status) values(?,?,?,?,?,1)";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, this.generateID());
-            ps.setString(2, la.getRid().getpId());
-            ps.setString(3, la.getAid().getId());
-            ps.setString(4, la.getStartDate());
-            ps.setString(5, la.getEndDate());
+            ps.setString(2, rid);
+            ps.setString(3, aid);
+            ps.setString(4, startDate);
+            ps.setString(5, null);
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
 
@@ -119,13 +119,12 @@ public class LivingApartmentDAO extends DBContext {
         return false;
     }
 
-    public boolean updateLivingApartment(LivingApartment la) {
-        String sql = "update LivingAparment set Enddate = ?, status = ? where id = ?";
+    public boolean updateEndLivingApartment(String endDate, String aid) {
+        String sql = "update LivingAparment set Enddate = ?, status = 0 where aid = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, la.getEndDate());
-            ps.setInt(2, la.getStatus());
-            ps.setString(3, la.getId());
+            ps.setString(1, endDate);
+            ps.setString(2, aid);
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(LivingApartmentDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,9 +144,9 @@ public class LivingApartmentDAO extends DBContext {
         oa.setEndDate(date);
         oa.setStatus(0);
 
-        System.out.println(dao.updateLivingApartment(oa) + " " + oa.getId());
         oa.setStatus(1);
         oa.setEndDate(null);
         oa.setStartDate(date);
+        System.out.println(dao.updateEndLivingApartment("2025-2-16", "A001"));
     }
 }
