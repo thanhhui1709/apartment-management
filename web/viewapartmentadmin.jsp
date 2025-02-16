@@ -124,7 +124,7 @@
                                                     </div>
                                                     <div class="col-md-4 d-flex">
                                                         <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
-                                                        <a href="addnewapartment.jsp"  class="btn btn-primary">Add new Apartment</a>
+                                                        <a href="add-new-apartment"  class="btn btn-primary">Add new Apartment</a>
                                                     </div>
                                                 </div>
                                             </form>
