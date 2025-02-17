@@ -16,6 +16,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import util.Util;
 
 /**
  * Class to handle sending confirmation emails for orders and password recovery.
@@ -164,12 +165,8 @@ public class SendEmail {
         String emailToSend = "example@gmail.com"; // Địa chỉ email cần gửi
         String subject = "Xác nhận đơn hàng"; // Chủ đề email
         String content = "<h1>Cảm ơn bạn đã đặt hàng!</h1>"; // Nội dung email
+        Util u=new Util();
 
-        // Gửi email
-        if (emailSender.sendEmail(emailToSend, subject, content)) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("NO");
-        }
+        emailSender.sendEmail("kophaithanhhui@gmail.com", "hui", "bla", u.generatePassword());
     }
 }
