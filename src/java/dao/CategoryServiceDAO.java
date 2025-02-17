@@ -34,4 +34,30 @@ public class CategoryServiceDAO extends DBContext {
         }
         return list;
     }
+    public int getNumberCategoryService(){
+        String sql=" select count(*) as number from ServiceCategory";
+        try {
+            PreparedStatement st= connection.prepareCall(sql);
+            ResultSet rs= st.executeQuery();
+            if(rs.next()){
+                return rs.getInt("number");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    public void addCategoryService(String name,String note){
+        String id = "SV"+ Integer.toString(getNumberCategoryService()+1);
+        String sql= "insert into ServiceCategory values(?,?,?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            st.setString(2, name);
+            st.setString(3, note);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }

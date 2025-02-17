@@ -99,7 +99,7 @@ public class Util {
         return rs;
     }
 
-    public String stringNomalize(String str) {
+    public static String stringNomalize(String str) {
 
         if (str == null || str.trim().isEmpty()) {
             return "";

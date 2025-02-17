@@ -80,6 +80,7 @@
             .status-active {
                 color: green;
             }
+
             .status-inactive {
                 color: red;
             }
@@ -160,9 +161,9 @@
                                                             <td>
                                                                 <form action="updateResidentStatus" method="POST" class="status-form">
                                                                     <input type="hidden" name="id" value="${resident.pId}">
-                                                                    <select class="status-select" name="status" onchange="confirmStatusChange(this)">
-                                                                        <option value="1" style="color: green;" ${resident.status == '1' ? 'selected' : ''}>Active</option>
-                                                                        <option value="0" style="color: red;" ${resident.status == '0' ? 'selected' : ''}>Inactive</option>
+                                                                    <select class="status-select ${resident.status == '1' ? 'status-active' : 'status-inactive'}" name="status" onchange="confirmStatusChange(this)">
+                                                                        <option value="1" class="status-active" ${resident.status == '1' ? 'selected' : ''}>Active</option>
+                                                                        <option value="0" class="status-inactive" ${resident.status == '0' ? 'selected' : ''}>Inactive</option>
                                                                     </select>
                                                                 </form>
                                                             </td>
@@ -196,9 +197,9 @@
                                                                             <p><strong>Status:</strong>
                                                                             <form action="updateResidentStatus" method="POST" class="status-form">
                                                                                 <input type="hidden" name="id" value="${resident.pId}">
-                                                                                <select class="status-select" name="status" onchange="confirmStatusChange(this)">
-                                                                                    <option value="1" style="color: green;" <c:if test="${resident.status == '1'}">selected</c:if>>Active</option>
-                                                                                    <option value="0" style="color: red;" <c:if test="${resident.status == '0'}">selected</c:if>>Inactive</option>
+                                                                                <select class="status-select ${resident.status == '1' ? 'status-active' : 'status-inactive'}" name="status" onchange="confirmStatusChange(this)">
+                                                                                    <option value="1" class="status-active" <c:if test="${resident.status == '1'}">selected</c:if>>Active</option>
+                                                                                    <option value="0" class="status-inactive" <c:if test="${resident.status == '0'}">selected</c:if>>Inactive</option>
                                                                                     </select>
                                                                                 </form>
                                                                                 </p>

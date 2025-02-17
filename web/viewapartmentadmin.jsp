@@ -70,6 +70,9 @@
             #table-infor th, #table-infor td {
                 text-align: center;
             }
+            .option{
+                margin-left: 1.5px;
+            }
         </style>
     </head>
     <body class="inner_page tables_page">
@@ -124,7 +127,7 @@
                                                     </div>
                                                     <div class="col-md-4 d-flex">
                                                         <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
-                                                        <a href="addnewapartment.jsp"  class="btn btn-primary">Add new Apartment</a>
+                                                        <a href="add-new-apartment"  class="btn btn-primary">Add new Apartment</a>
                                                     </div>
                                                 </div>
                                             </form>
@@ -149,8 +152,11 @@
                                                                 <td>${o.floor.number}</td>
                                                                 <td>${o.roomtype.name}</td>
                                                                 <td>
-                                                                    <a href="viewdetailapartment-admin?apartmentId=${o.id}"><i class="fa-solid fa-eye"></i></a>
-                                                                    <a href="update-apartment?id=${o.id}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                                    <a class="option" href="viewdetailapartment-admin?apartmentId=${o.id}"><i class="fa-solid fa-eye"></i></a>
+                                                                    <a class="option" href="update-apartment?id=${o.id}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                                    <c:if test="${o.status == 1}">
+                                                                        <a class="option" href="delete-apartment?id=${o.id}" onclick="return confirm('Are you sure to delete this apartment?')"><i class="fa-solid fa-trash"></i></a>
+                                                                    </c:if>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>

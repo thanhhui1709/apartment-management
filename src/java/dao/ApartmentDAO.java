@@ -48,9 +48,20 @@ public class ApartmentDAO extends DBContext {
                         rdao.getRoomTypeById(rs.getString("rtid")), rs.getInt("status")));
             }
         } catch (SQLException e) {
-            System.out.println(e + "abcsda");
+            System.out.println(e + "need repair 1");
         }
         return list;
+    }
+    
+    public void deleteApartment(String id){
+        String sql = "update Apartment set status = 0 where id = ?";
+        try{
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, id);
+            ps.executeUpdate();
+        }catch (SQLException e) {
+            System.out.println(e + "need repair 1");
+        }
     }
 
     public boolean getApartmentByRoomType(int id) {
@@ -90,6 +101,47 @@ public class ApartmentDAO extends DBContext {
         } catch (SQLException e) {
         }
         return null;
+    }
+
+    public boolean insertNewApartment(Apartment newApartment) {
+        String sql = "INSERT INTO [dbo].[Apartment]\n"
+                + "           ([Id]\n"
+                + "           ,[NoPerson]\n"
+                + "           ,[floor]\n"
+                + "           ,[information]\n"
+                + "           ,[rtId]\n"
+                + "           ,[status])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, newApartment.getId());
+            st.setInt(2, newApartment.getNumberOfPerson());
+            st.setInt(3, newApartment.getFloor().getNumber());
+            st.setString(4, newApartment.getInfor());
+            st.setString(5, newApartment.getRoomtype().getId());
+            st.setInt(6, newApartment.getStatus());
+            st.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean checkExistAptNumber(String number) {
+        String sql = "Select * from Apartment where Id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, number);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
     }
 
     public boolean updateApartment(Apartment a) {
