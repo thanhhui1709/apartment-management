@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
-<title>Apartment management</title>        <link rel="icon" href="images/fevicon.png" type="image/png" />
+        <title>Apartment management</title>        <link rel="icon" href="images/fevicon.png" type="image/png" />
         <!-- bootstrap css -->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <!-- site css -->
@@ -96,6 +96,15 @@
                                             </div>
                                         </div>
                                         <div class="table_section padding_infor_info">
+                                            <div style="margin-bottom: 20px">
+                                                <form action="view-resident" method="GET">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-4 d-flex">
+                                                            <a href="addcategoryservice.jsp" class="btn btn-primary">Add new Category Service</a>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                             <div class="table-responsive-sm">
                                                 <table class="table w-100" id="table-infor">
                                                     <thead>
@@ -115,7 +124,7 @@
                                                                 <td style="text-align: left;">${category.detail}</td>
                                                                 <td></td>
                                                             </tr>
-                                                    </c:forEach>
+                                                        </c:forEach>
                                                     </tbody>
                                                 </table>
                                             </div>
