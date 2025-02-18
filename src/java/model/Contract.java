@@ -17,6 +17,57 @@ public class Contract {
     private String endDate, startDate, paymentTems, signDate, title, description, image;
     int status;
 
+    public Contract(Staff staff, Company company, String startDate, String endDate, String paymentTems, String signDate, String title, String description, Staff accountant , Staff admin, String image) {
+        this.staff=staff;
+        this.company=company;
+        this.startDate=startDate;
+        this.endDate=endDate;
+        this.paymentTems=paymentTems;
+        this.signDate=signDate;
+        this.title=title;
+        this.description=description;
+        this.accountant=accountant;
+        this.admin=admin;
+        this.image=image;
+    }
+
+    public Contract(String valueOf, Staff byId) {
+    }
+
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Staff getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Staff admin) {
+        this.admin = admin;
+    }
+
+    public Staff getAccountant() {
+        return accountant;
+    }
+
+    public void setAccountant(Staff accountant) {
+        this.accountant = accountant;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Contract(String id, Staff staff, Staff admin, Staff accountant, Company company, String endDate, String startDate, String paymentTems, String signDate, String title, String description, String image, int status) {
         this.id = id;
         this.staff = staff;
@@ -46,6 +97,7 @@ public class Contract {
         this.description = description;
         this.status = status;
     }
+
 
     public Staff getStaff() {
         return staff;
