@@ -9,11 +9,32 @@ package model;
  * @author quang
  */
 public class Contract {
+    private String id;
     private Staff staff;
+    private Staff admin;
+    private Staff accountant;
     private Company company;
-    private String endDate, startDate, paymentTems, signDate, title, description;
+    private String endDate, startDate, paymentTems, signDate, title, description, image;
     int status;
 
+    public Contract(String id, Staff staff, Staff admin, Staff accountant, Company company, String endDate, String startDate, String paymentTems, String signDate, String title, String description, String image, int status) {
+        this.id = id;
+        this.staff = staff;
+        this.admin = admin;
+        this.accountant = accountant;
+        this.company = company;
+        this.endDate = endDate;
+        this.startDate = startDate;
+        this.paymentTems = paymentTems;
+        this.signDate = signDate;
+        this.title = title;
+        this.description = description;
+        this.image = image;
+        this.status = status;
+    }
+
+    
+    
     public Contract(Staff staff, Company company, String endDate, String startDate, String paymentTems, String signDate, String title, String description, int status) {
         this.staff = staff;
         this.company = company;
