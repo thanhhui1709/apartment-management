@@ -90,6 +90,15 @@
         <url-pattern>/view-all-request</url-pattern>
         <url-pattern>/viewallrequest.jsp</url-pattern>
     </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdministrativeFilter</filter-name>
+        <url-pattern>/update-news</url-pattern>
+        <url-pattern>/updatenews.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdministrativeFilter</filter-name>
+        <url-pattern>/delete-news</url-pattern>
+    </filter-mapping>
      <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/assign-request</url-pattern>
@@ -119,7 +128,6 @@
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/view-all-staff</url-pattern>
         <url-pattern>/viewallstaff.jsp</url-pattern>
-
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
@@ -150,6 +158,40 @@
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/add-new-rule</url-pattern>
         <url-pattern>/addnewrule.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/view-categoryservice-staff</url-pattern>
+        <url-pattern>/viewallcategoryservice.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/view-floor-staff</url-pattern>
+        <url-pattern>/floorinformation.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/view-roomtype</url-pattern>
+        <url-pattern>/viewroomtype.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/updateroomtype.jsp</url-pattern>
+        <url-pattern>/update-room-type</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/add-new-room-type</url-pattern>
+        <url-pattern>/addnewroomtype.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/delete-room-type</url-pattern>
+    </filter-mapping>
+     <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/update-apartment</url-pattern>
+        <url-pattern>/updateapartment.jsp</url-pattern>
     </filter-mapping>
 
     <servlet>

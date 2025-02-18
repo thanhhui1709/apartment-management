@@ -69,7 +69,7 @@ public class ContractDAO extends DBContext {
         if (endDate != "") {
             Date date = Date.valueOf(endDate);
             String formatDate = format.format(date);
-            sql += " and enddate>= '" + formatDate + "'";
+            sql += " and startdate <= '" + formatDate + "'";
         }
         List<Contract> list = new ArrayList<>();
         try {
@@ -95,6 +95,6 @@ public class ContractDAO extends DBContext {
 
     public static void main(String[] args) {
         ContractDAO dap = new ContractDAO();
-        System.out.println(dap.filterContract("", "", "2025-2-17").size());
+        System.out.println(dap.filterContract("", "", "2025-3-27").size());
     }
 }
