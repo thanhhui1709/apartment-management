@@ -87,27 +87,32 @@ public class ViewAllServices extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String status = request.getParameter("status");
         String category = request.getParameter("category");
         String company = request.getParameter("company");
+
+        if (status == null) status = "";
+        if (category == null) category = "";
+        if (company == null) company = "";
+
         ServiceDAO sd = new ServiceDAO();
         CategoryServiceDAO csd = new CategoryServiceDAO();
         CompanyDAO cd = new CompanyDAO();
-        List<Service> listServices = sd.filterByCompanyAndCategoryAndStatus(category, company, status);
         
-        HttpSession session=request.getSession();
-        session.setAttribute("status", status);
-        session.setAttribute("category", category);
-        session.setAttribute("company", company);
+        List<Service> listServices = sd.filterByCompanyAndCategoryAndStatus(category, company, status);
+
+        HttpSession session = request.getSession();
+        session.setAttribute("status", status.isEmpty() ? null : status);
+        session.setAttribute("category", category.isEmpty() ? null : category);
+        session.setAttribute("company", company.isEmpty() ? null : company);
         
         request.setAttribute("listServices", listServices);
         request.setAttribute("listCategories", csd.getAll());
         request.setAttribute("listCompanies", cd.getAll());
         request.getRequestDispatcher("viewallservices.jsp").forward(request, response);
-
     }
 
     /**

@@ -41,14 +41,14 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <select class="form-control" name="status">
-                                                            <option value="" <c:if test="${sessionScope.status == null}">selected</c:if>>Filter by Status</option>
+                                                            <option value="">Filter by Status</option>
                                                             <option value="1" <c:if test="${sessionScope.status == 1}">selected</c:if>>Active</option>
                                                             <option value="0" <c:if test="${sessionScope.status == 0}">selected</c:if>>Inactive</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <select class="form-control" name="Category">
-                                                                <option value="">Select category</option>
+                                                            <select class="form-control" name="category">
+                                                                <option value="" >Select category</option>
                                                             <c:forEach items="${requestScope.listCategories}" var="cs">
                                                                 <option value="${cs.id}" <c:if test="${sessionScope.category == cs.id}">selected</c:if>>${cs.name}</option>
                                                             </c:forEach>
@@ -56,7 +56,7 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <select class="form-control" name="company">
-                                                            <option value="">Select Company</option>
+                                                            <option value="" >Select Company</option>
                                                             <c:forEach items="${requestScope.listCompanies}" var="c">
                                                                 <option value="${c.id}" <c:if test="${sessionScope.company == c.id}">selected</c:if>>${c.name}</option>
                                                             </c:forEach>
