@@ -60,4 +60,28 @@ public class CategoryServiceDAO extends DBContext {
             System.out.println(e);
         }
     }
+    public CategoryService getByServiceId(String id){
+     String sql="select sc.Id,sc.Name,sc.Detail from ServiceCategory sc join Service s on s.scId=sc.Id where s.Id=? ";
+        try {
+            PreparedStatement st=connection.prepareStatement(sql);
+            st.setString(1, id);
+            ResultSet rs=st.executeQuery();
+            if(rs.next()){
+            CategoryService cs=new CategoryService();
+            cs.setId(rs.getString(1));
+            cs.setName(rs.getString(2));
+            cs.setDetail(rs.getString(3));
+            return cs;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    
+    }
+    public static void main(String[] args) {
+        CategoryServiceDAO csd=new CategoryServiceDAO();
+        System.out.println(csd.getByServiceId("S1"));
+    }
+    
 }

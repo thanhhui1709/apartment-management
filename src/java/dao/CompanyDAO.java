@@ -120,14 +120,15 @@ public class CompanyDAO extends DBContext {
             ps.setString(10, com.getBank());
             ps.setString(11, com.getdescription());
             ps.setString(12, com.getAddress());
-            
+
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(CompanyDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
-    public void updateCompany(Company company){
+
+    public void updateCompany(Company company) {
         String sql = "update company set name=?, phone=?,contactphone=?,fax=?,email=?,contactemail=?,"
                 + "website=?,taxcode=?,bank=?,description=?,address=?"
                 + " where id=?";
@@ -150,11 +151,43 @@ public class CompanyDAO extends DBContext {
             System.out.println(e);
         }
     }
+
+    public Company getByServiceId(String id) {
+        String sql = "select c.id,c.name,c.phone,c.contactphone,c.fax,c.email,c.contactemail,"
+                + "c.website,c.taxcode,c.bank,c.Description,c.address "
+                + "from Company c join Service s on s.cId=c.id where s.Id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Company c = new Company();
+                c.setId(rs.getString(1));
+                c.setName(rs.getString(2));
+                c.setPhone(rs.getString(3));
+                c.setContactPhone(rs.getString(4));
+                c.setFax(rs.getString(5));
+                c.setEmail(rs.getString(6));
+                c.setContactemail(rs.getString(7));
+                c.setWebsite(rs.getString(8));
+                c.setTaxCode(rs.getString(9));
+                c.setBank(rs.getString(10));
+                c.setdescription(rs.getString(11));
+                c.setAddress(rs.getString(12));
+                return c;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+
+    }
+
     public static void main(String[] args) {
         CompanyDAO dao = new CompanyDAO();
-        Company cp = new Company("324ss", "09113467", "091231247", "142322312", "caon4cass@gmail.com", "caon2s4ca@gmail.com", "xx",
-                "c4scccwc",
-                "12143813", "", "agfffsf");
-        System.out.println(dao.insertNewCompany(cp));
+//        Company cp = new Company("324ss", "09113467", "091231247", "142322312", "caon4cass@gmail.com", "caon2s4ca@gmail.com", "xx",
+//                "c4scccwc",
+//                "12143813", "", "agfffsf");
+        System.out.println(dao.getByServiceId("S1").getId());
     }
 }
