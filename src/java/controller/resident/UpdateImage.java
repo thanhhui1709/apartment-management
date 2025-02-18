@@ -5,6 +5,8 @@
 package controller.resident;
 
 import dao.AccountDAO;
+import dao.ResidentDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.File;
@@ -19,6 +21,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import model.Account;
+import model.Resident;
+import model.Staff;
 import util.Util;
 
 /**
@@ -104,6 +108,15 @@ HttpSession session = request.getSession();
             request.setAttribute("message", "Upload success: " + source);
         }
         Util util = new Util();
+        if (ac.getRoleId() == 1) {
+            ResidentDAO rd = new ResidentDAO();
+            Resident re = rd.getById(ac.getpId());
+            session.setAttribute("person", re);
+        } else {
+            StaffDAO sd = new StaffDAO();
+            Staff staff = sd.getById(ac.getpId());
+            session.setAttribute("person", staff);
+        }
         request.getRequestDispatcher(util.getTableNameByRoleId(ac.getRoleId())).forward(request, response);
     }
 

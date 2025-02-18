@@ -180,7 +180,7 @@ public class AccountDAO extends DBContext {
     
     public static void main(String[] args) {
         AccountDAO dao = new AccountDAO();
-        dao.changeImageByAccount(new Account("bob","e", "e", "P001", 1), "images/avatar/anh.jpg");
+        System.out.println(""+dao.getAccountByUsernameandRole("bob", 1));
     }
 
 }
