@@ -101,6 +101,7 @@ public class ViewAllStaff extends HttpServlet {
             list = sd.getByStatus(filterStatus);
             if (list.size()==0) {
                 session.setAttribute("staffs", null);
+                request.setAttribute("totalPage", 1);
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
@@ -111,6 +112,7 @@ public class ViewAllStaff extends HttpServlet {
             list = sd.searchByName(list, searchName);
             if (list.size()==0) {
                 session.setAttribute("staffs", null);
+                request.setAttribute("totalPage", 1);
                 request.getRequestDispatcher("viewallstaff.jsp").forward(request, response);
                 return;
             }
