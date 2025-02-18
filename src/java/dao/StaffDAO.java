@@ -514,7 +514,7 @@ public class StaffDAO extends DBContext {
         StaffDAO staffDAO = new StaffDAO();
         Staff s1 = new Staff("S1013", "Guard Company", "2000-05-05", "na3m@gmail.com", "0226013325", "Ha Noi", "11232231", 500, "VO Hoc", "1234564898723", 1, "sa1das", "4578", new Role("4", "name", ""), new Company("C001"), "2025-02-01", "F");
         Staff s = new Staff("S1013", "2000-05-05", "na3m@gmail.com", "0226013325", "Ha Noi", "11232231", 500, "VO Hoc", "1234564898723", "sa1das", "4578", new Role("4", "name", ""), new Company("C001"), "2025-02-01", "F");
-        System.out.println(staffDAO.insertStaff(s));
+        System.out.println(staffDAO.getStaffbyRole("3"));
 
     }
 

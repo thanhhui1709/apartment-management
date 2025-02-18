@@ -159,6 +159,47 @@ public class ApartmentDAO extends DBContext {
         }
         return false;
     }
+    public List<Apartment> GetREApartment(String reId) {
+        String sql = "SELECT A.*, RT.*\n"
+                + "FROM AparmentOwner AO\n"
+                + "JOIN Apartment A ON AO.aId = A.Id\n"
+                + "JOIN RoomType RT ON A.rtId = RT.Id\n"
+                + "WHERE AO.rId = ? ";
+
+        RoomTypeDAO rt = new RoomTypeDAO();
+        List<Apartment> list = new ArrayList<>();
+
+        try {
+            PreparedStatement pre = connection.prepareStatement(sql);
+            pre.setString(1, reId);
+            ResultSet rs = pre.executeQuery();
+
+            while (rs.next()) {
+                System.out.println("Number Of Person: " + rs.getInt("NoPerson"));
+                System.out.println("Floor: " + rs.getInt("floor"));
+                System.out.println("Information: " + rs.getString("information"));
+
+                RoomType roomtype = rt.getRoomTypeByApartmentId(rs.getString("id"));
+
+                Floor floor = new Floor();
+                floor.setNumber(rs.getInt("floor"));
+
+                Apartment apartment = new Apartment(rs.getString("Id"),
+                        rs.getInt("NoPerson"),
+                        floor,
+                        rs.getString("information"),roomtype
+                );
+                apartment.setRoomtype(roomtype);
+                list.add(apartment);
+            }
+
+            rs.close();
+            pre.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public static void main(String[] args) {
         ApartmentDAO dao = new ApartmentDAO();
@@ -169,5 +210,6 @@ public class ApartmentDAO extends DBContext {
         a.setRoomtype(rt);
         a.setInfor("Abc");
         dao.updateApartment(a);
+        System.out.println(dao.GetREApartment("P101"));
     }
 }
