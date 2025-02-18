@@ -71,10 +71,12 @@ public class ViewAllCompany extends HttpServlet {
             list = (List<Company>) session.getAttribute("companies");
         }
         String searchName = request.getParameter("searchName");
+        int totalPage = u.getTotalPage(list, 3);
         if (null != searchName) {
             searchName = u.stringNomalize(searchName);
             list = cd.searchCompaniesbyName(searchName);
             if (list.size() == 0) {
+                request.setAttribute("totalPage", 1);
                 request.getRequestDispatcher("viewallcompany.jsp").forward(request, response);
                 return;
             }
@@ -84,9 +86,10 @@ public class ViewAllCompany extends HttpServlet {
         if (null == page) {
             page = "1";
         }
-        int totalPage = u.getTotalPage(list, 3);
+        
         list = u.getListPerPage(list, 3, page);        
         request.setAttribute("totalPage", totalPage);
+        
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("companies", list);
         request.getRequestDispatcher("viewallcompany.jsp").forward(request, response);

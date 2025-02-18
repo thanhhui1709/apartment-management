@@ -185,10 +185,7 @@ public class Util {
     }
 
     public static void main(String[] args) {
-        Util u = new Util();
-       
- 
-// 
+        Util u = new Util(); 
     }
 
 }
