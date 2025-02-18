@@ -108,7 +108,7 @@ public class UpdateNewServlet extends HttpServlet {
         Part fileImage = request.getPart("file");
         String image = "";
         if (fileImage != null && fileImage.getSize() > 0) {
-            image = "images/news/" + fileImage.getSubmittedFileName();
+            image = "images/avatar/" + fileImage.getSubmittedFileName();
         }
 
         NewDAO ndao = new NewDAO();
