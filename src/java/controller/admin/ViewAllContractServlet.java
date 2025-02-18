@@ -2,40 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.resident;
+package controller.admin;
 
-import dao.AccountDAO;
-import dao.ResidentDAO;
-import dao.StaffDAO;
+import dao.ContractDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.File;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Part;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import model.Account;
-import model.Resident;
-import model.Staff;
+import java.util.ArrayList;
+import java.util.List;
+import model.Contract;
 import util.Util;
 
 /**
  *
- * @author PC
+ * @author quang
  */
-@WebServlet(name = "UpdateImage", urlPatterns = {"/update-image"})
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB
-        maxRequestSize = 1024 * 1024 * 50 // 50MB
-)
-public class UpdateImage extends HttpServlet {
+@WebServlet(name = "ViewAllContractServlet", urlPatterns = {"/view-all-contract"})
+public class ViewAllContractServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,14 +42,10 @@ public class UpdateImage extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateImage</title>");
+            out.println("<title>Servlet ViewAllContractServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            String message = (String) request.getAttribute("message");
-            String fileName = request.getAttribute("message").toString().replace("Upload thành công: ", "");
-            String imagePath = "images/avatar/" + fileName;
-            out.println("<h3><%= message %></h3> <img src=\"" + imagePath + "\" alt=\"Ảnh đã upload\" style=\"max-width:300px;\">");
-            out.println("<h1>Servlet UpdateImage at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewAllContractServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -79,7 +63,46 @@ public class UpdateImage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        HttpSession session = request.getSession();
+        Util u = new Util();
+        String title = request.getParameter("title");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+
+        if (title == null) {
+            title = "";
+        }
+        title = u.stringNomalize(title);
+        if (startDate == null) {
+            startDate = "";
+        }
+        if (endDate == null) {
+            endDate = "";
+        }
+
+        ContractDAO daoCT = new ContractDAO();
+        List<Contract> listContract = daoCT.filterContract(title, startDate, endDate);
+
+        String page = request.getParameter("page");
+        if (page == null) {
+            page = "1";
+        }
+
+        if (listContract.size() != 0) {
+            int totalPage = u.getTotalPage(listContract, 3);
+            listContract = u.getListPerPage(listContract, 3, page);
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("currentPage", Integer.parseInt(page));
+            session.setAttribute("listContract", listContract);
+            request.getRequestDispatcher("viewallcontract.jsp").forward(request, response);
+            return;
+        } else {
+            request.setAttribute("totalPage", 1);
+            request.setAttribute("currentPage", 1);
+            session.setAttribute("listContract", null);
+            request.setAttribute("message", "No result");
+            request.getRequestDispatcher("viewallcontract.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -93,31 +116,7 @@ public class UpdateImage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-HttpSession session = request.getSession();
-        Account ac = (Account) session.getAttribute("account");
-        Part fileImage = request.getPart("file");
-        String fileName = fileImage.getSubmittedFileName();
-        if(!fileName.endsWith(".jpg")){
-            request.setAttribute("status", false);
-            request.setAttribute("message", "Only upload file .jpg");            
-        }else{
-            String source = "images/avatar/" + fileName;
-            AccountDAO dao = new AccountDAO();
-            dao.changeImageByAccount(ac, source);
-            request.setAttribute("status", true);
-            request.setAttribute("message", "Upload success: " + source);
-        }
-        Util util = new Util();
-        if (ac.getRoleId() == 1) {
-            ResidentDAO rd = new ResidentDAO();
-            Resident re = rd.getById(ac.getpId());
-            session.setAttribute("person", re);
-        } else {
-            StaffDAO sd = new StaffDAO();
-            Staff staff = sd.getById(ac.getpId());
-            session.setAttribute("person", staff);
-        }
-        request.getRequestDispatcher(util.getTableNameByRoleId(ac.getRoleId())).forward(request, response);
+        processRequest(request, response);
     }
 
     /**
