@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Apartment;
 import model.RoomType;
+import util.Util;
 
 /**
  *
@@ -80,7 +81,24 @@ public class ViewApartmantAdmin extends HttpServlet {
         request.setAttribute("filterType", filterType);
         request.setAttribute("filterStatus", filterStatus);
         request.setAttribute("types", types);
-        request.setAttribute("apartmentes", apartmentes);
+        String page = request.getParameter("page");
+        if (page == null) {
+            page = "1";
+        }
+        Util u = new Util();
+        int totalPage = u.getTotalPage(apartmentes, 10);
+
+        if (apartmentes.size() != 0) {
+            apartmentes = u.getListPerPage(apartmentes, 10, page);
+            request.setAttribute("apartmentes", apartmentes);
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("currentPage", Integer.parseInt(page));
+            request.setAttribute("isFilter", "true");
+        } else {
+            request.setAttribute("totalPage", 1);
+            request.setAttribute("currentPage", 1);
+            request.setAttribute("message", "No result");
+        }        
         request.getRequestDispatcher("viewapartmentadmin.jsp").forward(request, response);
     } 
 

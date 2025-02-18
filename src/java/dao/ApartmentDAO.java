@@ -54,7 +54,7 @@ public class ApartmentDAO extends DBContext {
     }
     
     public void deleteApartment(String id){
-        String sql = "update Apartment set status = 0 where id = ?";
+        String sql = "delete from Apartment where id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, id);

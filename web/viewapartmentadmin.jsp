@@ -154,9 +154,9 @@
                                                                 <td>
                                                                     <a class="option" href="viewdetailapartment-admin?apartmentId=${o.id}"><i class="fa-solid fa-eye"></i></a>
                                                                     <a class="option" href="update-apartment?id=${o.id}"><i class="fa-solid fa-pen-to-square"></i></a>
-                                                                    <c:if test="${o.status == 1}">
+                                                                        <c:if test="${o.status == 1}">
                                                                         <a class="option" href="delete-apartment?id=${o.id}" onclick="return confirm('Are you sure to delete this apartment?')"><i class="fa-solid fa-trash"></i></a>
-                                                                    </c:if>
+                                                                        </c:if>
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -168,6 +168,19 @@
                                 </div>
                             </div>
                         </div>
+                        <form method="get" action="view-apartment-admin" style="display: flex; align-items: center; gap: 10px;">
+                            <label for="page" style="font-size: 14px; font-weight: bold;">Page:</label>
+                            <input type="text" name="filterStatus" value="${param.filterStatus}" hidden=""><!-- comment -->
+                            <input type="text" name="searchName" value="${param.searchName}" hidden=""><!-- comment -->
+                            <select id="page" name="page" onchange="this.form.submit()" 
+                                    style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
+                                <c:forEach begin="1" end="${requestScope.totalPage}" var="page">
+                                    <option value="${page}" <c:if test="${page == requestScope.currentPage}">selected</c:if>>
+                                        ${page}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </form>
                         <div class="container-fluid">
                             <div class="footer">
                                 <p>Copyright � 2018 Designed by html.design. All rights reserved.</p>
