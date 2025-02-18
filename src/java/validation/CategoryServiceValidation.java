@@ -28,4 +28,18 @@ public class CategoryServiceValidation extends DBContext{
         }
         return false;
     }
+    
+    public boolean isExistedNameExceptSeft(String name,String id){
+        String sql =" select * from ServiceCategory where name =? and id <> ?";
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setString(2, id);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()) return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 }

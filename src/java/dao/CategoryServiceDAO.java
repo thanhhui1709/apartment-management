@@ -34,6 +34,22 @@ public class CategoryServiceDAO extends DBContext {
         }
         return list;
     }
+    
+     public CategoryService getByCategoryId(String ids){
+        String sql="select * from ServiceCategory where id = ?";
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setString(1, ids);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()){
+                return new CategoryService(rs.getString("id"), rs.getString("name"), rs.getString("detail"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
     public int getNumberCategoryService(){
         String sql=" select count(*) as number from ServiceCategory";
         try {
@@ -47,6 +63,7 @@ public class CategoryServiceDAO extends DBContext {
         }
         return 0;
     }
+    
     public void addCategoryService(String name,String note){
         String id = "SV"+ Integer.toString(getNumberCategoryService()+1);
         String sql= "insert into ServiceCategory values(?,?,?)";
@@ -60,6 +77,20 @@ public class CategoryServiceDAO extends DBContext {
             System.out.println(e);
         }
     }
+    
+    public void updateCategoryService(CategoryService c){
+        String sql= "update ServiceCategory set name = ? , detail = ? where id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, c.getName());
+            st.setString(2, c.getDetail());
+            st.setString(3, c.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
     public CategoryService getByServiceId(String id){
      String sql="select sc.Id,sc.Name,sc.Detail from ServiceCategory sc join Service s on s.scId=sc.Id where s.Id=? ";
         try {

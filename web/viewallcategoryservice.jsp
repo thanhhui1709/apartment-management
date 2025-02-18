@@ -122,7 +122,7 @@
                                                                 <td>${category.id}</td>
                                                                 <td style="text-align: left;">${category.name}</td>
                                                                 <td style="text-align: left;">${category.detail}</td>
-                                                                <td></td>
+                                                                <td><a href="update-categoryservice-staff?id=${category.id}"><i class="fa-solid fa-pen-to-square"></i></a></td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
