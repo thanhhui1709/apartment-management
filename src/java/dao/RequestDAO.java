@@ -350,18 +350,32 @@ public class RequestDAO extends DBContext {
             System.out.println(e);
         }
     }
+    public void updateRequest(String id,String res,String status,String responseDate){
+        String sql="update request set response=?, status=?,responseDate=? where id=?";
+        try {
+            PreparedStatement st=connection.prepareStatement(sql);
+            st.setString(1, res);
+            st.setString(2, status);
+            st.setString(3, responseDate);
+            st.setString(4, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
     public static void main(String[] args) {
         RequestDAO dao = new RequestDAO();
-        List<Request> list = new ArrayList<>();
-        list = dao.getAll();
+//        List<Request> list = new ArrayList<>();
 //        list = dao.getAll();
-//        list = dao.getByRoles(list, 5);
-//        List<Request> getByRID = dao.getByResidentIDAndDate("P110", "2025-01-01", "2025-01-25", "R001");
-//        System.out.println(getByRID.get(0).getRequestType().getName());
-        System.out.println(""+list);
-        System.out.println(""+dao.getInProcessgTable(list));
-        dao.AssignRequest("R005", "S1005");
-        System.out.println(dao.getAllRequestByStatus("waiting").size());
+////        list = dao.getAll();
+////        list = dao.getByRoles(list, 5);
+////        List<Request> getByRID = dao.getByResidentIDAndDate("P110", "2025-01-01", "2025-01-25", "R001");
+////        System.out.println(getByRID.get(0).getRequestType().getName());
+//        System.out.println(""+list);
+//        System.out.println(""+dao.getInProcessgTable(list));
+//        dao.AssignRequest("R005", "S1005");
+//        System.out.println(dao.getAllRequestByStatus("waiting").size());
+        System.out.println(dao.getById("R002").getResidentId().getName());
 
     }
 }

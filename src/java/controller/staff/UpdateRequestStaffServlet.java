@@ -12,14 +12,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Request;
+import java.time.LocalDate;
 
 /**
  *
  * @author thanh
  */
-@WebServlet(name = "UpdateRequestAdministrative", urlPatterns = {"/update-request-administrative"})
-public class UpdateRequestAdministrative extends HttpServlet {
+@WebServlet(name = "UpdateRequestStaffServlet", urlPatterns = {"/update-request-staff"})
+public class UpdateRequestStaffServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class UpdateRequestAdministrative extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateRequestAdministrative</title>");
+            out.println("<title>Servlet UpdateRequestStaffServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateRequestAdministrative at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateRequestStaffServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,12 +61,8 @@ public class UpdateRequestAdministrative extends HttpServlet {
             throws ServletException, IOException {
         String requestId = request.getParameter("requestId");
         RequestDAO rd = new RequestDAO();
-        if (!rd.getAllRequestByStatus("waiting").contains(requestId.trim())) {
-            response.sendRedirect("view-all-request");
-            return;
-        }
-        rd.declineRequestWithoutMessageById(requestId);
-        request.getRequestDispatcher("view-all-request").forward(request, response);
+        request.setAttribute("rq", rd.getById(requestId));
+        request.getRequestDispatcher("updateRequest-staff.jsp").forward(request, response);
     }
 
     /**
@@ -80,7 +76,13 @@ public class UpdateRequestAdministrative extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String res = request.getParameter("response");
+        String status = request.getParameter("status");
+        String id = request.getParameter("id");
+        String responseDate = LocalDate.now().toString();
+        RequestDAO rd = new RequestDAO();
+        rd.updateRequest(id, res, status, responseDate);
+        response.sendRedirect("view-all-request");
     }
 
     /**

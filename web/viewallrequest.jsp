@@ -202,6 +202,7 @@
                                                                 <th>Status</th>
                                                                 <th>Reception Staff</th>
                                                                 <th>Option</th>
+                                                                <th>Decline</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -271,6 +272,9 @@
                                                                             </div>
                                                                         </div>                                                           
                                                                     </td> 
+                                                                    <td>
+                                                                        <a href="update-request-administrative?requestId=${o.id}" class="fa fa-ban"></a>
+                                                                    </td>
                                                                 </tr>                                                            
                                                             </c:forEach>
 
@@ -316,7 +320,6 @@
                                                             <th>Status</th>
                                                             <th>Reception Staff</th>
                                                             <th>Option</th>
-                                                            <td>Response</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -329,67 +332,69 @@
                                                                 <td>${o.requestType.name}</td>                                             
                                                                 <td>${o.status}</td>
                                                                 <td>${o.status != 'No response' ? o.staffId.name : ''}</td> 
-                                                                <td>
-
-                                                                    <a href="#assignRequestProcess${status.index}" class="edit" data-toggle="modal">
-                                                                        <i class="material-icons" data-toggle="tooltip" title="Assign">&#xE254;</i>
-                                                                    </a>
-
-                                                                    <div id="assignRequestProcess${status.index}" class="modal fade">
-                                                                        <div class="modal-dialog">
-                                                                            <div class="modal-content">
-                                                                                <h3>Working Staff Information</h3>
-                                                                                <div class="table_section padding_infor_info">
-                                                                                    <div class="table-responsive-sm">
-                                                                                        <table class="table w-100">
-                                                                                            <thead>
-                                                                                                <tr>
-                                                                                                    <th>ID</th>
-                                                                                                    <th>Name</th>                                                            
-                                                                                                    <th>Email</th>
-                                                                                                    <th>Phone</th>                                               
-                                                                                                    <th>Address</th>
-                                                                                                    <th>Option</th>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <c:choose>
-                                                                                                    <c:when test="${o.requestType.destination.id == '5'}">
-                                                                                                        <c:set var="targetList" value="${requestScope.environmental}" />
-                                                                                                    </c:when>
-                                                                                                    <c:otherwise>
-                                                                                                        <c:set var="targetList" value="${requestScope.engineer}" />
-                                                                                                    </c:otherwise>
-                                                                                                </c:choose>
-
-                                                                                                <c:forEach items="${targetList}" var="staff">
+                                                                <c:if test="${sessionScope.account.roleId!=2}">
+                                                                    <td>
+                                                                        <a href="update-request-staff?requestId=${o.id}" class="fas fa-edit"></a>
+                                                                    </td>
+                                                                </c:if>
+                                                                <c:if test="${sessionScope.account.roleId==2}">
+                                                                    <td>
+                                                                        <a href="#assignRequestProcess${status.index}"
+                                                                           class="edit" data-toggle="modal">
+                                                                            <i class="material-icons" data-toggle="tooltip" title="Assign">&#xE254;</i>
+                                                                        </a>
+                                                                        <div id="assignRequestProcess${status.index}" class="modal fade">
+                                                                            <div class="modal-dialog">
+                                                                                <div class="modal-content">
+                                                                                    <h3>Working Staff Information</h3>
+                                                                                    <div class="table_section padding_infor_info">
+                                                                                        <div class="table-responsive-sm">
+                                                                                            <table class="table w-100">
+                                                                                                <thead>
                                                                                                     <tr>
-                                                                                                        <td>${staff.id}</td>
-                                                                                                        <td>${staff.name}</td>
-                                                                                                        <td>${staff.email}</td>
-                                                                                                        <td>${staff.phone}</td> 
-                                                                                                        <td>${request.address}</td>                                             
-                                                                                                        <td>
-                                                                                                            <form action="assign-request" method="get">
-                                                                                                                <input type="hidden" name="requestid" value="${o.id}">
-                                                                                                                <input type="hidden" name="staffid" value="${staff.id}">
-                                                                                                                <button type="submit">Assign</button>
-                                                                                                            </form>
-                                                                                                        </td>   
+                                                                                                        <th>ID</th>
+                                                                                                        <th>Name</th>                                                            
+                                                                                                        <th>Email</th>
+                                                                                                        <th>Phone</th>                                               
+                                                                                                        <th>Address</th>
+                                                                                                        <th>Option</th>
                                                                                                     </tr>
-                                                                                                </c:forEach>
-                                                                                            </tbody>
-                                                                                        </table>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <c:choose>
+                                                                                                        <c:when test="${o.requestType.destination.id == '5'}">
+                                                                                                            <c:set var="targetList" value="${requestScope.environmental}" />
+                                                                                                        </c:when>
+                                                                                                        <c:otherwise>
+                                                                                                            <c:set var="targetList" value="${requestScope.engineer}" />
+                                                                                                        </c:otherwise>
+                                                                                                    </c:choose>
+
+                                                                                                    <c:forEach items="${targetList}" var="staff">
+                                                                                                        <tr>
+                                                                                                            <td>${staff.id}</td>
+                                                                                                            <td>${staff.name}</td>
+                                                                                                            <td>${staff.email}</td>
+                                                                                                            <td>${staff.phone}</td> 
+                                                                                                            <td>${request.address}</td>                                             
+                                                                                                            <td>
+                                                                                                                <form action="assign-request" method="get">
+                                                                                                                    <input type="hidden" name="requestid" value="${o.id}">
+                                                                                                                    <input type="hidden" name="staffid" value="${staff.id}">
+                                                                                                                    <button type="submit">Assign</button>
+                                                                                                                </form>
+                                                                                                            </td>   
+                                                                                                        </tr>
+                                                                                                    </c:forEach>
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </div>                                                           
-                                                                </td> 
-                                                                <td style="text-align: center">
-                                                                    <a href="update-request-administrative?requestId=${o.id}" class="fa fa-ban">
-                                                                    </a>
-                                                                </td>
+                                                                        </div>                                                           
+                                                                    </td> 
+                                                                </c:if>
                                                             </tr>
                                                         </c:forEach>
 
