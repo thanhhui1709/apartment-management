@@ -164,6 +164,7 @@ public class RequestDAO extends DBContext {
         List<Request> listpage = new ArrayList<>();
         int start = number * (page - 1);
         int end = number * page - 1;
+        if(list.isEmpty()) return null;
         for (int i = start; i <= end; i++) {
             listpage.add(list.get(i));
             if (i == list.size() - 1) {
@@ -176,11 +177,43 @@ public class RequestDAO extends DBContext {
     public List<Request> getByStatus(List<Request> list, String status) {
         List<Request> ls = this.getRequestByStatus(status);
         List<Request> sl = new ArrayList<>();
+        if(list.isEmpty()) return null;
         for (Request l : ls) {
             for (Request request : list) {
                 if (l.getId().equals(request.getId())) {
                     sl.add(request);
                 }
+            }
+        }
+        return sl;
+    }
+    
+    public List<Request> getWaitingTable(List<Request> list) {
+        List<Request> sl = new ArrayList<>();
+        for (Request request : list) {
+            if(request.getStatus().equalsIgnoreCase("No response") || request.getStatus().equalsIgnoreCase("Waiting")){
+                sl.add(request);
+            }
+        }
+        return sl;
+    }
+    
+    public List<Request> getInProcessgTable(List<Request> list) {
+        List<Request> sl = new ArrayList<>();
+        for (Request request : list) {
+            if(request.getStatus().equalsIgnoreCase("In process")){
+                sl.add(request);
+
+            }
+        }
+        return sl;
+    }
+    
+    public List<Request> getDoneTable(List<Request> list) {
+        List<Request> sl = new ArrayList<>();
+        for (Request request : list) {
+            if(request.getStatus().equalsIgnoreCase("Done")){
+                sl.add(request);
             }
         }
         return sl;
@@ -261,11 +294,13 @@ public class RequestDAO extends DBContext {
     public static void main(String[] args) {
         RequestDAO dao = new RequestDAO();
         List<Request> list = new ArrayList<>();
+        list = dao.getAll();
 //        list = dao.getAll();
 //        list = dao.getByRoles(list, 5);
 //        List<Request> getByRID = dao.getByResidentIDAndDate("P110", "2025-01-01", "2025-01-25", "R001");
 //        System.out.println(getByRID.get(0).getRequestType().getName());
-        dao.AssignRequest("R005","S1005" );
+        System.out.println(""+list);
+        System.out.println(""+dao.getInProcessgTable(list));
 
     }
 }
