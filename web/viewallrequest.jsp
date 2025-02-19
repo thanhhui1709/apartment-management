@@ -16,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
-<title>Apartment management</title>        <link rel="icon" href="images/fevicon.png" type="image/png" />
+        <title>Apartment management</title>        <link rel="icon" href="images/fevicon.png" type="image/png" />
         <!-- bootstrap css -->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <!-- site css -->
@@ -196,6 +196,7 @@
                                                             <th>Status</th>
                                                             <th>Reception Staff</th>
                                                             <th>Option</th>
+                                                            <td>Response</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -264,7 +265,11 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>                                                           
-                                                                </td>   
+                                                                </td> 
+                                                                <td style="text-align: center">
+                                                                    <a href="update-request-administrative?requestId=${o.id}" class="fa fa-ban">
+                                                                    </a>
+                                                                </td>
                                                             </tr>
                                                         </c:forEach>
 
