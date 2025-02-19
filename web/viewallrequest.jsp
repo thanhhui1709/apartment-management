@@ -316,6 +316,7 @@
                                                             <th>Status</th>
                                                             <th>Reception Staff</th>
                                                             <th>Option</th>
+                                                            <td>Response</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -384,7 +385,11 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>                                                           
-                                                                </td>   
+                                                                </td> 
+                                                                <td style="text-align: center">
+                                                                    <a href="update-request-administrative?requestId=${o.id}" class="fa fa-ban">
+                                                                    </a>
+                                                                </td>
                                                             </tr>
                                                         </c:forEach>
 

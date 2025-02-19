@@ -85,11 +85,11 @@
     </filter-mapping>
 
 
-    <filter-mapping>
+<!--    <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/view-all-request</url-pattern>
         <url-pattern>/viewallrequest.jsp</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <filter-mapping>
         <filter-name>AdministrativeFilter</filter-name>
         <url-pattern>/update-news</url-pattern>
