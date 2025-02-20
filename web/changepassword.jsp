@@ -91,21 +91,25 @@
                                 <div class="form-container">
                                     <h1>Change password</h1>
                                     <form action="update-password-resident" method="post">
-                                        <div class="form-group">
+                                   
+                                        <c:if test="${sessionScope.account.getActive()!=2}">
+                                            <div class="form-group">
                                             <label for="oldPassword">Old Password:</label>
-                                            <input type="password" id="oldPassword" name="oldPassword" required />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="newPassword">New Password:</label>
-                                            <input type="password" id="newPassword" name="newPassword" required />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="cfnewPassword">Confirm Password:</label>
-                                            <input type="password" id="cfnewPassword" name="cfnewPassword" required />
-                                        </div>
-                                        <div class="form-button">
-                                            <button type="submit">Save</button>
-                                            <h5 class="error-msg">${requestScope.msg}</h5>
+                                            <input type="password" id="oldPassword" name="oldPassword" 
+                                                         required />
+                                            </div>
+                                        </c:if>
+                                            <div class="form-group">
+                                                <label for="newPassword">New Password:</label>
+                                                <input type="password" id="newPassword" name="newPassword" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cfnewPassword">Confirm Password:</label>
+                                                <input type="password" id="cfnewPassword" name="cfnewPassword" required />
+                                            </div>
+                                            <div class="form-button">
+                                                <button type="submit">Save</button>
+                                                <h5 class="error-msg">${requestScope.msg}</h5>
                                         </div>
 
                                     </form>

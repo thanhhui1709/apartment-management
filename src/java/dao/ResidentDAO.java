@@ -367,7 +367,7 @@ public class ResidentDAO extends DBContext {
 
     public static void main(String[] args) {
         ResidentDAO dao = new ResidentDAO();
-        System.out.println(dao.getAllResident().size());
+        System.out.println(dao.editResidentStatus("P113", "2"));
 
     }
 }

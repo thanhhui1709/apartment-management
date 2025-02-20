@@ -76,14 +76,18 @@ public class PasswordUpdateServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        String oldpw = request.getParameter("oldPassword").trim();
         String newpw = request.getParameter("newPassword").trim();
         String cfnewpw = request.getParameter("cfnewPassword").trim();
         ResidentDAO rd = new ResidentDAO();
-        if (!Util.isCorrectPassword(oldpw, account.getPassword())) {
-            request.setAttribute("msg", "Old password is not correct");
-            request.getRequestDispatcher("changepassword.jsp").forward(request, response);
-            return;
+
+        if (account.getActive() != 2) {
+
+            String oldpw = request.getParameter("oldPassword").trim();
+            if (!Util.isCorrectPassword(oldpw, account.getPassword())) {
+                request.setAttribute("msg", "Old password is not correct");
+                request.getRequestDispatcher("changepassword.jsp").forward(request, response);
+                return;
+            }
         }
         if (newpw.isBlank() || newpw.isEmpty()) {
             request.setAttribute("msg", "Password must be not a blank");
@@ -95,14 +99,17 @@ public class PasswordUpdateServlet extends HttpServlet {
             request.getRequestDispatcher("changepassword.jsp").forward(request, response);
             return;
         }
-        if(!Util.isCorrectFormatPassword(newpw)){
-             request.setAttribute("msg", "The password must have at least 6 characters, including at least 1 uppercase letter,"
-                     + " 1 special character, and both letters and numbers.");
+        if (!Util.isCorrectFormatPassword(newpw)) {
+            request.setAttribute("msg", "The password must have at least 6 characters, including at least 1 uppercase letter,"
+                    + " 1 special character, and both letters and numbers.");
             request.getRequestDispatcher("changepassword.jsp").forward(request, response);
             return;
         }
         AccountDAO ad = new AccountDAO();
         ad.changePassword(account.getUsername(), newpw, account.getRoleId());
+        if (account.getActive() == 2) {
+            rd.editResidentStatus(account.getpId(), "1");
+        }
 //        rd.changPasswordById(account.getpId(), newpw);
         request.setAttribute("status", "true");
         request.setAttribute("message", "Password is changed");

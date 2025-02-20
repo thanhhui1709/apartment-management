@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller.resident;
 
 import dao.RequestDAO;
@@ -18,89 +14,64 @@ import java.util.List;
 import model.Account;
 import model.Request;
 import model.RequestType;
-import java.sql.Date;
-import util.Util;
 
-/**
- *
- * @author NCPC
- */
 @WebServlet(name = "ViewRequestHistory", urlPatterns = {"/viewrequest_history"})
 public class ViewRequestHistory extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ViewRequestHistory</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ViewRequestHistory at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    private static final int PAGE_SIZE = 8; // Number of rows per page
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("account");
+
+        // Get the current page number from the request, default to 1 if not provided
+        int page = 1;
+        String pageParam = request.getParameter("page");
+        if (pageParam != null && !pageParam.isEmpty()) {
+            page = Integer.parseInt(pageParam);
+        }
+
         RequestDAO rd = new RequestDAO();
         RequestTypeDAO rtd = new RequestTypeDAO();
+
+        // Fetch all requests for the resident
+        List<Request> allRequests = rd.getByResidentID(acc.getpId());
+
+        // Calculate pagination details
+        int totalRequests = allRequests.size();
+        int totalPages = (int) Math.ceil((double) totalRequests / PAGE_SIZE);
+
+        // Calculate start and end indices for the current page
+        int start = (page - 1) * PAGE_SIZE;
+        int end = Math.min(start + PAGE_SIZE, totalRequests);
+
+        // Get the paginated sublist
+        List<Request> paginatedRequests = allRequests.subList(start, end);
+
+        // Fetch all request types
         List<RequestType> listTypeRequest = rtd.getAll();
-        List<Request> listRequest = rd.getByResidentID(acc.getpId());
+
+        // Set attributes for the JSP
         request.setAttribute("listType", listTypeRequest);
         request.setAttribute("rid", acc.getpId());
-        request.setAttribute("listRequest", listRequest);
+        request.setAttribute("listRequest", paginatedRequests);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("totalPages", totalPages);
+
+        // Forward to the JSP
         request.getRequestDispatcher("view_request_history.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-
+        // Handle POST requests if needed
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Servlet for viewing request history with pagination";
+    }
 }
