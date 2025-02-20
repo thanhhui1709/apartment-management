@@ -165,7 +165,7 @@ public class RequestDAO extends DBContext {
         List<Request> listpage = new ArrayList<>();
         int start = number * (page - 1);
         int end = number * page - 1;
-        if(list.isEmpty()) return null;
+        if(list.isEmpty()) return listpage;
         for (int i = start; i <= end; i++) {
             listpage.add(list.get(i));
             if (i == list.size() - 1) {
@@ -375,7 +375,11 @@ public class RequestDAO extends DBContext {
 //        System.out.println(""+dao.getInProcessgTable(list));
 //        dao.AssignRequest("R005", "S1005");
 //        System.out.println(dao.getAllRequestByStatus("waiting").size());
-        System.out.println(dao.getById("R002").getResidentId().getName());
+List<Request> list = dao.getAll();
+List<Request> inprocess_list = dao.getInProcessgTable(list);
+        Util u = new Util();
+        int totalPage_waiting = u.getTotalPage(inprocess_list, 5);
+        System.out.println(inprocess_list.size() + "page: "+totalPage_waiting);
 
     }
 }
