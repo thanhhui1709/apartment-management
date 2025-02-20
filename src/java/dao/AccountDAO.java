@@ -57,10 +57,14 @@ public class AccountDAO extends DBContext {
         table = dao.getcheckTable(user, roleId);
         if (table.equals("Empty")) {
             return s;
-        } else if (table.equals("Resident")) {
-            sql = "SELECT * FROM Resident WHERE [username]=?";
-        } else if (table.equals("Staff")) {
-            sql = "SELECT * FROM Staff WHERE [username]=?";
+//        } else if (table.equals("Resident")) {
+//            sql = "SELECT * FROM Resident WHERE [username]=?";
+//        } else if (table.equals("Staff")) {
+//            sql = "SELECT * FROM Staff WHERE [username]=?";
+//        }
+        }
+        else{
+            sql = "SELECT * FROM "+table+" WHERE [username]=?";
         }
         try {
             PreparedStatement pre = connection.prepareStatement(sql);

@@ -92,6 +92,11 @@ public class AddNewCompany extends HttpServlet {
 
         boolean hasError = false;
 
+        
+        if(name.isBlank()){
+            request.setAttribute("nameError", "Name is not allow blank.");
+            hasError = true;
+        }
         // Validate tax code (must be exactly 10 digits)
         if (!taxCode.matches("\\d{10}")) {
             request.setAttribute("taxCodeError", "Tax code must have exactly 10 digits.");
