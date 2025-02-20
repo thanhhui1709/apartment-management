@@ -395,11 +395,11 @@ public class RequestDAO extends DBContext {
 //        Util u = new Util();
 //        int totalPage_waiting = u.getTotalPage(inprocess_list, 5);
 //        System.out.println(inprocess_list.size() + "page: "+totalPage_waiting);
-RequestTypeDAO rd=new RequestTypeDAO();
-Request r= new Request();
-r.setId("R9");
-r.setDetail("hehe");
-r.setRequestType(rd.getById("R003"));
-System.out.println(dao.Editrequest(r));
+//RequestTypeDAO rd=new RequestTypeDAO();
+//Request r= new Request();
+//r.setId("R9");
+//r.setDetail("hehe");
+//r.setRequestType(rd.getById("R003"));
+//System.out.println(dao.Editrequest(r));
     }
 }
