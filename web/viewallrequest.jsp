@@ -172,8 +172,8 @@
                                                                 <th>Detail</th>
                                                                 <th>Date</th>                                               
                                                                 <th>Type</th>
+                                                                <th>Response</th>
                                                                 <th>Status</th>
-                                                                <th>Reception Staff</th>
                                                                 <th>Option</th>
                                                                 <th>Decline</th>
                                                             </tr>
@@ -185,9 +185,9 @@
                                                                     <td>${o.residentId.name}</td>
                                                                     <td>${o.detail}</td>
                                                                     <td>${o.date}</td> 
-                                                                    <td>${o.requestType.name}</td>                                             
-                                                                    <td>${o.status}</td>
-                                                                    <td>${o.status != 'No response' ? o.staffId.name : ''}</td> 
+                                                                    <td>${o.requestType.name}</td>  
+                                                                    <td>${o.response}</td>
+                                                                    <td>${o.status}</td> 
                                                                     <td>
 
                                                                         <a href="#assignRequestWaiting${status.index}" class="edit" data-toggle="modal">
@@ -322,7 +322,7 @@
                                                                 <td>${o.date}</td> 
                                                                 <td>${o.requestType.name}</td>                                             
                                                                 <td>${o.status}</td>
-                                                                <td>${o.status != 'No response' ? o.staffId.name : ''}</td> 
+                                                                <td>${o.staffId.name}</td> 
                                                                 <c:if test="${sessionScope.account.roleId!=2}">
                                                                     <td>
                                                                         <a href="update-request-staff?requestId=${o.id}" class="fas fa-edit"></a>
