@@ -309,12 +309,13 @@ public class RequestDAO extends DBContext {
     }
 
     public Request getById(String id) {
-        String sql = "select * from Request order by date";
+        String sql = "select * from Request where id =?";
         ResidentDAO rd = new ResidentDAO();
         StaffDAO sd = new StaffDAO();
         RequestTypeDAO rtd = new RequestTypeDAO();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 Resident r = rd.getById(rs.getString("rid"));
