@@ -87,9 +87,9 @@
                                                 <ul class="contract-list">
                                                     <h3>${requestScope.message}</h3>
                                                 <c:forEach var="c" items="${sessionScope.listContract}">
-                                                    <li>-${c.startDate}<a href="contract-detail?id=">: ${c.title}</a></li>
+                                                    <li>-${c.startDate}<a href="contract-detail?id=${c.id}">: ${c.title}</a></li>
                                                         <c:if test="${sessionScope.account.roleId == 1}">
-                                                        <a href="delete-contract?id=" onclick="return confirm('Are you sure to delete this contract?')">
+                                                        <a href="delete-contract?id=${c.id}" onclick="return confirm('Are you sure to delete this contract?')">
                                                             <i class="material-icons" title="Delete">&#xE872;</i>
                                                         </a>
                                                     </c:if>

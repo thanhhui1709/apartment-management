@@ -119,6 +119,11 @@ public class Contract {
         return endDate;
     }
 
+    @Override
+    public String toString() {
+        return "Company: "+ company ;
+    }
+
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
