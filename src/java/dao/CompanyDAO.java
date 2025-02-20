@@ -58,19 +58,31 @@ public class CompanyDAO extends DBContext {
         return null;
     }
 
-    public List<Company> searchCompaniesbyName(String name) {
-        List<Company> list = this.getAll();
-        List<Company> sc = new ArrayList<>();
-        if (name.isBlank()) {
-            return list;
-        } else {
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getName().toLowerCase().contains(name.toLowerCase())) {
-                    sc.add(list.get(i));
-                }
+    public List<Company> searchCompaniesbyName(String names) {
+        List<Company> list = new ArrayList<>();
+        String sql = "select * from Company where name like '%"+names+"%'";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String phone = rs.getString("phone");
+                String contactphone = rs.getString("contactphone");
+                String fax = rs.getString("fax");
+                String email = rs.getString("email");
+                String contactEmail = rs.getString("contactemail");
+                String website = rs.getString("website");
+                String taxCode = rs.getString("taxcode");
+                String bank = rs.getString("bank");
+                String description = rs.getString("description");
+                String address = rs.getString("address");
+                Company cp = new Company(id, name, phone, contactphone, fax, email, contactEmail, website, taxCode, bank, description, address);
+                list.add(cp);
             }
+        } catch (Exception e) {
         }
-        return sc;
+        return list;
     }
 
     public List<Company> getPageByNumber(List<Company> list, int page, int number) {

@@ -160,33 +160,6 @@
                                                 <div class="heading1 margin_0">
                                                     <h3>Waiting Table</h3> 
                                                 </div>
-                                            </div>
-                                            <div style="margin-left: 40px;">
-                                                <form action="view-all-request" method="GET">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-md-2">
-                                                            <select class="form-control" name="filterRoles">
-                                                                <option value="">Filter by Roles</option>
-                                                                <c:forEach items="${requestScope.rolelist}" var="o">
-                                                                    <c:if test="${o.id >= 2 and o.id != 3}">
-                                                                        <option value="${o.id}" <c:if test="${requestScope.filterRoles == o.id}">selected</c:if>>${o.name}</option>
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <select class="form-control" name="filterStatus">
-                                                                <option value="">Filter by Status</option>
-                                                                <option value="In process" ${requestScope.filterStatus == 'In process' ? 'selected' : ''}>In Process</option>
-                                                                <option value="No response" ${requestScope.filterStatus == 'No response' ? 'selected' : ''}>No response</option>
-                                                                <option value="Done" ${requestScope.filterStatus == 'Done' ? 'selected' : ''}>Done</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col-md-4 d-flex">
-                                                            <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
-                                                        </div>
-                                                    </div>
-                                                </form>
                                             </div>                  
                                             <div class="table_section padding_infor_info">
                                                 <div class="table-responsive-sm">
@@ -283,10 +256,10 @@
                                                     <form method="get" action="view-all-request" style="display: flex; align-items: center; gap: 10px;">
                                                         <!-- Dropdown chọn trang -->
                                                         <label for="page" style="font-size: 14px; font-weight: bold;">Trang:</label>
-                                                        <select id="page" name="page" onchange="this.form.submit()" 
+                                                        <select id="page" name="page_waiting" onchange="this.form.submit()" 
                                                                 style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
-                                                            <c:forEach begin="1" end="${requestScope.totalPage}" var="page">
-                                                                <option value="${page}" <c:if test="${page == requestScope.currentPage}">selected</c:if>>
+                                                            <c:forEach begin="1" end="${requestScope.totalPage_waiting}" var="page">
+                                                                <option value="${page}" <c:if test="${page == requestScope.currentPage_waiting}">selected</c:if>>
                                                                     ${page}
                                                                 </option>
                                                             </c:forEach>
@@ -305,7 +278,25 @@
                                                 <h3>In-Process Table</h3> 
                                             </div>
                                         </div>
-
+                                        <div style="margin-left: 40px;">
+                                                <form action="view-all-request" method="GET">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-2">
+                                                            <select class="form-control" name="filterRoles">
+                                                                <option value="">Filter by Roles</option>
+                                                                <c:forEach items="${requestScope.rolelist}" var="o">
+                                                                    <c:if test="${o.id >= 2 and o.id != 3}">
+                                                                        <option value="${o.id}" <c:if test="${requestScope.filterRoles == o.id}">selected</c:if>>${o.name}</option>
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4 d-flex">
+                                                            <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
 
@@ -403,10 +394,10 @@
                                                 <form method="get" action="view-all-request" style="display: flex; align-items: center; gap: 10px;">
                                                     <!-- Dropdown chọn trang -->
                                                     <label for="page" style="font-size: 14px; font-weight: bold;">Trang:</label>
-                                                    <select id="page" name="page" onchange="this.form.submit()" 
+                                                    <select id="page" name="page_inprocess" onchange="this.form.submit()" 
                                                             style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
-                                                        <c:forEach begin="1" end="${requestScope.totalPage}" var="page">
-                                                            <option value="${page}" <c:if test="${page == requestScope.currentPage}">selected</c:if>>
+                                                        <c:forEach begin="1" end="${requestScope.totalPage_inprocess}" var="page">
+                                                            <option value="${page}" <c:if test="${page == requestScope.currentPage_inprocess}">selected</c:if>>
                                                                 ${page}
                                                             </option>
                                                         </c:forEach>
@@ -456,10 +447,10 @@
                                                 <form method="get" action="view-all-request" style="display: flex; align-items: center; gap: 10px;">
                                                     <!-- Dropdown chọn trang -->
                                                     <label for="page" style="font-size: 14px; font-weight: bold;">Trang:</label>
-                                                    <select id="page" name="page" onchange="this.form.submit()" 
+                                                    <select id="page" name="page_done" onchange="this.form.submit()" 
                                                             style="padding: 6px 12px; font-size: 14px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;">
-                                                        <c:forEach begin="1" end="${requestScope.totalPage}" var="page">
-                                                            <option value="${page}" <c:if test="${page == requestScope.currentPage}">selected</c:if>>
+                                                        <c:forEach begin="1" end="${requestScope.totalPage_done}" var="page">
+                                                            <option value="${page}" <c:if test="${page == requestScope.currentPage_done}">selected</c:if>>
                                                                 ${page}
                                                             </option>
                                                         </c:forEach>
