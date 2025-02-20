@@ -246,7 +246,7 @@ public class RequestDAO extends DBContext {
     }
 
     public List<Request> getByResidentIDAndDate(String id, String from, String to, String requestType) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM Request WHERE rId = ?");
+        StringBuilder sql = new StringBuilder("SELECT * FROM Request WHERE rId = ? order by Date desc");
         List<Request> list = new ArrayList<>();
         ResidentDAO rd = new ResidentDAO();
         StaffDAO sd = new StaffDAO();
