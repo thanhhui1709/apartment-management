@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
+import model.SendEmail;
 
 /**
  *
@@ -82,6 +83,11 @@ public class UpdateRequestStaffServlet extends HttpServlet {
         String responseDate = LocalDate.now().toString();
         RequestDAO rd = new RequestDAO();
         rd.updateRequest(id, res, status, responseDate);
+        if (status.equals("Done")) {
+            SendEmail send = new SendEmail();
+            send.sendEmail(rd.getById(id).getResidentId().getEmail(), "UPDATE YOUR REQUEST", rd.getById(id).getResponse());
+        }
+
         response.sendRedirect("view-all-request");
     }
 
