@@ -1,4 +1,3 @@
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +9,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!-- site metas -->
-<title>Apartment management</title>        <meta name="keywords" content="">
+        <title>Apartment management</title>
+        <meta name="keywords" content="">
         <meta name="description" content="">
         <meta name="author" content="">
         <!-- site icon -->
@@ -42,12 +42,10 @@
                 <!-- end sidebar -->
                 <!-- right content -->
                 <div id="content">
-
                     <!-- topbar -->
                     <%@include file="topbar.jsp" %>
                     <div class="midde_cont">
                         <div class="container-fluid">
-
                             <div class="row">
                                 <!-- table section -->
                                 <div class="col-md-12">
@@ -61,13 +59,16 @@
                                             <form action="filterequest" method="post">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-2">
-                                                        <input type="date" class="form-control" name="from" placeholder="From" value="${sessionScope.from}">
+                                                        <label for="fromDate">From:</label>
+                                                        <input type="date" class="form-control" id="fromDate" name="from" placeholder="From" value="${sessionScope.from}">
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <input type="date" class="form-control" name="to" placeholder="To" value="${sessionScope.to}">
+                                                        <label for="toDate">To:</label>
+                                                        <input type="date" class="form-control" id="toDate" name="to" placeholder="To" value="${sessionScope.to}">
                                                     </div>
                                                     <div class="col-md-2">
-                                                        <select class="form-control" name="typeRequest">
+                                                        <label for="typeRequest">Type:</label>
+                                                        <select class="form-control" id="typeRequest" name="typeRequest">
                                                             <c:choose>
                                                                 <c:when test="${sessionScope.selectedType == null}">
                                                                     <option value="" disabled selected> --Select Type-- </option>
@@ -80,27 +81,15 @@
                                                             <c:forEach items="${requestScope.listType}" var="t">
                                                                 <option value="${t.id}">${t.name}</option>
                                                             </c:forEach>
-                                                            <!-- Add more options as needed -->
                                                         </select>
                                                     </div>
-
-
-
-
-                                                    <div class="col-md-4 d-flex">
+                                                    <div class="col-md-4 d-flex align-items-end">
                                                         <button type="submit" class="btn btn-primary" style="margin-right: 5px;">Filter</button>
                                                         <a href="resident-add-request"  class="btn btn-primary">Create new Request</a>
                                                     </div>
                                                 </div>
-
                                             </form>
-
                                         </div>
-
-
-
-
-
                                         <div class="table_section padding_infor_info">
                                             <div class="table-responsive-sm">
                                                 <table class="table w-100">
@@ -110,14 +99,12 @@
                                                             <th>Response Date</th>
                                                             <th>Type</th>
                                                             <th>Executor</th>
-                                                            <th>Description</th>                                               
+                                                            <th>Description</th>
                                                             <th>Status</th>
-
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <c:forEach items="${requestScope.listRequest}" var="l">
+                                                        <c:forEach items="${listRequest}" var="l">
                                                             <tr>
                                                                 <td>${l.date}</td>
                                                                 <td>
@@ -126,14 +113,29 @@
                                                                         <c:otherwise>${l.responseDate}</c:otherwise>
                                                                     </c:choose>
                                                                 </td>
-
                                                                 <td>${l.requestType.name}</td>
-                                                                <td>${l.staffId.name}</td>                                               
+                                                                <td>
+                                                                    <c:choose>
+                                                                        <c:when test="${l.staffId.name == null}">
+                                                                            <span style="color: orange;">Waiting</span>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <span style="color: green;">${l.staffId.name}</span>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </td>
                                                                 <td>${l.detail}</td>
                                                                 <td>
                                                                     <c:choose>
-                                                                        <c:when test="${l.status == '0'}">In process</c:when>
-                                                                        <c:when test="${l.status == '1'}">Done</c:when>
+                                                                        <c:when test="${l.status == '0'}">
+                                                                            <span style="color: blue;">In process</span>
+                                                                        </c:when>
+                                                                        <c:when test="${l.status == '1'}">
+                                                                            <span style="color: green;">Done</span>
+                                                                        </c:when>
+                                                                        <c:when test="${l.status == '-1'}">
+                                                                            <span style="color: red;">Waiting</span>
+                                                                        </c:when>
                                                                     </c:choose>
                                                                 </td>
                                                             </tr>
@@ -142,16 +144,32 @@
                                                 </table>
                                             </div>
                                         </div>
+                                        <!-- Pagination Controls -->
                                     </div>
                                 </div>
-                                <!-- More tables can be added here -->
+                                <!-- Pagination Controls -->
+                                <div class="pagination" style="margin: 20px; text-align: center;">
+                                    <c:if test="${currentPage > 1}">
+                                        <a href="?page=${currentPage - 1}" class="btn btn-primary" style="padding: 10px 20px; min-width: 120px;">Previous</a>
+                                    </c:if>
+                                    <c:forEach begin="1" end="${totalPages}" var="i">
+                                        <c:choose>
+                                            <c:when test="${currentPage == i}">
+                                                <span class="btn btn-primary active" style="padding: 10px 20px; min-width: 50px;">${i}</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="?page=${i}" class="btn btn-primary" style="padding: 10px 20px; min-width: 50px;">${i}</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:forEach>
+                                    <c:if test="${currentPage < totalPages}">
+                                        <a href="?page=${currentPage + 1}" class="btn btn-primary" style="padding: 10px 20px; min-width: 120px;">Next</a>
+                                    </c:if>
+                                </div>
+
                             </div>
                         </div>
                     </div>
-                    <!-- end topbar -->
-                    <!-- dashboard inner -->
-
-                    <!-- end dashboard inner -->
                 </div>
             </div>
         </div>

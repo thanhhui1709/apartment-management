@@ -86,7 +86,7 @@ public class AddRequestServlet extends HttpServlet {
         RequestTypeDAO rtd = new RequestTypeDAO();
         RequestDAO rd = new RequestDAO();
         int addRequest =rd.addRequest(rid, detail, rtd.getById(typeRequestId));
-        response.sendRedirect("index.jsp");
+        response.sendRedirect("viewrequest_history");
     }
 
     /** 
