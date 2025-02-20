@@ -107,23 +107,41 @@ public class ViewAllRequest extends HttpServlet {
             }
             session.setAttribute("requestes", list);
         }
+        List<Request> waitting_list = rd.getWaitingTable(list);
+        List<Request> inprocess_list = rd.getInProcessgTable(list);
+        List<Request> done_list = rd.getDoneTable(list);
         String page = request.getParameter("page");
         if (null == page) {
             page = "1";
         }
-        int numberPerPage = 4;
+        int numberPerPage = 5;
+        
+        waitting_list = rd.getPageByNumber(waitting_list, Integer.parseInt(page), numberPerPage);
+        inprocess_list = rd.getPageByNumber(inprocess_list, Integer.parseInt(page), numberPerPage);
+        done_list = rd.getPageByNumber(done_list, Integer.parseInt(page), numberPerPage);
+        
         int totalPage;
         if (list.size() % numberPerPage == 0) {
             totalPage = list.size() / numberPerPage;
         } else {
             totalPage = list.size() / numberPerPage + 1;
         }
-        list = rd.getPageByNumber(list, Integer.parseInt(page), numberPerPage);
         request.setAttribute("totalPage", totalPage);
         request.setAttribute("filterRoles", filterRoles_raw);
         request.setAttribute("filterStatus", filterStatus_raw);
         request.setAttribute("currentPage", Integer.parseInt(page));
-        request.setAttribute("requestes", list);
+        
+        
+        request.setAttribute("waiting_requestes", waitting_list);
+        
+        
+        request.setAttribute("inprocess_requestes", inprocess_list);
+        
+        
+        request.setAttribute("done_requestes", done_list);
+        
+        
+        
         request.getRequestDispatcher("viewallrequest.jsp").forward(request, response);
     }
 
