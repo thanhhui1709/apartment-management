@@ -139,7 +139,7 @@ public class RequestDAO extends DBContext {
             st.setString(3, sd.getByRequestType(rt).getId());
             st.setString(4, detail);
             st.setDate(5, new java.sql.Date(System.currentTimeMillis()));
-            st.setString(6, "-1");
+            st.setString(6, "waiting");
             st.setString(7, rt.getId());
             st.executeUpdate();
             return 1;
