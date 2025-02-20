@@ -138,7 +138,14 @@
                                                                         </c:when>
                                                                     </c:choose>
                                                                 </td>
+                                                                <td>
+                                                                    <c:if test="${l.status == '-1'}">
+                                                                        <a href="update-request?id=${l.id}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                                        </c:if>
+                                                                </td>
+
                                                             </tr>
+
                                                         </c:forEach>
                                                     </tbody>
                                                 </table>

@@ -221,12 +221,12 @@
                                                     <label for="salary">Salary</label>
                                                     <input
                                                         type="text" 
-                                                    id="salary"
-                                                    name="salary"
-                                                    placeholder="Enter salary"
-                                                    required
-                                                    oninput="formatSalary(this)"
-                                                    />
+                                                        id="salary"
+                                                        name="salary"
+                                                        placeholder="Enter salary"
+                                                        required
+                                                        oninput="formatSalary(this)"
+                                                        />
                                                     <span id="salary-error" style="color: red"></span>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">

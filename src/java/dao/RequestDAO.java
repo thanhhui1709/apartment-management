@@ -364,6 +364,20 @@ public class RequestDAO extends DBContext {
             System.out.println(e);
         }
     }
+    public boolean Editrequest(Request r){
+        RequestTypeDAO rd=new RequestTypeDAO();
+        String sql="update Request set tId=?, Detail=? where id=?";
+        try {
+            PreparedStatement ps= connection.prepareStatement(sql);
+            ps.setString(1, r.getRequestType().getId());
+            ps.setString(2, r.getDetail());
+            ps.setString(3, r.getId());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
     public static void main(String[] args) {
         RequestDAO dao = new RequestDAO();
 //        List<Request> list = new ArrayList<>();
@@ -376,11 +390,16 @@ public class RequestDAO extends DBContext {
 //        System.out.println(""+dao.getInProcessgTable(list));
 //        dao.AssignRequest("R005", "S1005");
 //        System.out.println(dao.getAllRequestByStatus("waiting").size());
-List<Request> list = dao.getAll();
-List<Request> inprocess_list = dao.getInProcessgTable(list);
-        Util u = new Util();
-        int totalPage_waiting = u.getTotalPage(inprocess_list, 5);
-        System.out.println(inprocess_list.size() + "page: "+totalPage_waiting);
-
+//List<Request> list = dao.getAll();
+//List<Request> inprocess_list = dao.getInProcessgTable(list);
+//        Util u = new Util();
+//        int totalPage_waiting = u.getTotalPage(inprocess_list, 5);
+//        System.out.println(inprocess_list.size() + "page: "+totalPage_waiting);
+RequestTypeDAO rd=new RequestTypeDAO();
+Request r= new Request();
+r.setId("R9");
+r.setDetail("hehe");
+r.setRequestType(rd.getById("R003"));
+System.out.println(dao.Editrequest(r));
     }
 }
