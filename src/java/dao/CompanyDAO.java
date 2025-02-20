@@ -200,6 +200,6 @@ public class CompanyDAO extends DBContext {
 //        Company cp = new Company("324ss", "09113467", "091231247", "142322312", "caon4cass@gmail.com", "caon2s4ca@gmail.com", "xx",
 //                "c4scccwc",
 //                "12143813", "", "agfffsf");
-        System.out.println(dao.getByServiceId("S1").getId());
+        System.out.println(dao.getById("C001"));
     }
 }
