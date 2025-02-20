@@ -85,7 +85,7 @@ public class ViewAllRequest extends HttpServlet {
         if (ac.getRoleId() == 2) {
             list = rd.getAll();
         } else if (ac.getRoleId() > 2) {
-            list = rd.getRequestByRoles(ac.getRoleId());
+            list = rd.getRequestByRolesAndPid(ac.getRoleId(),ac.getpId());
         }
         session.setAttribute("requestes", list);
         if (ac.getRoleId() == 2) {

@@ -6,6 +6,7 @@ package controller.resident;
 
 import dao.FeedbackDAO;
 import dao.RequestTypeDAO;
+import dao.StaffDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,6 +18,8 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Account;
 import model.RequestType;
+import model.SendEmail;
+import model.Staff;
 
 /**
  *
@@ -84,11 +87,23 @@ public class SendFeedback extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String rID=request.getParameter("rID");
-        String tID=request.getParameter("typeOfRequest");
-        String detail=request.getParameter("content");
-        FeedbackDAO fd=new FeedbackDAO();
+        String rID = request.getParameter("rID");
+        String tID = request.getParameter("typeOfRequest");
+        
+        SendEmail email=new SendEmail();
+        StaffDAO sd = new StaffDAO();
+        RequestTypeDAO rtd = new RequestTypeDAO();
+        
+        RequestType requestType = rtd.getById(tID);
+        List<Staff> staffs = sd.getStaffbyRole(requestType.getDestination().getId());
+
+        String detail = request.getParameter("content");
+        FeedbackDAO fd = new FeedbackDAO();
         fd.sendFeedback(detail, rID, tID);
+        for (Staff staff : staffs) {
+            email.sendFeedbackEmail(staff.getEmail(), requestType.getName(), detail);
+        }
+        
         response.sendRedirect("view-feed-back-user");
 
     }
