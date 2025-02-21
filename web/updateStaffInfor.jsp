@@ -222,12 +222,12 @@
                                                     <input
                                                         type="text" 
                                                         id="salary"
-                                                        name="salary"
-                                                        placeholder="Enter salary"
-                                                        value="${staff.salary}"
-                                                        required
-                                                        oninput="formatSalary(this)"
-                                                        />
+                                                    name="salary"
+                                                    placeholder="Enter salary"
+                                                    required
+                                                    value="${staff.salary}"
+                                                    oninput="formatSalary(this)"
+                                                    />
                                                     <span id="salary-error" style="color: red"></span>
                                                 </div>
                                                 <div class="col" style="padding: 0; margin-right: 5px">
