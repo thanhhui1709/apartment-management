@@ -102,7 +102,7 @@
                                                                     <a href="#" data-toggle="modal" data-target="#apartmentDetail${listapartment.id}">
                                                                         <i class="fa fa-home" aria-hidden="true"></i>
                                                                     </a>
-                                                                   <a href="updatelimitpersonapartment?id=${listapartment.id}"><i class="fa-solid fa-pen-to-square"></i></a>   
+                                                                   <a href="updatenopersonre?id=${listapartment.id}"><i class="fa-solid fa-pen-to-square"></i></a>   
                                                                 </td>
                                                                 
                                                         </tr>
