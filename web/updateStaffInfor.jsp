@@ -225,6 +225,7 @@
                                                     name="salary"
                                                     placeholder="Enter salary"
                                                     required
+                                                    value="${staff.salary}"
                                                     oninput="formatSalary(this)"
                                                     />
                                                     <span id="salary-error" style="color: red"></span>
