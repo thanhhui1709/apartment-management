@@ -5,6 +5,7 @@
 package controller.staff;
 
 import dao.RequestDAO;
+import dao.ResidentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Request;
+import model.SendEmail;
 
 /**
  *
@@ -65,6 +67,9 @@ public class UpdateRequestAdministrative extends HttpServlet {
             response.sendRedirect("view-all-request");
             return;
         }
+
+        SendEmail sendEmail = new SendEmail();
+        sendEmail.sendEmail(rd.getById(requestId).getResidentId().getEmail(), "Your request has been declined", "We can not solve your problem! Thank you and farewell");
         rd.declineRequestWithoutMessageById(requestId);
         request.getRequestDispatcher("view-all-request").forward(request, response);
     }
