@@ -224,6 +224,7 @@
                                                         id="salary"
                                                         name="salary"
                                                         placeholder="Enter salary"
+                                                        value="${staff.salary}"
                                                         required
                                                         oninput="formatSalary(this)"
                                                         />
