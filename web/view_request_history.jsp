@@ -139,13 +139,13 @@
                                                                         </c:when>
                                                                     </c:choose>
                                                                 </td>
-                                                                <<td>
+                                                                <td>
                                                                     <c:if test="${l.status == 'Waiting'}">
                                                                     <a href="delete-request-resident?id=${l.id}" onclick="return confirm('Are you sure to delete this request?')"><i class="fa-solid fa-trash"></i></a>
                                                                     </c:if>
                                                                 </td>
                                                                 <td>
-                                                                    <c:if test="${l.status == '-1'}">
+                                                                    <c:if test="${l.status == 'Waiting'}">
                                                                         <a href="update-request?id=${l.id}"><i class="fa-solid fa-pen-to-square"></i></a>
                                                                         </c:if>
                                                                 </td>
