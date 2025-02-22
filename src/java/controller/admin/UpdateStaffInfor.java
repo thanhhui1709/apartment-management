@@ -168,7 +168,7 @@ public class UpdateStaffInfor extends HttpServlet {
                     return;
                 }
             }
-
+            
             Staff staff = new Staff(
                     id, name, dob, email, phone, address, cccd, salary,
                     education, bank, status, daoR.getById(role), daoCp.getById(companyId),
