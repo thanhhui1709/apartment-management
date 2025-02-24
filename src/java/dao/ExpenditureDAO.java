@@ -10,10 +10,14 @@ import model.Expenditure;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 import model.Company;
 import model.Staff;
+=======
+import java.sql.SQLException;
+>>>>>>> parent of 0f685c4 (update expenditure)
 =======
 import java.sql.SQLException;
 >>>>>>> parent of 0f685c4 (update expenditure)
@@ -63,6 +67,9 @@ import model.Staff;
  *
  * @author PC
  */
+<<<<<<< HEAD
+>>>>>>> parent of 0f685c4 (update expenditure)
+=======
 >>>>>>> parent of 0f685c4 (update expenditure)
 public class ExpenditureDAO extends DBContext{
     public List<Expenditure> getAll(){
