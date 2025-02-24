@@ -16,13 +16,14 @@ public class Expenditure {
     String paymentdate;
     String note;
     String category;
-    String cid;
-    String sid;
+    Company cid;
+    Staff sid;
 
     public Expenditure() {
     }
 
-    public Expenditure(String id, int amount, float price, String aprroveddate, String paymentdate, String note, String category, String cid, String sid) {
+    public Expenditure(String id, int amount, float price, String aprroveddate, String paymentdate, 
+            String note, String category, Company cid, Staff sid) {
         this.id = id;
         this.amount = amount;
         this.price = price;
@@ -34,7 +35,8 @@ public class Expenditure {
         this.sid = sid;
     }
 
-    public Expenditure(int amount, float price, String aprroveddate, String paymentdate, String note, String category, String cid, String sid) {
+    public Expenditure(int amount, float price, String aprroveddate, String paymentdate, 
+            String note, String category, Company cid, Staff sid) {
         this.amount = amount;
         this.price = price;
         this.aprroveddate = aprroveddate;
@@ -101,19 +103,19 @@ public class Expenditure {
         this.category = category;
     }
 
-    public String getCid() {
+    public Company getCid() {
         return cid;
     }
 
-    public void setCid(String cid) {
+    public void setCid(Company cid) {
         this.cid = cid;
     }
 
-    public String getSid() {
+    public Staff getSid() {
         return sid;
     }
 
-    public void setSid(String sid) {
+    public void setSid(Staff sid) {
         this.sid = sid;
     }
     
