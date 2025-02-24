@@ -9,15 +9,15 @@ package model;
  * @author PC
  */
 public class Expenditure {
-    String id;
-    int amount;
-    float price;
-    String aprroveddate;
-    String paymentdate;
-    String note;
-    String category;
-    Company cid;
-    Staff sid;
+     String id;
+     int amount;
+     float price;
+     String aprroveddate;
+     String paymentdate;
+     String note;
+     String category;
+     Company cid;
+     Staff sid;
 
     public Expenditure() {
     }
@@ -45,6 +45,17 @@ public class Expenditure {
         this.category = category;
         this.cid = cid;
         this.sid = sid;
+    }
+
+    public Expenditure(String note, String category, int amount, float price, String aprroveddate, String paymentdate, Company cid, Staff sid) {
+        this.note=note;
+        this.category=category;
+        this.amount=amount;
+        this.price=price;
+        this.aprroveddate=aprroveddate;
+        this.paymentdate=paymentdate;
+        this.cid=cid;
+        this.sid=sid;
     }
 
     public String getId() {
