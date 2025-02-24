@@ -21,6 +21,7 @@ import model.Account;
 import model.Request;
 import model.Role;
 import model.Staff;
+import util.Util;
 
 /**
  *
@@ -69,10 +70,10 @@ public class ViewAllRequest extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         StaffDAO sd = new StaffDAO();
-        List<Staff> list4 =  sd.getStaffbyRole("4");
-        List<Staff> list5 =  sd.getStaffbyRole("5");
+        List<Staff> list4 = sd.getStaffbyRole("4");
+        List<Staff> list5 = sd.getStaffbyRole("5");
         request.setAttribute("engineer", list4);
-        request.setAttribute("environmental", list5);       
+        request.setAttribute("environmental", list5);
         RequestDAO rd = new RequestDAO();
         List<Request> list = null;
         RoleDAO dao = new RoleDAO();
@@ -80,12 +81,11 @@ public class ViewAllRequest extends HttpServlet {
         ls = dao.getAll();
         request.setAttribute("rolelist", ls);
         String filterRoles_raw = request.getParameter("filterRoles");
-        String filterStatus_raw = request.getParameter("filterStatus");
         Account ac = (Account) session.getAttribute("account");
         if (ac.getRoleId() == 2) {
             list = rd.getAll();
         } else if (ac.getRoleId() > 2) {
-            list = rd.getRequestByRoles(ac.getRoleId());
+            list = rd.getRequestByRolesAndPid(ac.getRoleId(),ac.getpId());
         }
         session.setAttribute("requestes", list);
         if (ac.getRoleId() == 2) {
@@ -99,49 +99,60 @@ public class ViewAllRequest extends HttpServlet {
                 session.setAttribute("requestes", list);
             }
         }
-        if (null != filterStatus_raw && !filterStatus_raw.isBlank()) {         
-            list = rd.getByStatus(list, filterStatus_raw);
-            if (list.size() == 0) {
-                request.getRequestDispatcher("viewallrequest.jsp").forward(request, response);
-                return;
-            }
-            session.setAttribute("requestes", list);
-        }
         List<Request> waitting_list = rd.getWaitingTable(list);
         List<Request> inprocess_list = rd.getInProcessgTable(list);
         List<Request> done_list = rd.getDoneTable(list);
-        String page = request.getParameter("page");
-        if (null == page) {
-            page = "1";
+        String page_waiting = request.getParameter("page_waiting");
+        String page_inprocess = request.getParameter("page_inprocess");
+        String page_done = request.getParameter("page_done");
+        if (null == page_waiting) {
+            page_waiting = "1";
+        }
+        if (null == page_inprocess) {
+            page_inprocess = "1";
+        }
+        if (null == page_done) {
+            page_done = "1";
         }
         int numberPerPage = 5;
-        
-        waitting_list = rd.getPageByNumber(waitting_list, Integer.parseInt(page), numberPerPage);
-        inprocess_list = rd.getPageByNumber(inprocess_list, Integer.parseInt(page), numberPerPage);
-        done_list = rd.getPageByNumber(done_list, Integer.parseInt(page), numberPerPage);
-        
-        int totalPage;
-        if (list.size() % numberPerPage == 0) {
-            totalPage = list.size() / numberPerPage;
-        } else {
-            totalPage = list.size() / numberPerPage + 1;
-        }
-        request.setAttribute("totalPage", totalPage);
+        Util u = new Util();
         request.setAttribute("filterRoles", filterRoles_raw);
-        request.setAttribute("filterStatus", filterStatus_raw);
-        request.setAttribute("currentPage", Integer.parseInt(page));
-        
-        
+        if (!waitting_list.isEmpty()) {
+            int totalPage_waiting = u.getTotalPage(waitting_list, numberPerPage);
+            System.out.println(""+totalPage_waiting+" number page of totalPage_waiting");
+            request.setAttribute("totalPage_waiting", totalPage_waiting);
+            request.setAttribute("currentPage_waiting", Integer.parseInt(page_waiting));
+        } else {
+            System.out.println(""+" number page of totalPage_done");
+            request.setAttribute("totalPage_waiting", 1);
+            request.setAttribute("currentPage_waiting", 1);
+        }
+        if (!inprocess_list.isEmpty()) {
+            int totalPage_inprocess = u.getTotalPage(inprocess_list, numberPerPage);
+            System.out.println(""+totalPage_inprocess+" number page of inprocess "+inprocess_list);
+            request.setAttribute("totalPage_inprocess", totalPage_inprocess);
+            request.setAttribute("currentPage_inprocess", Integer.parseInt(page_inprocess));
+        } else {
+            System.out.println(""+" number page of totalPage_done");
+            request.setAttribute("totalPage_inprocess", 1);
+            request.setAttribute("currentPage_inprocess", 1);
+        }
+        if (!done_list.isEmpty()) {
+            int totalPage_done = u.getTotalPage(done_list, numberPerPage);
+            System.out.println(""+totalPage_done+" number page of totalPage_done");
+            request.setAttribute("totalPage_done", totalPage_done);
+            request.setAttribute("currentPage_done", Integer.parseInt(page_done));
+        } else {
+            System.out.println(""+" number page of totalPage_done");
+            request.setAttribute("totalPage_done", 1);
+            request.setAttribute("currentPage_done", 1);
+        }
+        waitting_list = rd.getPageByNumber(waitting_list, Integer.parseInt(page_waiting), numberPerPage);
+        inprocess_list = rd.getPageByNumber(inprocess_list, Integer.parseInt(page_inprocess), numberPerPage);
+        done_list = rd.getPageByNumber(done_list, Integer.parseInt(page_done), numberPerPage);
         request.setAttribute("waiting_requestes", waitting_list);
-        
-        
         request.setAttribute("inprocess_requestes", inprocess_list);
-        
-        
         request.setAttribute("done_requestes", done_list);
-        
-        
-        
         request.getRequestDispatcher("viewallrequest.jsp").forward(request, response);
     }
 

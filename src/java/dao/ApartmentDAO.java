@@ -200,16 +200,36 @@ public class ApartmentDAO extends DBContext {
         }
         return list;
     }
+    public boolean updatenoperson(Apartment a){
+        String sql="update Apartment set NoPerson =? where id=?";
+        try {
+            PreparedStatement ps=connection.prepareStatement(sql);
+            ps.setInt(1, a.getNumberOfPerson());
+            ps.setString(2, a.getId());
+            int rowsUpdated = ps.executeUpdate();
+            if (rowsUpdated > 0) {
+            return true;
+        }
+        } catch (Exception e) {
+        }
+        return false;
+                
+    }
 
     public static void main(String[] args) {
         ApartmentDAO dao = new ApartmentDAO();
         RoomTypeDAO daoRT = new RoomTypeDAO();
         ResidentDAO daoR = new ResidentDAO();
-        RoomType rt = daoRT.getRoomTypeById("4");
-        Apartment a = dao.getById("A001");
-        a.setRoomtype(rt);
-        a.setInfor("Abc");
-        dao.updateApartment(a);
-        System.out.println(dao.GetREApartment("P101"));
+////        RoomType rt = daoRT.getRoomTypeById("4");
+//        Apartment a = dao.getById("A001");
+//        a.setRoomtype(rt);
+//        a.setInfor("Abc");
+//        dao.updateApartment(a);
+Apartment a=new Apartment();
+a.setId("A01_01");
+a.setNumberOfPerson(4);
+
+        System.out.println(dao.updatenoperson(a));
+        
     }
 }

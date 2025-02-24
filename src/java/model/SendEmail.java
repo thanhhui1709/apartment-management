@@ -235,6 +235,6 @@ public class SendEmail {
         String subject = "Xác nhận đơn hàng"; // Chủ đề email
         String content = "<h1>Cảm ơn bạn đã đặt hàng!</h1>"; // Nội dung email
 
-        emailSender.sendEmail("mykiwae@gmail.com", "thanh", "thanhhui", "123");
+        emailSender.sendFeedbackEmail("kophaithanhhui@gmail.com", "1", "cac");
     }
 }

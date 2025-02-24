@@ -26,7 +26,7 @@ import util.Util;
 public class RequestDAO extends DBContext {
 
     public List<Request> getAll() {
-        String sql = "select * from Request order by date";
+        String sql = "select * from Request order by date desc";
         List<Request> list = new ArrayList<>();
         ResidentDAO rd = new ResidentDAO();
         StaffDAO sd = new StaffDAO();
@@ -58,6 +58,42 @@ public class RequestDAO extends DBContext {
         return list;
     }
 
+    public List<Request> getRequestByRolesAndPid(int role, String pId) {
+        String sql = "select Request.Id as id,rId,sid,detail,Response,date,responsedate,Request.Status as status, tId ,roleId "
+                + "from Request join Staff on Request.[sId]=Staff.Id ";
+        sql += " where Staff.id = "+"'"+pId+"'"+" and Staff.roleid = "+role+"  order by date desc";
+        List<Request> list = new ArrayList<>();
+        ResidentDAO rd = new ResidentDAO();
+        StaffDAO sd = new StaffDAO();
+        RequestTypeDAO rtd = new RequestTypeDAO();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("id");
+                Resident r = rd.getById(rs.getString("rid"));
+                Staff s = sd.getById(rs.getString("sid"));
+                String detail = rs.getString("detail");
+                String response = rs.getString("response");
+                String date = rs.getDate("date").toString();
+                String responseDate;
+                if (rs.getDate("responseDate") == null) {
+                    responseDate = null;
+                } else {
+                    responseDate = rs.getDate("responseDate").toString();
+                }
+                String status = rs.getString("status");
+                RequestType rt = rtd.getById(rs.getString("tid"));
+                Request rq = new Request(id, r, s, detail, response, date, responseDate, status, rt);
+                list.add(rq);
+
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
     public List<Request> getRequestByRoles(int role) {
         String sql = "select Request.Id as id,rId,sid,detail,Response,date,responsedate,Request.Status as status, tId ,roleId from Request join Staff on Request.[sId]=Staff.Id  ";
         List<Request> list = new ArrayList<>();
@@ -139,13 +175,22 @@ public class RequestDAO extends DBContext {
             st.setString(3, sd.getByRequestType(rt).getId());
             st.setString(4, detail);
             st.setDate(5, new java.sql.Date(System.currentTimeMillis()));
-            st.setString(6, "-1");
+            st.setString(6, "Waiting");
             st.setString(7, rt.getId());
             st.executeUpdate();
             return 1;
         } catch (SQLException e) {
             System.out.println(e);
             return 0;
+        }
+    }
+    
+    public void deleteRequest(String id){
+        String sql = "delete from Request where id ="+"'"+id+"'";
+        try(PreparedStatement st = connection.prepareStatement(sql)){
+            st.executeUpdate();
+        }catch (SQLException e) {
+            System.out.println(e);
         }
     }
 
@@ -165,7 +210,7 @@ public class RequestDAO extends DBContext {
         List<Request> listpage = new ArrayList<>();
         int start = number * (page - 1);
         int end = number * page - 1;
-        if(list.isEmpty()) return null;
+        if(list.isEmpty()) return listpage;
         for (int i = start; i <= end; i++) {
             listpage.add(list.get(i));
             if (i == list.size() - 1) {
@@ -309,12 +354,13 @@ public class RequestDAO extends DBContext {
     }
 
     public Request getById(String id) {
-        String sql = "select * from Request order by date";
+        String sql = "select * from Request where id =?";
         ResidentDAO rd = new ResidentDAO();
         StaffDAO sd = new StaffDAO();
         RequestTypeDAO rtd = new RequestTypeDAO();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 Resident r = rd.getById(rs.getString("rid"));
@@ -363,6 +409,20 @@ public class RequestDAO extends DBContext {
             System.out.println(e);
         }
     }
+    public boolean Editrequest(Request r){
+        RequestTypeDAO rd=new RequestTypeDAO();
+        String sql="update Request set tId=?, Detail=? where id=?";
+        try {
+            PreparedStatement ps= connection.prepareStatement(sql);
+            ps.setString(1, r.getRequestType().getId());
+            ps.setString(2, r.getDetail());
+            ps.setString(3, r.getId());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
     public static void main(String[] args) {
         RequestDAO dao = new RequestDAO();
 //        List<Request> list = new ArrayList<>();
@@ -375,7 +435,16 @@ public class RequestDAO extends DBContext {
 //        System.out.println(""+dao.getInProcessgTable(list));
 //        dao.AssignRequest("R005", "S1005");
 //        System.out.println(dao.getAllRequestByStatus("waiting").size());
-        System.out.println(dao.getById("R002").getResidentId().getName());
-
+//List<Request> list = dao.getAll();
+//List<Request> inprocess_list = dao.getInProcessgTable(list);
+//        Util u = new Util();
+//        int totalPage_waiting = u.getTotalPage(inprocess_list, 5);
+//        System.out.println(inprocess_list.size() + "page: "+totalPage_waiting);
+//RequestTypeDAO rd=new RequestTypeDAO();
+//Request r= new Request();
+//r.setId("R9");
+//r.setDetail("hehe");
+//r.setRequestType(rd.getById("R003"));
+//System.out.println(dao.Editrequest(r));
     }
 }

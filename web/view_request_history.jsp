@@ -101,6 +101,7 @@
                                                             <th>Executor</th>
                                                             <th>Description</th>
                                                             <th>Status</th>
+                                                            <th>Option</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -127,18 +128,30 @@
                                                                 <td>${l.detail}</td>
                                                                 <td>
                                                                     <c:choose>
-                                                                        <c:when test="${l.status == '0'}">
+                                                                        <c:when test="${l.status == 'In process'}">
                                                                             <span style="color: blue;">In process</span>
                                                                         </c:when>
-                                                                        <c:when test="${l.status == '1'}">
+                                                                        <c:when test="${l.status == 'Done'}">
                                                                             <span style="color: green;">Done</span>
                                                                         </c:when>
-                                                                        <c:when test="${l.status == '-1'}">
+                                                                        <c:when test="${l.status == 'Waiting'}">
                                                                             <span style="color: red;">Waiting</span>
                                                                         </c:when>
                                                                     </c:choose>
                                                                 </td>
+                                                                <td>
+                                                                    <c:if test="${l.status == 'Waiting'}">
+                                                                    <a href="delete-request-resident?id=${l.id}" onclick="return confirm('Are you sure to delete this request?')"><i class="fa-solid fa-trash"></i></a>
+                                                                    </c:if>
+                                                                </td>
+                                                                <td>
+                                                                    <c:if test="${l.status == 'Waiting'}">
+                                                                        <a href="update-request?id=${l.id}"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                                        </c:if>
+                                                                </td>
+
                                                             </tr>
+
                                                         </c:forEach>
                                                     </tbody>
                                                 </table>

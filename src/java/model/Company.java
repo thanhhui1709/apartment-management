@@ -13,6 +13,19 @@ public class Company {
     private String id;
     private String name;
     private String phone;
+
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" + "id=" + id + ", name=" + name + ", phone=" + phone + ", contactPhone=" + contactPhone + ", fax=" + fax + ", email=" + email + ", contactemail=" + contactemail + ", website=" + website + ", taxCode=" + taxCode + ", bank=" + bank + ", description=" + description + ", address=" + address + '}';
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     private String contactPhone;
     private String fax;
     private String email;

@@ -62,14 +62,8 @@ public class ViewAllCompany extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         CompanyDAO cd = new CompanyDAO();
-        List<Company> list;
+        List<Company> list = cd.getAll();
         Util u = new Util();
-        if (null == session.getAttribute("companies")) {
-            list = cd.getAll();
-            session.setAttribute("companies", list);
-        } else {
-            list = (List<Company>) session.getAttribute("companies");
-        }
         String searchName = request.getParameter("searchName");
         int totalPage = u.getTotalPage(list, 3);
         if (null != searchName) {
@@ -80,16 +74,13 @@ public class ViewAllCompany extends HttpServlet {
                 request.getRequestDispatcher("viewallcompany.jsp").forward(request, response);
                 return;
             }
-            session.setAttribute("companies", list);
         }
         String page = request.getParameter("page");
         if (null == page) {
             page = "1";
-        }
-        
+        }       
         list = u.getListPerPage(list, 3, page);        
-        request.setAttribute("totalPage", totalPage);
-        
+        request.setAttribute("totalPage", totalPage);     
         request.setAttribute("currentPage", Integer.parseInt(page));
         request.setAttribute("companies", list);
         request.getRequestDispatcher("viewallcompany.jsp").forward(request, response);

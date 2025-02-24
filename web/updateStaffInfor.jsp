@@ -221,10 +221,11 @@
                                                     <label for="salary">Salary</label>
                                                     <input
                                                         type="text" 
-                                                    id="salary"
+                                                        id="salary"
                                                     name="salary"
                                                     placeholder="Enter salary"
                                                     required
+                                                    value="${staff.salary}"
                                                     oninput="formatSalary(this)"
                                                     />
                                                     <span id="salary-error" style="color: red"></span>
