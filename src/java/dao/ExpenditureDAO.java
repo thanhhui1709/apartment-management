@@ -9,47 +9,42 @@ import jdbc.DBContext;
 import model.Expenditure;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 import java.util.ArrayList;
 import java.util.List;
 import model.Company;
 import model.Staff;
-=======
-import java.sql.SQLException;
->>>>>>> parent of 0f685c4 (update expenditure)
-=======
-import java.sql.SQLException;
->>>>>>> parent of 0f685c4 (update expenditure)
-=======
-import java.sql.SQLException;
->>>>>>> parent of 0f685c4 (update expenditure)
 
-/**
- *
- * @author PC
- */
-<<<<<<< HEAD
-=======
+import java.sql.SQLException;
+import java.sql.SQLException;
+
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+
 public class ExpenditureDAO extends DBContext {
 
     public boolean updateExpenditure(Expenditure e) {
         String sql = "UPDATE [dbo].[Expenditure]\n"
-                + "   SET ?,?,?,?,?,?,?,?,?\n"
-                + " WHERE Id=?";
+                + "   SET[amount] = ?\n"
+                + "      ,[Price] =?\n"
+                + "      ,[Approveddate] = ?\n"
+                + "      ,[Paymentdate] = ?\n"
+                + "      ,[note] = ?\n"
+                + "      ,[category] = ?\n"
+                + "      ,[cid] = ?\n"
+                + "      ,[sId] = ?\n"
+                + " WHERE id=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, e.getId());
-            st.setInt(2, e.getAmount());
-            st.setFloat(3, e.getPrice());
-            st.setString(4, e.getAprroveddate());
-            st.setString(5, e.getPaymentdate());
-            st.setString(6, e.getNote());
-            st.setString(7, e.getCategory());
-            st.setString(8, e.getCid());
-            st.setString(9, e.getSid());
-            st.setString(10, e.getId());
+            st.setInt(1, e.getAmount());
+            st.setFloat(2, e.getPrice());
+            st.setString(3, e.getApproveddate());
+            st.setString(4, e.getPaymentdate());
+            st.setString(5, e.getNote());
+            st.setString(6, e.getCategory());
+            st.setString(7, e.getCid().getId());
+            st.setString(8, e.getSid().getId());
+            st.setString(9, e.getId());
             st.executeUpdate();
             return true;
 
@@ -57,29 +52,9 @@ public class ExpenditureDAO extends DBContext {
             System.out.println(ex);
         }
         return false;
+    }
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
-import jdbc.DBContext;
-import model.Company;
-import model.Expenditure;
-import model.Staff;
-
-/**
- *
- * @author PC
- */
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 0f685c4 (update expenditure)
-=======
->>>>>>> parent of 0f685c4 (update expenditure)
-=======
->>>>>>> parent of 0f685c4 (update expenditure)
-public class ExpenditureDAO extends DBContext{
-    public List<Expenditure> getAll(){
+    public List<Expenditure> getAll() {
         List<Expenditure> list = new ArrayList<>();
         String sql = "select * from Expenditure";
         try {
@@ -98,20 +73,21 @@ public class ExpenditureDAO extends DBContext{
                 Company company = cdao.getById(rs.getString("cid"));
                 Staff staff = sdao.getById(rs.getString("sid"));
                 Expenditure ne = new Expenditure(id, amount, price, approveddate, paymentdate, note, category, company, staff);
-                System.out.println("new ="+ne);
+                System.out.println("new =" + ne);
                 list.add(ne);
             }
         } catch (Exception e) {
         }
         return list;
     }
-    public List<String> getListCategory(){
+
+    public List<String> getListCategory() {
         List<String> list = new ArrayList<>();
         String sql = "select distinct category from Expenditure";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            while (rs.next()) {     
+            while (rs.next()) {
                 String category = rs.getString("category");
                 list.add(category);
             }
@@ -119,8 +95,8 @@ public class ExpenditureDAO extends DBContext{
         }
         return list;
     }
-    
-    public List<Expenditure> getViewExpenditure(String title,String startDate,String endDate, String categories){
+
+    public List<Expenditure> getViewExpenditure(String title, String startDate, String endDate, String categories) {
         List<Expenditure> list = new ArrayList<>();
         String sql = "select * from Expenditure where id <> '0'";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
