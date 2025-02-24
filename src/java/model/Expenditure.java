@@ -50,7 +50,7 @@ public class Expenditure {
         this.category=category;
         this.amount=amount;
         this.price=price;
-        this.aprroveddate=aprroveddate;
+        this.approveddate=aprroveddate;
         this.paymentdate=paymentdate;
         this.cid=cid;
         this.sid=sid;

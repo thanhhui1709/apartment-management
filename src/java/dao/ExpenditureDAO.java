@@ -122,7 +122,7 @@ public class ExpenditureDAO extends DBContext {
             ps.setString(1, (lastNum+1)+ "");
             ps.setInt(2, e.getAmount());
             ps.setFloat(3, e.getPrice());
-            ps.setString(4, e.getAprroveddate());
+            ps.setString(4, e.getApproveddate());
             ps.setString(5, e.getPaymentdate());
             ps.setString(6, e.getNote());
             ps.setString(7, e.getCategory());
@@ -143,7 +143,7 @@ public class ExpenditureDAO extends DBContext {
         ex.setId("2");
         ex.setAmount(2);
         ex.setPrice(500);
-        ex.setAprroveddate("2025-02-24");
+        ex.setApproveddate("2025-02-24");
         ex.setPaymentdate("2025-02-24");
         ex.setNote("sua ong");
         ex.setCategory("chi");
