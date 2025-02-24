@@ -12,7 +12,7 @@ public class Expenditure {
     String id;
     int amount;
     float price;
-    String aprroveddate;
+    String approveddate;
     String paymentdate;
     String note;
     String category;
@@ -22,12 +22,11 @@ public class Expenditure {
     public Expenditure() {
     }
 
-    public Expenditure(String id, int amount, float price, String aprroveddate, String paymentdate, 
-            String note, String category, Company cid, Staff sid) {
+    public Expenditure(String id, int amount, float price, String approveddate, String paymentdate, String note, String category, Company cid, Staff sid) {
         this.id = id;
         this.amount = amount;
         this.price = price;
-        this.aprroveddate = aprroveddate;
+        this.approveddate = approveddate;
         this.paymentdate = paymentdate;
         this.note = note;
         this.category = category;
@@ -35,11 +34,10 @@ public class Expenditure {
         this.sid = sid;
     }
 
-    public Expenditure(int amount, float price, String aprroveddate, String paymentdate, 
-            String note, String category, Company cid, Staff sid) {
+    public Expenditure(int amount, float price, String approveddate, String paymentdate, String note, String category, Company cid, Staff sid) {
         this.amount = amount;
         this.price = price;
-        this.aprroveddate = aprroveddate;
+        this.approveddate = approveddate;
         this.paymentdate = paymentdate;
         this.note = note;
         this.category = category;
@@ -71,12 +69,12 @@ public class Expenditure {
         this.price = price;
     }
 
-    public String getAprroveddate() {
-        return aprroveddate;
+    public String getApproveddate() {
+        return approveddate;
     }
 
-    public void setAprroveddate(String aprroveddate) {
-        this.aprroveddate = aprroveddate;
+    public void setApproveddate(String approveddate) {
+        this.approveddate = approveddate;
     }
 
     public String getPaymentdate() {
@@ -118,5 +116,9 @@ public class Expenditure {
     public void setSid(Staff sid) {
         this.sid = sid;
     }
+
+    
+
+   
     
 }

@@ -46,6 +46,7 @@ public class Util {
         return "view-rule-admin";
     }
     
+    
     public String getSiteToViewApartment(int role) {
         if (role == 1) {
             return "view-apartment-resident";
