@@ -221,7 +221,7 @@
                                                     <label for="salary">Salary</label>
                                                     <input
                                                         type="text" 
-                                                    id="salary"
+                                                        id="salary"
                                                     name="salary"
                                                     placeholder="Enter salary"
                                                     required
