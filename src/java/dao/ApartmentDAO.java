@@ -36,6 +36,7 @@ public class ApartmentDAO extends DBContext {
         if (!status.equals("")) {
             sql += "and status = " + status;
         }
+        sql += " order by floor";
         List<Apartment> list = new ArrayList<>();
         FloorDAO fdao = new FloorDAO();
         RoomTypeDAO rdao = new RoomTypeDAO();
